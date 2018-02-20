@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5B1AC398203BADB300F3B921 /* Battleground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC397203BADB300F3B921 /* Battleground.swift */; };
 		5B1AC39A203BB01200F3B921 /* PlayerHand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC399203BB01200F3B921 /* PlayerHand.swift */; };
+		5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC39B203C435A00F3B921 /* Deck.swift */; };
+		5B1AC39F203C619100F3B921 /* PlayerDeck.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B1AC39E203C619100F3B921 /* PlayerDeck.json */; };
+		5B1AC3A3203C87A300F3B921 /* ManaCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */; };
 		5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F0B2038911000B81376 /* AppDelegate.swift */; };
 		5BCA6F122038911000B81376 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F112038911000B81376 /* GameScene.swift */; };
 		5BCA6F142038911000B81376 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F132038911000B81376 /* GameViewController.swift */; };
@@ -26,6 +29,9 @@
 /* Begin PBXFileReference section */
 		5B1AC397203BADB300F3B921 /* Battleground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battleground.swift; sourceTree = "<group>"; };
 		5B1AC399203BB01200F3B921 /* PlayerHand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHand.swift; sourceTree = "<group>"; };
+		5B1AC39B203C435A00F3B921 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		5B1AC39E203C619100F3B921 /* PlayerDeck.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PlayerDeck.json; sourceTree = "<group>"; };
+		5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManaCounter.swift; sourceTree = "<group>"; };
 		5BCA6F082038911000B81376 /* Uniq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uniq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCA6F0B2038911000B81376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BCA6F112038911000B81376 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -53,6 +59,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B1AC39D203C612900F3B921 /* Decks */ = {
+			isa = PBXGroup;
+			children = (
+				5B1AC39E203C619100F3B921 /* PlayerDeck.json */,
+			);
+			path = Decks;
+			sourceTree = "<group>";
+		};
 		5BCA6EFF2038911000B81376 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +90,9 @@
 				5BCA6F112038911000B81376 /* GameScene.swift */,
 				5B1AC397203BADB300F3B921 /* Battleground.swift */,
 				5B1AC399203BB01200F3B921 /* PlayerHand.swift */,
+				5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */,
+				5B1AC39D203C612900F3B921 /* Decks */,
+				5B1AC39B203C435A00F3B921 /* Deck.swift */,
 				5BCA6F31203B20DC00B81376 /* Card */,
 				5BCA6F30203B20C100B81376 /* Creature */,
 				5BCA6F132038911000B81376 /* GameViewController.swift */,
@@ -169,6 +186,7 @@
 				5BCA6F172038911000B81376 /* Main.storyboard in Resources */,
 				5BCA6F192038911000B81376 /* Assets.xcassets in Resources */,
 				5BCA6F1C2038911000B81376 /* LaunchScreen.storyboard in Resources */,
+				5B1AC39F203C619100F3B921 /* PlayerDeck.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +197,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */,
 				5B1AC39A203BB01200F3B921 /* PlayerHand.swift in Sources */,
+				5B1AC3A3203C87A300F3B921 /* ManaCounter.swift in Sources */,
 				5B1AC398203BADB300F3B921 /* Battleground.swift in Sources */,
 				5BCA6F242038992C00B81376 /* Creature.swift in Sources */,
 				5BCA6F122038911000B81376 /* GameScene.swift in Sources */,

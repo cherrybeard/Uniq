@@ -19,15 +19,16 @@ class PlayerHand: SKNode {
         super.init()
     }
     
-    func draw() {
-        let creature = Creature(attack: 1, health: 2)
-        let card = CreatureCard(cost: 1, creature: creature)
-        let cardSprite = CreatureCardSprite(card: card)
+    func draw(card: Card) {
+        var cardSprite:CardSprite? = nil
+        if card is CreatureCard {
+            cardSprite = CreatureCardSprite(card: card as! CreatureCard)
+        }
         
-        cardSprite.position = CGPoint(x: 0, y: 25)
+        cardSprite?.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
         
-        addChild(cardSprite)
-        cards.append(cardSprite)
+        addChild(cardSprite!)
+        cards.append(cardSprite!)
         
         repositionCards()
     }

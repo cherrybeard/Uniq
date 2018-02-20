@@ -1,0 +1,75 @@
+{
+    "cards": [
+        {
+            "type": "creature",
+            "cost": 1,
+            "creature": {
+                "attack": 1,
+                "health": 2
+            }
+        },{
+            "type": "creature",
+            "cost": 1,
+            "creature": {
+                "attack": 2,
+                "health": 1
+            }
+        },{
+            "type": "creature",
+            "cost": 1,
+            "creature": {
+                "attack": 2,
+                "health": 1
+            }
+        },{
+            "type": "creature",
+            "cost": 2,
+            "creature": {
+                "attack": 2,
+                "health": 2
+            }
+        },{
+            "type": "creature",
+            "cost": 2,
+            "creature": {
+                "attack": 3,
+                "health": 1
+            }
+        },{
+            "type": "creature",
+            "cost": 2,
+            "creature": {
+                "attack": 1,
+                "health": 3
+            }
+        },{
+            "type": "creature",
+            "cost": 3,
+            "creature": {
+                "attack": 2,
+                "health": 3
+            }
+        },{
+            "type": "creature",
+            "cost": 3,
+            "creature": {
+                "attack": 3,
+                "health": 2
+            }
+        },{
+            "type": "creature",
+            "cost": 3,
+            "creature": {
+                "attack": 1,
+                "health": 4
+            }
+        },{
+            "type": "creature",
+            "cost": 3,
+            "creature": {
+                "attack": 4,
+                "health": 1
+            }
+        }
+    ]
+}

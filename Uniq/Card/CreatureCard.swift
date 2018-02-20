@@ -14,4 +14,9 @@ class CreatureCard: Card {
         super.init(cost: cost)
     }
     
+    init(card: CreatureCard) {
+        self.creature = card.creature
+        super.init(cost: card.cost)
+    }
+    
 }
