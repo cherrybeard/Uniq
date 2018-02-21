@@ -18,6 +18,8 @@ class GameScene: SKScene {
     
     var attackingCreature: CreatureSprite? = nil
     var castingCreatureCard: CreatureCardSprite? = nil
+    var isEndTurn: Bool = false
+    var isComputerTurn: Bool = false
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
@@ -42,38 +44,66 @@ class GameScene: SKScene {
         for _ in 1...5 {
             playerHand.draw(card: deck.draw())
         }
+        playerHand.markPlayable(mana: manaCounter.mana)
         
-        let computerCreature = Creature(attack: 2, health: 3)
-        battleground.summon(creature: computerCreature, owner: OwnerType.computer)
+        for _ in 1...2 {
+            battleground.summon(creature: Creature(attack: 1, health: 24), owner: OwnerType.computer)
+        }
     }
     
     func playCard(card: CreatureCardSprite) {
         let cost = card.creatureCard.cost
-        if manaCounter.useMana(amount: cost) {
+        if manaCounter.use(amount: cost) {
             battleground.summon(creature: card.creatureCard.creature, owner: OwnerType.player)
             card.discarded = true
             playerHand.clean()
+            playerHand.markPlayable(mana: manaCounter.mana)
         }
     }
     
-    func endTurn() {
-        manaCounter.addMana(amount: 1)
+    func playerTurnStart() {
+        manaCounter.increaseAndRestore()
         playerHand.draw(card: deck.draw())
+        battleground.allowCreaturesAttack(owner: OwnerType.player)
+        playerHand.markPlayable(mana: manaCounter.mana)
+        isComputerTurn = false
+    }
+    
+    func playerTurnEnd() {
+        isComputerTurn = true
+        playerHand.markUnplayable()
+        battleground.disableCreaturesAttack(owner: OwnerType.player)
+        computerTurn()
+    }
+    
+    func computerTurn() {
+        battleground.allowCreaturesAttack(owner: OwnerType.computer)
+        battleground.computerAttacks()
+        playerTurnStart()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let touchLocation = touch.location(in: self)
-            let touchedNodes = self.nodes(at: touchLocation)
-            
-            for node in touchedNodes {
-                if node.name == "player-creature" {
-                    attackingCreature = node as? CreatureSprite
-                    break
-                }
-                if node.name == "player-creature-card" {
-                    castingCreatureCard = node as? CreatureCardSprite
-                    break
+            if !isComputerTurn {
+                let touchLocation = touch.location(in: self)
+                let touchedNodes = self.nodes(at: touchLocation)
+                
+                for node in touchedNodes {
+                    if node.name == "player-creature" {
+                        let creature = node as? CreatureSprite
+                        if (creature?.canAttack)! {
+                            attackingCreature = creature
+                            break
+                        }
+                    }
+                    if node.name == "player-creature-card" {
+                        castingCreatureCard = node as? CreatureCardSprite
+                        break
+                    }
+                    if node.name == "end-turn" {
+                        isEndTurn = true
+                        break
+                    }
                 }
             }
         }
@@ -84,25 +114,35 @@ class GameScene: SKScene {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation)
             
-            if attackingCreature != nil {
-                for node in touchedNodes {
-                    if node.name == "computer-creature" {
-                        let defendingCreature = node as? CreatureSprite
-                        battleground.attack(attacking: attackingCreature!, defending: defendingCreature!)
+            if !isComputerTurn {
+                if attackingCreature != nil {
+                    for node in touchedNodes {
+                        if node.name == "computer-creature" {
+                            let defendingCreature = node as? CreatureSprite
+                            battleground.attack(attacking: attackingCreature!, defending: defendingCreature!)
+                        }
                     }
                 }
-            }
-            
-            if castingCreatureCard != nil {
-                for node in touchedNodes {
-                    if node.name == "creatures-layer" {
-                        playCard(card: castingCreatureCard!)
+                
+                if castingCreatureCard != nil {
+                    for node in touchedNodes {
+                        if node.name == "creatures-layer" {
+                            playCard(card: castingCreatureCard!)
+                        }
                     }
                 }
+                
+                if isEndTurn {
+                    for node in touchedNodes {
+                        if node.name == "end-turn" {
+                            playerTurnEnd()
+                        }
+                    }
+                }
+                
+                attackingCreature = nil
+                castingCreatureCard = nil
             }
-            
-            attackingCreature = nil
-            castingCreatureCard = nil
         }
     }
     

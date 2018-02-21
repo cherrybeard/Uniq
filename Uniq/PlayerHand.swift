@@ -44,6 +44,18 @@ class PlayerHand: SKNode {
         repositionCards()
     }
     
+    func markPlayable(mana: Int) {
+        for card in cards {
+            card.canPlay = (card.card.cost <= mana)
+        }
+    }
+    
+    func markUnplayable() {
+        for card in cards {
+            card.canPlay = false
+        }
+    }
+    
     func repositionCards() {
         let width = (50 + 20) / 2
         let duration:TimeInterval = 0.2

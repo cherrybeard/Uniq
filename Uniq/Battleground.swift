@@ -6,6 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
+import GameplayKit
 import SpriteKit
 
 class Battleground: SKNode {
@@ -37,18 +38,56 @@ class Battleground: SKNode {
     }
     
     func attack(attacking: CreatureSprite, defending: CreatureSprite) {
-        defending.applyDamage(damage: attacking.creature.attack)
-        attacking.applyDamage(damage: defending.creature.attack)
-        removeDeadCreatures()
-        repositionCreatures(owner: OwnerType.player)
-        repositionCreatures(owner: OwnerType.computer)
+        if !attacking.canAttack { return }
+        
+        let initPos = attacking.position
+        let defPos = defending.position
+        let targetX = Int( (defPos.x - initPos.x) / 2 + initPos.x )
+        let targetY = Int( (defPos.y - initPos.y) / 2 + initPos.y )
+        let targetPos = CGPoint(x: targetX, y: targetY)
+        
+        let duration:TimeInterval = 0.2
+        
+        let moveTo = SKAction.move(to: targetPos, duration: duration)
+        moveTo.timingMode = .easeOut
+        
+        let moveBack = SKAction.move(to: initPos, duration: duration)
+        moveBack.timingMode = .easeOut
+        
+        attacking.canAttack = false
+        attacking.run(moveTo, completion: {
+            defending.applyDamage(damage: attacking.creature.attack)
+            attacking.applyDamage(damage: defending.creature.attack)
+            
+            attacking.run(moveBack, completion: {
+                self.removeDeadCreatures()
+                self.repositionCreatures(owner: OwnerType.player)
+                self.repositionCreatures(owner: OwnerType.computer)
+                
+                if attacking.owner == OwnerType.computer { self.computerAttacks() }
+            })
+        })
+    }
+    
+    func computerAttacks() {
+        let creatures = creaturesOf(owner: OwnerType.computer, canAttack: true)
+        if creatures.count == 0 { return }
+        
+        let playerCreatures = creaturesOf(owner: OwnerType.player)
+        if playerCreatures.count == 0 { return }
+        
+        let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
+        let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
+        
+        let creature = creaturesShuffled[0] as! CreatureSprite
+        let playerCreature = playerCreaturesShffled[0] as! CreatureSprite
+        
+        attack(attacking: creature, defending: playerCreature)
     }
     
     func repositionCreatures(owner: OwnerType) {
         let yPos = (owner == OwnerType.player) ? -55 : 65
-        let ownerCreatures = creatures.filter { (creature) -> Bool in
-            creature.owner == owner
-        }
+        let ownerCreatures = creaturesOf(owner: owner)
         
         let width = (50 + 20) / 2
         let duration:TimeInterval = 0.2
@@ -69,6 +108,30 @@ class Battleground: SKNode {
                 creature.destroy()
                 creatures.remove(at: i)
             }
+        }
+    }
+    
+    func creaturesOf(owner: OwnerType) -> [CreatureSprite] {
+        return creatures.filter { (creature) -> Bool in
+            creature.owner == owner
+        }
+    }
+    
+    func creaturesOf(owner: OwnerType, canAttack: Bool) -> [CreatureSprite] {
+        return creatures.filter { (creature) -> Bool in
+            (creature.owner == owner) && (creature.canAttack == canAttack)
+        }
+    }
+    
+    func allowCreaturesAttack(owner: OwnerType) {
+        for creature in creaturesOf(owner: owner) {
+            creature.canAttack = true
+        }
+    }
+    
+    func disableCreaturesAttack(owner: OwnerType) {
+        for creature in creaturesOf(owner: owner) {
+            creature.canAttack = false
         }
     }
     

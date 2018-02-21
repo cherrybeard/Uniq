@@ -11,7 +11,18 @@ import SpriteKit
 class CardSprite: SKNode {
     var card: Card
     var costLabel: SKLabelNode
+    let border: SKShapeNode
+    
     var discarded: Bool = false
+    
+    private var _canPlay:Bool = false
+    var canPlay: Bool {
+        get { return _canPlay }
+        set(newValue) {
+            _canPlay = newValue
+            redrawBorder()
+        }
+    }
     
     let width: Int = 50
     let height: Int = 90
@@ -19,12 +30,10 @@ class CardSprite: SKNode {
     init(card: Card) {
         self.card = card
         costLabel = SKLabelNode(text: String(card.cost))
+        border = SKShapeNode(rectOf: CGSize(width: width, height: height))
         super.init()
         
-        let border = SKShapeNode(rectOf: CGSize(width: width, height: height))
-        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
-        border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
-        border.lineWidth = 1
+        redrawBorder()
         addChild(border)
         
         let costBorder = SKShapeNode(circleOfRadius: 12)
@@ -42,6 +51,16 @@ class CardSprite: SKNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func redrawBorder() {
+        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
+        if canPlay {
+            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
+        } else {
+            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
+        }
+        border.lineWidth = 1
     }
     
     func destroy() {

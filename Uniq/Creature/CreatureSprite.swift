@@ -15,8 +15,18 @@ enum OwnerType: Int {
 class CreatureSprite: SKNode {
     var creature: Creature
     var owner: OwnerType
-    var healthLabel: SKLabelNode
-    var attackLabel: SKLabelNode
+    let healthLabel: SKLabelNode
+    let attackLabel: SKLabelNode
+    let border: SKShapeNode
+    
+    private var _canAttack: Bool = false
+    var canAttack: Bool {
+        get { return _canAttack }
+        set(newValue) {
+            _canAttack = newValue
+            redrawBorder()
+        }
+    }
     
     let width: Int = 50
     let height: Int = 90
@@ -24,14 +34,14 @@ class CreatureSprite: SKNode {
     init(creature: Creature, owner: OwnerType) {
         self.creature = creature
         self.owner = owner
-        self.attackLabel = SKLabelNode(text: String(creature.attack))
-        self.healthLabel = SKLabelNode(text: String(creature.health))
+        
+        attackLabel = SKLabelNode(text: String(creature.attack))
+        healthLabel = SKLabelNode(text: String(creature.health))
+        border = SKShapeNode(rectOf: CGSize(width: width, height: height))
+        
         super.init()
         
-        let border = SKShapeNode(rectOf: CGSize(width: width, height: height))
-        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
-        border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
-        border.lineWidth = 1
+        redrawBorder()
         addChild(border)
         
         let attackBorder = SKShapeNode(circleOfRadius: 12)
@@ -63,6 +73,16 @@ class CreatureSprite: SKNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func redrawBorder() {
+        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
+        if canAttack && (owner == OwnerType.player) {
+            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
+        } else {
+            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
+        }
+        border.lineWidth = 1
     }
     
     func applyDamage(damage: Int) {

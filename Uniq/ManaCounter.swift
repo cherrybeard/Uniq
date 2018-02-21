@@ -10,6 +10,7 @@ import SpriteKit
 
 class ManaCounter: SKNode {
     var mana:Int = 0
+    var totalMana:Int = 0
     let manaLabel = SKLabelNode()
     
     required init?(coder aDecoder: NSCoder) {
@@ -19,6 +20,7 @@ class ManaCounter: SKNode {
     init(mana: Int) {
         super.init()
         self.mana = mana
+        totalMana = mana
         
         let border = SKShapeNode(circleOfRadius: 24)
         border.lineWidth = 0
@@ -28,24 +30,34 @@ class ManaCounter: SKNode {
         manaLabel.color = UIColor.white
         manaLabel.fontName = "AvenirNext-Bold"
         manaLabel.fontSize = 24
-        manaLabel.text = String(self.mana)
         manaLabel.position = CGPoint(x: 0, y: -10)
+        update()
         addChild(manaLabel)
         
         name = "end-turn"
     }
     
-    func useMana(amount: Int) -> Bool {
+    func use(amount: Int) -> Bool {
         if amount > mana { return false }
         
         mana -= amount
-        manaLabel.text = String(mana)
+        update()
         return true
     }
     
-    func addMana(amount: Int) {
+    func add(amount: Int) {
         mana += amount
         if mana >= 10 { mana = 10 }
+        update()
+    }
+    
+    func increaseAndRestore() {
+        if totalMana < 10 { totalMana += 1 }
+        mana = totalMana
+        update()
+    }
+    
+    func update() {
         manaLabel.text = String(mana)
     }
 }
