@@ -37,7 +37,7 @@ class Battleground: SKNode {
         repositionCreatures(owner: owner)
     }
     
-    func attack(attacking: CreatureSprite, defending: CreatureSprite) {
+    func attackAnimation(attacking: CreatureSprite, defending: CreatureSprite) {
         if !attacking.canAttack { return }
         
         let initPos = attacking.position
@@ -63,26 +63,8 @@ class Battleground: SKNode {
                 self.removeDeadCreatures()
                 self.repositionCreatures(owner: OwnerType.player)
                 self.repositionCreatures(owner: OwnerType.computer)
-                
-                if attacking.owner == OwnerType.computer { self.computerAttacks() }
             })
         })
-    }
-    
-    func computerAttacks() {
-        let creatures = creaturesOf(owner: OwnerType.computer, canAttack: true)
-        if creatures.count == 0 { return }
-        
-        let playerCreatures = creaturesOf(owner: OwnerType.player)
-        if playerCreatures.count == 0 { return }
-        
-        let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
-        let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
-        
-        let creature = creaturesShuffled[0] as! CreatureSprite
-        let playerCreature = playerCreaturesShffled[0] as! CreatureSprite
-        
-        attack(attacking: creature, defending: playerCreature)
     }
     
     func repositionCreatures(owner: OwnerType) {
@@ -109,6 +91,8 @@ class Battleground: SKNode {
                 creatures.remove(at: i)
             }
         }
+        repositionCreatures(owner: .computer)
+        repositionCreatures(owner: .player)
     }
     
     func creaturesOf(owner: OwnerType) -> [CreatureSprite] {
@@ -120,6 +104,12 @@ class Battleground: SKNode {
     func creaturesOf(owner: OwnerType, canAttack: Bool) -> [CreatureSprite] {
         return creatures.filter { (creature) -> Bool in
             (creature.owner == owner) && (creature.canAttack == canAttack)
+        }
+    }
+    
+    func creaturesOf(owner: OwnerType, alive: Bool) -> [CreatureSprite] {
+        return creatures.filter { (creature) -> Bool in
+            (creature.owner == owner) && ( (creature.creature.health > 0) == alive)
         }
     }
     

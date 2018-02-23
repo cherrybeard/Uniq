@@ -9,17 +9,25 @@
 import SpriteKit
 import GameplayKit
 
+enum TurnState: Int {
+    case preparing = 0, playerTurn, playerEnd, computerTurn, computerEnd
+}
+
+enum PlayerActionType: Int {
+    case rest = 0, attack, cast, endTurn
+}
+
 class GameScene: SKScene {
     let gameLayer = SKNode()
     let battleground = Battleground()
     let deck = Deck()
     let playerHand = PlayerHand()
-    let manaCounter = ManaCounter(mana: 1)
+    let manaCounter = ManaCounter(mana: 5)
+    let animationPipeline = AnimationPipeline()
     
-    var attackingCreature: CreatureSprite? = nil
-    var castingCreatureCard: CreatureCardSprite? = nil
-    var isEndTurn: Bool = false
-    var isComputerTurn: Bool = false
+    var state: TurnState = .playerTurn
+    var playerAction: PlayerActionType = .rest
+    var playerActionTarget: Any? = nil
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
@@ -61,30 +69,35 @@ class GameScene: SKScene {
         }
     }
     
-    func playerTurnStart() {
-        manaCounter.increaseAndRestore()
-        playerHand.draw(card: deck.draw())
-        battleground.allowCreaturesAttack(owner: OwnerType.player)
-        playerHand.markPlayable(mana: manaCounter.mana)
-        isComputerTurn = false
+    func makeComputerMove() {
+        let creatures = battleground.creaturesOf(owner: OwnerType.computer, canAttack: true)
+        if creatures.count > 0 {
+            let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
+            
+            for creature in creaturesShuffled {
+                let playerCreatures = battleground.creaturesOf(owner: OwnerType.player, alive: true)
+                if playerCreatures.count == 0 { break }
+                let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
+                let playerCreature = playerCreaturesShffled[0] as! CreatureSprite
+                
+                attack(attacking: creature as! CreatureSprite, defending: playerCreature)
+            }
+        }
+        state = .computerEnd
     }
     
-    func playerTurnEnd() {
-        isComputerTurn = true
-        playerHand.markUnplayable()
-        battleground.disableCreaturesAttack(owner: OwnerType.player)
-        computerTurn()
-    }
-    
-    func computerTurn() {
-        battleground.allowCreaturesAttack(owner: OwnerType.computer)
-        battleground.computerAttacks()
-        playerTurnStart()
+    func attack(attacking: CreatureSprite, defending: CreatureSprite) {
+        defending.applyDamage(damage: attacking.creature.attack)
+        attacking.applyDamage(damage: defending.creature.attack)
+        attacking.canAttack = false
+        
+        let animation = AttackAnimation(attacking: attacking, defending: defending)
+        animationPipeline.add(animation: animation)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            if !isComputerTurn {
+            if state == .playerTurn {
                 let touchLocation = touch.location(in: self)
                 let touchedNodes = self.nodes(at: touchLocation)
                 
@@ -92,16 +105,18 @@ class GameScene: SKScene {
                     if node.name == "player-creature" {
                         let creature = node as? CreatureSprite
                         if (creature?.canAttack)! {
-                            attackingCreature = creature
+                            playerAction = .attack
+                            playerActionTarget = creature
                             break
                         }
                     }
                     if node.name == "player-creature-card" {
-                        castingCreatureCard = node as? CreatureCardSprite
+                        playerAction = .cast
+                        playerActionTarget = node as? CreatureCardSprite
                         break
                     }
                     if node.name == "end-turn" {
-                        isEndTurn = true
+                        playerAction = .endTurn
                         break
                     }
                 }
@@ -114,39 +129,43 @@ class GameScene: SKScene {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation)
             
-            if !isComputerTurn {
-                if attackingCreature != nil {
-                    for node in touchedNodes {
-                        if node.name == "computer-creature" {
-                            let defendingCreature = node as? CreatureSprite
-                            battleground.attack(attacking: attackingCreature!, defending: defendingCreature!)
-                        }
+            if state == .playerTurn {
+                for node in touchedNodes {
+                    if (playerAction == .attack) && (node.name == "computer-creature") {
+                        let defendingCreature = node as? CreatureSprite
+                        attack(attacking: playerActionTarget as! CreatureSprite, defending: defendingCreature!)
+                    }
+                    if (playerAction == .cast) && (node.name == "creatures-layer") {
+                        playCard(card: playerActionTarget as! CreatureCardSprite)
+                    }
+                    if (playerAction == .endTurn) && (node.name == "end-turn") {
+                        state = .playerEnd
                     }
                 }
-                
-                if castingCreatureCard != nil {
-                    for node in touchedNodes {
-                        if node.name == "creatures-layer" {
-                            playCard(card: castingCreatureCard!)
-                        }
-                    }
-                }
-                
-                if isEndTurn {
-                    for node in touchedNodes {
-                        if node.name == "end-turn" {
-                            playerTurnEnd()
-                        }
-                    }
-                }
-                
-                attackingCreature = nil
-                castingCreatureCard = nil
+                playerAction = .rest
+                playerActionTarget = nil
             }
         }
     }
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        animationPipeline.update()
+        if (animationPipeline.state == AnimationState.finished) {
+            battleground.removeDeadCreatures()
+            if (state == .computerEnd) {
+                state = .playerTurn
+                manaCounter.increaseAndRestore()
+                playerHand.draw(card: deck.draw())
+                battleground.allowCreaturesAttack(owner: OwnerType.player)
+                playerHand.markPlayable(mana: manaCounter.mana)
+            }
+            if (state == .playerEnd) {
+                state = .computerTurn
+                playerHand.markUnplayable()
+                battleground.disableCreaturesAttack(owner: OwnerType.player)
+                battleground.allowCreaturesAttack(owner: OwnerType.computer)
+                makeComputerMove()
+            }
+        }
     }
 }

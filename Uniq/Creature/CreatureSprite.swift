@@ -15,9 +15,9 @@ enum OwnerType: Int {
 class CreatureSprite: SKNode {
     var creature: Creature
     var owner: OwnerType
-    let healthLabel: SKLabelNode
-    let attackLabel: SKLabelNode
-    let border: SKShapeNode
+    private let healthLabel: SKLabelNode
+    private let attackLabel: SKLabelNode
+    private let border: SKShapeNode
     
     private var _canAttack: Bool = false
     var canAttack: Bool {
@@ -25,6 +25,13 @@ class CreatureSprite: SKNode {
         set(newValue) {
             _canAttack = newValue
             redrawBorder()
+        }
+    }
+    
+    var health: Int {
+        get { return Int(healthLabel.text!)! }
+        set(newValue) {
+            healthLabel.text = String(newValue)
         }
     }
     
@@ -87,6 +94,9 @@ class CreatureSprite: SKNode {
     
     func applyDamage(damage: Int) {
         creature.health -= damage
+    }
+    
+    func updateHealth() {
         healthLabel.text = String(creature.health)
     }
     
