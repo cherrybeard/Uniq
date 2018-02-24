@@ -12,19 +12,33 @@ struct CardsData: Decodable {
     var cards: [CardData]
 }
 
-struct CardData: Decodable {
-    var type: String
-    var cost: Int
-    var creature: CreatureData
-}
-
 struct CreatureData: Decodable {
     var attack: Int
     var health: Int
 }
 
+struct SpellData: Decodable {
+    var type: String
+    var target: String
+    var amount: Int
+    var description: String
+}
+
+struct CardData: Decodable {
+    var cost: Int
+    var creature: CreatureData?
+    var spell: SpellData?
+}
+
 class Deck {
     var cards: [Card] = []
+    var drawPile: [Card] {
+        get {
+            return cards.filter({ (card) -> Bool in
+                card.state == CardState.deck
+            })
+        }
+    }
     
     init() {
         cards = loadJson(filename: "PlayerDeck")!
@@ -38,10 +52,17 @@ class Deck {
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
-                    if cardData.type == "creature" {
+                    if cardData.creature != nil {
                         let creatureData = cardData.creature
-                        let creature = Creature(attack: creatureData.attack, health: creatureData.health)
+                        let creature = Creature(attack: (creatureData?.attack)!, health: (creatureData?.health)!)
                         let card = CreatureCard(cost: cardData.cost, creature: creature)
+                        cards.append(card)
+                    } else if cardData.spell != nil {
+                        let spellData = cardData.spell!
+                        let type = SpellType(rawValue: spellData.type)!
+                        let target = SpellTargetType(rawValue: spellData.target)!
+                        let spell = Spell(type: type, target: target, amount: spellData.amount, description: spellData.description)
+                        let card = SpellCard(cost: cardData.cost, spell: spell)
                         cards.append(card)
                     }
                 }
@@ -54,7 +75,7 @@ class Deck {
     }
     
     func draw() -> Card {
-        let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: cards)
+        let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: drawPile)
         let card = shuffled[0] as! Card
         return card
     }

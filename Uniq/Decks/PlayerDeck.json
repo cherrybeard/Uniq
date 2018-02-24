@@ -1,74 +1,134 @@
 {
     "cards": [
         {
-            "type": "creature",
             "cost": 1,
             "creature": {
                 "attack": 1,
                 "health": 2
             }
         },{
-            "type": "creature",
             "cost": 1,
-            "creature": {
-                "attack": 2,
-                "health": 1
-            }
-        },{
-            "type": "creature",
-            "cost": 1,
-            "creature": {
-                "attack": 2,
-                "health": 1
-            }
-        },{
-            "type": "creature",
-            "cost": 2,
-            "creature": {
-                "attack": 2,
-                "health": 2
-            }
-        },{
-            "type": "creature",
-            "cost": 2,
-            "creature": {
-                "attack": 3,
-                "health": 1
-            }
-        },{
-            "type": "creature",
-            "cost": 2,
             "creature": {
                 "attack": 1,
-                "health": 3
+                "health": 1
             }
         },{
-            "type": "creature",
-            "cost": 3,
+            "cost": 1,
+            "creature": {
+                "attack": 2,
+                "health": 1
+            }
+        },{
+            "cost": 1,
+            "creature": {
+                "attack": 2,
+                "health": 1
+            }
+        },{
+            "cost": 1,
+            "creature": {
+                "attack": 1,
+                "health": 2
+            }
+        },{
+            "cost": 2,
             "creature": {
                 "attack": 2,
                 "health": 3
             }
         },{
-            "type": "creature",
-            "cost": 3,
+            "cost": 2,
             "creature": {
                 "attack": 3,
                 "health": 2
             }
         },{
-            "type": "creature",
-            "cost": 3,
+            "cost": 2,
+            "creature": {
+                "attack": 3,
+                "health": 2
+            }
+        },{
+            "cost": 2,
             "creature": {
                 "attack": 1,
                 "health": 4
             }
         },{
-            "type": "creature",
+            "cost": 2,
+            "creature": {
+                "attack": 1,
+                "health": 4
+            }
+        },{
+            "cost": 3,
+            "creature": {
+                "attack": 2,
+                "health": 4
+            }
+        },{
+            "cost": 3,
+            "creature": {
+                "attack": 3,
+                "health": 3
+            }
+        },{
+            "cost": 3,
+            "creature": {
+                "attack": 1,
+                "health": 5
+            }
+        },{
             "cost": 3,
             "creature": {
                 "attack": 4,
-                "health": 1
+                "health": 2
+            }
+        },{
+            "cost": 4,
+            "creature": {
+                "attack": 3,
+                "health": 4
+            }
+        },{
+            "cost": 4,
+            "creature": {
+                "attack": 2,
+                "health": 5
+            }
+        },{
+            "cost": 4,
+            "creature": {
+                "attack": 4,
+                "health": 3
+            }
+        },{
+            "cost": 5,
+            "creature": {
+                "attack": 5,
+                "health": 5
+            }
+        },{
+            "cost": 5,
+            "creature": {
+                "attack": 3,
+                "health": 7
+            }
+        },{
+            "cost": 4,
+            "spell": {
+                "type": "Damage",
+                "target": "Enemy creature",
+                "amount": 6,
+                "description": "Deal 6 damage"
+            }
+        },{
+            "cost": 3,
+            "spell": {
+                "type": "Damage",
+                "target": "All enemy creatures",
+                "amount": 1,
+                "description": "Deal 1 damage to all enemy creatures"
             }
         }
     ]

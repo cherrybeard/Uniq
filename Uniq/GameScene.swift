@@ -14,7 +14,12 @@ enum TurnState: Int {
 }
 
 enum PlayerActionType: Int {
-    case rest = 0, attack, cast, endTurn
+    case rest = 0, attack, summon, spell, endTurn
+}
+
+enum PlayerActionTargetType: String {
+    case all = "creatures-layer"
+    case creature = "computer-creature"
 }
 
 class GameScene: SKScene {
@@ -22,12 +27,13 @@ class GameScene: SKScene {
     let battleground = Battleground()
     let deck = Deck()
     let playerHand = PlayerHand()
-    let manaCounter = ManaCounter(mana: 5)
+    let manaCounter = ManaCounter(mana: 1)
     let animationPipeline = AnimationPipeline()
     
     var state: TurnState = .playerTurn
     var playerAction: PlayerActionType = .rest
-    var playerActionTarget: Any? = nil
+    var playerActionSubject: Any? = nil
+    var playerActionTarget: PlayerActionTargetType? = nil
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
@@ -59,11 +65,23 @@ class GameScene: SKScene {
         }
     }
     
-    func playCard(card: CreatureCardSprite) {
-        let cost = card.creatureCard.cost
+    func playCard(card: CardSprite, target: CreatureSprite?) {
+        let cost = card.card.cost
         if manaCounter.use(amount: cost) {
-            battleground.summon(creature: card.creatureCard.creature, owner: OwnerType.player)
-            card.discarded = true
+            if card is CreatureCardSprite {
+                let creature = (card as! CreatureCardSprite).creatureCard.creature
+                battleground.summon(creature: creature, owner: .player)
+            } else if card is SpellCardSprite {
+                let damage = (card as! SpellCardSprite).spellCard.spell.amount
+                var targets: [CreatureSprite]
+                if target != nil {
+                    targets = [target!]
+                } else {
+                    targets = battleground.creaturesOf(owner: .computer, alive: true)
+                }
+                spellDamage(amount: damage, targets: targets)
+            }
+            card.card.state = .discarded
             playerHand.clean()
             playerHand.markPlayable(mana: manaCounter.mana)
         }
@@ -95,6 +113,14 @@ class GameScene: SKScene {
         animationPipeline.add(animation: animation)
     }
     
+    func spellDamage(amount: Int, targets: [CreatureSprite]) {
+        for target in targets {
+            target.applyDamage(damage: amount)
+            let animation = SpellAnimation(target: target, damage: amount)
+            animationPipeline.add(animation: animation)
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if state == .playerTurn {
@@ -106,13 +132,25 @@ class GameScene: SKScene {
                         let creature = node as? CreatureSprite
                         if (creature?.canAttack)! {
                             playerAction = .attack
-                            playerActionTarget = creature
+                            playerActionSubject = creature
                             break
                         }
                     }
                     if node.name == "player-creature-card" {
-                        playerAction = .cast
-                        playerActionTarget = node as? CreatureCardSprite
+                        playerAction = .summon
+                        playerActionSubject = node as? CreatureCardSprite
+                        break
+                    }
+                    if node.name == "player-spell-card" {
+                        playerAction = .spell
+                        let card = node as? SpellCardSprite
+                        playerActionSubject = card
+                        let target = card?.spellCard.spell.target
+                        if (target == .all) || (target == .allEnemyCreatures) {
+                            playerActionTarget = .all
+                        } else {
+                            playerActionTarget = .creature
+                        }
                         break
                     }
                     if node.name == "end-turn" {
@@ -133,16 +171,25 @@ class GameScene: SKScene {
                 for node in touchedNodes {
                     if (playerAction == .attack) && (node.name == "computer-creature") {
                         let defendingCreature = node as? CreatureSprite
-                        attack(attacking: playerActionTarget as! CreatureSprite, defending: defendingCreature!)
+                        attack(attacking: playerActionSubject as! CreatureSprite, defending: defendingCreature!)
                     }
-                    if (playerAction == .cast) && (node.name == "creatures-layer") {
-                        playCard(card: playerActionTarget as! CreatureCardSprite)
+                    if (playerAction == .summon) && (node.name == "creatures-layer") {
+                        playCard(card: playerActionSubject as! CreatureCardSprite, target: nil)
+                    }
+                    if (playerAction == .spell) && (playerActionTarget?.rawValue == node.name) {
+                        if (playerActionTarget == .all) {
+                            playCard(card: playerActionSubject as! SpellCardSprite, target: nil)
+                        } else {
+                            let targetCreature = node as? CreatureSprite
+                            playCard(card: playerActionSubject as! SpellCardSprite, target: targetCreature!)
+                        }
                     }
                     if (playerAction == .endTurn) && (node.name == "end-turn") {
                         state = .playerEnd
                     }
                 }
                 playerAction = .rest
+                playerActionSubject = nil
                 playerActionTarget = nil
             }
         }

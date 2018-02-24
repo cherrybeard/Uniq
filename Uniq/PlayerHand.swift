@@ -20,9 +20,12 @@ class PlayerHand: SKNode {
     }
     
     func draw(card: Card) {
+        card.state = .hand
         var cardSprite:CardSprite? = nil
         if card is CreatureCard {
             cardSprite = CreatureCardSprite(card: card as! CreatureCard)
+        } else if card is SpellCard {
+            cardSprite = SpellCardSprite(card: card as! SpellCard)
         }
         
         cardSprite?.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
@@ -35,7 +38,7 @@ class PlayerHand: SKNode {
     
     func clean() {
         for (i, card) in cards.enumerated().reversed() {
-            if card.discarded {
+            if card.card.state == .discarded {
                 card.destroy()
                 cards.remove(at: i)
             }

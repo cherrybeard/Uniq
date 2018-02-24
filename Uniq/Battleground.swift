@@ -37,36 +37,6 @@ class Battleground: SKNode {
         repositionCreatures(owner: owner)
     }
     
-    func attackAnimation(attacking: CreatureSprite, defending: CreatureSprite) {
-        if !attacking.canAttack { return }
-        
-        let initPos = attacking.position
-        let defPos = defending.position
-        let targetX = Int( (defPos.x - initPos.x) / 2 + initPos.x )
-        let targetY = Int( (defPos.y - initPos.y) / 2 + initPos.y )
-        let targetPos = CGPoint(x: targetX, y: targetY)
-        
-        let duration:TimeInterval = 0.2
-        
-        let moveTo = SKAction.move(to: targetPos, duration: duration)
-        moveTo.timingMode = .easeOut
-        
-        let moveBack = SKAction.move(to: initPos, duration: duration)
-        moveBack.timingMode = .easeOut
-        
-        attacking.canAttack = false
-        attacking.run(moveTo, completion: {
-            defending.applyDamage(damage: attacking.creature.attack)
-            attacking.applyDamage(damage: defending.creature.attack)
-            
-            attacking.run(moveBack, completion: {
-                self.removeDeadCreatures()
-                self.repositionCreatures(owner: OwnerType.player)
-                self.repositionCreatures(owner: OwnerType.computer)
-            })
-        })
-    }
-    
     func repositionCreatures(owner: OwnerType) {
         let yPos = (owner == OwnerType.player) ? -55 : 65
         let ownerCreatures = creaturesOf(owner: owner)

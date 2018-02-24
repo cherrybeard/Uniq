@@ -13,8 +13,6 @@ class CardSprite: SKNode {
     var costLabel: SKLabelNode
     let border: SKShapeNode
     
-    var discarded: Bool = false
-    
     private var _canPlay:Bool = false
     var canPlay: Bool {
         get { return _canPlay }
