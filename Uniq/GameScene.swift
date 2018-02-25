@@ -27,7 +27,7 @@ class GameScene: SKScene {
     let battleground = Battleground()
     let deck = Deck()
     let playerHand = PlayerHand()
-    let manaCounter = ManaCounter(mana: 1)
+    let manaCounter = ManaCounter(mana: 10)
     let animationPipeline = AnimationPipeline()
     
     var state: TurnState = .playerTurn
@@ -55,7 +55,7 @@ class GameScene: SKScene {
         playerHand.position = CGPoint(x: 0, y: screenBottom + 45 + 20)
         gameLayer.addChild(playerHand)
         
-        for _ in 1...5 {
+        for _ in 1...2 {
             playerHand.draw(card: deck.draw())
         }
         playerHand.markPlayable(mana: manaCounter.mana)

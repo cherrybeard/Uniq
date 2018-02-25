@@ -20,7 +20,26 @@ class SpellAnimation: Animation {
     
     override func play() {
         state = .inProgress
-        target.health -= damage
-        state = .finished
+        target.damageLabel.setScale(0)
+        target.damageLabel.text = "-" + String(damage)
+        let appear = SKAction.fadeIn(withDuration: 0.1)
+        let scale = SKAction.scale(to: 1.4, duration: 0.1)
+        let appearAction = SKAction.group([appear, scale])
+        appearAction.timingMode = .easeIn
+        let stabilize = SKAction.scale(to: 1, duration: 0.1)
+        let appearing = SKAction.sequence([appearAction, stabilize])
+        
+        let delay = SKAction.wait(forDuration: 0.5)
+        let hide = SKAction.fadeOut(withDuration: 0.1)
+        let shrink = SKAction.scale(to: 0, duration: 0.1)
+        let hideWithDelay = SKAction.sequence([delay, hide])
+        hide.timingMode = .easeIn
+        
+        target.damageLabel.run(appearing, completion: {
+            self.target.health -= self.damage
+            self.state = .finished
+            self.target.damageLabel.run(hideWithDelay, completion: {
+            })
+        })
     }
 }

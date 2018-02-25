@@ -41,7 +41,7 @@ class Deck {
     }
     
     init() {
-        cards = loadJson(filename: "PlayerDeck")!
+        cards = loadJson(filename: "PlayerSpellsDeck")!
     }
     
     func loadJson(filename: String) -> [Card]? {

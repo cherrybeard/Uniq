@@ -18,6 +18,7 @@ class CreatureSprite: SKNode {
     private let healthLabel: SKLabelNode
     private let attackLabel: SKLabelNode
     private let border: SKShapeNode
+    let damageLabel: SKLabelNode
     
     private var _canAttack: Bool = false
     var canAttack: Bool {
@@ -45,6 +46,7 @@ class CreatureSprite: SKNode {
         attackLabel = SKLabelNode(text: String(creature.attack))
         healthLabel = SKLabelNode(text: String(creature.health))
         border = SKShapeNode(rectOf: CGSize(width: width, height: height))
+        damageLabel = SKLabelNode(text: "-1")
         
         super.init()
         
@@ -74,6 +76,13 @@ class CreatureSprite: SKNode {
         healthLabel.fontSize = 17
         healthLabel.position = CGPoint(x: width/2 - 1 - 6, y: -height/2 - 7 + 6)
         addChild(healthLabel)
+        
+        damageLabel.fontColor = SKColor.white
+        damageLabel.fontName = "AvenirNext-Bold"
+        damageLabel.fontSize = 32
+        damageLabel.position = CGPoint(x: 0, y: -10)
+        damageLabel.alpha = 0
+        addChild(damageLabel)
         
         name = (self.owner == OwnerType.player) ? "player-creature" : "computer-creature"
     }

@@ -15,6 +15,7 @@
 		5B33A6472040DC4B00CF2D76 /* SpellCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33A6462040DC4B00CF2D76 /* SpellCard.swift */; };
 		5B33A64A2040DD2F00CF2D76 /* Spell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33A6492040DD2F00CF2D76 /* Spell.swift */; };
 		5B33A64C204116CF00CF2D76 /* SpellCardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */; };
+		5B45B1BA2042398B000D640A /* PlayerSpellsDeck.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B45B1B92042398B000D640A /* PlayerSpellsDeck.json */; };
 		5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */; };
 		5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D19203EB7B20026B445 /* Animation.swift */; };
 		5B7E2D1D203EB7D30026B445 /* AttackAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */; };
@@ -42,6 +43,7 @@
 		5B33A6462040DC4B00CF2D76 /* SpellCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCard.swift; sourceTree = "<group>"; };
 		5B33A6492040DD2F00CF2D76 /* Spell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spell.swift; sourceTree = "<group>"; };
 		5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCardSprite.swift; sourceTree = "<group>"; };
+		5B45B1B92042398B000D640A /* PlayerSpellsDeck.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PlayerSpellsDeck.json; sourceTree = "<group>"; };
 		5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPipeline.swift; sourceTree = "<group>"; };
 		5B7E2D19203EB7B20026B445 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackAnimation.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				5B1AC39E203C619100F3B921 /* PlayerDeck.json */,
+				5B45B1B92042398B000D640A /* PlayerSpellsDeck.json */,
 			);
 			path = Decks;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				5BCA6F172038911000B81376 /* Main.storyboard in Resources */,
 				5BCA6F192038911000B81376 /* Assets.xcassets in Resources */,
 				5BCA6F1C2038911000B81376 /* LaunchScreen.storyboard in Resources */,
+				5B45B1BA2042398B000D640A /* PlayerSpellsDeck.json in Resources */,
 				5B1AC39F203C619100F3B921 /* PlayerDeck.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
