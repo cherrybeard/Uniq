@@ -56,11 +56,12 @@ class Battleground: SKNode {
     
     func removeDeadCreatures() {
         for (i, creature) in creatures.enumerated().reversed() {
-            if creature.creature.health <= 0 {
-                creature.destroy()
+            if creature.dead {
                 creatures.remove(at: i)
+                creature.removeFromParent()
             }
         }
+        
         repositionCreatures(owner: .computer)
         repositionCreatures(owner: .player)
     }

@@ -30,20 +30,20 @@ class AttackAnimation: Animation {
         let moveTo = SKAction.move(to: targetPos, duration: duration)
         moveTo.timingMode = .easeOut
         
-        let moveBack = SKAction.group([
+        let moveBack = SKAction.sequence([
             SKAction.move(to: initPos, duration: duration),
-            SKAction.wait(forDuration: duration)
+            SKAction.wait(forDuration: 0.1)
         ])
         moveBack.timingMode = .easeOut
         
         attacking.run(moveTo, completion: {
-            self.defending.health -= self.attacking.creature.attack
-            self.attacking.health -= self.defending.creature.attack
+            self.defending.showDamage(damage: self.attacking.creature.attack)
+            self.attacking.showDamage(damage: self.defending.creature.attack)
             
             self.attacking.run(moveBack, completion: {
-                let fadeOut = SKAction.fadeOut(withDuration: self.duration)
-                if self.attacking.health <= 0 { self.attacking.run(fadeOut) }
-                if self.defending.health <= 0 { self.defending.run(fadeOut) }
+//                let fadeOut = SKAction.fadeOut(withDuration: self.duration)
+//                if self.attacking.health <= 0 { self.attacking.run(fadeOut) }
+//                if self.defending.health <= 0 { self.defending.run(fadeOut) }
                 
                 self.state = AnimationState.finished
             })

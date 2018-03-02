@@ -31,7 +31,6 @@ class SpellAnimation: Animation {
         
         let delay = SKAction.wait(forDuration: 0.5)
         let hide = SKAction.fadeOut(withDuration: 0.1)
-        let shrink = SKAction.scale(to: 0, duration: 0.1)
         let hideWithDelay = SKAction.sequence([delay, hide])
         hide.timingMode = .easeIn
         

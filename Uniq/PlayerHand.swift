@@ -19,21 +19,23 @@ class PlayerHand: SKNode {
         super.init()
     }
     
-    func draw(card: Card) {
-        card.state = .hand
-        var cardSprite:CardSprite? = nil
-        if card is CreatureCard {
-            cardSprite = CreatureCardSprite(card: card as! CreatureCard)
-        } else if card is SpellCard {
-            cardSprite = SpellCardSprite(card: card as! SpellCard)
+    func draw(card: Card?) {
+        if card != nil {
+            card?.state = .hand
+            var cardSprite:CardSprite? = nil
+            if card is CreatureCard {
+                cardSprite = CreatureCardSprite(card: card as! CreatureCard)
+            } else if card is SpellCard {
+                cardSprite = SpellCardSprite(card: card as! SpellCard)
+            }
+            
+            cardSprite?.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
+            
+            addChild(cardSprite!)
+            cards.append(cardSprite!)
+            
+            repositionCards()
         }
-        
-        cardSprite?.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
-        
-        addChild(cardSprite!)
-        cards.append(cardSprite!)
-        
-        repositionCards()
     }
     
     func clean() {

@@ -27,7 +27,7 @@ class GameScene: SKScene {
     let battleground = Battleground()
     let deck = Deck()
     let playerHand = PlayerHand()
-    let manaCounter = ManaCounter(mana: 10)
+    let manaCounter = ManaCounter(mana: 5)
     let animationPipeline = AnimationPipeline()
     
     var state: TurnState = .playerTurn
@@ -55,13 +55,13 @@ class GameScene: SKScene {
         playerHand.position = CGPoint(x: 0, y: screenBottom + 45 + 20)
         gameLayer.addChild(playerHand)
         
-        for _ in 1...2 {
+        for _ in 1...5 {
             playerHand.draw(card: deck.draw())
         }
         playerHand.markPlayable(mana: manaCounter.mana)
         
-        for _ in 1...2 {
-            battleground.summon(creature: Creature(attack: 1, health: 24), owner: OwnerType.computer)
+        for _ in 1...3 {
+            battleground.summon(creature: Creature(attack: 1, health: 12), owner: OwnerType.computer)
         }
     }
     
@@ -116,8 +116,7 @@ class GameScene: SKScene {
     func spellDamage(amount: Int, targets: [CreatureSprite]) {
         for target in targets {
             target.applyDamage(damage: amount)
-            let animation = SpellAnimation(target: target, damage: amount)
-            animationPipeline.add(animation: animation)
+            target.showDamage(damage: amount)
         }
     }
     

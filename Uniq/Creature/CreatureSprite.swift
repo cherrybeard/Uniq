@@ -19,6 +19,12 @@ class CreatureSprite: SKNode {
     private let attackLabel: SKLabelNode
     private let border: SKShapeNode
     let damageLabel: SKLabelNode
+    private let damageAction: SKAction
+    private let destroyAction: SKAction = SKAction.sequence([
+        SKAction.wait(forDuration: 0.3),
+        SKAction.fadeOut(withDuration: 0.2),
+        SKAction.wait(forDuration: 0.1)
+    ])
     
     private var _canAttack: Bool = false
     var canAttack: Bool {
@@ -28,6 +34,8 @@ class CreatureSprite: SKNode {
             redrawBorder()
         }
     }
+    
+    var dead: Bool = false
     
     var health: Int {
         get { return Int(healthLabel.text!)! }
@@ -48,6 +56,22 @@ class CreatureSprite: SKNode {
         border = SKShapeNode(rectOf: CGSize(width: width, height: height))
         damageLabel = SKLabelNode(text: "-1")
         
+        let damageAppear = SKAction.group([
+            SKAction.fadeIn(withDuration: 0.1),
+            SKAction.scale(to: 1.4, duration: 0.1)
+            ])
+        damageAppear.timingMode = .easeIn
+        
+        let damageHide = SKAction.fadeOut(withDuration: 0.1)
+        damageHide.timingMode = .easeIn
+        
+        damageAction = SKAction.sequence([
+            damageAppear,
+            SKAction.scale(to: 1, duration: 0.1),
+            SKAction.wait(forDuration: 0.5),
+            damageHide
+        ])
+        
         super.init()
         
         redrawBorder()
@@ -59,9 +83,7 @@ class CreatureSprite: SKNode {
         attackBorder.fillColor = UIColor(hue: 353.0/360.0, saturation: 90.0/100.0, brightness: 69.0/100.0, alpha: 1)
         addChild(attackBorder)
         
-        attackLabel.fontColor = SKColor.white
-        attackLabel.fontName = "AvenirNext-Bold"
-        attackLabel.fontSize = 17
+        setLabelStyle(label: attackLabel)
         attackLabel.position = CGPoint(x: -width/2 + 6, y: -height/2 - 7 + 6)
         addChild(attackLabel)
         
@@ -71,9 +93,7 @@ class CreatureSprite: SKNode {
         healthBorder.fillColor = UIColor(hue: 35.0/360.0, saturation: 76.0/100.0, brightness: 72.0/100.0, alpha: 1)
         addChild(healthBorder)
         
-        healthLabel.fontColor = SKColor.white
-        healthLabel.fontName = "AvenirNext-Bold"
-        healthLabel.fontSize = 17
+        setLabelStyle(label: healthLabel)
         healthLabel.position = CGPoint(x: width/2 - 1 - 6, y: -height/2 - 7 + 6)
         addChild(healthLabel)
         
@@ -91,6 +111,12 @@ class CreatureSprite: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setLabelStyle(label: SKLabelNode) {
+        label.fontColor = SKColor.white
+        label.fontName = "AvenirNext-Bold"
+        label.fontSize = 17
+    }
+    
     func redrawBorder() {
         border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
         if canAttack && (owner == OwnerType.player) {
@@ -105,11 +131,16 @@ class CreatureSprite: SKNode {
         creature.health -= damage
     }
     
-    func updateHealth() {
-        healthLabel.text = String(creature.health)
-    }
-    
-    func destroy() {
-        self.removeFromParent()
+    func showDamage(damage: Int) {
+        damageLabel.setScale(0.5)
+        damageLabel.text = "-" + String(damage)
+        health -= damage
+        damageLabel.run(damageAction)
+        
+        if health <= 0 {
+            self.run(destroyAction, completion: {
+                self.dead = true
+            })
+        }
     }
 }

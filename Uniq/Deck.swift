@@ -41,7 +41,7 @@ class Deck {
     }
     
     init() {
-        cards = loadJson(filename: "PlayerSpellsDeck")!
+        cards = loadJson(filename: "PlayerDeck")!
     }
     
     func loadJson(filename: String) -> [Card]? {
@@ -74,9 +74,13 @@ class Deck {
         return nil
     }
     
-    func draw() -> Card {
-        let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: drawPile)
-        let card = shuffled[0] as! Card
-        return card
+    func draw() -> Card? {
+        if drawPile.count > 0 {
+            let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: drawPile)
+            let card = shuffled[0] as! Card
+            return card
+        } else {
+            return nil
+        }
     }
 }
