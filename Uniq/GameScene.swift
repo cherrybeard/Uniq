@@ -69,10 +69,12 @@ class GameScene: SKScene {
         let cost = card.card.cost
         if manaCounter.use(amount: cost) {
             if card is CreatureCardSprite {
-                let creature = (card as! CreatureCardSprite).creatureCard.creature
+                let creatureCard = (card as! CreatureCardSprite).card as! CreatureCard
+                let creature = creatureCard.creature
                 battleground.summon(creature: creature, owner: .player)
             } else if card is SpellCardSprite {
-                let damage = (card as! SpellCardSprite).spellCard.spell.amount
+                let spellCard = (card as! SpellCardSprite).card as! SpellCard
+                let damage = spellCard.spell.amount
                 var targets: [CreatureSprite]
                 if target != nil {
                     targets = [target!]
@@ -144,7 +146,8 @@ class GameScene: SKScene {
                         playerAction = .spell
                         let card = node as? SpellCardSprite
                         playerActionSubject = card
-                        let target = card?.spellCard.spell.target
+                        let spellCard = card?.card as! SpellCard
+                        let target = spellCard.spell.target
                         if (target == .all) || (target == .allEnemyCreatures) {
                             playerActionTarget = .all
                         } else {

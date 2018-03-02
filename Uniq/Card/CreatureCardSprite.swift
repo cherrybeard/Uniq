@@ -9,14 +9,12 @@
 import SpriteKit
 
 class CreatureCardSprite: CardSprite {
-    var creatureCard: CreatureCard
     var healthLabel: SKLabelNode
     var attackLabel: SKLabelNode
     
     init(card: CreatureCard) {
-        creatureCard = card
-        healthLabel = SKLabelNode(text: String(creatureCard.creature.health))
-        attackLabel = SKLabelNode(text: String(creatureCard.creature.attack))
+        healthLabel = SKLabelNode(text: String(card.creature.health))
+        attackLabel = SKLabelNode(text: String(card.creature.attack))
         super.init(card: card)
         
         let attackBorder = SKShapeNode(circleOfRadius: 12)

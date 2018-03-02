@@ -9,7 +9,6 @@
 import SpriteKit
 
 class SpellCardSprite: CardSprite {
-    var spellCard: SpellCard
     var descriptionLabel = SKLabelNode(text: "Boom!")
     
     required init?(coder aDecoder: NSCoder) {
@@ -17,10 +16,9 @@ class SpellCardSprite: CardSprite {
     }
     
     init(card: SpellCard) {
-        spellCard = card
         super.init(card: card)
         
-        descriptionLabel.text = spellCard.spell.description
+        descriptionLabel.text = card.spell.description
         descriptionLabel.fontColor = SKColor.white
         descriptionLabel.fontName = "AvenirNext-Bold"
         descriptionLabel.fontSize = 8

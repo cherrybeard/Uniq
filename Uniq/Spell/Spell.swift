@@ -24,8 +24,6 @@ class Spell {
     var amount: Int
     var description: String
     
-    //var effects: [Effect]
-    
     init(type: SpellType, target: SpellTargetType, amount: Int, description: String) {
         self.type = type
         self.target = target

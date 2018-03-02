@@ -41,10 +41,6 @@ class AttackAnimation: Animation {
             self.attacking.showDamage(damage: self.defending.creature.attack)
             
             self.attacking.run(moveBack, completion: {
-//                let fadeOut = SKAction.fadeOut(withDuration: self.duration)
-//                if self.attacking.health <= 0 { self.attacking.run(fadeOut) }
-//                if self.defending.health <= 0 { self.defending.run(fadeOut) }
-                
                 self.state = AnimationState.finished
             })
         })
