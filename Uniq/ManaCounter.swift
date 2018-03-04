@@ -28,7 +28,7 @@ class ManaCounter: SKNode {
         addChild(border)
         
         manaLabel.color = UIColor.white
-        manaLabel.fontName = "AvenirNext-Bold"
+        manaLabel.fontName = "Baskerville-Bold"
         manaLabel.fontSize = 24
         manaLabel.position = CGPoint(x: 0, y: -10)
         update()

@@ -78,7 +78,7 @@ class CreatureSprite: SKNode {
     }
     
     func redrawBorder() {
-        border.strokeColor = (canAttack && (owner == OwnerType.player)) ? UIColor.white : UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
+        border.strokeColor = (canAttack && (owner == OwnerType.player)) ? UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1) : UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
     }
     
     func applyDamage(damage: Int) {

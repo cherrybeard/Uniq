@@ -24,7 +24,7 @@ class CardSprite: SKNode {
     let border: SKShapeNode
     let width = 50
     let height = 90
-    private let canPlayBorderColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
+    private let canPlayBorderColor = UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1)
     private let defaultBorderColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
     
     init(card: Card) {

@@ -37,7 +37,7 @@ class StatLabel: SKNode {
     private let label: SKLabelNode
     private let borderColors: [StatType: UIColor] = [
         .cost:   UIColor(hue: 207.0/360.0, saturation: 67.0/100.0, brightness: 65.0/100.0, alpha: 1),
-        .attack: UIColor(hue: 28.0/360.0,  saturation: 36.0/100.0, brightness: 47.0/100.0, alpha: 1),
+        .attack: UIColor(hue: 33.0/360.0,  saturation: 50.0/100.0, brightness: 63.0/100.0, alpha: 1),
         .health: UIColor(hue: 0/360.0,     saturation: 63.0/100.0, brightness: 64.0/100.0, alpha: 1)
     ]
     
@@ -63,8 +63,8 @@ class StatLabel: SKNode {
         
         label.text = text
         label.fontColor = textColors[_state]
-        label.fontName = "AvenirNext-DemiBold"
-        label.fontSize = 15
+        label.fontName = "Baskerville-Bold"
+        label.fontSize = 17
         label.position = CGPoint(x: 0, y: -6)
         addChild(label)
     }
