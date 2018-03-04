@@ -13,8 +13,8 @@ class CreatureCardSprite: CardSprite {
     var attackLabel: SKLabelNode
     
     init(card: CreatureCard) {
-        healthLabel = SKLabelNode(text: String(card.creature.health))
-        attackLabel = SKLabelNode(text: String(card.creature.attack))
+        healthLabel = SKLabelNode(text: String(card.health))
+        attackLabel = SKLabelNode(text: String(card.attack))
         super.init(card: card)
         
         let attackBorder = SKShapeNode(circleOfRadius: 12)

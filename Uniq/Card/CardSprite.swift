@@ -10,8 +10,6 @@ import SpriteKit
 
 class CardSprite: SKNode {
     var card: Card
-    var costLabel: SKLabelNode
-    let border: SKShapeNode
     
     private var _canPlay:Bool = false
     var canPlay: Bool {
@@ -22,8 +20,12 @@ class CardSprite: SKNode {
         }
     }
     
-    let width: Int = 50
-    let height: Int = 90
+    var costLabel: SKLabelNode
+    let border: SKShapeNode
+    let width = 50
+    let height = 90
+    private let canPlayBorderColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
+    private let defaultBorderColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
     
     init(card: Card) {
         self.card = card
@@ -53,15 +55,7 @@ class CardSprite: SKNode {
     
     func redrawBorder() {
         border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
-        if canPlay {
-            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
-        } else {
-            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
-        }
+        border.strokeColor = canPlay ? canPlayBorderColor : defaultBorderColor
         border.lineWidth = 1
-    }
-    
-    func destroy() {
-        self.removeFromParent()
     }
 }

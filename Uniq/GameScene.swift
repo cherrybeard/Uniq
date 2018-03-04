@@ -27,7 +27,7 @@ class GameScene: SKScene {
     let battleground = Battleground()
     let deck = Deck()
     let playerHand = PlayerHand()
-    let manaCounter = ManaCounter(mana: 5)
+    let manaCounter = ManaCounter(mana: 1)
     let animationPipeline = AnimationPipeline()
     
     var state: TurnState = .playerTurn
@@ -60,30 +60,31 @@ class GameScene: SKScene {
         }
         playerHand.markPlayable(mana: manaCounter.mana)
         
-        for _ in 1...3 {
-            battleground.summon(creature: Creature(attack: 1, health: 12), owner: OwnerType.computer)
-        }
+        battleground.summon(creatureName: "Soldier", owner: .computer)
+        battleground.summon(creatureName: "Bandit", owner: .computer)
+        battleground.summon(creatureName: "Soldier", owner: .computer)
     }
     
-    func playCard(card: CardSprite, target: CreatureSprite?) {
-        let cost = card.card.cost
+    func playCard(cardSprite: CardSprite, target: CreatureSprite?) {
+        let cost = cardSprite.card.cost
         if manaCounter.use(amount: cost) {
-            if card is CreatureCardSprite {
-                let creatureCard = (card as! CreatureCardSprite).card as! CreatureCard
-                let creature = creatureCard.creature
-                battleground.summon(creature: creature, owner: .player)
-            } else if card is SpellCardSprite {
-                let spellCard = (card as! SpellCardSprite).card as! SpellCard
-                let damage = spellCard.spell.amount
-                var targets: [CreatureSprite]
-                if target != nil {
-                    targets = [target!]
-                } else {
-                    targets = battleground.creaturesOf(owner: .computer, alive: true)
+            if let creatureCardSprite = cardSprite as? CreatureCardSprite {
+                battleground.summon(
+                    creature: creatureCardSprite.card as! CreatureCard,
+                    owner: .player
+                )
+            } else if let spellCardSprite = cardSprite as? SpellCardSprite {
+                if let spellCard = spellCardSprite.card as? SpellCard {
+                    var targets: [CreatureSprite]
+                    if target != nil {
+                        targets = [target!]
+                    } else {
+                        targets = battleground.creaturesOf(owner: .computer, alive: true)
+                    }
+                    spellCard.effect(targets)
                 }
-                spellDamage(amount: damage, targets: targets)
             }
-            card.card.state = .discarded
+            cardSprite.card.state = .discarded
             playerHand.clean()
             playerHand.markPlayable(mana: manaCounter.mana)
         }
@@ -146,8 +147,7 @@ class GameScene: SKScene {
                         playerAction = .spell
                         let card = node as? SpellCardSprite
                         playerActionSubject = card
-                        let spellCard = card?.card as! SpellCard
-                        let target = spellCard.spell.target
+                        let target = (card?.card as! SpellCard).target
                         if (target == .all) || (target == .allEnemyCreatures) {
                             playerActionTarget = .all
                         } else {
@@ -176,14 +176,16 @@ class GameScene: SKScene {
                         attack(attacking: playerActionSubject as! CreatureSprite, defending: defendingCreature!)
                     }
                     if (playerAction == .summon) && (node.name == "creatures-layer") {
-                        playCard(card: playerActionSubject as! CreatureCardSprite, target: nil)
+                        playCard(cardSprite: playerActionSubject as! CreatureCardSprite, target: nil)
                     }
-                    if (playerAction == .spell) && (playerActionTarget?.rawValue == node.name) {
-                        if (playerActionTarget == .all) {
-                            playCard(card: playerActionSubject as! SpellCardSprite, target: nil)
-                        } else {
+                    if playerAction == .spell {
+                        if (playerActionTarget == .all) && (node.name == "creatures-layer") {
+                            playCard(cardSprite: playerActionSubject as! SpellCardSprite, target: nil)
+                        } else if (playerActionTarget == .creature) && (
+                            (node.name == "computer-creature") || (node.name == "player-creature")
+                        ) {
                             let targetCreature = node as? CreatureSprite
-                            playCard(card: playerActionSubject as! SpellCardSprite, target: targetCreature!)
+                            playCard(cardSprite: playerActionSubject as! SpellCardSprite, target: targetCreature!)
                         }
                     }
                     if (playerAction == .endTurn) && (node.name == "end-turn") {

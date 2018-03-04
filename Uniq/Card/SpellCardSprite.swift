@@ -18,7 +18,7 @@ class SpellCardSprite: CardSprite {
     init(card: SpellCard) {
         super.init(card: card)
         
-        descriptionLabel.text = card.spell.description
+        descriptionLabel.text = card.description
         descriptionLabel.fontColor = SKColor.white
         descriptionLabel.fontName = "AvenirNext-Bold"
         descriptionLabel.fontSize = 8

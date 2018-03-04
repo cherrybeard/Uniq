@@ -12,36 +12,21 @@ struct CardsData: Decodable {
     var cards: [CardData]
 }
 
-struct CreatureData: Decodable {
-    var attack: Int
-    var health: Int
-}
-
-struct SpellData: Decodable {
-    var type: String
-    var target: String
-    var amount: Int
-    var description: String
-}
-
 struct CardData: Decodable {
-    var cost: Int
-    var creature: CreatureData?
-    var spell: SpellData?
+    var card: String
+    var amount: Int
 }
 
 class Deck {
     var cards: [Card] = []
     var drawPile: [Card] {
         get {
-            return cards.filter({ (card) -> Bool in
-                card.state == CardState.deck
-            })
+            return cards.filter({ (card) -> Bool in (card.state == .deck) })
         }
     }
     
     init() {
-        cards = loadJson(filename: "PlayerDeck")!
+        cards = loadJson(filename: "NotOnlyDamageSpells")!
     }
     
     func loadJson(filename: String) -> [Card]? {
@@ -52,18 +37,11 @@ class Deck {
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
-                    if cardData.creature != nil {
-                        let creatureData = cardData.creature
-                        let creature = Creature(attack: (creatureData?.attack)!, health: (creatureData?.health)!)
-                        let card = CreatureCard(cost: cardData.cost, creature: creature)
-                        cards.append(card)
-                    } else if cardData.spell != nil {
-                        let spellData = cardData.spell!
-                        let type = SpellType(rawValue: spellData.type)!
-                        let target = SpellTargetType(rawValue: spellData.target)!
-                        let spell = Spell(type: type, target: target, amount: spellData.amount, description: spellData.description)
-                        let card = SpellCard(cost: cardData.cost, spell: spell)
-                        cards.append(card)
+                    if let card = CardBook[cardData.card] {
+                        cards.append(card.copy())
+                        if cardData.amount == 2 {
+                            cards.append(card.copy())
+                        }
                     }
                 }
                 return cards

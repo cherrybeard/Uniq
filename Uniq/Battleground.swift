@@ -26,8 +26,8 @@ class Battleground: SKNode {
         name = "creatures-layer"
     }
     
-    func summon(creature: Creature, owner: OwnerType) {
-        let creatureSprite = CreatureSprite(creature: Creature(creature: creature), owner: owner)
+    func summon(creature: CreatureCard, owner: OwnerType) {
+        let creatureSprite = CreatureSprite(creature: creature.copy(), owner: owner)
         let yPosSummoning = (owner == OwnerType.player) ? -55-90 : 65+90
         
         creatureSprite.position = CGPoint( x: 0, y: yPosSummoning )
@@ -35,6 +35,12 @@ class Battleground: SKNode {
         creatures.append(creatureSprite)
         
         repositionCreatures(owner: owner)
+    }
+    
+    func summon(creatureName: String, owner: OwnerType) {
+        if let creature = CardBook[creatureName] {
+            summon(creature: creature as! CreatureCard, owner: owner)
+        }
     }
     
     func repositionCreatures(owner: OwnerType) {

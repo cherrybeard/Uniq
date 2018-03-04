@@ -13,12 +13,16 @@ enum OwnerType: Int {
 }
 
 class CreatureSprite: SKNode {
-    var creature: Creature
+    var creature: CreatureCard
     var owner: OwnerType
+    
     private let healthLabel: SKLabelNode
     private let attackLabel: SKLabelNode
     private let border: SKShapeNode
     let damageLabel: SKLabelNode
+    private let actionAvailableBorder = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
+    private let defaultBorder = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
+    
     private let damageAction: SKAction
     private let destroyAction: SKAction = SKAction.sequence([
         SKAction.wait(forDuration: 0.3),
@@ -47,7 +51,7 @@ class CreatureSprite: SKNode {
     let width: Int = 50
     let height: Int = 90
     
-    init(creature: Creature, owner: OwnerType) {
+    init(creature: CreatureCard, owner: OwnerType) {
         self.creature = creature
         self.owner = owner
         
@@ -119,11 +123,7 @@ class CreatureSprite: SKNode {
     
     func redrawBorder() {
         border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
-        if canAttack && (owner == OwnerType.player) {
-            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1)
-        } else {
-            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
-        }
+        border.strokeColor = (canAttack && (owner == OwnerType.player)) ? actionAvailableBorder : defaultBorder
         border.lineWidth = 1
     }
     
@@ -142,5 +142,9 @@ class CreatureSprite: SKNode {
                 self.dead = true
             })
         }
+    }
+    
+    func increaseHealth(amount: Int) {
+        creature.health += amount
     }
 }

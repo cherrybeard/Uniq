@@ -7,16 +7,22 @@
 //
 
 class CreatureCard: Card {
-    var creature: Creature
+    var attack: Int
+    var health: Int
     
-    init(cost: Int, creature: Creature) {
-        self.creature = creature
+    init(cost: Int, attack: Int, health: Int) {
+        self.attack = attack
+        self.health = health
         super.init(cost: cost)
     }
     
-//    init(card: CreatureCard) {
-//        self.creature = card.creature
-//        super.init(cost: card.cost)
-//    }
+    init(_ card: CreatureCard) {
+        attack = card.attack
+        health = card.health
+        super.init(cost: card.cost)
+    }
     
+    override func copy() -> CreatureCard {
+        return CreatureCard(self)
+    }
 }

@@ -41,7 +41,7 @@ class PlayerHand: SKNode {
     func clean() {
         for (i, card) in cards.enumerated().reversed() {
             if card.card.state == .discarded {
-                card.destroy()
+                card.removeFromParent()
                 cards.remove(at: i)
             }
         }
