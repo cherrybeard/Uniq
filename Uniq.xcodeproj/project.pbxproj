@@ -18,6 +18,8 @@
 		5B669F3D2049B4BF00DC2760 /* NotOnlyDamageSpells.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */; };
 		5B669F41204A894900DC2760 /* CardBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F40204A894900DC2760 /* CardBook.swift */; };
 		5B669F43204AB02F00DC2760 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F42204AB02F00DC2760 /* Card.swift */; };
+		5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4D204BF6560047A9DC /* StatLabel.swift */; };
+		5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */; };
 		5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */; };
 		5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D19203EB7B20026B445 /* Animation.swift */; };
 		5B7E2D1D203EB7D30026B445 /* AttackAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */; };
@@ -45,6 +47,8 @@
 		5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotOnlyDamageSpells.json; sourceTree = "<group>"; };
 		5B669F40204A894900DC2760 /* CardBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBook.swift; sourceTree = "<group>"; };
 		5B669F42204AB02F00DC2760 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		5B66CE4D204BF6560047A9DC /* StatLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatLabel.swift; sourceTree = "<group>"; };
+		5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageLabel.swift; sourceTree = "<group>"; };
 		5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPipeline.swift; sourceTree = "<group>"; };
 		5B7E2D19203EB7B20026B445 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackAnimation.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				5BCA6F292039EE2300B81376 /* CreatureSprite.swift */,
+				5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */,
 			);
 			path = Creature;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				5BCA6F2B203A283200B81376 /* CardSprite.swift */,
 				5BCA6F2D203A2AB400B81376 /* CreatureCardSprite.swift */,
 				5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */,
+				5B66CE4D204BF6560047A9DC /* StatLabel.swift */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -233,6 +239,7 @@
 				5B1AC39A203BB01200F3B921 /* PlayerHand.swift in Sources */,
 				5B1AC3A3203C87A300F3B921 /* ManaCounter.swift in Sources */,
 				5B1AC398203BADB300F3B921 /* Battleground.swift in Sources */,
+				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
 				5B33A6472040DC4B00CF2D76 /* SpellCard.swift in Sources */,
 				5B669F43204AB02F00DC2760 /* Card.swift in Sources */,
 				5BCA6F122038911000B81376 /* GameScene.swift in Sources */,
@@ -242,6 +249,7 @@
 				5BCA6F2C203A283200B81376 /* CardSprite.swift in Sources */,
 				5BCA6F2E203A2AB400B81376 /* CreatureCardSprite.swift in Sources */,
 				5B33A64C204116CF00CF2D76 /* SpellCardSprite.swift in Sources */,
+				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
 				5B669F41204A894900DC2760 /* CardBook.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,

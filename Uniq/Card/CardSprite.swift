@@ -20,7 +20,7 @@ class CardSprite: SKNode {
         }
     }
     
-    var costLabel: SKLabelNode
+    private let costLabel: StatLabel
     let border: SKShapeNode
     let width = 50
     let height = 90
@@ -29,23 +29,16 @@ class CardSprite: SKNode {
     
     init(card: Card) {
         self.card = card
-        costLabel = SKLabelNode(text: String(card.cost))
+        costLabel = StatLabel(type: .cost, text: String(card.cost))
         border = SKShapeNode(rectOf: CGSize(width: width, height: height))
         super.init()
         
+        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
+        border.lineWidth = 1
         redrawBorder()
         addChild(border)
         
-        let costBorder = SKShapeNode(circleOfRadius: 12)
-        costBorder.position = CGPoint(x: -width/2 + 6, y: height/2 - 6)
-        costBorder.lineWidth = 0
-        costBorder.fillColor = UIColor(hue: 205.0/360.0, saturation: 76.0/100.0, brightness: 74.0/100.0, alpha: 1)
-        addChild(costBorder)
-        
-        costLabel.fontColor = SKColor.white
-        costLabel.fontName = "AvenirNext-Bold"
-        costLabel.fontSize = 17
-        costLabel.position = CGPoint(x: -width/2 + 6, y: height/2 - 7 - 6)
+        costLabel.position = CGPoint(x: -width/2 + 6, y: height/2 - 6)
         addChild(costLabel)
     }
     
@@ -54,8 +47,6 @@ class CardSprite: SKNode {
     }
     
     func redrawBorder() {
-        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
         border.strokeColor = canPlay ? canPlayBorderColor : defaultBorderColor
-        border.lineWidth = 1
     }
 }

@@ -9,7 +9,7 @@
 import SpriteKit
 
 class SpellCardSprite: CardSprite {
-    var descriptionLabel = SKLabelNode(text: "Boom!")
+    private let descriptionLabel = SKLabelNode(text: "Boom!")
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
