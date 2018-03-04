@@ -88,6 +88,7 @@ class CreatureSprite: SKNode {
     func showDamage(damage: Int) {
         health -= damage
         damageLabel.show(damage: damage)
+        healthLabel.state = .damaged
         
         if health <= 0 {
             self.run(CreatureSprite.destroyAction, completion: {
@@ -98,5 +99,6 @@ class CreatureSprite: SKNode {
     
     func increaseHealth(amount: Int) {
         creature.health += amount
+        healthLabel.state = .buffed
     }
 }

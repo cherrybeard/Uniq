@@ -87,6 +87,19 @@
 			path = Decks;
 			sourceTree = "<group>";
 		};
+		5B66CE51204C0A930047A9DC /* Sprite */ = {
+			isa = PBXGroup;
+			children = (
+				5B66CE4D204BF6560047A9DC /* StatLabel.swift */,
+				5BCA6F2B203A283200B81376 /* CardSprite.swift */,
+				5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */,
+				5BCA6F2D203A2AB400B81376 /* CreatureCardSprite.swift */,
+				5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */,
+				5BCA6F292039EE2300B81376 /* CreatureSprite.swift */,
+			);
+			path = Sprite;
+			sourceTree = "<group>";
+		};
 		5B7E2D1B203EB7C20026B445 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,9 +135,9 @@
 				5B1AC399203BB01200F3B921 /* PlayerHand.swift */,
 				5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */,
 				5B1AC39B203C435A00F3B921 /* Deck.swift */,
+				5B66CE51204C0A930047A9DC /* Sprite */,
 				5B7E2D1B203EB7C20026B445 /* Animation */,
 				5BCA6F31203B20DC00B81376 /* Card */,
-				5BCA6F30203B20C100B81376 /* Creature */,
 				5B1AC39D203C612900F3B921 /* Decks */,
 				5BCA6F132038911000B81376 /* GameViewController.swift */,
 				5BCA6F152038911000B81376 /* Main.storyboard */,
@@ -135,15 +148,6 @@
 			path = Uniq;
 			sourceTree = "<group>";
 		};
-		5BCA6F30203B20C100B81376 /* Creature */ = {
-			isa = PBXGroup;
-			children = (
-				5BCA6F292039EE2300B81376 /* CreatureSprite.swift */,
-				5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */,
-			);
-			path = Creature;
-			sourceTree = "<group>";
-		};
 		5BCA6F31203B20DC00B81376 /* Card */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,10 +155,6 @@
 				5B669F42204AB02F00DC2760 /* Card.swift */,
 				5BCA6F272039E74200B81376 /* CreatureCard.swift */,
 				5B33A6462040DC4B00CF2D76 /* SpellCard.swift */,
-				5BCA6F2B203A283200B81376 /* CardSprite.swift */,
-				5BCA6F2D203A2AB400B81376 /* CreatureCardSprite.swift */,
-				5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */,
-				5B66CE4D204BF6560047A9DC /* StatLabel.swift */,
 			);
 			path = Card;
 			sourceTree = "<group>";
