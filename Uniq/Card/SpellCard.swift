@@ -6,6 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
+typealias CreatureSpriteFilter = (CreatureSprite) -> Bool
 
 enum SpellTargetType: String {
     case all = "All"
@@ -19,11 +20,13 @@ class SpellCard: Card {
     var target: SpellTargetType
     var description: String
     var effect: ([CreatureSprite]) -> Void
+    var targetFilter: CreatureSpriteFilter
     
-    init(cost: Int, target: SpellTargetType, description: String, effect: @escaping ([CreatureSprite]) -> Void ) {
+    init(cost: Int, target: SpellTargetType, description: String, effect: @escaping ([CreatureSprite]) -> Void, targetFilter: @escaping CreatureSpriteFilter) {
         self.target = target
         self.description = description
         self.effect = effect
+        self.targetFilter = targetFilter
         
         super.init(cost: cost)
     }
@@ -32,6 +35,8 @@ class SpellCard: Card {
         target = card.target
         description = card.description
         effect = card.effect
+        targetFilter = card.targetFilter
+        
         super.init(cost: card.cost)
     }
     

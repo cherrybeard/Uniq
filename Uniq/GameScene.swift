@@ -58,11 +58,12 @@ class GameScene: SKScene {
         for _ in 1...5 {
             playerHand.draw(card: deck.draw())
         }
-        playerHand.markPlayable(mana: manaCounter.mana)
         
-        battleground.summon(creatureName: "Soldier", owner: .computer)
+        battleground.summon(creatureName: "Thug", owner: .computer)
         battleground.summon(creatureName: "Bandit", owner: .computer)
-        battleground.summon(creatureName: "Soldier", owner: .computer)
+        battleground.summon(creatureName: "Thug", owner: .computer)
+        
+        playerHand.markPlayable(mana: manaCounter.mana)
     }
     
     func playCard(cardSprite: CardSprite, target: CreatureSprite?) {
@@ -79,7 +80,7 @@ class GameScene: SKScene {
                     if target != nil {
                         targets = [target!]
                     } else {
-                        targets = battleground.creaturesOf(owner: .computer, alive: true)
+                        targets = battleground.creatures.filter(spellCard.targetFilter)
                     }
                     spellCard.effect(targets)
                 }
@@ -116,13 +117,6 @@ class GameScene: SKScene {
         animationPipeline.add(animation: animation)
     }
     
-    func spellDamage(amount: Int, targets: [CreatureSprite]) {
-        for target in targets {
-            target.applyDamage(damage: amount)
-            target.showDamage(damage: amount)
-        }
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if state == .playerTurn {
@@ -144,16 +138,20 @@ class GameScene: SKScene {
                         break
                     }
                     if node.name == "player-spell-card" {
-                        playerAction = .spell
-                        let card = node as? SpellCardSprite
-                        playerActionSubject = card
-                        let target = (card?.card as! SpellCard).target
-                        if (target == .all) || (target == .allEnemyCreatures) {
-                            playerActionTarget = .all
-                        } else {
-                            playerActionTarget = .creature
+                        if let cardSprite = node as? SpellCardSprite {
+                            if let spellCard = cardSprite.card as? SpellCard {
+                                let target = spellCard.target
+                                if (target == .all) || (target == .allEnemyCreatures) {
+                                    playerActionTarget = .all
+                                } else {
+                                    playerActionTarget = .creature
+                                }
+                                battleground.markTargets(filter: spellCard.targetFilter)
+                                playerAction = .spell
+                                playerActionSubject = cardSprite
+                                break
+                            }
                         }
-                        break
                     }
                     if node.name == "end-turn" {
                         playerAction = .endTurn
@@ -184,8 +182,11 @@ class GameScene: SKScene {
                         } else if (playerActionTarget == .creature) && (
                             (node.name == "computer-creature") || (node.name == "player-creature")
                         ) {
-                            let targetCreature = node as? CreatureSprite
-                            playCard(cardSprite: playerActionSubject as! SpellCardSprite, target: targetCreature!)
+                            if let targetCreature = node as? CreatureSprite {
+                                if targetCreature.isTarget {
+                                    playCard(cardSprite: playerActionSubject as! SpellCardSprite, target: targetCreature)
+                                }
+                            }
                         }
                     }
                     if (playerAction == .endTurn) && (node.name == "end-turn") {
@@ -195,6 +196,7 @@ class GameScene: SKScene {
                 playerAction = .rest
                 playerActionSubject = nil
                 playerActionTarget = nil
+                battleground.markTargets(filter: { (_) -> Bool in false })
             }
         }
     }

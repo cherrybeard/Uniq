@@ -63,7 +63,7 @@ class StatLabel: SKNode {
         
         label.text = text
         label.fontColor = textColors[_state]
-        label.fontName = "Baskerville-Bold"
+        label.fontName = "Courier-Bold"
         label.fontSize = 17
         label.position = CGPoint(x: 0, y: -6)
         addChild(label)

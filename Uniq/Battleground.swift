@@ -62,7 +62,7 @@ class Battleground: SKNode {
     
     func removeDeadCreatures() {
         for (i, creature) in creatures.enumerated().reversed() {
-            if creature.dead {
+            if creature.destroyed {
                 creatures.remove(at: i)
                 creature.removeFromParent()
             }
@@ -99,6 +99,14 @@ class Battleground: SKNode {
     func disableCreaturesAttack(owner: OwnerType) {
         for creature in creaturesOf(owner: owner) {
             creature.canAttack = false
+        }
+    }
+    
+    func markTargets(filter: CreatureSpriteFilter) {
+        _ = creatures.map { creature in creature.isTarget = false }
+        let filteredCreatures = creatures.filter(filter)
+        _ = filteredCreatures.map { creature in
+            creature.isTarget = true
         }
     }
     

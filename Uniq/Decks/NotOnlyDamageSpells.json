@@ -2,9 +2,15 @@
     "cards": [
         {
             "card": "Vitalization",
-            "amount": 2
+            "amount": 1
         },{
             "card": "Fireball",
+            "amount": 2
+        },{
+            "card": "Chain Lightning",
+            "amount": 2
+        },{
+            "card": "Sudden Strike",
             "amount": 2
         },{
             "card": "Imp",

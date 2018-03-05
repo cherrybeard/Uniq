@@ -35,7 +35,7 @@ class DamageLabel: SKLabelNode {
         super.init()
         
         fontColor = SKColor.white
-        fontName = "Baskerville-Bold"
+        fontName = "Courier-Bold"
         fontSize = 32
         alpha = 0
     }

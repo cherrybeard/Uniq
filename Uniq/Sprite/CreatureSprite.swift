@@ -15,7 +15,17 @@ enum OwnerType: Int {
 class CreatureSprite: SKNode {
     var creature: CreatureCard
     var owner: OwnerType
+    var destroyed: Bool = false
     var dead: Bool = false
+    
+    private var _isTarget: Bool = false
+    var isTarget: Bool {
+        get { return _isTarget }
+        set(newValue) {
+            _isTarget = newValue
+            redrawBorder()
+        }
+    }
     
     private var _canAttack: Bool = false
     var canAttack: Bool {
@@ -24,6 +34,10 @@ class CreatureSprite: SKNode {
             _canAttack = newValue
             redrawBorder()
         }
+    }
+    
+    var isFullHealth: Bool {
+        get { return healthLabel.state != .damaged }
     }
     
     var health: Int {
@@ -78,11 +92,20 @@ class CreatureSprite: SKNode {
     }
     
     func redrawBorder() {
-        border.strokeColor = (canAttack && (owner == OwnerType.player)) ? UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1) : UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
+        if isTarget {
+            border.strokeColor = UIColor(hue: 33.0/360.0, saturation: 70.0/100.0, brightness: 81.0/100.0, alpha: 1)
+        } else if canAttack && (owner == OwnerType.player) {
+            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1)
+        } else {
+            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
+        }
     }
     
     func applyDamage(damage: Int) {
         creature.health -= damage
+        if creature.health <= 0 {
+            dead = true
+        }
     }
     
     func showDamage(damage: Int) {
@@ -92,7 +115,7 @@ class CreatureSprite: SKNode {
         
         if health <= 0 {
             self.run(CreatureSprite.destroyAction, completion: {
-                self.dead = true
+                self.destroyed = true
             })
         }
     }
