@@ -16,13 +16,8 @@ class CreatureCard: Card {
         super.init(cost: cost)
     }
     
-    init(_ card: CreatureCard) {
-        attack = card.attack
-        health = card.health
-        super.init(cost: card.cost)
-    }
-    
-    override func copy() -> CreatureCard {
-        return CreatureCard(self)
+    override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
+        let creature = CreatureSprite(creature: self, owner: owner)
+        battle.summon(creature)
     }
 }

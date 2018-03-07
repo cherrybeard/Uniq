@@ -10,7 +10,13 @@
             "card": "Chain Lightning",
             "amount": 2
         },{
-            "card": "Sudden Strike",
+            "card": "Spark",
+            "amount": 2
+        },{
+            "card": "Recall",
+            "amount": 1
+        },{
+            "card": "Harmless Affair",
             "amount": 2
         },{
             "card": "Imp",

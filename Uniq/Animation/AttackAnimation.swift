@@ -37,8 +37,8 @@ class AttackAnimation: Animation {
         moveBack.timingMode = .easeOut
         
         attacking.run(moveTo, completion: {
-            self.defending.showDamage(damage: self.attacking.creature.attack)
-            self.attacking.showDamage(damage: self.defending.creature.attack)
+            self.defending.showDamage(self.attacking.creature.attack)
+            self.attacking.showDamage(self.defending.creature.attack)
             
             self.attacking.run(moveBack, completion: {
                 self.state = AnimationState.finished

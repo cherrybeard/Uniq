@@ -26,7 +26,5 @@ class CreatureCardSprite: CardSprite {
         
         healthLabel.position = CGPoint(x: width/2 - 6, y: -height/2 + 6)
         addChild(healthLabel)
-        
-        name = "player-creature-card"
     }
 }

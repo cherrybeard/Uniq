@@ -15,7 +15,7 @@ class SpellCardSprite: CardSprite {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(card: SpellCard) {
+    override init(card: Card) {
         super.init(card: card)
         
         descriptionLabel.text = card.description
@@ -27,7 +27,5 @@ class SpellCardSprite: CardSprite {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.position = CGPoint(x: 0, y: -40)
         addChild(descriptionLabel)
-        
-        name = "player-spell-card"
     }
 }

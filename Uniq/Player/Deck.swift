@@ -38,9 +38,9 @@ class Deck {
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
                     if let card = CardBook[cardData.card] {
-                        cards.append(card.copy())
+                        cards.append(card)
                         if cardData.amount == 2 {
-                            cards.append(card.copy())
+                            cards.append(card)
                         }
                     }
                 }

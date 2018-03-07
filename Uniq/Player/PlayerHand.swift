@@ -25,8 +25,8 @@ class PlayerHand: SKNode {
             var cardSprite:CardSprite? = nil
             if card is CreatureCard {
                 cardSprite = CreatureCardSprite(card: card as! CreatureCard)
-            } else if card is SpellCard {
-                cardSprite = SpellCardSprite(card: card as! SpellCard)
+            } else {
+                cardSprite = SpellCardSprite(card: card!)
             }
             
             cardSprite?.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)

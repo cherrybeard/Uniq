@@ -14,10 +14,6 @@ class AnimationPipeline {
         }
     }
     
-    init() {
-        
-    }
-    
     func add(animation: Animation) {
         pipelineStack.append(animation)
     }

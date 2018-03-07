@@ -7,68 +7,17 @@
 //
 
 
-var SpellTargetFilters: [String: CreatureSpriteFilter] = [
-    "none": { _ in false },
-    "creatures": { _ in true },
-    "enemy creatures": { creature in creature.owner == .computer },
-    "full health creatures": { creature in creature.isFullHealth }
-]
-
 var CardBook: [String: Card] = [
-    
-//  SPELLS
-    
-    "Vitalization": SpellCard(
-        cost: 2,
-        target: .creature,
-        description: "Double creature's health",
-        effect: { targets in
-            for target in targets {
-                let amount = target.creature.health
-                target.increaseHealth(amount: amount)
-                target.health += amount
-            }
-        },
-        targetFilter: SpellTargetFilters["creatures"]!
-    ),
-    "Fireball": SpellCard(
-        cost: 4,
-        target: .creature,
-        description: "Deal 6 damage",
-        effect: { targets in
-            for target in targets {
-                target.applyDamage(damage: 6)
-                target.showDamage(damage: 6)
-            }
-        },
-        targetFilter: SpellTargetFilters["creatures"]!
-    ),
-    "Chain Lightning": SpellCard(
-        cost: 2,
-        target: .all,
-        description: "Deal 1 damage to all enemy creatures",
-        effect: { targets in
-            for target in targets {
-                target.applyDamage(damage: 1)
-                target.showDamage(damage: 1)
-            }
-        },
-        targetFilter: SpellTargetFilters["enemy creatures"]!
-    ),
-    "Sudden Strike": SpellCard(
-        cost: 0,
-        target: .creature,
-        description: "Deal 2 damage to undamaged minion",
-        effect: { targets in
-            for target in targets {
-                target.applyDamage(damage: 2)
-                target.showDamage(damage: 2)
-            }
-        },
-        targetFilter: SpellTargetFilters["full health creatures"]!
-    ),
+    "Vitalization": VitalizationSpell(),
+    "Fireball": FireballSpell(),
+    "Chain Lightning": ChainLightningSpell(),
+    "Sudden Strike": SuddenStrikeSpell(),
+    "Spark": SparkSpell(),
+    "Harmless Affair": HarmlessAffairSpell(),
+    "Recall": RecallSpell(),
     
 //  CREATURES
+    "Fairy":        CreatureCard(cost: 0, attack: 1, health: 1),
     
     "Imp":          CreatureCard(cost: 1, attack: 2, health: 1),
     "Skeleton":     CreatureCard(cost: 1, attack: 1, health: 2),
@@ -81,10 +30,10 @@ var CardBook: [String: Card] = [
     
     "Knight":       CreatureCard(cost: 4, attack: 2, health: 4),
     "Lesser Demon": CreatureCard(cost: 4, attack: 4, health: 3),
-    "Thug":         CreatureCard(cost: 4, attack: 1, health: 12),
+    "Thug":         CreatureCard(cost: 4, attack: 1, health: 4),
     
     "Samurai":      CreatureCard(cost: 5, attack: 4, health: 5),
     
-    "Bandit":       CreatureCard(cost: 10, attack: 1, health: 24)
+    "Bandit":       CreatureCard(cost: 10, attack: 1, health: 32)
     
 ]

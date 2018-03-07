@@ -101,14 +101,19 @@ class CreatureSprite: SKNode {
         }
     }
     
-    func applyDamage(damage: Int) {
+    func dealDamage(_ damage: Int) {
+        applyDamage(damage)
+        showDamage(damage)
+    }
+    
+    func applyDamage(_ damage: Int) {
         creature.health -= damage
         if creature.health <= 0 {
             dead = true
         }
     }
     
-    func showDamage(damage: Int) {
+    func showDamage(_ damage: Int) {
         health -= damage
         damageLabel.show(damage: damage)
         healthLabel.state = .damaged
