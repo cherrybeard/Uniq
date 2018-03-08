@@ -25,9 +25,9 @@ class Battle {
         }
     }
     
-    func attack(attacking: CreatureSprite, defending: CreatureSprite) {
-        defending.applyDamage(attacking.creature.attack)
-        attacking.applyDamage(defending.creature.attack)
+    func attack(attacking: CharacterSprite, defending: CharacterSprite) {
+        defending.applyDamage(attacking.attack)
+        attacking.applyDamage(defending.attack)
         attacking.canAttack = false
         
         let animation = AttackAnimation(attacking: attacking, defending: defending)

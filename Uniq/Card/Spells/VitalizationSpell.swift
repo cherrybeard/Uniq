@@ -11,9 +11,10 @@ class VitalizationSpell: Card {
         super.init(cost: 2)
         description = "Double creature's health"
         requiresTarget = true
+        targetFilter = CardTargetFilters.creatures
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
+    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         if let creature = target {
             creature.increaseHealth(by: creature.health)
         }

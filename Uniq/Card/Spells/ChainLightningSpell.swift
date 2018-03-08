@@ -12,7 +12,7 @@ class ChainLightningSpell: Card {
         description = "Deal 1 damage to all enemy creatures"
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
+    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         for creature in battle.desk.creatures.filter({ creature in creature.owner != owner }) {
             creature.dealDamage(1)
         }

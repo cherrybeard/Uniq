@@ -38,6 +38,7 @@ class GameScene: SKScene {
     struct ScreenBoundaries {
         static let bottom = -Int(UIScreen.main.bounds.size.height/2)
         static let left = -Int(UIScreen.main.bounds.size.width/2)
+        static let right = Int(UIScreen.main.bounds.size.width/2)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,13 +49,14 @@ class GameScene: SKScene {
         super.init(size: size)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        addChild(battle.desk)
-        
-        battle.player.manaCounter.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
-        addChild(battle.player.manaCounter)
-        
+        battle.player.manaCounter.position = CGPoint(x: ScreenBoundaries.right - 40, y: ScreenBoundaries.bottom + 160)
         battle.player.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
+        battle.desk.playerHero.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
+        
         addChild(battle.player.hand)
+        addChild(battle.player.manaCounter)
+        addChild(battle.desk)
+        addChild(battle.desk.playerHero)
         
         for _ in 1...5 { battle.player.drawCard() }
         
@@ -75,12 +77,16 @@ class GameScene: SKScene {
             let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
             
             for creature in creaturesShuffled {
-                let playerCreatures = battle.desk.creatures.filter { creature in (creature.owner == .player) && !creature.dead }
-                if playerCreatures.count == 0 { break }
-                let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
-                let playerCreature = playerCreaturesShffled[0] as! CreatureSprite
+                let playerCreatures = battle.desk.creatures.filter { creature in (creature.owner == .player) && !creature.dead && (creature is CreatureSprite) }
+                var target: CharacterSprite
+                if playerCreatures.count != 0 {
+                    let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
+                    target = playerCreaturesShffled[0] as! CharacterSprite
+                } else {
+                    target = battle.desk.playerHero
+                }
                 
-                battle.attack(attacking: creature as! CreatureSprite, defending: playerCreature)
+                battle.attack(attacking: creature as! CharacterSprite, defending: target)
             }
         }
         state = .computerEnd
@@ -96,7 +102,7 @@ class GameScene: SKScene {
                     if let nodeType = NodeType(rawValue: node.name!) {
                         switch nodeType {
                         case .character:
-                            let creature = node as? CreatureSprite
+                            let creature = node as? CharacterSprite
                             if (creature?.canAttack)! {
                                 playerAction.type = .attack
                                 playerAction.subject = creature
@@ -144,11 +150,13 @@ class GameScene: SKScene {
                         case .attack:
                             if nodeType == .character {
                                 if let defendingCreature = node as? CreatureSprite {
-                                    if let attackingCreature = playerAction.subject as? CreatureSprite {
-                                        battle.attack(
-                                            attacking: attackingCreature,
-                                            defending: defendingCreature
-                                        )
+                                    if defendingCreature.owner == .computer {
+                                        if let attackingCreature = playerAction.subject as? CreatureSprite {
+                                            battle.attack(
+                                                attacking: attackingCreature,
+                                                defending: defendingCreature
+                                            )
+                                        }
                                     }
                                 }
                                 break

@@ -14,7 +14,7 @@ class SuddenStrikeSpell: Card {
         targetFilter = CardTargetFilters.fullHealthCreatures
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
+    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         if let creature = target {
             creature.dealDamage(2)
         }

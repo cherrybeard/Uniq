@@ -16,7 +16,7 @@ class CreatureCard: Card {
         super.init(cost: cost)
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
+    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         let creature = CreatureSprite(creature: self, owner: owner)
         battle.summon(creature)
     }

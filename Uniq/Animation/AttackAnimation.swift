@@ -11,10 +11,10 @@ import SpriteKit
 class AttackAnimation: Animation {
     let duration:TimeInterval = 0.2
     
-    var attacking: CreatureSprite
-    var defending: CreatureSprite
+    var attacking: CharacterSprite
+    var defending: CharacterSprite
     
-    init(attacking: CreatureSprite, defending: CreatureSprite) {
+    init(attacking: CharacterSprite, defending: CharacterSprite) {
         self.attacking = attacking
         self.defending = defending
     }
@@ -39,8 +39,8 @@ class AttackAnimation: Animation {
         attacking.zPosition = 100
         
         attacking.run(moveTo, completion: {
-            self.defending.showDamage(self.attacking.creature.attack)
-            self.attacking.showDamage(self.defending.creature.attack)
+            self.defending.showDamage(self.attacking.attack)
+            self.attacking.showDamage(self.defending.attack)
             
             self.attacking.run(moveBack, completion: {
                 self.attacking.zPosition = 0

@@ -9,7 +9,8 @@
 import SpriteKit
 
 class Desk: SKNode {
-    var creatures: [CreatureSprite] = []
+    var creatures: [CharacterSprite] = []
+    var playerHero: HeroSprite
     
     private let creatureHalfVolume = (50 + 20) / 2
     private let creaturesYPosition: [OwnerType: Int] = [
@@ -18,7 +19,10 @@ class Desk: SKNode {
     ]
     
     override init() {
+        playerHero = HeroSprite(health: 30)
         super.init()
+        
+        creatures.append(playerHero)
         
         let border = SKShapeNode(rectOf: CGSize(width: UIScreen.main.bounds.size.width, height: 240))
         border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 11.0/100.0, alpha: 1)
@@ -42,7 +46,7 @@ class Desk: SKNode {
     }
     
     func setCreaturesAttack(owner: OwnerType, canAttack: Bool) {
-        let ownerCreatures = creatures.filter({ creature in creature.owner == owner })
+        let ownerCreatures = creatures.filter({ creature in (creature.owner == owner) && (creature.attack > 0) })
         for creature in ownerCreatures {
             creature.canAttack = canAttack
         }
@@ -57,7 +61,7 @@ class Desk: SKNode {
     }
     
     private func repositionCreatures(owner: OwnerType) {
-        let ownerCreatures = creatures.filter({ creature in creature.owner == owner })
+        let ownerCreatures = creatures.filter({ creature in (creature.owner == owner) && (creature is CreatureSprite) })
         
         let duration: TimeInterval = 0.2
         var multiplier = ownerCreatures.count-1

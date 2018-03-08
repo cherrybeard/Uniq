@@ -15,8 +15,8 @@ class RecallSpell: Card {
         targetFilter = CardTargetFilters.ownerCreatures
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
-        if let creature = target {
+    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+        if let creature = target as? CreatureSprite {
             let card = creature.creature
             card.cost -= 2
             if card.cost < 0 {

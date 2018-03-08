@@ -30,10 +30,10 @@ var CardBook: [String: Card] = [
     
     "Knight":       CreatureCard(cost: 4, attack: 2, health: 4),
     "Lesser Demon": CreatureCard(cost: 4, attack: 4, health: 3),
-    "Thug":         CreatureCard(cost: 4, attack: 1, health: 4),
+    "Thug":         CreatureCard(cost: 4, attack: 1, health: 8),
     
     "Samurai":      CreatureCard(cost: 5, attack: 4, health: 5),
     
-    "Bandit":       CreatureCard(cost: 10, attack: 1, health: 32)
+    "Bandit":       CreatureCard(cost: 10, attack: 2, health: 32)
     
 ]
