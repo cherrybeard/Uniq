@@ -66,6 +66,7 @@ class CharacterSprite: SKNode {
         super.init()
         
         damageLabel.position = CGPoint(x: 0, y: -10)
+        damageLabel.zPosition = 200
         addChild(healthLabel)
         addChild(damageLabel)
         

@@ -40,7 +40,9 @@ class AttackAnimation: Animation {
         
         attacking.run(moveTo, completion: {
             self.defending.showDamage(self.attacking.attack)
-            self.attacking.showDamage(self.defending.attack)
+            if self.defending.attack > 0 {
+                self.attacking.showDamage(self.defending.attack)
+            }
             
             self.attacking.run(moveBack, completion: {
                 self.attacking.zPosition = 0

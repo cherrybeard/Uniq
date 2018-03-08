@@ -8,6 +8,7 @@
 
 
 var CardBook: [String: Card] = [
+// SPELLS
     "Vitalization": VitalizationSpell(),
     "Fireball": FireballSpell(),
     "Chain Lightning": ChainLightningSpell(),
@@ -34,6 +35,6 @@ var CardBook: [String: Card] = [
     
     "Samurai":      CreatureCard(cost: 5, attack: 4, health: 5),
     
-    "Bandit":       CreatureCard(cost: 10, attack: 2, health: 32)
+    "Bandit":       CreatureCard(cost: 10, attack: 3, health: 32)
     
 ]
