@@ -18,13 +18,17 @@ enum StatState {
 
 class StatLabel: SKNode {
     var type: StatType
-    private var _state: StatState = .initial
     
-    var text: String {
-        get { return label.text! }
-        set(text) { label.text = text }
+    private var _value: Int
+    var value: Int {
+        get { return _value }
+        set(newValue) {
+            _value = newValue
+            label.text = String(_value)
+        }
     }
     
+    private var _state: StatState = .initial
     var state: StatState {
         get { return _state }
         set(newState) {
@@ -51,17 +55,17 @@ class StatLabel: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(type: StatType, text: String) {
+    init(type: StatType, value: Int) {
         self.type = type
+        _value = value
         border = SKShapeNode(circleOfRadius: 12)
-        label = SKLabelNode(text: text)
+        label = SKLabelNode(text: String(value))
         super.init()
         
         border.lineWidth = 0
         if let color = borderColors[type] { border.fillColor = color }
         addChild(border)
         
-        label.text = text
         label.fontColor = textColors[_state]
         label.fontName = "Courier-Bold"
         label.fontSize = 17

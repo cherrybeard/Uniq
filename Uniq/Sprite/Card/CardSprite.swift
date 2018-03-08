@@ -29,7 +29,7 @@ class CardSprite: SKNode {
     
     init(card: Card) {
         self.card = card
-        costLabel = StatLabel(type: .cost, text: String(card.cost))
+        costLabel = StatLabel(type: .cost, value: card.cost)
         border = SKShapeNode(rectOf: CGSize(width: width, height: height))
         super.init()
         

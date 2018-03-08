@@ -17,8 +17,8 @@ class CreatureCardSprite: CardSprite {
     }
     
     init(card: CreatureCard) {
-        healthLabel = StatLabel(type: .health, text: String(card.health))
-        attackLabel = StatLabel(type: .attack, text: String(card.attack))
+        healthLabel = StatLabel(type: .health, value: card.health)
+        attackLabel = StatLabel(type: .attack, value: card.attack)
         super.init(card: card)
         
         attackLabel.position = CGPoint(x: -width/2 + 6, y: -height/2 + 6)

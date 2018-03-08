@@ -20,8 +20,7 @@ enum PlayerActionType: Int {
 enum NodeType: String {
     case desk = "desk"
     case card = "card"
-    case playerCreature = "player-creature"
-    case computerCreature = "computer-creature"
+    case character = "character"
     case endTurn = "end-turn"
 }
 
@@ -96,7 +95,7 @@ class GameScene: SKScene {
                 for node in touchedNodes {
                     if let nodeType = NodeType(rawValue: node.name!) {
                         switch nodeType {
-                        case .playerCreature:
+                        case .character:
                             let creature = node as? CreatureSprite
                             if (creature?.canAttack)! {
                                 playerAction.type = .attack
@@ -143,7 +142,7 @@ class GameScene: SKScene {
                     if let nodeType = NodeType(rawValue: node.name!) {
                         switch playerAction.type {
                         case .attack:
-                            if nodeType == .computerCreature {
+                            if nodeType == .character {
                                 if let defendingCreature = node as? CreatureSprite {
                                     if let attackingCreature = playerAction.subject as? CreatureSprite {
                                         battle.attack(
@@ -157,7 +156,7 @@ class GameScene: SKScene {
                             
                         case .card:
                             if let card = playerAction.subject as? CardSprite {
-                                if playerAction.requiresTarget && (nodeType == .computerCreature) || (nodeType == .playerCreature) {
+                                if playerAction.requiresTarget && (nodeType == .character) {
                                     if let creature = node as? CreatureSprite {
                                         if creature.isTarget {
                                             battle.playCard(cardSprite: card, target: creature)

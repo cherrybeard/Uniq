@@ -15,9 +15,7 @@ class VitalizationSpell: Card {
     
     override func play(battle: Battle, for owner: OwnerType, target: CreatureSprite? = nil) {
         if let creature = target {
-            let amount = creature.creature.health
-            creature.increaseHealth(amount: amount)
-            creature.health += amount
+            creature.increaseHealth(by: creature.health)
         }
     }
 }
