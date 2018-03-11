@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class Desk: SKNode {
+class DeskSprite: SKNode {
     var creatures: [CharacterSprite] = []
     var playerHero: HeroSprite
     

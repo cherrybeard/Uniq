@@ -9,55 +9,50 @@
 import SpriteKit
 
 class ManaCounter: SKNode {
-    var mana:Int = 0
-    var totalMana:Int = 0
-    let manaLabel = SKLabelNode()
+    var _amount:Int = 1
+    var amount:Int {
+        get { return _amount }
+        set {
+            _amount = newValue
+            label.text = String(_amount)
+        }
+    }
+    var totalAmount:Int = 1
+    
+    let label = SKLabelNode()
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(mana: Int) {
+    override init() {
         super.init()
-        self.mana = mana
-        totalMana = mana
         
         let border = SKShapeNode(circleOfRadius: 24)
         border.lineWidth = 0
         border.fillColor = UIColor(hue: 205.0/360.0, saturation: 76.0/100.0, brightness: 74.0/100.0, alpha: 1)
-        addChild(border)
         
-        manaLabel.color = UIColor.white
-        manaLabel.fontName = "Courier-Bold"
-        manaLabel.fontSize = 24
-        manaLabel.position = CGPoint(x: 0, y: -10)
-        update()
-        addChild(manaLabel)
+        label.color = UIColor.white
+        label.fontName = "Courier-Bold"
+        label.fontSize = 24
+        label.position = CGPoint(x: 0, y: -10)
+        label.text = String(_amount)
+        
+        addChild(border)
+        addChild(label)
         
         name = "end-turn"
     }
     
     func use(amount: Int) -> Bool {
-        if amount > mana { return false }
+        if amount > self.amount { return false }
         
-        mana -= amount
-        update()
+        self.amount -= amount
         return true
     }
     
-    func add(amount: Int) {
-        mana += amount
-        if mana >= 10 { mana = 10 }
-        update()
-    }
-    
     func increaseAndRestore() {
-        if totalMana < 10 { totalMana += 1 }
-        mana = totalMana
-        update()
-    }
-    
-    func update() {
-        manaLabel.text = String(mana)
+        if totalAmount < 10 { totalAmount += 1 }
+        amount = totalAmount
     }
 }

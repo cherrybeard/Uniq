@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class VitalizationSpell: Card {
+class VitalizationSpell: SpellCard {
     init() {
         super.init(cost: 2)
         description = "Double creature's health"

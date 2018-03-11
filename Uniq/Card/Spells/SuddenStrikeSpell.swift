@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class SuddenStrikeSpell: Card {
+class SuddenStrikeSpell: SpellCard {
     init() {
         super.init(cost: 0)
         description = "Deal 2 damage to to undamaged creature"

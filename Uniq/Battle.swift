@@ -6,22 +6,35 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
+struct Player {
+    let deck = Deck()
+    let mana = ManaCounter()
+    
+    func highlightCards(removeHighlight: Bool = false) {
+        if removeHighlight {
+            deck.hand.highlightCards()
+        } else {
+            deck.hand.highlightCards(mana: mana.amount)
+        }
+    }
+}
+
 class Battle {
     let player = Player()
-    let desk = Desk()
+    let desk = DeskSprite()
     let animationPipeline = AnimationPipeline()
     
     func summon(_ creature: CreatureSprite) {
         desk.summon(creature)
     }
     
-    func playCard(cardSprite: CardSprite, target: CreatureSprite? = nil) {
+    func play(cardSprite: CardSprite, target: CreatureSprite? = nil) {
         let cost = cardSprite.card.cost
-        if player.manaCounter.use(amount: cost) {
+        if player.mana.use(amount: cost) {
             cardSprite.card.play(battle: self, for: .player, target: target)
-            cardSprite.card.state = .discarded
-            player.hand.clean()
-            player.toggleCardsHighlight(playable: true)
+            cardSprite.state = .discarded
+            player.deck.hand.clean()
+            player.highlightCards()
         }
     }
     

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class FireballSpell: Card {
+class FireballSpell: SpellCard {
     init() {
         super.init(cost: 4)
         description = "Deal 6 damage"

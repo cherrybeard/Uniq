@@ -49,16 +49,16 @@ class GameScene: SKScene {
         super.init(size: size)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        battle.player.manaCounter.position = CGPoint(x: ScreenBoundaries.right - 40, y: ScreenBoundaries.bottom + 160)
-        battle.player.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
+        battle.player.mana.position = CGPoint(x: ScreenBoundaries.right - 40, y: ScreenBoundaries.bottom + 160)
+        battle.player.deck.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
         battle.desk.playerHero.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
         
-        addChild(battle.player.hand)
-        addChild(battle.player.manaCounter)
+        addChild(battle.player.deck.hand)
+        addChild(battle.player.mana)
         addChild(battle.desk)
         addChild(battle.desk.playerHero)
         
-        for _ in 1...5 { battle.player.drawCard() }
+        for _ in 1...5 { battle.player.deck.draw() }
         
         let leftThug = CreatureSprite(creature: CardBook["Thug"] as! CreatureCard, owner: .computer)
         let bandit = CreatureSprite(creature: CardBook["Bandit"] as! CreatureCard, owner: .computer)
@@ -68,7 +68,7 @@ class GameScene: SKScene {
         battle.summon(bandit)
         battle.summon(rightThug)
         
-        battle.player.toggleCardsHighlight(playable: true)
+        battle.player.highlightCards()
     }
     
     func makeComputerMove() {
@@ -167,13 +167,13 @@ class GameScene: SKScene {
                                 if playerAction.requiresTarget && (nodeType == .character) {
                                     if let creature = node as? CreatureSprite {
                                         if creature.isTarget {
-                                            battle.playCard(cardSprite: card, target: creature)
+                                            battle.play(cardSprite: card, target: creature)
                                         }
                                     }
                                     break
                                 }
                                 if !playerAction.requiresTarget && (nodeType == .desk) {
-                                    battle.playCard(cardSprite: card)
+                                    battle.play(cardSprite: card)
                                     break
                                 }
                             }
@@ -203,14 +203,14 @@ class GameScene: SKScene {
             battle.desk.removeDeadCreatures()
             if (state == .computerEnd) {
                 state = .playerTurn
-                battle.player.manaCounter.increaseAndRestore()
-                battle.player.drawCard()
+                battle.player.mana.increaseAndRestore()
+                battle.player.deck.draw()
                 battle.desk.setCreaturesAttack(owner: .player, canAttack: true)
-                battle.player.toggleCardsHighlight(playable: true)
+                battle.player.highlightCards()
             }
             if (state == .playerEnd) {
                 state = .computerTurn
-                battle.player.toggleCardsHighlight(playable: false)
+                battle.player.highlightCards(removeHighlight: true)
                 battle.desk.setCreaturesAttack(owner: .player, canAttack: false)
                 battle.desk.setCreaturesAttack(owner: .computer, canAttack: true)
                 makeComputerMove()

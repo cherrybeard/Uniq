@@ -8,8 +8,13 @@
 
 import SpriteKit
 
+enum CardState {
+    case deck, hand, discarded
+}
+
 class CardSprite: SKNode {
     var card: Card
+    var state: CardState = .deck
     
     private var _canPlay:Bool = false
     var canPlay: Bool {

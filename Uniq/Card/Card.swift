@@ -6,10 +6,6 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-enum CardState {
-    case deck, hand, discarded
-}
-
 typealias CardTargetFilter = (CharacterSprite) -> Bool
 
 struct CardTargetFilters {
@@ -22,7 +18,6 @@ struct CardTargetFilters {
 
 class Card {
     var cost: Int
-    var state: CardState = .deck
     var description: String = "Boom!"
     var targetFilter: CardTargetFilter? = CardTargetFilters.all
     var requiresTarget: Bool = false
@@ -33,5 +28,9 @@ class Card {
     
     func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         
+    }
+    
+    func generateSprite() -> CardSprite {
+        return CardSprite(card: self)
     }
 }

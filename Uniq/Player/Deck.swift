@@ -18,29 +18,28 @@ struct CardData: Decodable {
 }
 
 class Deck {
-    var cards: [Card] = []
-    var drawPile: [Card] {
-        get {
-            return cards.filter({ (card) -> Bool in (card.state == .deck) })
-        }
+    var cards: [CardSprite] = []
+    var hand = HandSprite()
+    
+    private var drawPile: [CardSprite] {
+        get { return cards.filter({ card in card.state == .deck }) }
     }
     
     init() {
         cards = loadJson(filename: "NotOnlyDamageSpells")!
     }
     
-    func loadJson(filename: String) -> [Card]? {
+    func loadJson(filename: String) -> [CardSprite]? {
         if let url = Bundle.main.url(forResource: filename, withExtension: "json") {
             do {
-                var cards: [Card] = []
+                var cards: [CardSprite] = []
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
                     if let card = CardBook[cardData.card] {
-                        cards.append(card)
-                        if cardData.amount == 2 {
-                            cards.append(card)
+                        for _ in 1...cardData.amount {
+                            cards.append(card.generateSprite())
                         }
                     }
                 }
@@ -52,13 +51,18 @@ class Deck {
         return nil
     }
     
-    func draw() -> Card? {
+    func draw(card: CardSprite) {
+        card.state = .hand
+        hand.add(card)
+    }
+    
+    func draw() {
         if drawPile.count > 0 {
             let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: drawPile)
-            let card = shuffled[0] as! Card
-            return card
-        } else {
-            return nil
+            if let card = shuffled[0] as? CardSprite {
+                draw(card: card)
+            }
         }
     }
+    
 }

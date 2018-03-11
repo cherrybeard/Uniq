@@ -18,6 +18,7 @@ var CardBook: [String: Card] = [
     "Recall": RecallSpell(),
     
 //  CREATURES
+    "Bounty Hunter": BountyHunterCreature(),
     "Fairy":        CreatureCard(cost: 0, attack: 1, health: 1),
     
     "Imp":          CreatureCard(cost: 1, attack: 2, health: 1),

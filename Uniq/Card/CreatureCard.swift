@@ -20,4 +20,12 @@ class CreatureCard: Card {
         let creature = CreatureSprite(creature: self, owner: owner)
         battle.summon(creature)
     }
+    
+    override func generateSprite() -> CreatureCardSprite {
+        return CreatureCardSprite(card: self)
+    }
+    
+    func battlecry(battle: Battle, creature: CreatureSprite) {
+        
+    }
 }

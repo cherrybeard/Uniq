@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SparkSpell: Card {
+class SparkSpell: SpellCard {
     init() {
         super.init(cost: 1)
         description = "Deal 2 damage. Draw 1 card"
@@ -20,6 +20,6 @@ class SparkSpell: Card {
         if let creature = target {
             creature.dealDamage(2)
         }
-        battle.player.drawCard()
+        battle.player.deck.draw()
     }
 }

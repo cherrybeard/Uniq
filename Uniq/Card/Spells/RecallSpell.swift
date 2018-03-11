@@ -7,7 +7,7 @@
 //
 
 
-class RecallSpell: Card {
+class RecallSpell: SpellCard {
     init() {
         super.init(cost: 0)
         description = "Return friendly creature back to hand. Reduce its cost by 2."
@@ -17,12 +17,12 @@ class RecallSpell: Card {
     
     override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         if let creature = target as? CreatureSprite {
-            let card = creature.creature
-            card.cost -= 2
-            if card.cost < 0 {
-                card.cost = 0
+            let creatureCard = creature.creature
+            creatureCard.cost -= 2
+            if creatureCard.cost < 0 {
+                creatureCard.cost = 0
             }
-            battle.player.drawSpecificCard(card)
+            battle.player.deck.draw(card: CreatureCardSprite(card: creatureCard))
             creature.destroyed = true
         }
     }

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class ChainLightningSpell: Card {
+class ChainLightningSpell: SpellCard {
     init() {
         super.init(cost: 2)
         description = "Deal 1 damage to all enemy creatures"
