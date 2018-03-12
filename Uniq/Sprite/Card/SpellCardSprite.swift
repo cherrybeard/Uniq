@@ -9,23 +9,11 @@
 import SpriteKit
 
 class SpellCardSprite: CardSprite {
-    private let descriptionLabel = SKLabelNode(text: "Boom!")
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override init(card: Card) {
         super.init(card: card)
-        
-        descriptionLabel.text = card.description
-        descriptionLabel.fontColor = SKColor.white
-        descriptionLabel.fontName = "AvenirNext-Bold"
-        descriptionLabel.fontSize = 8
-        descriptionLabel.preferredMaxLayoutWidth = 48
-        descriptionLabel.lineBreakMode = .byWordWrapping
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.position = CGPoint(x: 0, y: -40)
-        addChild(descriptionLabel)
     }
 }

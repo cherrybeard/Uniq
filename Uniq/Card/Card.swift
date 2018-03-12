@@ -18,7 +18,7 @@ struct CardTargetFilters {
 
 class Card {
     var cost: Int
-    var description: String = "Boom!"
+    var description: String = ""
     var targetFilter: CardTargetFilter? = CardTargetFilters.all
     var requiresTarget: Bool = false
     

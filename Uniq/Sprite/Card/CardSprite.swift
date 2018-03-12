@@ -26,7 +26,9 @@ class CardSprite: SKNode {
     }
     
     private let costLabel: StatLabel
+    let descriptionLabel = SKLabelNode(text: "")
     let border: SKShapeNode
+    
     let width = 50
     let height = 90
     private let canPlayBorderColor = UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1)
@@ -41,10 +43,21 @@ class CardSprite: SKNode {
         border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
         border.lineWidth = 1
         redrawBorder()
-        addChild(border)
         
         costLabel.position = CGPoint(x: -width/2 + 6, y: height/2 - 6)
+        
+        descriptionLabel.text = card.description
+        descriptionLabel.fontColor = SKColor.white
+        descriptionLabel.fontName = "AvenirNext-DemiBold"
+        descriptionLabel.fontSize = 8
+        descriptionLabel.preferredMaxLayoutWidth = 48
+        descriptionLabel.lineBreakMode = .byWordWrapping
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.position = CGPoint(x: 0, y: -40)
+        
+        addChild(border)
         addChild(costLabel)
+        addChild(descriptionLabel)
         
         name = "card"
     }

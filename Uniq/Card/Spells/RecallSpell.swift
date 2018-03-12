@@ -10,7 +10,7 @@
 class RecallSpell: SpellCard {
     init() {
         super.init(cost: 0)
-        description = "Return friendly creature back to hand. Reduce its cost by 2."
+        description = "Return friendly creature back to hand. Reduce its cost by 2"
         requiresTarget = true
         targetFilter = CardTargetFilters.ownerCreatures
     }

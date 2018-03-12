@@ -4,29 +4,11 @@
             "card": "Vitalization",
             "amount": 1
         },{
-            "card": "Fireball",
-            "amount": 2
-        },{
             "card": "Chain Lightning",
             "amount": 2
         },{
-            "card": "Spark",
-            "amount": 2
-        },{
-            "card": "Recall",
-            "amount": 1
-        },{
             "card": "Harmless Affair",
-            "amount": 2
-        },{
-            "card": "Imp",
-            "amount": 2
-        },{
-            "card": "Skeleton",
-            "amount": 2
-        },{
-            "card": "Soldier",
-            "amount": 2
+            "amount": 1
         },{
             "card": "Mercenary",
             "amount": 1
@@ -35,10 +17,25 @@
             "amount": 1
         },{
             "card": "Lesser Demon",
-            "amount": 1
+            "amount": 2
         },{
             "card": "Samurai",
-            "amount": 1
+            "amount": 2
+        },{
+            "card": "Bounty Hunter",
+            "amount": 2
+        },{
+            "card": "Old Prophest",
+            "amount": 2
+        },{
+            "card": "Fire Imp",
+            "amount": 2
+        },{
+            "card": "Royal Alchemist",
+            "amount": 2
+        },{
+            "card": "Firelink Priest",
+            "amount": 2
         }
     ]
 }

@@ -26,6 +26,10 @@ class Battle {
     
     func summon(_ creature: CreatureSprite) {
         desk.summon(creature)
+        if creature.creature.charge {
+            creature.canAttack = true
+        }
+        creature.battlecry(battle: self)
     }
     
     func play(cardSprite: CardSprite, target: CreatureSprite? = nil) {

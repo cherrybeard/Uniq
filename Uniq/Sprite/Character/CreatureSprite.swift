@@ -55,4 +55,14 @@ class CreatureSprite: CharacterSprite {
             border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
         }
     }
+    
+    func battlecry(battle: Battle) {
+        creature.battlecry(battle: battle, creature: self)
+    }
+    
+    func increaseAttack(by amount: Int) {
+        _attack += amount
+        attackLabel.value = _attack
+        attackLabel.state = .buffed
+    }
 }

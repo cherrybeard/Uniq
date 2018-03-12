@@ -19,6 +19,11 @@ var CardBook: [String: Card] = [
     
 //  CREATURES
     "Bounty Hunter": BountyHunterCreature(),
+    "Old Prophet": OldProphetCreature(),
+    "Fire Imp": FireImpCreature(),
+    "Royal Alchemist": RoyalAlchemistCreature(),
+    "Firelink Priest": FirelinkPriestCreature(),
+    
     "Fairy":        CreatureCard(cost: 0, attack: 1, health: 1),
     
     "Imp":          CreatureCard(cost: 1, attack: 2, health: 1),

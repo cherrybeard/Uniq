@@ -9,6 +9,7 @@
 class CreatureCard: Card {
     var attack: Int
     var health: Int
+    var charge: Bool = false
     
     init(cost: Int, attack: Int, health: Int) {
         self.attack = attack

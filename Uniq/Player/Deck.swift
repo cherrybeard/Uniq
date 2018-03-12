@@ -21,8 +21,12 @@ class Deck {
     var cards: [CardSprite] = []
     var hand = HandSprite()
     
-    private var drawPile: [CardSprite] {
+    var drawPile: [CardSprite] {
         get { return cards.filter({ card in card.state == .deck }) }
+    }
+    
+    var handPile: [CardSprite] {
+        get { return cards.filter({ card in card.state == .hand }) }
     }
     
     init() {
@@ -38,8 +42,10 @@ class Deck {
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
                     if let card = CardBook[cardData.card] {
-                        for _ in 1...cardData.amount {
-                            cards.append(card.generateSprite())
+                        if cardData.amount > 0 {
+                            for _ in 1...cardData.amount {
+                                cards.append(card.generateSprite())
+                            }
                         }
                     }
                 }
