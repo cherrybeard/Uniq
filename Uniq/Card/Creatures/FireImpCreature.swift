@@ -14,7 +14,7 @@ class FireImpCreature: CreatureCard {
     
     override func battlecry(battle: Battle, creature: CreatureSprite) {
         if creature.owner == .player {
-            battle.desk.playerHero.dealDamage(3)
+            battle.desk.playerHero.dealDamage(3, battle: battle)
         }
     }
 }

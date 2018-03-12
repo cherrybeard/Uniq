@@ -29,4 +29,8 @@ class CreatureCard: Card {
     func battlecry(battle: Battle, creature: CreatureSprite) {
         
     }
+    
+    func deathrattle(battle: Battle, creature: CreatureSprite) {
+        
+    }
 }

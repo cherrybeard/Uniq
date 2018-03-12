@@ -56,13 +56,17 @@ class CreatureSprite: CharacterSprite {
         }
     }
     
-    func battlecry(battle: Battle) {
-        creature.battlecry(battle: battle, creature: self)
-    }
-    
     func increaseAttack(by amount: Int) {
         _attack += amount
         attackLabel.value = _attack
         attackLabel.state = .buffed
+    }
+    
+    override func battlecry(battle: Battle) {
+        creature.battlecry(battle: battle, creature: self)
+    }
+    
+    override func deathrattle(battle: Battle) {
+        creature.deathrattle(battle: battle, creature: self)
     }
 }

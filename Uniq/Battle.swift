@@ -43,12 +43,11 @@ class Battle {
     }
     
     func attack(attacking: CharacterSprite, defending: CharacterSprite) {
-        defending.applyDamage(attacking.attack)
-        attacking.applyDamage(defending.attack)
+        defending.applyDamage(attacking.attack, battle: self)
+        attacking.applyDamage(defending.attack, battle: self)
         attacking.canAttack = false
         
         let animation = AttackAnimation(attacking: attacking, defending: defending)
         animationPipeline.add(animation: animation)
     }
-    
 }

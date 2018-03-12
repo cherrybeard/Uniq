@@ -14,6 +14,6 @@ class FirelinkPriestCreature: CreatureCard {
     
     override func battlecry(battle: Battle, creature: CreatureSprite) {
         let health = battle.player.deck.handPile.count
-        creature.increaseHealth(by: health)
+        creature.setHealth(to: health)
     }
 }

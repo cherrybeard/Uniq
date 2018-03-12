@@ -10,7 +10,7 @@ import SpriteKit
 
 class DeskSprite: SKNode {
     var creatures: [CharacterSprite] = []
-    var playerHero: HeroSprite
+    var playerHero = HeroSprite(health: 30)
     
     private let creatureHalfVolume = (50 + 20) / 2
     private let creaturesYPosition: [OwnerType: Int] = [
@@ -19,7 +19,6 @@ class DeskSprite: SKNode {
     ]
     
     override init() {
-        playerHero = HeroSprite(health: 30)
         super.init()
         
         creatures.append(playerHero)

@@ -15,7 +15,7 @@ class FireballSpell: SpellCard {
     
     override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         if let creature = target {
-            creature.dealDamage(6)
+            creature.dealDamage(6, battle: battle)
         }
     }
 }

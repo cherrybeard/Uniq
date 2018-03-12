@@ -23,6 +23,8 @@ var CardBook: [String: Card] = [
     "Fire Imp": FireImpCreature(),
     "Royal Alchemist": RoyalAlchemistCreature(),
     "Firelink Priest": FirelinkPriestCreature(),
+    "Mystic Lancer": MysticLancerCreature(),
+    "Witch": WitchCreature(),
     
     "Fairy":        CreatureCard(cost: 0, attack: 1, health: 1),
     
@@ -32,7 +34,6 @@ var CardBook: [String: Card] = [
     "Soldier":      CreatureCard(cost: 2, attack: 1, health: 3),
     "Mercenary":    CreatureCard(cost: 2, attack: 2, health: 2),
     
-    "Judge":        CreatureCard(cost: 3, attack: 3, health: 3),
     "Abomination":  CreatureCard(cost: 3, attack: 2, health: 4),
     
     "Knight":       CreatureCard(cost: 4, attack: 2, health: 4),

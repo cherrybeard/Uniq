@@ -20,6 +20,7 @@ class HeroSprite: CharacterSprite {
         redrawBorder()
         
         _health = health
+        _maxHealth = health
         healthLabel.value = _health
         healthLabel.position = CGPoint(x: 16, y: -16)
         healthLabel.zPosition = 1

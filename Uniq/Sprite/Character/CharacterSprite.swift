@@ -14,16 +14,16 @@ enum OwnerType: Int {
 
 class CharacterSprite: SKNode {
     var owner: OwnerType = .player
-    var destroyed: Bool = false         //TODO: Combine with dead in one state var
+    var destroyed: Bool = false
     var dead: Bool = false
     
-    internal var _maxHealth: Int = 1
-    internal var _health: Int = 1
+    var _maxHealth: Int = 1
+    var _health: Int = 1
     var health: Int {
         get { return _health }
     }
     
-    internal var _attack: Int = 0
+    var _attack: Int = 0
     var attack: Int {
         get { return _attack }
     }
@@ -80,14 +80,17 @@ class CharacterSprite: SKNode {
     
     func redrawBorder() { }
     
-    func dealDamage(_ damage: Int) {
-        applyDamage(damage)
+    func dealDamage(_ damage: Int, battle: Battle) {
+        applyDamage(damage, battle: battle)
         showDamage(damage)
     }
     
-    func applyDamage(_ damage: Int) {
+    func applyDamage(_ damage: Int, battle: Battle) {
         _health -= damage
-        if _health <= 0 { dead = true }
+        if _health <= 0 {
+            deathrattle(battle: battle)
+            dead = true
+        }
     }
     
     func showDamage(_ damage: Int) {
@@ -96,7 +99,7 @@ class CharacterSprite: SKNode {
         healthLabel.state = .damaged
         
         if healthLabel.value <= 0 {
-            self.run(CreatureSprite.destroyAction, completion: {
+            run(CharacterSprite.destroyAction, completion: {
                 self.destroyed = true
             })
         }
@@ -105,10 +108,18 @@ class CharacterSprite: SKNode {
     func increaseHealth(by amount: Int) {
         _health += amount
         _maxHealth += amount
-        healthLabel.value = _health
         if healthLabel.state == .initial {
             healthLabel.state = .buffed
         }
+        healthLabel.value = _health
+    }
+    
+    func setHealth(to amount: Int) {
+        _health = amount
+        _maxHealth = amount
+        healthLabel.state = .initial
+        healthLabel.value = _health
+        
     }
     
     func restoreHealth(by amount: Int) {
@@ -119,5 +130,14 @@ class CharacterSprite: SKNode {
         } else {
             _health = newHealth
         }
+        healthLabel.value = _health
+    }
+    
+    func battlecry(battle: Battle) {
+        
+    }
+    
+    func deathrattle(battle: Battle) {
+        
     }
 }

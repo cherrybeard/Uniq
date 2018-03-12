@@ -14,7 +14,7 @@ class ChainLightningSpell: SpellCard {
     
     override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         for creature in battle.desk.creatures.filter({ creature in creature.owner != owner }) {
-            creature.dealDamage(1)
+            creature.dealDamage(1, battle: battle)
         }
     }
 }

@@ -18,7 +18,7 @@ class SparkSpell: SpellCard {
     
     override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
         if let creature = target {
-            creature.dealDamage(2)
+            creature.dealDamage(2, battle: battle)
         }
         battle.player.deck.draw()
     }

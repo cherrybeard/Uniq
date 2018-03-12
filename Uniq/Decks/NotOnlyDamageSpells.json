@@ -10,18 +10,6 @@
             "card": "Harmless Affair",
             "amount": 1
         },{
-            "card": "Mercenary",
-            "amount": 1
-        },{
-            "card": "Knight",
-            "amount": 1
-        },{
-            "card": "Lesser Demon",
-            "amount": 2
-        },{
-            "card": "Samurai",
-            "amount": 2
-        },{
             "card": "Bounty Hunter",
             "amount": 2
         },{
@@ -35,6 +23,12 @@
             "amount": 2
         },{
             "card": "Firelink Priest",
+            "amount": 2
+        },{
+            "card": "Mystic Lancer",
+            "amount": 2
+        },{
+            "card": "Witch",
             "amount": 2
         }
     ]

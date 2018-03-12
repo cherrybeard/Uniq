@@ -20,6 +20,8 @@
 		5B35E5CC2056AE1A00678A10 /* FireImpCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5CB2056AE1A00678A10 /* FireImpCreature.swift */; };
 		5B35E5CE2056BA6100678A10 /* RoyalAlchemistCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5CD2056BA6100678A10 /* RoyalAlchemistCreature.swift */; };
 		5B35E5D02056D14C00678A10 /* FirelinkPriestCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5CF2056D14C00678A10 /* FirelinkPriestCreature.swift */; };
+		5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5D12056D92C00678A10 /* MysticLancerCreature.swift */; };
+		5B35E5D42057034E00678A10 /* WitchCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5D32057034E00678A10 /* WitchCreature.swift */; };
 		5B669F3D2049B4BF00DC2760 /* NotOnlyDamageSpells.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */; };
 		5B669F41204A894900DC2760 /* CardBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F40204A894900DC2760 /* CardBook.swift */; };
 		5B669F43204AB02F00DC2760 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F42204AB02F00DC2760 /* Card.swift */; };
@@ -62,6 +64,8 @@
 		5B35E5CB2056AE1A00678A10 /* FireImpCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireImpCreature.swift; sourceTree = "<group>"; };
 		5B35E5CD2056BA6100678A10 /* RoyalAlchemistCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoyalAlchemistCreature.swift; sourceTree = "<group>"; };
 		5B35E5CF2056D14C00678A10 /* FirelinkPriestCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirelinkPriestCreature.swift; sourceTree = "<group>"; };
+		5B35E5D12056D92C00678A10 /* MysticLancerCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MysticLancerCreature.swift; sourceTree = "<group>"; };
+		5B35E5D32057034E00678A10 /* WitchCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WitchCreature.swift; sourceTree = "<group>"; };
 		5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotOnlyDamageSpells.json; sourceTree = "<group>"; };
 		5B669F40204A894900DC2760 /* CardBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBook.swift; sourceTree = "<group>"; };
 		5B669F42204AB02F00DC2760 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 				5B35E5CD2056BA6100678A10 /* RoyalAlchemistCreature.swift */,
 				5B35E5C92056AA4300678A10 /* OldProphetCreature.swift */,
 				5B35E5CB2056AE1A00678A10 /* FireImpCreature.swift */,
+				5B35E5D12056D92C00678A10 /* MysticLancerCreature.swift */,
+				5B35E5D32057034E00678A10 /* WitchCreature.swift */,
 			);
 			path = Creatures;
 			sourceTree = "<group>";
@@ -338,6 +344,7 @@
 				5BE0B0BC204F48E3009DA26E /* FireballSpell.swift in Sources */,
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
 				5B669F43204AB02F00DC2760 /* Card.swift in Sources */,
+				5B35E5D42057034E00678A10 /* WitchCreature.swift in Sources */,
 				5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */,
 				5BCA6F122038911000B81376 /* GameScene.swift in Sources */,
 				5BCA6F282039E74200B81376 /* CreatureCard.swift in Sources */,
@@ -345,6 +352,7 @@
 				5BE0B0BE204F4A27009DA26E /* ChainLightningSpell.swift in Sources */,
 				5B35E5C12051FC1400678A10 /* BountyHunterCreature.swift in Sources */,
 				5BCA6F2A2039EE2300B81376 /* CreatureSprite.swift in Sources */,
+				5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */,
 				5BCA6F2C203A283200B81376 /* CardSprite.swift in Sources */,
 				5BCA6F2E203A2AB400B81376 /* CreatureCardSprite.swift in Sources */,
 				5B33A64C204116CF00CF2D76 /* SpellCardSprite.swift in Sources */,
