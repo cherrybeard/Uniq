@@ -8,10 +8,6 @@
 
 import SpriteKit
 
-enum OwnerType: Int {
-    case player = 0, computer
-}
-
 class CharacterSprite: SKNode {
     var owner: OwnerType = .player
     var destroyed: Bool = false

@@ -8,8 +8,8 @@
 
 import SpriteKit
 
-class ManaCounter: SKNode {
-    var _amount:Int = 1
+class ManaCounter: SKNode, Targetable {
+    private var _amount:Int
     var amount:Int {
         get { return _amount }
         set {
@@ -17,18 +17,24 @@ class ManaCounter: SKNode {
             label.text = String(_amount)
         }
     }
-    var totalAmount:Int = 1
+    var totalAmount:Int
     
     let label = SKLabelNode()
+    let border = SKShapeNode(circleOfRadius: 24)
+    var isPossibleTarget: Bool = false
+    var isCurrentTarget: Bool = false
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init() {
+    init(startingAmount: Int = 1) {
+        _amount = startingAmount
+        totalAmount = startingAmount
         super.init()
         
-        let border = SKShapeNode(circleOfRadius: 24)
+        amount = startingAmount
+        
         border.lineWidth = 0
         border.fillColor = UIColor(hue: 205.0/360.0, saturation: 76.0/100.0, brightness: 74.0/100.0, alpha: 1)
         
@@ -44,7 +50,7 @@ class ManaCounter: SKNode {
         name = "end-turn"
     }
     
-    func use(amount: Int) -> Bool {
+    func use(amount: Int) -> Bool { // replace amount with _
         if amount > self.amount { return false }
         
         self.amount -= amount

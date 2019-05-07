@@ -21,10 +21,12 @@ struct Player {
 
 class Battle {
     let player = Player()
-    let desk = DeskSprite()
+    let desk = TableSprite()
     let animationPipeline = AnimationPipeline()
     
-    func summon(_ creature: CreatureSprite) {
+    var state: TurnState = .playerTurn      // TODO: split it into currentPlayer: OwnerType and state
+    
+    func summon(_ creature: CreatureSprite) { // OBSOLETE
         desk.summon(creature)
         if creature.creature.charge {
             creature.canAttack = true
@@ -32,7 +34,7 @@ class Battle {
         creature.battlecry(battle: self)
     }
     
-    func play(cardSprite: CardSprite, target: CreatureSprite? = nil) {
+    func play(cardSprite: CardSprite, target: CreatureSprite? = nil) {  // OBSOLETE
         let cost = cardSprite.card.cost
         if player.mana.use(amount: cost) {
             cardSprite.card.play(battle: self, for: .player, target: target)
@@ -40,6 +42,18 @@ class Battle {
             player.deck.hand.clean()
             player.highlightCards()
         }
+    }
+    
+    func play(_ creatureCard: CreatureCardSprite, to creatureSpot: CreatureSpotSprite) -> Bool {
+        if !creatureSpot.isTaken {
+            if let creature = creatureCard.card as? CreatureCard {
+                if player.mana.use(amount: creature.cost) {
+                    setCardState(card: creatureCard, state: .discarded)
+                    desk.summon(creature, to: creatureSpot)
+                }
+            }
+        }
+        return false
     }
     
     func attack(attacking: CharacterSprite, defending: CharacterSprite) {
@@ -50,4 +64,11 @@ class Battle {
         let animation = AttackAnimation(attacking: attacking, defending: defending)
         animationPipeline.add(animation: animation)
     }
+    
+    func setCardState(card: CardSprite, state: CardState) {
+        card.state = state
+        player.deck.hand.clean()
+        player.highlightCards()
+    }
+    
 }

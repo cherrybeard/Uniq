@@ -13,6 +13,14 @@ enum CardState {
 }
 
 class CardSprite: SKNode {
+    let WIDTH = 60
+    let HEIGHT = 90
+    
+    private let ACTIVE_BORDER_COLOR = UIColor(rgb: 0xC69F78, alpha: 1)
+    private let DEFAULT_BORDER_COLOR = UIColor(rgb: 0x484644, alpha: 1)
+    private let DEFAULT_FILL_COLOR = UIColor(rgb: 0x111111, alpha: 1)
+    private let ACTIVE_FILL_COLOR = UIColor(rgb: 0x333333, alpha: 1)
+    
     var card: Card
     var state: CardState = .deck
     
@@ -25,26 +33,30 @@ class CardSprite: SKNode {
         }
     }
     
+    private var _isActive:Bool = false
+    var isActive: Bool {
+        get { return _isActive }
+        set(newValue) {
+            _isActive = newValue
+            redrawBorder()
+        }
+    }
+    
     private let costLabel: StatLabel
     let descriptionLabel = SKLabelNode(text: "")
     let border: SKShapeNode
     
-    let width = 50
-    let height = 90
-    private let canPlayBorderColor = UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1)
-    private let defaultBorderColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
-    
     init(card: Card) {
         self.card = card
         costLabel = StatLabel(type: .cost, value: card.cost)
-        border = SKShapeNode(rectOf: CGSize(width: width, height: height))
+        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
         super.init()
         
-        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
+        border.fillColor = DEFAULT_FILL_COLOR
         border.lineWidth = 1
         redrawBorder()
         
-        costLabel.position = CGPoint(x: -width/2 + 6, y: height/2 - 6)
+        costLabel.position = CGPoint(x: -WIDTH/2 + 6, y: HEIGHT/2 - 6)
         
         descriptionLabel.text = card.description
         descriptionLabel.fontColor = SKColor.white
@@ -67,6 +79,7 @@ class CardSprite: SKNode {
     }
     
     func redrawBorder() {
-        border.strokeColor = canPlay ? canPlayBorderColor : defaultBorderColor
+        border.strokeColor = canPlay ? ACTIVE_BORDER_COLOR : DEFAULT_BORDER_COLOR
+        border.fillColor = isActive ? ACTIVE_FILL_COLOR : DEFAULT_FILL_COLOR
     }
 }

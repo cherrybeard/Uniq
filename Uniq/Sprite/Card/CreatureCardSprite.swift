@@ -22,8 +22,8 @@ class CreatureCardSprite: CardSprite {
         super.init(card: card)
         
         descriptionLabel.position = CGPoint(x: 0, y: -20)
-        attackLabel.position = CGPoint(x: -width/2 + 6, y: -height/2 + 6)
-        healthLabel.position = CGPoint(x: width/2 - 6, y: -height/2 + 6)
+        attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
+        healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
         
         addChild(attackLabel)
         addChild(healthLabel)

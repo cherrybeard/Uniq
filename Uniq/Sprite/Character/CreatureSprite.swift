@@ -9,18 +9,19 @@
 import SpriteKit
 
 class CreatureSprite: CharacterSprite {
+    private let DEFUALT_BORDER_COLOR = UIColor(rgb: 0x484644, alpha: 1)
+    private let WIDTH: Int = 90
+    private let HEIGHT: Int = 60
+    
     var creature: CreatureCard
     private let attackLabel: StatLabel
     private let border: SKShapeNode
-    
-    private let width: Int = 50
-    private let height: Int = 90
     
     init(creature: CreatureCard, owner: OwnerType) {
         self.creature = creature
         
         attackLabel = StatLabel(type: .attack, value: creature.attack)
-        border = SKShapeNode(rectOf: CGSize(width: width, height: height))
+        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
         
         super.init(owner: owner)
         
@@ -31,11 +32,11 @@ class CreatureSprite: CharacterSprite {
         healthLabel.value = _health
         attackLabel.value = _attack
         
-        border.fillColor = UIColor(hue: 0, saturation: 0, brightness: 27.0/100.0, alpha: 1)
+        border.fillColor = DEFUALT_BORDER_COLOR
         border.lineWidth = 1
         redrawBorder()
-        attackLabel.position = CGPoint(x: -width/2 + 6, y: -height/2 + 6)
-        healthLabel.position = CGPoint(x: width/2 - 6, y: -height/2 + 6)
+        attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
+        healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
         healthLabel.zPosition = 1
         
         addChild(border)

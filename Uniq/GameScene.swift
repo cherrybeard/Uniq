@@ -13,18 +13,18 @@ enum TurnState: Int {
     case preparing = 0, playerTurn, playerEnd, computerTurn, computerEnd
 }
 
-enum PlayerActionType: Int {
+enum PlayerActionType: Int {   // OBSOLETE
     case rest = 0, attack, card, endTurn
 }
 
-enum NodeType: String {
+enum NodeType: String {    // OBSOLETE
     case desk = "desk"
     case card = "card"
     case character = "character"
     case endTurn = "end-turn"
 }
 
-struct PlayerAction {
+struct PlayerAction {   // OBSOLETE
     var type: PlayerActionType = .rest
     var subject: Any? = nil
     var requiresTarget: Bool = false
@@ -32,10 +32,42 @@ struct PlayerAction {
 
 class GameScene: SKScene {
     let battle = Battle()
-    var state: TurnState = .playerTurn
-    var playerAction = PlayerAction()
+    var sourceNode: SKNode? = nil
     
-    struct ScreenBoundaries {
+    var state: TurnState = .playerTurn  // OBSOLETE
+    var playerAction = PlayerAction()   // OBSOLETE
+    
+    private var _possibleTargets: [Targetable] = [] // TODO: Rework into targetStates array... maybe
+    private var possibleTargets: [Targetable] {     // problem is how to ajoin possibleTargets array
+        get { return _possibleTargets }             // with currentTargest array
+        set(newTargets) {
+            for var target in _possibleTargets {
+                target.isPossibleTarget = false
+            }
+            _possibleTargets = []
+            for var target in newTargets {
+                target.isPossibleTarget = true
+                _possibleTargets.append(target)
+            }
+        }
+    }
+    
+    private var _currentTargets: [Targetable] = []
+    private var currentTargets: [Targetable] {
+        get { return _currentTargets }
+        set(newTargets) {
+            for var target in _currentTargets {
+                target.isCurrentTarget = false
+            }
+            _currentTargets = []
+            for var target in newTargets {
+                target.isCurrentTarget = true
+                _currentTargets.append(target)
+            }
+        }
+    }
+    
+    struct ScreenBoundaries {   // constant? use uppercase
         static let bottom = -Int(UIScreen.main.bounds.size.height/2)
         static let left = -Int(UIScreen.main.bounds.size.width/2)
         static let right = Int(UIScreen.main.bounds.size.width/2)
@@ -47,11 +79,12 @@ class GameScene: SKScene {
     
     override init(size: CGSize) {
         super.init(size: size)
+        self.backgroundColor = UIColor(rgb: 0x000000, alpha: 1)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         battle.player.mana.position = CGPoint(x: ScreenBoundaries.right - 40, y: ScreenBoundaries.bottom + 160)
         battle.player.deck.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
-        battle.desk.playerHero.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
+        battle.desk.playerHero.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 160)
         
         addChild(battle.player.deck.hand)
         addChild(battle.player.mana)
@@ -60,13 +93,9 @@ class GameScene: SKScene {
         
         for _ in 1...5 { battle.player.deck.draw() }
         
-        let leftThug = CreatureSprite(creature: CardBook["Thug"] as! CreatureCard, owner: .computer)
-        let bandit = CreatureSprite(creature: CardBook["Bandit"] as! CreatureCard, owner: .computer)
-        let rightThug = CreatureSprite(creature: CardBook["Thug"] as! CreatureCard, owner: .computer)
-        
-        battle.summon(leftThug)
-        battle.summon(bandit)
-        battle.summon(rightThug)
+        battle.desk.summon(CardBook["Thug"] as! CreatureCard, to: 3)
+        battle.desk.summon(CardBook["Bandit"] as! CreatureCard, to: 5)
+        battle.desk.summon(CardBook["Thug"] as! CreatureCard, to: 4)
         
         battle.player.highlightCards()
     }
@@ -92,6 +121,16 @@ class GameScene: SKScene {
         state = .computerEnd
     }
     
+    func endPlayerTurn() {
+        startPlayerTurn()
+    }
+    
+    func startPlayerTurn() {
+        battle.player.mana.increaseAndRestore()
+        battle.player.deck.draw()
+        battle.player.highlightCards()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             if state == .playerTurn {
@@ -99,6 +138,23 @@ class GameScene: SKScene {
                 let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
                 
                 for node in touchedNodes {
+                    if let card = node as? CreatureCardSprite {
+                        // add inheritance from Clickable (protocol?) to CardSprite etc.
+                        if card.canPlay {
+                            card.isActive = true
+                            sourceNode = node
+                            possibleTargets = battle.desk.creatureSpots.filter({
+                                ($0.owner == .player) && !$0.isTaken
+                            })
+                            break
+                        }
+                    }
+                    if let endTurnButton = node as? ManaCounter {
+                        sourceNode = node
+                        possibleTargets = [endTurnButton]
+                        break
+                    }
+                    /*
                     if let nodeType = NodeType(rawValue: node.name!) {
                         switch nodeType {
                         case .character:
@@ -133,8 +189,31 @@ class GameScene: SKScene {
                         }
                         
                     }
+                    */
                 }
             }
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let touchLocation = touch.location(in: self)
+            let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
+            
+            var newTargets: [Targetable] = []
+            if state == .playerTurn {
+                if sourceNode?.name == "card" {
+                    for node in touchedNodes {
+                        if var target = node as? Targetable {
+                            if target.isPossibleTarget {
+                                target.isCurrentTarget = true
+                                newTargets.append(target)
+                            }
+                        }
+                    }
+                }
+            }
+            currentTargets = newTargets
         }
     }
     
@@ -144,6 +223,28 @@ class GameScene: SKScene {
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
             
             if state == .playerTurn {
+                for node in touchedNodes {
+                    if let target = node as? Targetable {
+                        if !target.isPossibleTarget { continue }
+                    }
+                    
+                    if sourceNode?.name == "card" {
+                        if let creatureSpot = node as? CreatureSpotSprite {
+                            if creatureSpot.owner != .player { continue }
+                            if let creatureCard = sourceNode as? CreatureCardSprite {
+                                if battle.play(creatureCard, to: creatureSpot) { break }
+                            }
+                        }
+                    }
+                    
+                    if sourceNode?.name == "end-turn" {
+                        if let _ = node as? ManaCounter {
+                            endPlayerTurn()
+                        }
+                    }
+                }
+                
+                /*
                 for node in touchedNodes {
                     if let nodeType = NodeType(rawValue: node.name!) {
                         switch playerAction.type {
@@ -189,6 +290,16 @@ class GameScene: SKScene {
                         }
                     }
                 }
+                 */
+                
+                currentTargets = []
+                possibleTargets = []
+                
+                if let card = sourceNode as? CardSprite {
+                    card.isActive = false
+                }
+                sourceNode = nil
+                
                 playerAction.type = .rest
                 playerAction.subject = nil
                 playerAction.requiresTarget = false
@@ -198,9 +309,10 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        /*
         battle.animationPipeline.update()
         if ( battle.animationPipeline.state == AnimationState.finished) {
-            battle.desk.removeDeadCreatures()
+            //battle.desk.removeDeadCreatures() // Causes permamament leak
             if (state == .computerEnd) {
                 state = .playerTurn
                 battle.player.mana.increaseAndRestore()
@@ -216,5 +328,6 @@ class GameScene: SKScene {
                 makeComputerMove()
             }
         }
+        */
     }
 }
