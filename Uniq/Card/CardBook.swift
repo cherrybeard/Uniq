@@ -25,6 +25,7 @@ var CardBook: [String: Card] = [
     "Firelink Priest": FirelinkPriestCreature(),
     "Mystic Lancer": MysticLancerCreature(),
     "Witch": WitchCreature(),
+    "Yletia Pirate": YletiaPirate(),
     
     "Fairy":        CreatureCard(cost: 0, attack: 1, health: 1),
     

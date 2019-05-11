@@ -12,14 +12,17 @@ enum CardState {
     case deck, hand, discarded
 }
 
-class CardSprite: SKNode {
+class CardSprite: SKNode, Tappable {
     let WIDTH = 60
     let HEIGHT = 90
-    
-    private let ACTIVE_BORDER_COLOR = UIColor(rgb: 0xC69F78, alpha: 1)
-    private let DEFAULT_BORDER_COLOR = UIColor(rgb: 0x484644, alpha: 1)
-    private let DEFAULT_FILL_COLOR = UIColor(rgb: 0x111111, alpha: 1)
-    private let ACTIVE_FILL_COLOR = UIColor(rgb: 0x333333, alpha: 1)
+    private struct BORDER_COLOR {
+        static let base: UIColor = UIColor(rgb: 0x484644, alpha: 1)
+        static let canPlay: UIColor = UIColor(rgb: 0xC69F78, alpha: 1)
+    }
+    private struct FILL_COLOR {
+        static let base: UIColor = UIColor(rgb: 0x111111, alpha: 1)
+        static let tapped: UIColor = UIColor(rgb: 0x333333, alpha: 1)
+    }
     
     var card: Card
     var state: CardState = .deck
@@ -29,16 +32,16 @@ class CardSprite: SKNode {
         get { return _canPlay }
         set(newValue) {
             _canPlay = newValue
-            redrawBorder()
+            redraw()
         }
     }
     
-    private var _isActive:Bool = false
-    var isActive: Bool {
-        get { return _isActive }
+    private var _isCurrentlyTapped: Bool = false
+    var isCurrentlyTapped: Bool {
+        get { return _isCurrentlyTapped }
         set(newValue) {
-            _isActive = newValue
-            redrawBorder()
+            _isCurrentlyTapped = newValue
+            redraw()
         }
     }
     
@@ -52,9 +55,8 @@ class CardSprite: SKNode {
         border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
         super.init()
         
-        border.fillColor = DEFAULT_FILL_COLOR
         border.lineWidth = 1
-        redrawBorder()
+        redraw()
         
         costLabel.position = CGPoint(x: -WIDTH/2 + 6, y: HEIGHT/2 - 6)
         
@@ -78,8 +80,8 @@ class CardSprite: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func redrawBorder() {
-        border.strokeColor = canPlay ? ACTIVE_BORDER_COLOR : DEFAULT_BORDER_COLOR
-        border.fillColor = isActive ? ACTIVE_FILL_COLOR : DEFAULT_FILL_COLOR
+    func redraw() {
+        border.fillColor = _isCurrentlyTapped ? FILL_COLOR.tapped : FILL_COLOR.base
+        border.strokeColor = _canPlay ? BORDER_COLOR.canPlay : BORDER_COLOR.base
     }
 }

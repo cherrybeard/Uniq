@@ -33,6 +33,7 @@ struct PlayerAction {   // OBSOLETE
 class GameScene: SKScene {
     let battle = Battle()
     var sourceNode: SKNode? = nil
+    var delayedTask: DispatchWorkItem? = nil
     
     var state: TurnState = .playerTurn  // OBSOLETE
     var playerAction = PlayerAction()   // OBSOLETE
@@ -67,6 +68,21 @@ class GameScene: SKScene {
         }
     }
     
+    private var _currentlyTapped: [Tappable] = []
+    private var currentlyTapped: [Tappable] {
+        get { return _currentlyTapped }
+        set(newTargets) {
+            for var target in _currentlyTapped {
+                target.isCurrentlyTapped = false
+            }
+            _currentlyTapped = []
+            for var target in newTargets {
+                target.isCurrentlyTapped = true
+                _currentlyTapped.append(target)
+            }
+        }
+    }
+    
     struct ScreenBoundaries {   // constant? use uppercase
         static let bottom = -Int(UIScreen.main.bounds.size.height/2)
         static let left = -Int(UIScreen.main.bounds.size.width/2)
@@ -93,11 +109,14 @@ class GameScene: SKScene {
         
         for _ in 1...5 { battle.player.deck.draw() }
         
+        // TODO: add checking of the name and make it easier to use
+        battle.desk.summon(CardBook["Yletia Pirate"] as! CreatureCard, to: 7)
         battle.desk.summon(CardBook["Thug"] as! CreatureCard, to: 3)
         battle.desk.summon(CardBook["Bandit"] as! CreatureCard, to: 5)
         battle.desk.summon(CardBook["Thug"] as! CreatureCard, to: 4)
         
         battle.player.highlightCards()
+        
     }
     
     func makeComputerMove() {
@@ -122,10 +141,20 @@ class GameScene: SKScene {
     }
     
     func endPlayerTurn() {
+        startComputerTurn()
+    }
+    
+    func startComputerTurn() {
         startPlayerTurn()
     }
     
     func startPlayerTurn() {
+        battle.player.mana.increaseAndRestore()
+        battle.player.deck.draw()
+        battle.player.highlightCards()
+    }
+    
+    func startNewRound(){
         battle.player.mana.increaseAndRestore()
         battle.player.deck.draw()
         battle.player.highlightCards()
@@ -138,14 +167,28 @@ class GameScene: SKScene {
                 let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
                 
                 for node in touchedNodes {
+                    // TODO: rework to unified Tappable experience
+                    // TODO: join Tapped with sourceNode
                     if let card = node as? CreatureCardSprite {
-                        // add inheritance from Clickable (protocol?) to CardSprite etc.
                         if card.canPlay {
-                            card.isActive = true
                             sourceNode = node
+                            currentlyTapped = [card]
                             possibleTargets = battle.desk.creatureSpots.filter({
                                 ($0.owner == .player) && !$0.isTaken
                             })
+                            break
+                        }
+                    }
+                    if let creatureSprite = node as? CreatureSprite {
+                        if creatureSprite.creature.hasActiveAbility && (creatureSprite.owner == .player) {
+                            sourceNode = node
+                            currentlyTapped = [creatureSprite]
+                            possibleTargets = [creatureSprite]
+                            delayedTask = DispatchWorkItem { [ weak self ] in
+                                creatureSprite.creature.useActiveAbility(battle: self!.battle)
+                                self?.currentlyTapped = []
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
                             break
                         }
                     }
@@ -154,42 +197,6 @@ class GameScene: SKScene {
                         possibleTargets = [endTurnButton]
                         break
                     }
-                    /*
-                    if let nodeType = NodeType(rawValue: node.name!) {
-                        switch nodeType {
-                        case .character:
-                            let creature = node as? CharacterSprite
-                            if (creature?.canAttack)! {
-                                playerAction.type = .attack
-                                playerAction.subject = creature
-                            }
-                            break
-                            
-                        case .card:
-                            if let card = node as? CardSprite {
-                                playerAction.type = .card
-                                playerAction.subject = card
-                                if card.card.requiresTarget {
-                                    playerAction.requiresTarget = true
-                                    if let filter = card.card.targetFilter {
-                                        battle.desk.markTargets(filter: filter)
-                                    } else {
-                                        battle.desk.markTargets()
-                                    }
-                                }
-                                break
-                            }
-                            
-                        case .endTurn:
-                            playerAction.type = .endTurn
-                            break
-                            
-                        default:
-                            continue
-                        }
-                        
-                    }
-                    */
                 }
             }
         }
@@ -211,6 +218,17 @@ class GameScene: SKScene {
                             }
                         }
                     }
+                }
+                if (delayedTask != nil) && !delayedTask!.isCancelled {
+                    var stopTask = true
+                    for node in touchedNodes {
+                        if let target = node as? Targetable {
+                            if target.isPossibleTarget {
+                                stopTask = false
+                            }
+                        }
+                    }
+                    if stopTask { cancelDelayedTask() }
                 }
             }
             currentTargets = newTargets
@@ -244,67 +262,17 @@ class GameScene: SKScene {
                     }
                 }
                 
-                /*
-                for node in touchedNodes {
-                    if let nodeType = NodeType(rawValue: node.name!) {
-                        switch playerAction.type {
-                        case .attack:
-                            if nodeType == .character {
-                                if let defendingCreature = node as? CreatureSprite {
-                                    if defendingCreature.owner == .computer {
-                                        if let attackingCreature = playerAction.subject as? CreatureSprite {
-                                            battle.attack(
-                                                attacking: attackingCreature,
-                                                defending: defendingCreature
-                                            )
-                                        }
-                                    }
-                                }
-                                break
-                            }
-                            
-                        case .card:
-                            if let card = playerAction.subject as? CardSprite {
-                                if playerAction.requiresTarget && (nodeType == .character) {
-                                    if let creature = node as? CreatureSprite {
-                                        if creature.isTarget {
-                                            battle.play(cardSprite: card, target: creature)
-                                        }
-                                    }
-                                    break
-                                }
-                                if !playerAction.requiresTarget && (nodeType == .desk) {
-                                    battle.play(cardSprite: card)
-                                    break
-                                }
-                            }
-                            
-                        case .endTurn:
-                            if nodeType == .endTurn {
-                                state = .playerEnd
-                                break
-                            }
-                        
-                        default:
-                            continue
-                        }
-                    }
-                }
-                 */
-                
                 currentTargets = []
                 possibleTargets = []
-                
-                if let card = sourceNode as? CardSprite {
-                    card.isActive = false
-                }
-                sourceNode = nil
+                currentlyTapped = []
                 
                 playerAction.type = .rest
                 playerAction.subject = nil
                 playerAction.requiresTarget = false
                 battle.desk.markTargets(filter: { (_) -> Bool in false })
             }
+            
+            cancelDelayedTask()
         }
     }
     
@@ -329,5 +297,10 @@ class GameScene: SKScene {
             }
         }
         */
+    }
+    
+    private func cancelDelayedTask() {
+        sourceNode = nil
+        delayedTask?.cancel()
     }
 }

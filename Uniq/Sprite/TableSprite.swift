@@ -17,12 +17,10 @@ class TableSprite: SKNode {     // TODO: Combine with Battle class
     var creatures: [CharacterSprite] = []
     var playerHero = HeroSprite(health: 30)
     
-    private let creatureHalfVolume = (50 + 20) / 2          // OBSOLETE
     private let creaturesYPosition: [OwnerType: Int] = [    // OBSOLETE
         .player: -55,
         .computer: 65
     ]
-    
     
     override init() {
         super.init()
@@ -68,6 +66,7 @@ class TableSprite: SKNode {     // TODO: Combine with Battle class
     func summon(_ creature: CreatureCard, to creatureSpot: CreatureSpotSprite) {
         let creatureSprite = CreatureSprite(creature: creature, owner: creatureSpot.owner)
         creatureSprite.position = creatureSpot.position
+        creatureSprite.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
         addChild(creatureSprite)
         creatures.append(creatureSprite)
         creatureSpot.isTaken = true

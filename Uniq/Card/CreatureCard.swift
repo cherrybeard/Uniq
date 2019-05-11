@@ -7,9 +7,12 @@
 //
 
 class CreatureCard: Card {
+    weak var summon: CreatureSprite? = nil
+    
     var attack: Int
     var health: Int
     var charge: Bool = false
+    var hasActiveAbility: Bool = false
     
     init(cost: Int, attack: Int, health: Int) {
         self.attack = attack
@@ -17,7 +20,7 @@ class CreatureCard: Card {
         super.init(cost: cost)
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {  // OBSOLETE
         let creature = CreatureSprite(creature: self, owner: owner)
         battle.summon(creature)
     }
@@ -31,6 +34,10 @@ class CreatureCard: Card {
     }
     
     func deathrattle(battle: Battle, creature: CreatureSprite) {
+        
+    }
+    
+    func useActiveAbility(battle: Battle) {
         
     }
 }
