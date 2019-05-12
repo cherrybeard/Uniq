@@ -8,13 +8,15 @@
 
 class OldProphetCreature: CreatureCard {
     init() {
-        super.init(cost: 2, attack: 1, health: 1)
+        super.init(attack: 1, health: 1)
         description = "Battlecry: Draw 1 card."
     }
     
     override func battlecry(battle: Battle, creature: CreatureSprite) {
+        /*
         if creature.owner == .player {
             battle.player.deck.draw()
         }
+        */
     }
 }

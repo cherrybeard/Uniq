@@ -10,9 +10,9 @@ import Foundation
 
 class YletiaPirate: CreatureCard {
     init() {
-        super.init(cost: 5, attack: 1, health: 4)
+        super.init(attack: 1, health: 4)
         description = "Yletia Pirate"
-        hasActiveAbility = true
+        activeAbilityCooldown = 1
     }
     
     override func useActiveAbility(battle: Battle) {

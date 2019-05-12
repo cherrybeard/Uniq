@@ -8,10 +8,6 @@
 
 import SpriteKit
 
-enum OwnerType: Int {
-    case player = -1, computer = 1
-}
-
 enum RangeType: Int {
     case melee = 0, range = 1
 }
@@ -29,7 +25,7 @@ class CreatureSpotSprite: SKNode, Targetable {
         static let currentTarget: UIColor = UIColor(rgb: 0x614F3F, alpha: 1)
     }
     
-    let owner: OwnerType
+    weak var owner: Player?
     let range: RangeType
     let column: ColumnType
     var isTaken: Bool = false
@@ -57,7 +53,7 @@ class CreatureSpotSprite: SKNode, Targetable {
     var index: Int {
         get {
             var shift: Int = column.rawValue + 2
-            if owner == .player {
+            if owner?.type == .human {
                 shift += 6 + range.rawValue * 3
             } else {
                 shift += (range.rawValue-1) * -3
@@ -66,8 +62,8 @@ class CreatureSpotSprite: SKNode, Targetable {
         }
     }
     
-    init(owner: OwnerType, range: RangeType, column: ColumnType) {
-        self.owner = owner
+    init(for player: Player, range: RangeType, column: ColumnType) {
+        self.owner = player
         self.range = range
         self.column = column
         border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT))
@@ -75,8 +71,13 @@ class CreatureSpotSprite: SKNode, Targetable {
         _afterInit()
     }
     
-    init(index: Int) {
-        owner = CreatureSpotSprite._getOwner(of: index)
+    init(at index: Int, battle: Battle) {
+        let ownerType = CreatureSpotSprite._getOwner(of: index)
+        if ownerType == .human  {
+            owner = battle.human
+        } else {
+            owner = battle.ai
+        }
         range = CreatureSpotSprite._getRange(of: index)
         column = CreatureSpotSprite._getColumn(of: index)
         border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
@@ -119,8 +120,8 @@ class CreatureSpotSprite: SKNode, Targetable {
         return ColumnType(rawValue: column) ?? .center
     }
     
-    static private func _getOwner(of index: Int) -> OwnerType {
-        return checkIndex(index) > 6 ? .player : .computer
+    static private func _getOwner(of index: Int) -> PlayerType {
+        return checkIndex(index) > 6 ? .human : .ai
     }
     
     static private func _getRange(of index: Int) -> RangeType {

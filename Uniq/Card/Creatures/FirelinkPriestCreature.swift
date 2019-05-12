@@ -8,12 +8,14 @@
 
 class FirelinkPriestCreature: CreatureCard {
     init() {
-        super.init(cost: 3, attack: 1, health: 1)
+        super.init(attack: 1, health: 1)
         description = "Battlecry: Set health to number of cards in your hand"
     }
     
     override func battlecry(battle: Battle, creature: CreatureSprite) {
+        /*
         let health = battle.player.deck.handPile.count
         creature.setHealth(to: health)
+        */
     }
 }

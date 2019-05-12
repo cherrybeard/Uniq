@@ -32,6 +32,8 @@ struct PlayerAction {   // OBSOLETE
 
 class GameScene: SKScene {
     let battle = Battle()
+    let passButton = PassButton()
+    
     var sourceNode: SKNode? = nil
     var delayedTask: DispatchWorkItem? = nil
     
@@ -97,35 +99,33 @@ class GameScene: SKScene {
         super.init(size: size)
         self.backgroundColor = UIColor(rgb: 0x000000, alpha: 1)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
+
+        battle.human.deck.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
+        //battle.desk.playerHero.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 160)
+        passButton.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
         
-        battle.player.mana.position = CGPoint(x: ScreenBoundaries.right - 40, y: ScreenBoundaries.bottom + 160)
-        battle.player.deck.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
-        battle.desk.playerHero.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 160)
+        addChild(passButton)
+        addChild(battle.human.deck.hand)
+        addChild(battle)
+        //addChild(battle.desk.playerHero)
         
-        addChild(battle.player.deck.hand)
-        addChild(battle.player.mana)
-        addChild(battle.desk)
-        addChild(battle.desk.playerHero)
-        
-        for _ in 1...5 { battle.player.deck.draw() }
+        for _ in 1...5 { battle.human.deck.draw() }
         
         // TODO: add checking of the name and make it easier to use
-        battle.desk.summon(CardBook["Yletia Pirate"] as! CreatureCard, to: 7)
-        battle.desk.summon(CardBook["Thug"] as! CreatureCard, to: 3)
-        battle.desk.summon(CardBook["Bandit"] as! CreatureCard, to: 5)
-        battle.desk.summon(CardBook["Thug"] as! CreatureCard, to: 4)
-        
-        battle.player.highlightCards()
-        
+        battle.summon(CardBook["Yletia Pirate"] as! CreatureCard, to: 7)
+        battle.summon(CardBook["Thug"] as! CreatureCard, to: 3)
+        battle.summon(CardBook["Bandit"] as! CreatureCard, to: 5)
+        battle.summon(CardBook["Thug"] as! CreatureCard, to: 4)
     }
     
     func makeComputerMove() {
-        let creatures = battle.desk.creatures.filter { creature in (creature.owner == .computer) && creature.canAttack }
+        /*
+        let creatures = battle.desk.creatures.filter { creature in (creature.owner == .ai) && creature.canAttack }
         if creatures.count > 0 {
             let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
             
             for creature in creaturesShuffled {
-                let playerCreatures = battle.desk.creatures.filter { creature in (creature.owner == .player) && !creature.dead && (creature is CreatureSprite) }
+                let playerCreatures = battle.desk.creatures.filter { creature in (creature.owner == .human) && !creature.dead && (creature is CreatureSprite) }
                 var target: CharacterSprite
                 if playerCreatures.count != 0 {
                     let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
@@ -138,26 +138,38 @@ class GameScene: SKScene {
             }
         }
         state = .computerEnd
+        */
     }
     
-    func endPlayerTurn() {
+    func endTurn(of owner: PlayerType, passed: Bool = false) {
+        if passed && passButton.readyToFight {
+            endRound()
+        }
+    }
+    
+    func endPlayerTurn(passed: Bool = false) {
         startComputerTurn()
     }
     
     func startComputerTurn() {
+        let computerCreatures = battle.creatures.filter { $0.owner.type == .ai }
         startPlayerTurn()
     }
     
     func startPlayerTurn() {
-        battle.player.mana.increaseAndRestore()
-        battle.player.deck.draw()
-        battle.player.highlightCards()
+        for creature in battle.creatures {
+            creature.decreaseAbilityCooldown()
+        }
+        battle.human.deck.draw()
+        passButton.readyToFight = false
     }
     
-    func startNewRound(){
-        battle.player.mana.increaseAndRestore()
-        battle.player.deck.draw()
-        battle.player.highlightCards()
+    func endRound(){
+        // fight
+        for creature in battle.creatures {
+            creature.decreaseAbilityCooldown()
+        }
+        battle.human.deck.draw()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -173,26 +185,28 @@ class GameScene: SKScene {
                         if card.canPlay {
                             sourceNode = node
                             currentlyTapped = [card]
-                            possibleTargets = battle.desk.creatureSpots.filter({
-                                ($0.owner == .player) && !$0.isTaken
+                            possibleTargets = battle.creatureSpots.filter({
+                                ($0.owner!.type == .human) && !$0.isTaken
                             })
                             break
                         }
                     }
                     if let creatureSprite = node as? CreatureSprite {
-                        if creatureSprite.creature.hasActiveAbility && (creatureSprite.owner == .player) {
+                        if (creatureSprite.activeAbilityCooldown == 0) && (creatureSprite.owner.type == .human) {
                             sourceNode = node
                             currentlyTapped = [creatureSprite]
                             possibleTargets = [creatureSprite]
+                            currentTargets = [creatureSprite]
                             delayedTask = DispatchWorkItem { [ weak self ] in
-                                creatureSprite.creature.useActiveAbility(battle: self!.battle)
-                                self?.currentlyTapped = []
+                                creatureSprite.useActiveAbility(battle: self!.battle)
+                                self?.possibleTargets = []
+                                self?.currentTargets = []
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
                             break
                         }
                     }
-                    if let endTurnButton = node as? ManaCounter {
+                    if let endTurnButton = node as? PassButton {
                         sourceNode = node
                         possibleTargets = [endTurnButton]
                         break
@@ -209,13 +223,11 @@ class GameScene: SKScene {
             
             var newTargets: [Targetable] = []
             if state == .playerTurn {
-                if sourceNode?.name == "card" {
-                    for node in touchedNodes {
-                        if var target = node as? Targetable {
-                            if target.isPossibleTarget {
-                                target.isCurrentTarget = true
-                                newTargets.append(target)
-                            }
+                for node in touchedNodes {
+                    if var target = node as? Targetable {
+                        if target.isPossibleTarget {
+                            target.isCurrentTarget = true
+                            newTargets.append(target)
                         }
                     }
                 }
@@ -228,7 +240,10 @@ class GameScene: SKScene {
                             }
                         }
                     }
-                    if stopTask { cancelDelayedTask() }
+                    if stopTask {
+                        cancelDelayedTask()
+                        possibleTargets = []
+                    }
                 }
             }
             currentTargets = newTargets
@@ -248,7 +263,7 @@ class GameScene: SKScene {
                     
                     if sourceNode?.name == "card" {
                         if let creatureSpot = node as? CreatureSpotSprite {
-                            if creatureSpot.owner != .player { continue }
+                            if creatureSpot.owner!.type != .human { continue }
                             if let creatureCard = sourceNode as? CreatureCardSprite {
                                 if battle.play(creatureCard, to: creatureSpot) { break }
                             }
@@ -256,7 +271,7 @@ class GameScene: SKScene {
                     }
                     
                     if sourceNode?.name == "end-turn" {
-                        if let _ = node as? ManaCounter {
+                        if let _ = node as? PassButton {
                             endPlayerTurn()
                         }
                     }
@@ -269,7 +284,7 @@ class GameScene: SKScene {
                 playerAction.type = .rest
                 playerAction.subject = nil
                 playerAction.requiresTarget = false
-                battle.desk.markTargets(filter: { (_) -> Bool in false })
+                //battle.markTargets(filter: { (_) -> Bool in false })
             }
             
             cancelDelayedTask()

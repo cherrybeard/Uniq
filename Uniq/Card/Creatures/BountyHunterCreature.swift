@@ -8,7 +8,7 @@
 
 class BountyHunterCreature: CreatureCard {
     init() {
-        super.init(cost: 3, attack: 3, health: 2)
+        super.init(attack: 3, health: 2)
         charge = true
         description = "Charge"
     }

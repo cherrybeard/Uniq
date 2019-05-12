@@ -29,8 +29,10 @@ class Deck {
         get { return cards.filter({ card in card.state == .hand }) }
     }
     
-    init() {
-        cards = loadJson(filename: "NotOnlyDamageSpells")!
+    init(name: String = "") {
+        if name != "" {
+            cards = loadJson(filename: name)!
+        }
     }
     
     func loadJson(filename: String) -> [CardSprite]? {

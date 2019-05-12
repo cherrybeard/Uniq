@@ -7,16 +7,18 @@
 //
 
 class SuddenStrikeSpell: SpellCard {
-    init() {
-        super.init(cost: 0)
+    override init() {
+        super.init()
         description = "Deal 2 damage to to undamaged creature"
         requiresTarget = true
-        targetFilter = CardTargetFilters.fullHealthCreatures
+        //targetFilter = CardTargetFilters.fullHealthCreatures
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+    /*
+    override func play(battle: Battle, for owner: PlayerType, target: CreatureSprite? = nil) {
         if let creature = target {
             creature.dealDamage(2, battle: battle)
         }
     }
+     */
 }

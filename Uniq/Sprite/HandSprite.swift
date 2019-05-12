@@ -37,11 +37,13 @@ class HandSprite: SKNode {
         _repositionCards()
     }
     
+    /*
     func highlightCards(mana: Int = -1) {
         for card in cards {
             card.canPlay = (card.card.cost <= mana)
         }
     }
+    */
     
     private func _repositionCards() {
         let duration:TimeInterval = 0.2

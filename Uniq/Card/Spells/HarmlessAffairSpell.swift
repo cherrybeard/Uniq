@@ -7,17 +7,19 @@
 //
 
 class HarmlessAffairSpell: SpellCard {
-    init() {
-        super.init(cost: 3)
+    override init() {
+        super.init()
         description = "Summon three 1/1 Fairies"
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
+        /*
         if let fairyCard = CardBook["Fairy"] as? CreatureCard {
             for _ in 1...3 {
                 let fairy = CreatureSprite(creature: fairyCard, owner: owner)
                 battle.summon(fairy)
             }
         }
+        */
     }
 }

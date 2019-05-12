@@ -10,11 +10,12 @@ import GameplayKit
 
 class WitchCreature: CreatureCard {
     init() {
-        super.init(cost: 1, attack: 3, health: 2)
+        super.init(attack: 3, health: 2)
         description = "Death: Summon creature from your hand"
     }
     
     override func deathrattle(battle: Battle, creature: CreatureSprite) {
+        /*
         let creatureCards = battle.player.deck.hand.cards.filter({ card in (card is CreatureCardSprite) })
         if creatureCards.count > 0 {
             if let shuffledCards = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatureCards) as? [CreatureCardSprite] {
@@ -24,5 +25,6 @@ class WitchCreature: CreatureCard {
                 battle.player.deck.hand.clean()
             }
         }
+        */
     }
 }

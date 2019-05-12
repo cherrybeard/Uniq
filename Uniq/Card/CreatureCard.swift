@@ -12,17 +12,12 @@ class CreatureCard: Card {
     var attack: Int
     var health: Int
     var charge: Bool = false
-    var hasActiveAbility: Bool = false
+    var activeAbilityCooldown: Int = -1
     
-    init(cost: Int, attack: Int, health: Int) {
+    init(attack: Int, health: Int) {
         self.attack = attack
         self.health = health
-        super.init(cost: cost)
-    }
-    
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {  // OBSOLETE
-        let creature = CreatureSprite(creature: self, owner: owner)
-        battle.summon(creature)
+        super.init()
     }
     
     override func generateSprite() -> CreatureCardSprite {
@@ -38,6 +33,7 @@ class CreatureCard: Card {
     }
     
     func useActiveAbility(battle: Battle) {
-        
+        // TODO: Rework into singgle ActiveAbilityty structure
+        // TOOD: Add -> Bool to check if it was really used or maybe some way to check available targets
     }
 }

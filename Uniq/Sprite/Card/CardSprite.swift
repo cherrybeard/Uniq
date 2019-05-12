@@ -45,20 +45,16 @@ class CardSprite: SKNode, Tappable {
         }
     }
     
-    private let costLabel: StatLabel
     let descriptionLabel = SKLabelNode(text: "")
     let border: SKShapeNode
     
     init(card: Card) {
         self.card = card
-        costLabel = StatLabel(type: .cost, value: card.cost)
         border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
         super.init()
         
         border.lineWidth = 1
         redraw()
-        
-        costLabel.position = CGPoint(x: -WIDTH/2 + 6, y: HEIGHT/2 - 6)
         
         descriptionLabel.text = card.description
         descriptionLabel.fontColor = SKColor.white
@@ -70,7 +66,6 @@ class CardSprite: SKNode, Tappable {
         descriptionLabel.position = CGPoint(x: 0, y: -40)
         
         addChild(border)
-        addChild(costLabel)
         addChild(descriptionLabel)
         
         name = "card"

@@ -9,20 +9,12 @@
 import SpriteKit
 
 class CharacterSprite: SKNode {
-    var owner: OwnerType = .player
+    /*
+    var owner: PlayerType = .human
     var destroyed: Bool = false
     var dead: Bool = false
     
     var _maxHealth: Int = 1
-    var _health: Int = 1
-    var health: Int {
-        get { return _health }
-    }
-    
-    var _attack: Int = 0
-    var attack: Int {
-        get { return _attack }
-    }
     
     private var _isTarget: Bool = false
     var isTarget: Bool {
@@ -55,7 +47,7 @@ class CharacterSprite: SKNode {
         SKAction.wait(forDuration: 0.1)
     ])
     
-    init(owner: OwnerType) {
+    init(owner: PlayerType) {
         self.owner = owner
         healthLabel = StatLabel(type: .health, value: _health)
         
@@ -128,12 +120,5 @@ class CharacterSprite: SKNode {
         }
         healthLabel.value = _health
     }
-    
-    func battlecry(battle: Battle) {
-        
-    }
-    
-    func deathrattle(battle: Battle) {
-        
-    }
+ */
 }

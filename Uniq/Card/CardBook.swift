@@ -9,6 +9,7 @@
 
 var CardBook: [String: Card] = [
 // SPELLS
+    /*
     "Vitalization": VitalizationSpell(),
     "Fireball": FireballSpell(),
     "Chain Lightning": ChainLightningSpell(),
@@ -16,6 +17,7 @@ var CardBook: [String: Card] = [
     "Spark": SparkSpell(),
     "Harmless Affair": HarmlessAffairSpell(),
     "Recall": RecallSpell(),
+    */
     
 //  CREATURES
     "Bounty Hunter": BountyHunterCreature(),
@@ -27,22 +29,22 @@ var CardBook: [String: Card] = [
     "Witch": WitchCreature(),
     "Yletia Pirate": YletiaPirate(),
     
-    "Fairy":        CreatureCard(cost: 0, attack: 1, health: 1),
+    "Fairy":        CreatureCard(attack: 1, health: 1),
     
-    "Imp":          CreatureCard(cost: 1, attack: 2, health: 1),
-    "Skeleton":     CreatureCard(cost: 1, attack: 1, health: 2),
+    "Imp":          CreatureCard(attack: 2, health: 1),
+    "Skeleton":     CreatureCard(attack: 1, health: 2),
     
-    "Soldier":      CreatureCard(cost: 2, attack: 1, health: 3),
-    "Mercenary":    CreatureCard(cost: 2, attack: 2, health: 2),
+    "Soldier":      CreatureCard(attack: 1, health: 3),
+    "Mercenary":    CreatureCard(attack: 2, health: 2),
     
-    "Abomination":  CreatureCard(cost: 3, attack: 2, health: 4),
+    "Abomination":  CreatureCard(attack: 2, health: 4),
     
-    "Knight":       CreatureCard(cost: 4, attack: 2, health: 4),
-    "Lesser Demon": CreatureCard(cost: 4, attack: 4, health: 3),
-    "Thug":         CreatureCard(cost: 4, attack: 1, health: 8),
+    "Knight":       CreatureCard(attack: 2, health: 4),
+    "Lesser Demon": CreatureCard(attack: 4, health: 3),
+    "Thug":         CreatureCard(attack: 1, health: 8),
     
-    "Samurai":      CreatureCard(cost: 5, attack: 4, health: 5),
+    "Samurai":      CreatureCard(attack: 4, health: 5),
     
-    "Bandit":       CreatureCard(cost: 10, attack: 3, health: 32)
+    "Bandit":       CreatureCard(attack: 3, health: 32)
     
 ]

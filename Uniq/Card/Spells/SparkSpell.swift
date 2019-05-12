@@ -9,17 +9,19 @@
 import Foundation
 
 class SparkSpell: SpellCard {
-    init() {
-        super.init(cost: 1)
+    override init() {
+        super.init()
         description = "Deal 2 damage. Draw 1 card"
         requiresTarget = true
         targetFilter = CardTargetFilters.all
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
+        /*
         if let creature = target {
             creature.dealDamage(2, battle: battle)
         }
         battle.player.deck.draw()
+        */
     }
 }

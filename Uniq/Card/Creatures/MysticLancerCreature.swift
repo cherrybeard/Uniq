@@ -8,12 +8,14 @@
 
 class MysticLancerCreature: CreatureCard {
     init() {
-        super.init(cost: 3, attack: 2, health: 2)
+        super.init(attack: 2, health: 2)
         description = "Death: Restore 4 health to your hero."
     }
     
+    /*
     override func deathrattle(battle: Battle, creature: CreatureSprite) {
         battle.desk.playerHero.restoreHealth(by: 4)
     }
+     */
 }
 

@@ -8,77 +8,91 @@
 
 import SpriteKit
 
-class CreatureSprite: CharacterSprite, Targetable, Tappable {
+class CreatureSprite: SKNode, Targetable, Tappable {
     private let WIDTH: Int = 90
     private let HEIGHT: Int = 60
     private struct BORDER_COLOR {
-        static let base: UIColor = UIColor(rgb: 0x484644, alpha: 1)
-        static let tapped: UIColor = UIColor(rgb: 0x614F3F, alpha: 1)
+        static let base = UIColor(rgb: 0x484644, alpha: 1)
+        static let tapped = UIColor(rgb: 0x614F3F, alpha: 1)
+        static let currentTarget = UIColor(rgb: 0x614F3F, alpha: 1)
     }
     private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111, alpha: 1)
     
+    var owner: Player
     var creature: CreatureCard
+    
+    private var _maxHealth: Int
+    private var _health: Int
+    var health: Int {
+        get { return _health }
+    }
+    
+    private var _attack: Int
+    var attack: Int {
+        get { return _attack }
+    }
+    
+    private var _activeAbilityCooldown: Int = -1
+    var activeAbilityCooldown: Int {
+        get { return _activeAbilityCooldown }
+    }
+    
+    private let healthLabel: StatLabel
     private let attackLabel: StatLabel
     private let border: SKShapeNode
     
     var isPossibleTarget: Bool = false
-    var isCurrentTarget: Bool = false
+    var isCurrentlyTapped: Bool = false
     
-    private var _isCurrentlyTapped: Bool = false
-    var isCurrentlyTapped: Bool {
-        get { return _isCurrentlyTapped }
+    private var _isCurrentTarget: Bool = false
+    var isCurrentTarget: Bool {
+        get { return _isCurrentTarget }
         set(newValue) {
-            _isCurrentlyTapped = newValue
+            _isCurrentTarget = newValue
             _redraw()
         }
     }
     
-    init(creature: CreatureCard, owner: OwnerType) {
+    init(of creature: CreatureCard, owner: Player) {
         self.creature = creature
+        self.owner = owner
         
-        attackLabel = StatLabel(type: .attack, value: creature.attack)
-        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
-        
-        super.init(owner: owner)
-        self.creature.summon = self
-        
-        _maxHealth = _health
-        _health = creature.health
         _attack = creature.attack
+        _maxHealth = creature.health
+        _health = _maxHealth
+        _activeAbilityCooldown = creature.activeAbilityCooldown
+        
+        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
+        attackLabel = StatLabel(type: .attack, value: creature.attack)
+        healthLabel = StatLabel(type: .health, value: _health)
+        
+        super.init()
+        
+        self.creature.summon = self
         
         healthLabel.value = _health
         attackLabel.value = _attack
-        
         attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
         healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
         healthLabel.zPosition = 1
         
         border.lineWidth = 1
         border.fillColor = FILL_COLOR
-        _redraw()
+        
         addChild(border)
         addChild(attackLabel)
+        addChild(healthLabel)
+        _redraw()
+        name = "creature"
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func redrawBorder() {  // OBSOLETE
-        /*
-        if isTarget {
-            border.strokeColor = UIColor(hue: 33.0/360.0, saturation: 70.0/100.0, brightness: 81.0/100.0, alpha: 1)
-        } else if canAttack && (owner == OwnerType.player) {
-            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 80.0/100.0, alpha: 1)
-        } else {
-            border.strokeColor = UIColor(hue: 0, saturation: 0, brightness: 40.0/100.0, alpha: 1)
-        }
-        */
-    }
-    
     private func _redraw() {
-        if _isCurrentlyTapped {
-            border.strokeColor = BORDER_COLOR.tapped
+        if _isCurrentTarget {
+            border.strokeColor = BORDER_COLOR.currentTarget
         } else {
             border.strokeColor = BORDER_COLOR.base
         }
@@ -90,6 +104,18 @@ class CreatureSprite: CharacterSprite, Targetable, Tappable {
         attackLabel.state = .buffed
     }
     
+    func decreaseAbilityCooldown() {
+        if _activeAbilityCooldown > 0 {
+            _activeAbilityCooldown -= 1
+        }
+    }
+    
+    func useActiveAbility(battle: Battle) {
+        creature.useActiveAbility(battle: battle)
+        _activeAbilityCooldown = creature.activeAbilityCooldown
+    }
+    
+    /*
     override func battlecry(battle: Battle) {
         creature.battlecry(battle: battle, creature: self)
     }
@@ -97,4 +123,5 @@ class CreatureSprite: CharacterSprite, Targetable, Tappable {
     override func deathrattle(battle: Battle) {
         creature.deathrattle(battle: battle, creature: self)
     }
+    */
 }

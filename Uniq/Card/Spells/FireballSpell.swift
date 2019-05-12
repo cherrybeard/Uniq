@@ -7,15 +7,17 @@
 //
 
 class FireballSpell: SpellCard {
-    init() {
-        super.init(cost: 4)
+    override init() {
+        super.init()
         description = "Deal 6 damage"
         requiresTarget = true
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+    /*
+    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
         if let creature = target {
             creature.dealDamage(6, battle: battle)
         }
     }
+     */
 }

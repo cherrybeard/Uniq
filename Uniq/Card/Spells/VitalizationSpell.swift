@@ -7,16 +7,18 @@
 //
 
 class VitalizationSpell: SpellCard {
-    init() {
-        super.init(cost: 2)
+    override init() {
+        super.init()
         description = "Double creature's health"
         requiresTarget = true
-        targetFilter = CardTargetFilters.creatures
+        targetFilter = CardTargetFilters.all
     }
     
-    override func play(battle: Battle, for owner: OwnerType, target: CharacterSprite? = nil) {
+    /*
+    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
         if let creature = target {
             creature.increaseHealth(by: creature.health)
         }
     }
+ */
 }

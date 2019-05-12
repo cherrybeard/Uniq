@@ -10,10 +10,8 @@
 		5B0703BE2287210C0029FD29 /* Tappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0703BD2287210C0029FD29 /* Tappable.swift */; };
 		5B116F802051A45A00396C0F /* HeroSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B116F7F2051A45A00396C0F /* HeroSprite.swift */; };
 		5B116F822051A46F00396C0F /* CharacterSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B116F812051A46F00396C0F /* CharacterSprite.swift */; };
-		5B1AC398203BADB300F3B921 /* TableSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC397203BADB300F3B921 /* TableSprite.swift */; };
 		5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC399203BB01200F3B921 /* HandSprite.swift */; };
 		5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC39B203C435A00F3B921 /* Deck.swift */; };
-		5B1AC3A3203C87A300F3B921 /* ManaCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */; };
 		5B33A64C204116CF00CF2D76 /* SpellCardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */; };
 		5B35E5C12051FC1400678A10 /* BountyHunterCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5C02051FC1400678A10 /* BountyHunterCreature.swift */; };
 		5B35E5C820557CC500678A10 /* SpellCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5C720557CC500678A10 /* SpellCard.swift */; };
@@ -26,6 +24,8 @@
 		5B3FE3F322807A1900470A5F /* UniqTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FE3F222807A1900470A5F /* UniqTests.swift */; };
 		5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C3493228536C1007D1E38 /* YletiaPirate.swift */; };
 		5B4E78942280EDC0005FAE5C /* Targetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4E78932280EDC0005FAE5C /* Targetable.swift */; };
+		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
+		5B4F7E792287D0FE00252113 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E782287D0FE00252113 /* Player.swift */; };
 		5B51A17A227C537200111234 /* CreatureSpotSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B51A179227C537200111234 /* CreatureSpotSprite.swift */; };
 		5B669F3D2049B4BF00DC2760 /* NotOnlyDamageSpells.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */; };
 		5B669F41204A894900DC2760 /* CardBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F40204A894900DC2760 /* CardBook.swift */; };
@@ -70,10 +70,8 @@
 		5B0703BD2287210C0029FD29 /* Tappable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tappable.swift; sourceTree = "<group>"; };
 		5B116F7F2051A45A00396C0F /* HeroSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroSprite.swift; sourceTree = "<group>"; };
 		5B116F812051A46F00396C0F /* CharacterSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSprite.swift; sourceTree = "<group>"; };
-		5B1AC397203BADB300F3B921 /* TableSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSprite.swift; sourceTree = "<group>"; };
 		5B1AC399203BB01200F3B921 /* HandSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandSprite.swift; sourceTree = "<group>"; };
 		5B1AC39B203C435A00F3B921 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
-		5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManaCounter.swift; sourceTree = "<group>"; };
 		5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCardSprite.swift; sourceTree = "<group>"; };
 		5B35E5C02051FC1400678A10 /* BountyHunterCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BountyHunterCreature.swift; sourceTree = "<group>"; };
 		5B35E5C720557CC500678A10 /* SpellCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCard.swift; sourceTree = "<group>"; };
@@ -88,6 +86,8 @@
 		5B3FE3F422807A1900470A5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B4C3493228536C1007D1E38 /* YletiaPirate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YletiaPirate.swift; sourceTree = "<group>"; };
 		5B4E78932280EDC0005FAE5C /* Targetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Targetable.swift; sourceTree = "<group>"; };
+		5B4F7E762287570B00252113 /* PassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
+		5B4F7E782287D0FE00252113 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5B51A179227C537200111234 /* CreatureSpotSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSpotSprite.swift; sourceTree = "<group>"; };
 		5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotOnlyDamageSpells.json; sourceTree = "<group>"; };
 		5B669F40204A894900DC2760 /* CardBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBook.swift; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 		5B66CE51204C0A930047A9DC /* Sprite */ = {
 			isa = PBXGroup;
 			children = (
-				5B1AC397203BADB300F3B921 /* TableSprite.swift */,
 				5B1AC399203BB01200F3B921 /* HandSprite.swift */,
+				5B4F7E762287570B00252113 /* PassButton.swift */,
 				5B4E78932280EDC0005FAE5C /* Targetable.swift */,
 				5B0703BD2287210C0029FD29 /* Tappable.swift */,
 				5B116F852051A4AA00396C0F /* Labels */,
@@ -287,7 +287,7 @@
 		5BE0B0B7204F3381009DA26E /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				5B1AC3A2203C87A300F3B921 /* ManaCounter.swift */,
+				5B4F7E782287D0FE00252113 /* Player.swift */,
 				5B1AC39B203C435A00F3B921 /* Deck.swift */,
 			);
 			path = Player;
@@ -419,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B4F7E792287D0FE00252113 /* Player.swift in Sources */,
 				5B116F802051A45A00396C0F /* HeroSprite.swift in Sources */,
 				5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */,
 				5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */,
@@ -434,8 +435,6 @@
 				5BE0B0B9204F3884009DA26E /* VitalizationSpell.swift in Sources */,
 				5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */,
 				5B35E5CC2056AE1A00678A10 /* FireImpCreature.swift in Sources */,
-				5B1AC3A3203C87A300F3B921 /* ManaCounter.swift in Sources */,
-				5B1AC398203BADB300F3B921 /* TableSprite.swift in Sources */,
 				5B35E5CA2056AA4300678A10 /* OldProphetCreature.swift in Sources */,
 				5BE0B0BC204F48E3009DA26E /* FireballSpell.swift in Sources */,
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
@@ -451,6 +450,7 @@
 				5B35E5C12051FC1400678A10 /* BountyHunterCreature.swift in Sources */,
 				5BCA6F2A2039EE2300B81376 /* CreatureSprite.swift in Sources */,
 				5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */,
+				5B4F7E772287570B00252113 /* PassButton.swift in Sources */,
 				5B0703BE2287210C0029FD29 /* Tappable.swift in Sources */,
 				5BCA6F2C203A283200B81376 /* CardSprite.swift in Sources */,
 				5BCA6F2E203A2AB400B81376 /* CreatureCardSprite.swift in Sources */,
