@@ -110,9 +110,11 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         }
     }
     
-    func useActiveAbility(battle: Battle) {
+    func useActiveAbility(battle: Battle) -> Bool {
+        if _activeAbilityCooldown != 0 { return false }
         creature.useActiveAbility(battle: battle)
         _activeAbilityCooldown = creature.activeAbilityCooldown
+        return true
     }
     
     /*

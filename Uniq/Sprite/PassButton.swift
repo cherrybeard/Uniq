@@ -43,7 +43,7 @@ class PassButton: SKNode, Tappable, Targetable {
         
         _redraw()
         
-        
+        name = "pass"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,6 +51,6 @@ class PassButton: SKNode, Tappable, Targetable {
     }
     
     private func _redraw() {
-        label.text = _readyToFight ? "Pass" : "Fight"
+        label.text = _readyToFight ? "Fight" : "Pass"
     }
 }
