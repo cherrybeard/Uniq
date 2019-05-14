@@ -16,9 +16,13 @@ struct CardTargetFilters {
 }
 
 class Card {
-    var description: String = ""
-    var targetFilter: CardTargetFilter? = CardTargetFilters.all
-    var requiresTarget: Bool = false
+    var description: String
+    //var targetFilter: CardTargetFilter? = CardTargetFilters.all
+    //var requiresTarget: Bool = false
+    
+    init(description: String = "") {
+        self.description = description
+    }
     
     func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
         
@@ -26,5 +30,12 @@ class Card {
     
     func generateSprite() -> CardSprite {
         return CardSprite(card: self)
+    }
+    
+    func copy() -> Card {
+        let card = Card(description: description)
+        //card.targetFilter = targetFilter
+        //card.requiresTarget = requiresTarget
+        return card
     }
 }

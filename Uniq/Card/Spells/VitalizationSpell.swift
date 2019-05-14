@@ -7,11 +7,10 @@
 //
 
 class VitalizationSpell: SpellCard {
-    override init() {
-        super.init()
-        description = "Double creature's health"
-        requiresTarget = true
-        targetFilter = CardTargetFilters.all
+    init() {
+        super.init(description: "Double creature's health")
+        //requiresTarget = true
+        //targetFilter = CardTargetFilters.all
     }
     
     /*

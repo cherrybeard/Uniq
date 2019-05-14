@@ -9,11 +9,10 @@
 import Foundation
 
 class SparkSpell: SpellCard {
-    override init() {
-        super.init()
-        description = "Deal 2 damage. Draw 1 card"
-        requiresTarget = true
-        targetFilter = CardTargetFilters.all
+    init() {
+        super.init(description: "Deal 2 damage. Draw 1 card")
+        //requiresTarget = true
+        //targetFilter = CardTargetFilters.all
     }
     
     override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {

@@ -92,10 +92,10 @@ class GameScene: SKScene {
         for _ in 1...5 { battle.human.deck.draw() }
         
         // TODO: add checking of the name and make it easier to use
-        battle.summon(CardBook["Yletia Pirate"] as! CreatureCard, to: 7)
-        battle.summon(CardBook["Yletia Pirate"] as! CreatureCard, to: 3)
-        battle.summon(CardBook["Bandit"] as! CreatureCard, to: 5)
-        battle.summon(CardBook["Thug"] as! CreatureCard, to: 4)
+        battle.summon(CardLibrary.getCard("Yletia Pirate") as! CreatureCard, to: 7)
+        battle.summon(CardLibrary.getCard("Yletia Pirate") as! CreatureCard, to: 3)
+        battle.summon(CardLibrary.getCard("Bandit") as! CreatureCard, to: 5)
+        battle.summon(CardLibrary.getCard("Thug") as! CreatureCard, to: 4)
     }
     
     func endTurn(of player: Player, passed: Bool = false) {
@@ -116,7 +116,6 @@ class GameScene: SKScene {
         for creature in creaturesShuffled {
             if let selectedCreature = creature as? CreatureSprite {
                 if selectedCreature.useActiveAbility(battle: battle) {
-                    print("hi?")
                     break
                 }
             }
@@ -134,6 +133,7 @@ class GameScene: SKScene {
     
     func endRound(){
         // fight
+        print("end of round")
         for creature in battle.creatures {
             creature.decreaseAbilityCooldown()
         }

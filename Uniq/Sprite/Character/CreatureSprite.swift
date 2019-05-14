@@ -60,15 +60,15 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         _attack = creature.attack
         _maxHealth = creature.health
         _health = _maxHealth
-        _activeAbilityCooldown = creature.activeAbilityCooldown
+        if creature.activeAbility != nil {
+            _activeAbilityCooldown = creature.activeAbility!.cooldown
+        }
         
         border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
         attackLabel = StatLabel(type: .attack, value: creature.attack)
         healthLabel = StatLabel(type: .health, value: _health)
         
         super.init()
-        
-        self.creature.summon = self
         
         healthLabel.value = _health
         attackLabel.value = _attack
@@ -111,10 +111,13 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     
     func useActiveAbility(battle: Battle) -> Bool {
-        if _activeAbilityCooldown != 0 { return false }
-        creature.useActiveAbility(battle: battle)
-        _activeAbilityCooldown = creature.activeAbilityCooldown
-        return true
+        if (creature.activeAbility != nil) && (_activeAbilityCooldown == 0) {
+            if creature.activeAbility!.ability(battle, self) {
+                _activeAbilityCooldown = creature.activeAbility!.cooldown
+                return true
+        }
+        }
+        return false
     }
     
     /*

@@ -7,7 +7,7 @@
 //
 
 class ChainLightningSpell: SpellCard {
-    override init() {
+    init() {
         super.init()
         description = "Deal 1 damage to all enemy creatures"
     }

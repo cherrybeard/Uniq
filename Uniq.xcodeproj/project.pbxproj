@@ -12,6 +12,8 @@
 		5B116F822051A46F00396C0F /* CharacterSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B116F812051A46F00396C0F /* CharacterSprite.swift */; };
 		5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC399203BB01200F3B921 /* HandSprite.swift */; };
 		5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC39B203C435A00F3B921 /* Deck.swift */; };
+		5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CA228A64E100DFE0EE /* CardLibrary.swift */; };
+		5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */; };
 		5B33A64C204116CF00CF2D76 /* SpellCardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */; };
 		5B35E5C12051FC1400678A10 /* BountyHunterCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5C02051FC1400678A10 /* BountyHunterCreature.swift */; };
 		5B35E5C820557CC500678A10 /* SpellCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5C720557CC500678A10 /* SpellCard.swift */; };
@@ -72,6 +74,8 @@
 		5B116F812051A46F00396C0F /* CharacterSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSprite.swift; sourceTree = "<group>"; };
 		5B1AC399203BB01200F3B921 /* HandSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandSprite.swift; sourceTree = "<group>"; };
 		5B1AC39B203C435A00F3B921 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		5B2622CA228A64E100DFE0EE /* CardLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLibrary.swift; sourceTree = "<group>"; };
+		5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveAbility.swift; sourceTree = "<group>"; };
 		5B33A64B204116CF00CF2D76 /* SpellCardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCardSprite.swift; sourceTree = "<group>"; };
 		5B35E5C02051FC1400678A10 /* BountyHunterCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BountyHunterCreature.swift; sourceTree = "<group>"; };
 		5B35E5C720557CC500678A10 /* SpellCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCard.swift; sourceTree = "<group>"; };
@@ -275,9 +279,11 @@
 			isa = PBXGroup;
 			children = (
 				5B669F40204A894900DC2760 /* CardBook.swift */,
+				5B2622CA228A64E100DFE0EE /* CardLibrary.swift */,
 				5B669F42204AB02F00DC2760 /* Card.swift */,
 				5B35E5C720557CC500678A10 /* SpellCard.swift */,
 				5BCA6F272039E74200B81376 /* CreatureCard.swift */,
+				5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */,
 				5B35E5BF2051FB1500678A10 /* Creatures */,
 				5BE0B0BA204F466C009DA26E /* Spells */,
 			);
@@ -428,6 +434,7 @@
 				5B35E5CE2056BA6100678A10 /* RoyalAlchemistCreature.swift in Sources */,
 				5B51A17A227C537200111234 /* CreatureSpotSprite.swift in Sources */,
 				5B35E5D02056D14C00678A10 /* FirelinkPriestCreature.swift in Sources */,
+				5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */,
 				5BE0B0C2205047D4009DA26E /* SparkSpell.swift in Sources */,
 				5BE0B0C420504BBE009DA26E /* HarmlessAffairSpell.swift in Sources */,
 				5BE0B0C0204F4D91009DA26E /* SuddenStrikeSpell.swift in Sources */,
@@ -438,6 +445,7 @@
 				5B35E5CA2056AA4300678A10 /* OldProphetCreature.swift in Sources */,
 				5BE0B0BC204F48E3009DA26E /* FireballSpell.swift in Sources */,
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
+				5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */,
 				5B669F43204AB02F00DC2760 /* Card.swift in Sources */,
 				5B35E5D42057034E00678A10 /* WitchCreature.swift in Sources */,
 				5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */,

@@ -7,10 +7,10 @@
 //
 
 class FireballSpell: SpellCard {
-    override init() {
+    init() {
         super.init()
         description = "Deal 6 damage"
-        requiresTarget = true
+        //requiresTarget = true
     }
     
     /*

@@ -20,14 +20,14 @@ var CardBook: [String: Card] = [
     */
     
 //  CREATURES
-    "Bounty Hunter": BountyHunterCreature(),
-    "Old Prophet": OldProphetCreature(),
-    "Fire Imp": FireImpCreature(),
-    "Royal Alchemist": RoyalAlchemistCreature(),
-    "Firelink Priest": FirelinkPriestCreature(),
-    "Mystic Lancer": MysticLancerCreature(),
-    "Witch": WitchCreature(),
-    "Yletia Pirate": YletiaPirate(),
+    "Bounty Hunter":    BountyHunterCreature(),
+    "Old Prophet":      OldProphetCreature(),
+    "Fire Imp":         FireImpCreature(),
+    "Royal Alchemist":  RoyalAlchemistCreature(),
+    "Firelink Priest":  FirelinkPriestCreature(),
+    "Mystic Lancer":    MysticLancerCreature(),
+    "Witch":            WitchCreature(),
+    //"Yletia Pirate":    YletiaPirate(),
     
     "Fairy":        CreatureCard(attack: 1, health: 1),
     

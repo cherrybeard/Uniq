@@ -7,10 +7,10 @@
 //
 
 class SuddenStrikeSpell: SpellCard {
-    override init() {
+    init() {
         super.init()
         description = "Deal 2 damage to to undamaged creature"
-        requiresTarget = true
+        //requiresTarget = true
         //targetFilter = CardTargetFilters.fullHealthCreatures
     }
     

@@ -7,9 +7,8 @@
 //
 
 class HarmlessAffairSpell: SpellCard {
-    override init() {
-        super.init()
-        description = "Summon three 1/1 Fairies"
+    init() {
+        super.init(description: "Summon three 1/1 Fairies")
     }
     
     override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {

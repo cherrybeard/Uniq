@@ -43,7 +43,7 @@ class Deck {
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
-                    if let card = CardBook[cardData.card] {
+                    if let card = CardLibrary.getCard(cardData.card) {
                         if cardData.amount > 0 {
                             for _ in 1...cardData.amount {
                                 cards.append(card.generateSprite())

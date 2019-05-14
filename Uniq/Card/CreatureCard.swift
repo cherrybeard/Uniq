@@ -7,17 +7,15 @@
 //
 
 class CreatureCard: Card {
-    weak var summon: CreatureSprite? = nil
-    
     var attack: Int
     var health: Int
-    var charge: Bool = false
-    var activeAbilityCooldown: Int = -1
+    var activeAbility: ActiveAbility? = nil
     
-    init(attack: Int, health: Int) {
+    init(description: String = "", attack: Int, health: Int, activeAbility: ActiveAbility? = nil) {
         self.attack = attack
         self.health = health
-        super.init()
+        self.activeAbility = activeAbility
+        super.init(description: description)
     }
     
     override func generateSprite() -> CreatureCardSprite {
@@ -35,5 +33,15 @@ class CreatureCard: Card {
     func useActiveAbility(battle: Battle) {
         // TODO: Rework into singgle ActiveAbilityty structure
         // TOOD: Add -> Bool to check if it was really used or maybe some way to check available targets
+    }
+    
+    override func copy() -> Card {
+        let card = CreatureCard(
+            description: description,
+            attack: attack,
+            health: health,
+            activeAbility: activeAbility
+        )
+        return card
     }
 }

@@ -8,11 +8,10 @@
 
 
 class RecallSpell: SpellCard {
-    override init() {
-        super.init()
-        description = "Return friendly creature back to hand. Reduce its cost by 2"
-        requiresTarget = true
-        targetFilter = CardTargetFilters.ownerCreatures
+    init() {
+        super.init(description: "Return friendly creature back to hand. Reduce its cost by 2")
+        //requiresTarget = true
+        //targetFilter = CardTargetFilters.ownerCreatures
     }
     
     override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
