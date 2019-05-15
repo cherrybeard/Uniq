@@ -7,21 +7,26 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class Battle: SKNode {
     private let SPACE_BETWEEN_COLUMNS: Int = 113
     private let SPACE_BETWEEN_ROWS: Int = 90
     private let MELEE_RANGE_DISTANCE_FROM_CENTER: Int = 78
     
-    let human = Player(as: .human)
-    let ai = Player(as: .ai)
-    
+    let passButton = PassButton()
     var creatureSpots: [CreatureSpotSprite] = []
     var creatures: [CreatureSprite] = []
+    
+    let human = Player(as: .human)
+    let ai = Player(as: .ai)
+    var activePlayer: Player
+    var passedPlayers: [Player] = []
     
     //let animationPipeline = AnimationPipeline() // TODO: work on it
     
     override init() {
+        activePlayer = human
         super.init()
         
         for index in 1...12 {
@@ -38,6 +43,65 @@ class Battle: SKNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func endTurn(passed: Bool = false) {
+        if passed {
+            activePlayer.passed = passed
+        } else {
+            human.passed = false
+            ai.passed = false
+        }
+        if human.passed && ai.passed {
+            endRound()
+            return
+        }
+        if activePlayer.type == .ai {
+            if activePlayer.passed { passButton.readyToFight = true }
+            activePlayer = human
+        } else {
+            activePlayer = ai
+            aiTurn()
+        }
+        
+    }
+    
+    func endRound() {
+        for creature in creatures {
+            creature.decreaseAbilityCooldown()
+        }
+        passButton.readyToFight = false
+        for player in [human, ai] {
+            player.passed = false
+            player.deck.draw()
+        }
+        if activePlayer.type == .ai {
+            activePlayer = human
+        } else {
+            activePlayer = ai
+            aiTurn()
+        }
+    }
+    
+    func aiTurn() {
+        let aiCreatures = creatures.filter { $0.owner!.type == .ai }
+        let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiCreatures)
+        var pass: Bool = true
+        for creature in creaturesShuffled {
+            if let selectedCreature = creature as? CreatureSprite {
+                if selectedCreature.useActiveAbility(battle: self) {
+                    pass = false
+                    break
+                }
+            }
+        }
+        endTurn(passed: pass)
+    }
+    
+    func summon(_ creatureName: String, to creatureSpotIndex: Int) {    //TODO: Make all three functions make sense
+        if let creature = CardLibrary.getCard(creatureName) as? CreatureCard {
+            summon(creature, to: creatureSpotIndex)
+        }
     }
     
     func summon(_ creature: CreatureCard, to creatureSpotIndex: Int) { // TODO: Return Bool

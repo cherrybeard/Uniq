@@ -11,8 +11,6 @@ import GameplayKit
 
 class GameScene: SKScene {
     let battle = Battle()
-    let passButton = PassButton()
-    var activePlayer: Player
     
     var sourceNode: SKNode? = nil
     var delayedTask: DispatchWorkItem? = nil
@@ -76,71 +74,26 @@ class GameScene: SKScene {
     }
     
     override init(size: CGSize) {
-        activePlayer = battle.human
         super.init(size: size)
         self.backgroundColor = UIColor(rgb: 0x000000, alpha: 1)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
+        //TODO: Move all this to class Battle
         battle.human.deck.hand.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 45 + 20)
         //battle.desk.playerHero.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 160)
-        passButton.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
+        battle.passButton.position = CGPoint(x: ScreenBoundaries.left + 40, y: ScreenBoundaries.bottom + 160)
         
-        addChild(passButton)
         addChild(battle.human.deck.hand)
         addChild(battle)
+        addChild(battle.passButton)
         
+        //TODO: Move to func startBattle() in class Battle
         for _ in 1...5 { battle.human.deck.draw() }
         
-        // TODO: add checking of the name and make it easier to use
-        battle.summon(CardLibrary.getCard("Yletia Pirate") as! CreatureCard, to: 7)
-        battle.summon(CardLibrary.getCard("Yletia Pirate") as! CreatureCard, to: 3)
-        battle.summon(CardLibrary.getCard("Bandit") as! CreatureCard, to: 5)
-        battle.summon(CardLibrary.getCard("Thug") as! CreatureCard, to: 4)
-    }
-    
-    func endTurn(of player: Player, passed: Bool = false) {
-        player.passed = true
-        if player.type == .ai { passButton.readyToFight = true }
-        if battle.human.passed && battle.ai.passed {
-            endRound()
-        } else if player.type == .ai {
-            startPlayerTurn()
-        } else {
-            startComputerTurn()
-        }
-    }
-    
-    func startComputerTurn() {
-        let creatures = battle.creatures.filter { $0.owner!.type == .ai }
-        let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
-        for creature in creaturesShuffled {
-            if let selectedCreature = creature as? CreatureSprite {
-                if selectedCreature.useActiveAbility(battle: battle) {
-                    break
-                }
-            }
-        }
-        endTurn(of: battle.ai, passed: true)
-    }
-    
-    func startPlayerTurn() {
-        for creature in battle.creatures {
-            creature.decreaseAbilityCooldown()
-        }
-        battle.human.deck.draw()
-        passButton.readyToFight = false
-    }
-    
-    func endRound(){
-        // fight
-        print("end of round")
-        for creature in battle.creatures {
-            creature.decreaseAbilityCooldown()
-        }
-        passButton.readyToFight = false
-        battle.human.passed = false
-        battle.ai.passed = false
-        battle.human.deck.draw()
+        battle.summon("Yletia Pirate", to: 7)
+        battle.summon("Yletia Pirate", to: 3)
+        battle.summon("Bandit", to: 5)
+        battle.summon("Thug", to: 4)
     }
     
     private func cancelDelayedTask() {
@@ -149,7 +102,7 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if activePlayer.type != .human { return }
+        if battle.activePlayer.type != .human { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -176,7 +129,7 @@ class GameScene: SKScene {
                             self?.possibleTargets = []
                             self?.currentTargets = []
                             if (creatureSprite.useActiveAbility(battle: self!.battle)) {
-                                self?.endTurn(of: self!.battle.human)
+                                self?.battle.endTurn()
                             }
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
@@ -193,7 +146,7 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if activePlayer.type != .human { return }
+        if battle.activePlayer.type != .human { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -226,7 +179,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if activePlayer.type != .human { return }
+        if battle.activePlayer.type != .human { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -241,7 +194,7 @@ class GameScene: SKScene {
                         if creatureSpot.owner!.type != .human { continue }
                         if let creatureCard = sourceNode as? CreatureCardSprite {
                             if battle.play(creatureCard, to: creatureSpot) {
-                                endTurn(of: battle.human)
+                                battle.endTurn()
                                 return
                             }
                         }
@@ -250,7 +203,7 @@ class GameScene: SKScene {
                 
                 if sourceNode?.name == "pass" {
                     if let _ = node as? PassButton {
-                        endTurn(of: battle.human, passed: true)
+                        battle.endTurn(passed: true)
                         return
                     }
                 }
