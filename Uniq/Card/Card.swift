@@ -10,8 +10,8 @@ typealias CardTargetFilter = (CreatureSprite) -> Bool
 
 struct CardTargetFilters {
     static let all: CardTargetFilter = { _ in true }
-    static let enemyCreatures: CardTargetFilter = { $0.owner.type == .ai }
-    static let ownerCreatures: CardTargetFilter = { $0.owner.type == .human }
+    static let enemyCreatures: CardTargetFilter = { $0.owner!.type == .ai }
+    static let ownerCreatures: CardTargetFilter = { $0.owner!.type == .human }
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 

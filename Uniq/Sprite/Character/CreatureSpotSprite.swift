@@ -25,7 +25,10 @@ class CreatureSpotSprite: SKNode, Targetable {
         static let currentTarget: UIColor = UIColor(rgb: 0x614F3F, alpha: 1)
     }
     
+    private let border: SKShapeNode
+    
     weak var owner: Player?
+    var creature: CreatureSprite? = nil
     let range: RangeType
     let column: ColumnType
     var isTaken: Bool = false
@@ -47,8 +50,6 @@ class CreatureSpotSprite: SKNode, Targetable {
             _redraw()
         }
     }
-    
-    private let border: SKShapeNode
 
     var index: Int {
         get {
@@ -85,9 +86,7 @@ class CreatureSpotSprite: SKNode, Targetable {
         _afterInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     private func _afterInit() {
         border.lineWidth = 1

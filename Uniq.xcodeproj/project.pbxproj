@@ -30,7 +30,6 @@
 		5B4F7E792287D0FE00252113 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E782287D0FE00252113 /* Player.swift */; };
 		5B51A17A227C537200111234 /* CreatureSpotSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B51A179227C537200111234 /* CreatureSpotSprite.swift */; };
 		5B669F3D2049B4BF00DC2760 /* NotOnlyDamageSpells.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */; };
-		5B669F41204A894900DC2760 /* CardBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F40204A894900DC2760 /* CardBook.swift */; };
 		5B669F43204AB02F00DC2760 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F42204AB02F00DC2760 /* Card.swift */; };
 		5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4D204BF6560047A9DC /* StatLabel.swift */; };
 		5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */; };
@@ -94,7 +93,6 @@
 		5B4F7E782287D0FE00252113 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5B51A179227C537200111234 /* CreatureSpotSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSpotSprite.swift; sourceTree = "<group>"; };
 		5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotOnlyDamageSpells.json; sourceTree = "<group>"; };
-		5B669F40204A894900DC2760 /* CardBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBook.swift; sourceTree = "<group>"; };
 		5B669F42204AB02F00DC2760 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		5B66CE4D204BF6560047A9DC /* StatLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatLabel.swift; sourceTree = "<group>"; };
 		5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageLabel.swift; sourceTree = "<group>"; };
@@ -146,8 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				5B51A179227C537200111234 /* CreatureSpotSprite.swift */,
-				5B116F812051A46F00396C0F /* CharacterSprite.swift */,
 				5BCA6F292039EE2300B81376 /* CreatureSprite.swift */,
+				5B116F812051A46F00396C0F /* CharacterSprite.swift */,
 				5B116F7F2051A45A00396C0F /* HeroSprite.swift */,
 			);
 			path = Character;
@@ -278,7 +276,6 @@
 		5BCA6F31203B20DC00B81376 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				5B669F40204A894900DC2760 /* CardBook.swift */,
 				5B2622CA228A64E100DFE0EE /* CardLibrary.swift */,
 				5B669F42204AB02F00DC2760 /* Card.swift */,
 				5B35E5C720557CC500678A10 /* SpellCard.swift */,
@@ -466,7 +463,6 @@
 				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
-				5B669F41204A894900DC2760 /* CardBook.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,
 				5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */,
 			);

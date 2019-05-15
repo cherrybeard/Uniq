@@ -111,7 +111,7 @@ class GameScene: SKScene {
     }
     
     func startComputerTurn() {
-        let creatures = battle.creatures.filter { $0.owner.type == .ai }
+        let creatures = battle.creatures.filter { $0.owner!.type == .ai }
         let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
         for creature in creaturesShuffled {
             if let selectedCreature = creature as? CreatureSprite {
@@ -166,7 +166,7 @@ class GameScene: SKScene {
                     return
                 }
                 if let creatureSprite = node as? CreatureSprite {
-                    if (creatureSprite.activeAbilityCooldown == 0) && (creatureSprite.owner.type == .human) {
+                    if (creatureSprite.activeAbilityCooldown == 0) && (creatureSprite.owner!.type == .human) {
                         sourceNode = node
                         currentlyTapped = [creatureSprite]
                         possibleTargets = [creatureSprite]

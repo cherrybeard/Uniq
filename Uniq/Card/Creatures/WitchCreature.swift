@@ -13,18 +13,18 @@ class WitchCreature: CreatureCard {
         super.init(attack: 3, health: 2)
         description = "Death: Summon creature from your hand"
     }
-    
-    override func deathrattle(battle: Battle, creature: CreatureSprite) {
-        /*
-        let creatureCards = battle.player.deck.hand.cards.filter({ card in (card is CreatureCardSprite) })
-        if creatureCards.count > 0 {
-            if let shuffledCards = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatureCards) as? [CreatureCardSprite] {
-                let cardSprite = shuffledCards[0]
-                cardSprite.card.play(battle: battle, for: .player, target: nil)
-                cardSprite.state = .discarded
-                battle.player.deck.hand.clean()
-            }
-        }
-        */
-    }
+//    
+//    override func deathrattle(battle: Battle, creature: CreatureSprite) {
+//        /*
+//        let creatureCards = battle.player.deck.hand.cards.filter({ card in (card is CreatureCardSprite) })
+//        if creatureCards.count > 0 {
+//            if let shuffledCards = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatureCards) as? [CreatureCardSprite] {
+//                let cardSprite = shuffledCards[0]
+//                cardSprite.card.play(battle: battle, for: .player, target: nil)
+//                cardSprite.state = .discarded
+//                battle.player.deck.hand.clean()
+//            }
+//        }
+//        */
+//    }
 }

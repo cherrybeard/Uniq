@@ -55,7 +55,7 @@ class StatLabel: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(type: StatType, value: Int) {
+    init(type: StatType, value: Int = 1) {
         self.type = type
         _value = value
         border = SKShapeNode(circleOfRadius: 12)

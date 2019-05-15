@@ -11,13 +11,13 @@ class FireImpCreature: CreatureCard {
         super.init(attack: 3, health: 2)
         description = "Battlecry: Deal 3 damage to your hero."
     }
-    
-    override func battlecry(battle: Battle, creature: CreatureSprite) {
-        /*
-        if creature.owner == .player {
-            battle.desk.playerHero.dealDamage(3, battle: battle)
-        }
-        */
-    }
+//    
+//    override func battlecry(battle: Battle, creature: CreatureSprite) {
+//        /*
+//        if creature.owner == .player {
+//            battle.desk.playerHero.dealDamage(3, battle: battle)
+//        }
+//        */
+//    }
 }
 

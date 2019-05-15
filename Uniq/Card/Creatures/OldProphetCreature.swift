@@ -12,11 +12,12 @@ class OldProphetCreature: CreatureCard {
         description = "Battlecry: Draw 1 card."
     }
     
+    /*
     override func battlecry(battle: Battle, creature: CreatureSprite) {
         /*
         if creature.owner == .player {
             battle.player.deck.draw()
         }
         */
-    }
+    }*/
 }

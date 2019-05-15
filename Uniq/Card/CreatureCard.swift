@@ -22,19 +22,6 @@ class CreatureCard: Card {
         return CreatureCardSprite(card: self)
     }
     
-    func battlecry(battle: Battle, creature: CreatureSprite) {
-        
-    }
-    
-    func deathrattle(battle: Battle, creature: CreatureSprite) {
-        
-    }
-    
-    func useActiveAbility(battle: Battle) {
-        // TODO: Rework into singgle ActiveAbilityty structure
-        // TOOD: Add -> Bool to check if it was really used or maybe some way to check available targets
-    }
-    
     override func copy() -> Card {
         let card = CreatureCard(
             description: description,

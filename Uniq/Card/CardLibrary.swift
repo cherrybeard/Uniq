@@ -17,15 +17,6 @@ class CardLibrary {
         //"Mystic Lancer":    MysticLancerCreature(),
         //"Witch":            WitchCreature(),
         
-        //"Imp":          CreatureCard(attack: 2, health: 1),
-        //"Skeleton":     CreatureCard(attack: 1, health: 2),
-        //"Soldier":      CreatureCard(attack: 1, health: 3),
-        //"Mercenary":    CreatureCard(attack: 2, health: 2),
-        //"Abomination":  CreatureCard(attack: 2, health: 4),
-        //"Knight":       CreatureCard(attack: 2, health: 4),
-        //"Lesser Demon": CreatureCard(attack: 4, health: 3),
-        //"Samurai":      CreatureCard(attack: 4, health: 5),
-        
         "Yletia Pirate": CreatureCard(
             description: "Yletia Pirate",
             attack: 1,

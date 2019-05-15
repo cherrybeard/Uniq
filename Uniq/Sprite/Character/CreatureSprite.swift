@@ -18,28 +18,19 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111, alpha: 1)
     
-    var owner: Player
+    private let _healthLabel = StatLabel(type: .health)
+    private let _attackLabel = StatLabel(type: .attack)
+    private let _border: SKShapeNode
+    
     var creature: CreatureCard
+    weak var spot: CreatureSpotSprite? = nil
     
-    private var _maxHealth: Int
-    private var _health: Int
-    var health: Int {
-        get { return _health }
-    }
-    
-    private var _attack: Int
-    var attack: Int {
-        get { return _attack }
-    }
+    var health: Int { get { return _healthLabel.value } }
+    var attack: Int { get { return _attackLabel.value } }
+    var owner: Player? { get { return spot?.owner } }
     
     private var _activeAbilityCooldown: Int = -1
-    var activeAbilityCooldown: Int {
-        get { return _activeAbilityCooldown }
-    }
-    
-    private let healthLabel: StatLabel
-    private let attackLabel: StatLabel
-    private let border: SKShapeNode
+    var activeAbilityCooldown: Int { get { return _activeAbilityCooldown } }
     
     var isPossibleTarget: Bool = false
     var isCurrentlyTapped: Bool = false
@@ -53,35 +44,28 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         }
     }
     
-    init(of creature: CreatureCard, owner: Player) {
+    init(of creature: CreatureCard, spot: CreatureSpotSprite) {
         self.creature = creature
-        self.owner = owner
+        self.spot = spot
+        _border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
+        super.init()
         
-        _attack = creature.attack
-        _maxHealth = creature.health
-        _health = _maxHealth
         if creature.activeAbility != nil {
             _activeAbilityCooldown = creature.activeAbility!.cooldown
         }
         
-        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
-        attackLabel = StatLabel(type: .attack, value: creature.attack)
-        healthLabel = StatLabel(type: .health, value: _health)
+        _healthLabel.value = creature.health
+        _attackLabel.value = creature.attack
+        _attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
+        _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
+        _healthLabel.zPosition = 1
         
-        super.init()
+        _border.lineWidth = 1
+        _border.fillColor = FILL_COLOR
         
-        healthLabel.value = _health
-        attackLabel.value = _attack
-        attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
-        healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
-        healthLabel.zPosition = 1
-        
-        border.lineWidth = 1
-        border.fillColor = FILL_COLOR
-        
-        addChild(border)
-        addChild(attackLabel)
-        addChild(healthLabel)
+        addChild(_border)
+        addChild(_attackLabel)
+        addChild(_healthLabel)
         _redraw()
         name = "creature"
     }
@@ -92,16 +76,15 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     
     private func _redraw() {
         if _isCurrentTarget {
-            border.strokeColor = BORDER_COLOR.currentTarget
+            _border.strokeColor = BORDER_COLOR.currentTarget
         } else {
-            border.strokeColor = BORDER_COLOR.base
+            _border.strokeColor = BORDER_COLOR.base
         }
     }
     
     func increaseAttack(by amount: Int) {
-        _attack += amount
-        attackLabel.value = _attack
-        attackLabel.state = .buffed
+        _attackLabel.value += amount
+        _attackLabel.state = .buffed    // TODO: Move to the StatLabel class
     }
     
     func decreaseAbilityCooldown() {
@@ -115,18 +98,8 @@ class CreatureSprite: SKNode, Targetable, Tappable {
             if creature.activeAbility!.ability(battle, self) {
                 _activeAbilityCooldown = creature.activeAbility!.cooldown
                 return true
-        }
+            }
         }
         return false
     }
-    
-    /*
-    override func battlecry(battle: Battle) {
-        creature.battlecry(battle: battle, creature: self)
-    }
-    
-    override func deathrattle(battle: Battle) {
-        creature.deathrattle(battle: battle, creature: self)
-    }
-    */
 }

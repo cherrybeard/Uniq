@@ -40,14 +40,14 @@ class Battle: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func summon(_ creature: CreatureCard, to creatureSpotIndex: Int) { // TODO: Move to Battle class
+    func summon(_ creature: CreatureCard, to creatureSpotIndex: Int) { // TODO: Return Bool
         let checkedIndex = CreatureSpotSprite.checkIndex(creatureSpotIndex)
         let creatureSpot = creatureSpots[checkedIndex-1]
         summon(creature, to: creatureSpot)
     }
-    
-    func summon(_ creature: CreatureCard, to creatureSpot: CreatureSpotSprite) {
-        let creatureSprite = CreatureSprite(of: creature, owner: creatureSpot.owner!)
+
+    func summon(_ creature: CreatureCard, to creatureSpot: CreatureSpotSprite) { // TODO: Return Bool
+        let creatureSprite = CreatureSprite(of: creature, spot: creatureSpot)
         creatureSprite.position = creatureSpot.position
         creatureSprite.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
         addChild(creatureSprite)
@@ -60,6 +60,7 @@ class Battle: SKNode {
             if let creature = creatureCard.card as? CreatureCard {
                 setCardState(card: creatureCard, state: .discarded)
                 summon(creature, to: creatureSpot)
+                return true
             }
         }
         return false
