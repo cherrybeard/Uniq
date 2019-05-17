@@ -11,12 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene {
     let battle = Battle()
-    
     var sourceNode: SKNode? = nil
     var delayedTask: DispatchWorkItem? = nil
-    
-    //var state: TurnState = .playerTurn  // OBSOLETE
-    //var playerAction = PlayerAction()   // OBSOLETE
     
     private var _possibleTargets: [Targetable] = [] // TODO: Rework into targetStates array... maybe
     private var possibleTargets: [Targetable] {     // problem is how to ajoin possibleTargets array
@@ -88,7 +84,7 @@ class GameScene: SKScene {
         addChild(battle.passButton)
         
         //TODO: Move to func startBattle() in class Battle
-        for _ in 1...5 { battle.human.deck.draw() }
+        for _ in 1...4 { battle.human.deck.draw() }
         
         battle.summon("Yletia Pirate", to: 7)
         battle.summon("Yletia Pirate", to: 3)
@@ -102,7 +98,7 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if battle.activePlayer.type != .human { return }
+        if !battle.isUnlocked { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -146,7 +142,7 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if battle.activePlayer.type != .human { return }
+        if !battle.isUnlocked { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -179,7 +175,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if battle.activePlayer.type != .human { return }
+        if !battle.isUnlocked { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -208,14 +204,6 @@ class GameScene: SKScene {
                     }
                 }
             }
-            
-            /*
-            playerAction.type = .rest
-            playerAction.subject = nil
-            playerAction.requiresTarget = false
-            //battle.markTargets(filter: { (_) -> Bool in false })
-            */
-            
         }
         
         currentTargets = []
@@ -225,29 +213,10 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        /*
-        battle.animationPipeline.update()
-        if ( battle.animationPipeline.state == AnimationState.finished) {
-            //battle.desk.removeDeadCreatures() // Causes permamament leak
-            if (state == .computerEnd) {
-                state = .playerTurn
-                battle.player.mana.increaseAndRestore()
-                battle.player.deck.draw()
-                battle.desk.setCreaturesAttack(owner: .player, canAttack: true)
-                battle.player.highlightCards()
-            }
-            if (state == .playerEnd) {
-                state = .computerTurn
-                battle.player.highlightCards(removeHighlight: true)
-                battle.desk.setCreaturesAttack(owner: .player, canAttack: false)
-                battle.desk.setCreaturesAttack(owner: .computer, canAttack: true)
-                makeComputerMove()
-            }
-        }
-        */
+        battle.update()
     }
     
-    func makeComputerMove() {
+    func makeComputerMove() {   //OBSLOLETE
         /*
          let creatures = battle.desk.creatures.filter { creature in (creature.owner == .ai) && creature.canAttack }
          if creatures.count > 0 {

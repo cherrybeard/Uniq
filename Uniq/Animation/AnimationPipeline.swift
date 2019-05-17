@@ -7,23 +7,26 @@
 //
 
 class AnimationPipeline {
-    private var pipelineStack: [Animation] = []
+    private var _queue: [Animation] = []
     var state: AnimationState {
-        get {
-            return (pipelineStack.count > 0) ? AnimationState.inProgress : AnimationState.finished
-        }
+        get { return (_queue.count > 0) ? .inProgress : .finished }
     }
     
     func add(animation: Animation) {
-        pipelineStack.append(animation)
+        _queue.append(animation)
     }
     
     func update() {
-        if (pipelineStack.count > 0) && (pipelineStack[0].state == AnimationState.finished) {
-            pipelineStack.remove(at: 0)
-        }
-        if (pipelineStack.count > 0) && (pipelineStack[0].state == AnimationState.ready) {
-            pipelineStack[0].play()
+        if _queue.count == 0 { return }
+        switch _queue[0].state {
+        case .finished:
+            _queue.remove(at: 0)
+        case .ready:
+            _queue[0].state = .inProgress
+            _queue[0].play()
+        default:
+            return
         }
     }
+    
 }

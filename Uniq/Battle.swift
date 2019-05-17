@@ -9,6 +9,10 @@
 import SpriteKit
 import GameplayKit
 
+enum BattleState {
+    case battleStart, actions, turnEnd, roundEnd
+}
+
 class Battle: SKNode {
     private let SPACE_BETWEEN_COLUMNS: Int = 113
     private let SPACE_BETWEEN_ROWS: Int = 90
@@ -21,9 +25,14 @@ class Battle: SKNode {
     let human = Player(as: .human)
     let ai = Player(as: .ai)
     var activePlayer: Player
-    var passedPlayers: [Player] = []
+    var state: BattleState = .battleStart
+    var round: Int = 0
     
-    //let animationPipeline = AnimationPipeline() // TODO: work on it
+    private let _animationPipeline = AnimationPipeline()
+    
+    var isUnlocked: Bool {
+        get { return (activePlayer.type == .human) && state == .actions }
+    }
     
     override init() {
         activePlayer = human
@@ -39,34 +48,59 @@ class Battle: SKNode {
         }
         
         name = "desk"
+        update()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update() {
+        _animationPipeline.update()
+        if _animationPipeline.state == .finished {
+            switch state {
+            case .turnEnd:
+                startTurn()
+            case .battleStart:
+                endRound()
+            case .actions:
+                state = .actions
+            case .roundEnd:
+                startTurn()
+            }
+        }
+    }
+    
+    func startTurn() {
+        state = .actions
+        switch activePlayer.type {
+        case .ai:
+            activePlayer = human
+        case .human:
+            activePlayer = ai
+            aiTurn()
+        }
+    }
+    
     func endTurn(passed: Bool = false) {
+        state = .turnEnd
         if passed {
             activePlayer.passed = passed
+            if activePlayer.type == .ai { passButton.readyToFight = true }
+            if human.passed && ai.passed {
+                endRound()
+                return
+            }
         } else {
             human.passed = false
             ai.passed = false
         }
-        if human.passed && ai.passed {
-            endRound()
-            return
-        }
-        if activePlayer.type == .ai {
-            if activePlayer.passed { passButton.readyToFight = true }
-            activePlayer = human
-        } else {
-            activePlayer = ai
-            aiTurn()
-        }
-        
+        let message = activePlayer.type == .ai ? "Your turn" : "Enemy turn"
+        _announce(message)
     }
     
     func endRound() {
+        state = .roundEnd
         for creature in creatures {
             creature.decreaseAbilityCooldown()
         }
@@ -75,12 +109,8 @@ class Battle: SKNode {
             player.passed = false
             player.deck.draw()
         }
-        if activePlayer.type == .ai {
-            activePlayer = human
-        } else {
-            activePlayer = ai
-            aiTurn()
-        }
+        round += 1
+        _announce("Round \(round)")
     }
     
     func aiTurn() {
@@ -133,6 +163,15 @@ class Battle: SKNode {
     func setCardState(card: CardSprite, state: CardState) {
         card.state = state
         human.deck.hand.clean()
+    }
+    
+    private func _announce(_ message: String) {
+        let announcer = TurnAnnouncerSprite()
+        announcer.message = message
+        announcer.position = CGPoint(x: 0, y: -6)
+        announcer.alpha = 0
+        addChild(announcer)
+        _animationPipeline.add(animation: AnnouncerAnimation(announcer: announcer))
     }
     
     /*
