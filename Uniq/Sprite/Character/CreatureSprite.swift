@@ -18,30 +18,22 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111, alpha: 1)
     
-    private let _healthLabel = StatLabel(type: .health)
-    private let _attackLabel = StatLabel(type: .attack)
+    private let _healthLabel = HealthLabel()
+    private let _attackLabel = AttackLabel()
     private let _abilityLabel = AbilityLabel()
     private let _border: SKShapeNode
     
     var creature: CreatureCard
     weak var spot: CreatureSpotSprite? = nil
     
-    var health: Int { get { return _healthLabel.value } }
-    var attack: Int { get { return _attackLabel.value } }
+    var health: Int { return _healthLabel.health }
+    var attack: Int { return _attackLabel.attack }
     var activeAbilityCooldown: Int { return _abilityLabel.remaining }
-    var owner: Player? { get { return spot?.owner } }
-    
+    var owner: Player? { return spot?.owner }
+
     var isPossibleTarget: Bool = false
     var isCurrentlyTapped: Bool = false
-    
-    private var _isCurrentTarget: Bool = false
-    var isCurrentTarget: Bool {
-        get { return _isCurrentTarget }
-        set(newValue) {
-            _isCurrentTarget = newValue
-            _redraw()
-        }
-    }
+    var isCurrentTarget: Bool = false { didSet { _redraw() } }
     
     init(of creature: CreatureCard, spot: CreatureSpotSprite) {
         self.creature = creature
@@ -58,13 +50,13 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         _abilityLabel.position = CGPoint(x: 0, y: HEIGHT/2)
         addChild(_abilityLabel)
         
-        _attackLabel.value = creature.attack
-        _attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
+        _attackLabel.attack = creature.attack
+        _attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 10)
         addChild(_attackLabel)
         
-        _healthLabel.value = creature.health
-        _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
-        _healthLabel.zPosition = 1
+        _healthLabel.health = creature.health
+        _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 10)
+        //_healthLabel.zPosition = 1
         addChild(_healthLabel)
         
         _redraw()
@@ -76,16 +68,11 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     
     private func _redraw() {
-        if _isCurrentTarget {
-            _border.strokeColor = BORDER_COLOR.currentTarget
-        } else {
-            _border.strokeColor = BORDER_COLOR.base
-        }
+        _border.strokeColor = isCurrentTarget ? BORDER_COLOR.currentTarget : BORDER_COLOR.base
     }
     
     func increaseAttack(by amount: Int) {
-        _attackLabel.value += amount
-        _attackLabel.state = .buffed    // TODO: Move to the StatLabel class
+        _attackLabel.increaseAttack(by: amount)
     }
     
     func decreaseAbilityCooldown() {
