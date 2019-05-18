@@ -20,6 +20,7 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     
     private let _healthLabel = StatLabel(type: .health)
     private let _attackLabel = StatLabel(type: .attack)
+    private let _cooldownLabel = AbilityLabel()
     private let _border: SKShapeNode
     
     var creature: CreatureCard
@@ -27,10 +28,8 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     
     var health: Int { get { return _healthLabel.value } }
     var attack: Int { get { return _attackLabel.value } }
+    var activeAbilityCooldown: Int { get { return _cooldownLabel.value } }
     var owner: Player? { get { return spot?.owner } }
-    
-    private var _activeAbilityCooldown: Int = -1
-    var activeAbilityCooldown: Int { get { return _activeAbilityCooldown } }
     
     var isPossibleTarget: Bool = false
     var isCurrentlyTapped: Bool = false
@@ -51,13 +50,17 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         super.init()
         
         if creature.activeAbility != nil {
-            _activeAbilityCooldown = creature.activeAbility!.cooldown
+            _cooldownLabel.value = creature.activeAbility!.cooldown
+        } else {
+            _cooldownLabel.value = -1
+            _cooldownLabel.isHidden = true
         }
         
         _healthLabel.value = creature.health
         _attackLabel.value = creature.attack
         _attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 6)
         _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 6)
+        _cooldownLabel.position = CGPoint(x: 0, y: HEIGHT/2 - 6)
         _healthLabel.zPosition = 1
         
         _border.lineWidth = 1
@@ -66,6 +69,7 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         addChild(_border)
         addChild(_attackLabel)
         addChild(_healthLabel)
+        addChild(_cooldownLabel)
         _redraw()
         name = "creature"
     }
@@ -88,15 +92,15 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     
     func decreaseAbilityCooldown() {
-        if _activeAbilityCooldown > 0 {
-            _activeAbilityCooldown -= 1
+        if _cooldownLabel.value > 0 {
+            _cooldownLabel.value -= 1
         }
     }
     
     func useActiveAbility(battle: Battle) -> Bool {
-        if (creature.activeAbility != nil) && (_activeAbilityCooldown == 0) {
+        if (creature.activeAbility != nil) && (_cooldownLabel.value == 0) {
             if creature.activeAbility!.ability(battle, self) {
-                _activeAbilityCooldown = creature.activeAbility!.cooldown
+                _cooldownLabel.value = creature.activeAbility!.cooldown
                 return true
             }
         }

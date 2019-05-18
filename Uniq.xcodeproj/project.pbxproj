@@ -39,6 +39,8 @@
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
+		5BBF0F1A228ED5620071E9F7 /* AbilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */; };
+		5BBF0F1C229012210071E9F7 /* AttackLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1B229012210071E9F7 /* AttackLabel.swift */; };
 		5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F0B2038911000B81376 /* AppDelegate.swift */; };
 		5BCA6F122038911000B81376 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F112038911000B81376 /* GameScene.swift */; };
 		5BCA6F142038911000B81376 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F132038911000B81376 /* GameViewController.swift */; };
@@ -104,6 +106,8 @@
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
+		5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityLabel.swift; sourceTree = "<group>"; };
+		5BBF0F1B229012210071E9F7 /* AttackLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackLabel.swift; sourceTree = "<group>"; };
 		5BCA6F082038911000B81376 /* Uniq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uniq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCA6F0B2038911000B81376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BCA6F112038911000B81376 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				5B66CE4D204BF6560047A9DC /* StatLabel.swift */,
+				5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */,
+				5BBF0F1B229012210071E9F7 /* AttackLabel.swift */,
 				5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */,
 			);
 			path = Labels;
@@ -457,7 +463,9 @@
 				5B4E78942280EDC0005FAE5C /* Targetable.swift in Sources */,
 				5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */,
 				5BCA6F122038911000B81376 /* GameScene.swift in Sources */,
+				5BBF0F1A228ED5620071E9F7 /* AbilityLabel.swift in Sources */,
 				5BCA6F282039E74200B81376 /* CreatureCard.swift in Sources */,
+				5BBF0F1C229012210071E9F7 /* AttackLabel.swift in Sources */,
 				5B7E2D1D203EB7D30026B445 /* AttackAnimation.swift in Sources */,
 				5BE0B0BE204F4A27009DA26E /* ChainLightningSpell.swift in Sources */,
 				5B35E5C12051FC1400678A10 /* BountyHunterCreature.swift in Sources */,
