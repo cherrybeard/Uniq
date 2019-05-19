@@ -31,6 +31,13 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     var activeAbilityCooldown: Int { return _abilityLabel.remaining }
     var owner: Player? { return spot?.owner }
 
+    var isActionTaken: Bool = false { didSet {
+        if isActionTaken {
+            _attackLabel.disable()
+        } else {
+            _attackLabel.enable()
+        }
+    } }
     var isPossibleTarget: Bool = false
     var isCurrentlyTapped: Bool = false
     var isCurrentTarget: Bool = false { didSet { _redraw() } }
@@ -56,7 +63,6 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         
         _healthLabel.health = creature.health
         _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 10)
-        //_healthLabel.zPosition = 1
         addChild(_healthLabel)
         
         _redraw()
@@ -80,9 +86,10 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     
     func useActiveAbility(battle: Battle) -> Bool {
-        if (creature.activeAbility != nil) && (_abilityLabel.remaining == 0) {
+        if (_abilityLabel.remaining == 0) && !isActionTaken {
             if creature.activeAbility!.ability(battle, self) {
                 _abilityLabel.resetCooldown()
+                isActionTaken = true
                 return true
             }
         }

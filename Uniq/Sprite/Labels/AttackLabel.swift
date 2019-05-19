@@ -14,8 +14,11 @@ class AttackLabel: SKNode {
         static let buffed = UIColor(rgb: 0xD9B282)
     }
     
-    var attack: Int = 1 { didSet { _redraw() } }
-    var isDisabled: Bool = false { didSet { _redraw() } }
+    var attack: Int = 1 { didSet {
+        _isDisabled = (attack == 0)
+    } }
+    private var _isDisabled: Bool = false { didSet { _redraw() } }
+    var isDisabled: Bool { return _isDisabled }
     var isBuffed: Bool = false { didSet { _redraw() } }
     
     private let _label = SKLabelNode()
@@ -45,5 +48,13 @@ class AttackLabel: SKNode {
     func increaseAttack(by amount: Int = 1) {
         attack += amount
         if !isBuffed { isBuffed = true }
+    }
+    
+    func enable() {
+        _isDisabled = !(attack > 0)
+    }
+    
+    func disable() {
+        _isDisabled = true
     }
 }

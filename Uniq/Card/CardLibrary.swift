@@ -35,7 +35,7 @@ class CardLibrary {
         
         "Fairy": CreatureCard(
             description: "Fairy",
-            attack: 3,
+            attack: 0,
             health: 4
         ),
         

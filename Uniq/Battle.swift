@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 enum BattleState {
-    case battleStart, actions, turnEnd, roundEnd
+    case battleStart, actions, actionsPaused, turnEnd, roundEnd
 }
 
 class Battle: SKNode {
@@ -67,6 +67,8 @@ class Battle: SKNode {
                 state = .actions
             case .roundEnd:
                 startTurn()
+            case .actionsPaused:
+                state = .actions
             }
         }
     }
@@ -103,6 +105,7 @@ class Battle: SKNode {
         state = .roundEnd
         for creature in creatures {
             creature.decreaseAbilityCooldown()
+            creature.isActionTaken = false
         }
         passButton.readyToFight = false
         for player in [human, ai] {
@@ -158,6 +161,16 @@ class Battle: SKNode {
             }
         }
         return false
+    }
+    
+    func swap(_ sourceSpot: CreatureSpotSprite, with targetSpot: CreatureSpotSprite) {
+        state = .actionsPaused
+        _animationPipeline.add(
+            animation: CreatureSwapAnimation(
+                sourceSpot: sourceSpot,
+                targetSpot: targetSpot
+            )
+        )
     }
     
     func setCardState(card: CardSprite, state: CardState) {

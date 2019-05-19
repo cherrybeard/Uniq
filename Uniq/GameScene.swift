@@ -191,7 +191,7 @@ class GameScene: SKScene {
                         if let creatureCard = sourceNode as? CreatureCardSprite {
                             if battle.play(creatureCard, to: creatureSpot) {
                                 battle.endTurn()
-                                return
+                                break
                             }
                         }
                     }
@@ -200,12 +200,13 @@ class GameScene: SKScene {
                 if sourceNode?.name == "pass" {
                     if let _ = node as? PassButton {
                         battle.endTurn(passed: true)
-                        return
+                        break
                     }
                 }
             }
         }
         
+        sourceNode = nil
         currentTargets = []
         possibleTargets = []
         currentlyTapped = []

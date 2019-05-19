@@ -42,6 +42,7 @@
 		5BBF0F1A228ED5620071E9F7 /* AbilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */; };
 		5BBF0F1C229012210071E9F7 /* AttackLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1B229012210071E9F7 /* AttackLabel.swift */; };
 		5BBF0F1E22908CDC0071E9F7 /* HealthLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1D22908CDC0071E9F7 /* HealthLabel.swift */; };
+		5BBF0F2022913DDD0071E9F7 /* CreatureSwapAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1F22913DDD0071E9F7 /* CreatureSwapAnimation.swift */; };
 		5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F0B2038911000B81376 /* AppDelegate.swift */; };
 		5BCA6F122038911000B81376 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F112038911000B81376 /* GameScene.swift */; };
 		5BCA6F142038911000B81376 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F132038911000B81376 /* GameViewController.swift */; };
@@ -110,6 +111,7 @@
 		5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityLabel.swift; sourceTree = "<group>"; };
 		5BBF0F1B229012210071E9F7 /* AttackLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackLabel.swift; sourceTree = "<group>"; };
 		5BBF0F1D22908CDC0071E9F7 /* HealthLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthLabel.swift; sourceTree = "<group>"; };
+		5BBF0F1F22913DDD0071E9F7 /* CreatureSwapAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSwapAnimation.swift; sourceTree = "<group>"; };
 		5BCA6F082038911000B81376 /* Uniq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uniq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCA6F0B2038911000B81376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BCA6F112038911000B81376 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				5B7E2D19203EB7B20026B445 /* Animation.swift */,
 				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
 				5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */,
+				5BBF0F1F22913DDD0071E9F7 /* CreatureSwapAnimation.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				5BE0B0C0204F4D91009DA26E /* SuddenStrikeSpell.swift in Sources */,
 				5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */,
 				5B116F822051A46F00396C0F /* CharacterSprite.swift in Sources */,
+				5BBF0F2022913DDD0071E9F7 /* CreatureSwapAnimation.swift in Sources */,
 				5BE0B0B9204F3884009DA26E /* VitalizationSpell.swift in Sources */,
 				5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */,
 				5B35E5CC2056AE1A00678A10 /* FireImpCreature.swift in Sources */,
