@@ -28,11 +28,12 @@ class CreatureSpotSprite: SKNode, Targetable {
     private let border: SKShapeNode
     
     weak var owner: Player?
-    var creature: CreatureSprite? = nil
     let range: RangeType
     let column: ColumnType
-    var isTaken: Bool = false
+    var creature: CreatureSprite? = nil
+    var isTaken: Bool { return (creature != nil) }
     
+    //TODO: Rework into more simple syntax
     private var _isPossibleTarget: Bool = false
     var isPossibleTarget: Bool {
         get { return _isPossibleTarget }

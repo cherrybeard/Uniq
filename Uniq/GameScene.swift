@@ -115,21 +115,23 @@ class GameScene: SKScene {
                     return
                 }
                 if let creatureSprite = node as? CreatureSprite {
-                    if (creatureSprite.activeAbilityCooldown == 0) && (creatureSprite.owner!.type == .human) {
+                    if (creatureSprite.owner!.type == .human) && !creatureSprite.isActionTaken {
                         sourceNode = node
                         currentlyTapped = [creatureSprite]
-                        possibleTargets = [creatureSprite]
-                        currentTargets = [creatureSprite]
-                        delayedTask = DispatchWorkItem { [ weak self ] in
-                            // TODO: check if ability was really used
-                            self?.possibleTargets = []
-                            self?.currentTargets = []
-                            if (creatureSprite.useActiveAbility(battle: self!.battle)) {
-                                self?.battle.endTurn()
+                        possibleTargets = battle.getNearbySpots(of: creatureSprite.spot!)
+                        if (creatureSprite.activeAbilityCooldown == 0) {
+                            possibleTargets.append(creatureSprite)
+                            currentTargets = [creatureSprite]
+                            delayedTask = DispatchWorkItem { [ weak self ] in
+                                // TODO: check if ability was really used
+                                self?.possibleTargets = []
+                                self?.currentTargets = []
+                                if (creatureSprite.useActiveAbility(battle: self!.battle)) {
+                                    self?.battle.endTurn()
+                                }
                             }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
-                        return
                     }
                 }
                 if let passButton = node as? PassButton {
@@ -187,12 +189,22 @@ class GameScene: SKScene {
                 
                 if sourceNode?.name == "card" {
                     if let creatureSpot = node as? CreatureSpotSprite {
-                        if creatureSpot.owner!.type != .human { continue }
+                        if creatureSpot.owner!.type != .human { continue }  //TODO: use isPossibleTarget
                         if let creatureCard = sourceNode as? CreatureCardSprite {
                             if battle.play(creatureCard, to: creatureSpot) {
                                 battle.endTurn()
                                 break
                             }
+                        }
+                    }
+                }
+                
+                if sourceNode?.name == "creature" {
+                    if let targetSpot = node as? CreatureSpotSprite {
+                        if let sourceSpotCreature = sourceNode as? CreatureSprite {
+                            battle.swap(sourceSpotCreature.spot!, with: targetSpot)
+                            battle.endTurn()
+                            break
                         }
                     }
                 }

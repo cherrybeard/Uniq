@@ -147,9 +147,9 @@ class Battle: SKNode {
         let creatureSprite = CreatureSprite(of: creature, spot: creatureSpot)
         creatureSprite.position = creatureSpot.position
         creatureSprite.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
+        creatureSpot.creature = creatureSprite
         addChild(creatureSprite)
         creatures.append(creatureSprite)
-        creatureSpot.isTaken = true
     }
     
     func play(_ creatureCard: CreatureCardSprite, to creatureSpot: CreatureSpotSprite) -> Bool {
@@ -185,6 +185,34 @@ class Battle: SKNode {
         announcer.alpha = 0
         addChild(announcer)
         _animationPipeline.add(animation: AnnouncerAnimation(announcer: announcer))
+    }
+    
+    func getSpot(of player: PlayerType, range: RangeType, column: ColumnType) -> CreatureSpotSprite {
+        return creatureSpots.first(where: {
+            ($0.owner!.type == player) && ($0.range == range) && ($0.column == column)
+        })!
+    }
+    
+    func getSpot(at index: Int) -> CreatureSpotSprite {
+        let checkedIndex = CreatureSpotSprite.checkIndex(index)
+        return creatureSpots.first(where: { $0.index == checkedIndex })!
+    }
+    
+    func getNearbySpots(of spot: CreatureSpotSprite, sameOwner: Bool = true) -> [CreatureSpotSprite] {
+        var nearbySpots: [CreatureSpotSprite] = []
+        let index = spot.index
+        var indexModifiers = [-3, 3]
+        if index % 3 != 0 { indexModifiers.append(1) }
+        if index % 3 != 1 { indexModifiers.append(-1) }
+        for indexModifier in indexModifiers {
+            let newIndex = index + indexModifier
+            if (newIndex < 1) || (newIndex > 12) { continue }
+            let nearbySpot = getSpot(at: newIndex)
+            if !sameOwner || (nearbySpot.owner!.type == spot.owner!.type) {
+                nearbySpots.append(nearbySpot)
+            }
+        }
+        return nearbySpots
     }
     
     /*
