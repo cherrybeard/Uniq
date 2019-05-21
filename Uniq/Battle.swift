@@ -165,6 +165,16 @@ class Battle: SKNode {
     
     func swap(_ sourceSpot: CreatureSpotSprite, with targetSpot: CreatureSpotSprite) {
         state = .actionsPaused
+        
+        // Swapping creatures and disabling actions for this turn
+        let movingCreature = sourceSpot.creature
+        sourceSpot.creature = targetSpot.creature
+        targetSpot.creature = movingCreature
+        targetSpot.creature?.spot = targetSpot
+        sourceSpot.creature?.spot = sourceSpot
+        targetSpot.creature?.isActionTaken = true
+        
+        // Animating movement
         _animationPipeline.add(
             animation: CreatureSwapAnimation(
                 sourceSpot: sourceSpot,

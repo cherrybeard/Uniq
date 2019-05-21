@@ -18,32 +18,25 @@ class CreatureSwapAnimation: Animation {
     }
     
     override func play() {
-        //TODO: Move all not-animation stuff to the class Battle
-        
-        // set souceSpot.creature.zPosition to 1
-        // move souceSpot.creature from initial position to the targetSpot
-        
-        let targetCreature = _targetSpot.creature
-        _targetSpot.creature = _sourceSpot.creature
-        _sourceSpot.creature = targetCreature
-        
-        _targetSpot.creature?.spot = _targetSpot
-        _sourceSpot.creature?.spot = _sourceSpot
-        let moveToSource = SKAction.move(to: _sourceSpot.position, duration: 0.6)
-        let moveToTarget = SKAction.move(to: _targetSpot.position, duration: 0.6)
-        _targetSpot.creature?.isActionTaken = true
+        // Creating actions for the first creature
+        let scaleIn = SKAction.scale(to: 1.2, duration: 0.1)
+        let wait = SKAction.wait(forDuration: 0.1)
+        let scaleOut = SKAction.scale(to: 1, duration: 0.1)
+        let scale = SKAction.sequence([scaleIn, wait, scaleOut])
+        let moveToTarget = SKAction.move(to: _targetSpot.position, duration: 0.3)
+        moveToTarget.timingMode = .easeIn
+        let moveToTargetAndScale = SKAction.group([moveToTarget, scale])
         _targetSpot.creature?.zPosition = 1
+        
+        // Creating actions for the second, optional creature
+        let moveToSource = SKAction.move(to: _sourceSpot.position, duration: 0.3)
+        moveToSource.timingMode = .easeIn
+        
+        // Running animation
         _sourceSpot.creature?.run(moveToSource)
-        _targetSpot.creature?.run(moveToTarget) {
+        _targetSpot.creature?.run(moveToTargetAndScale) {
             self._targetSpot.zPosition = 0
             self.state = .finished
         }
-        // move targetSpot.creature to the sourceSpot (if exist?)
-        // save targetSpot.creature to targetCreature
-        // set targetSpot.creature to souceSpot.creature
-        // set souceSpot.creature to targetCreature
-        // check isTaken properties of spots
-        // set souceSpot.creature as actionTaken = true
-        // reset actionTaken in new round
     }
 }
