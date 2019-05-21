@@ -9,5 +9,6 @@
 import Foundation
 
 protocol Tappable {
+    var isPosssibleToTap: Bool { get set }
     var isCurrentlyTapped: Bool { get set }
 }

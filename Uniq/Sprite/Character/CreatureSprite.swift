@@ -12,11 +12,14 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     private let WIDTH: Int = 90
     private let HEIGHT: Int = 60
     private struct BORDER_COLOR {
-        static let base = UIColor(rgb: 0x484644, alpha: 1)
-        static let tapped = UIColor(rgb: 0x614F3F, alpha: 1)
-        static let currentTarget = UIColor(rgb: 0x614F3F, alpha: 1)
+        static let base = UIColor(rgb: 0x484644)
+        static let tapped = UIColor(rgb: 0x614F3F)
+        static let possibleToTap = UIColor(rgb: 0x775534)
+        static let currentlyTapped = UIColor(rgb: 0xAC7D4E)
+        static let currentTarget = UIColor(rgb: 0x1A54FB)
+        static let possibleTarget = UIColor(rgb: 0x3752A1)
     }
-    private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111, alpha: 1)
+    private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111)
     
     private let _healthLabel = HealthLabel()
     private let _attackLabel = AttackLabel()
@@ -38,8 +41,9 @@ class CreatureSprite: SKNode, Targetable, Tappable {
             _attackLabel.enable()
         }
     } }
-    var isPossibleTarget: Bool = false
-    var isCurrentlyTapped: Bool = false
+    var isPossibleTarget: Bool = false { didSet { _redraw() } }
+    var isCurrentlyTapped: Bool = false { didSet { _redraw() } }
+    var isPosssibleToTap: Bool = false { didSet { _redraw() } }
     var isCurrentTarget: Bool = false { didSet { _redraw() } }
     
     init(of creature: CreatureCard, spot: CreatureSpotSprite) {
@@ -74,7 +78,17 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     
     private func _redraw() {
-        _border.strokeColor = isCurrentTarget ? BORDER_COLOR.currentTarget : BORDER_COLOR.base
+        if isCurrentTarget {
+            _border.strokeColor = BORDER_COLOR.currentTarget
+        } else if isPossibleTarget {
+            _border.strokeColor = BORDER_COLOR.possibleTarget
+        } else if isCurrentlyTapped {
+            _border.strokeColor = BORDER_COLOR.currentlyTapped
+        } else if isPosssibleToTap {
+            _border.strokeColor = BORDER_COLOR.possibleToTap
+        } else {
+            _border.strokeColor = BORDER_COLOR.base
+        }
     }
     
     func increaseAttack(by amount: Int) {

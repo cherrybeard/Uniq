@@ -20,9 +20,10 @@ class CreatureSpotSprite: SKNode, Targetable {
     private let WIDTH: Int = 86
     private let HEIGHT: Int = 56
     private struct BORDER_COLOR {
-        static let base: UIColor = UIColor(rgb: 0x1D1D1C, alpha: 1)
-        static let possibleTarget: UIColor = UIColor(rgb: 0x2E2924, alpha: 1)
-        static let currentTarget: UIColor = UIColor(rgb: 0x614F3F, alpha: 1)
+        static let base = UIColor(rgb: 0x1D1D1C)
+        //static let possibleTarget = UIColor(rgb: 0x2E2924)
+        static let possibleTarget = UIColor(rgb: 0x3752A1)
+        static let currentTarget = UIColor(rgb: 0x3065FF)
     }
     
     private let border: SKShapeNode
@@ -33,24 +34,8 @@ class CreatureSpotSprite: SKNode, Targetable {
     var creature: CreatureSprite? = nil
     var isTaken: Bool { return (creature != nil) }
     
-    //TODO: Rework into more simple syntax
-    private var _isPossibleTarget: Bool = false
-    var isPossibleTarget: Bool {
-        get { return _isPossibleTarget }
-        set(newValue) {
-            _isPossibleTarget = newValue
-            _redraw()
-        }
-    }
-    
-    private var _isCurrentTarget: Bool = false
-    var isCurrentTarget: Bool {
-        get { return _isCurrentTarget }
-        set(newValue) {
-            _isCurrentTarget = newValue
-            _redraw()
-        }
-    }
+    var isPossibleTarget: Bool = false { didSet { _redraw() } }
+    var isCurrentTarget: Bool = false { didSet { _redraw() } }
 
     var index: Int {
         get {
@@ -69,6 +54,7 @@ class CreatureSpotSprite: SKNode, Targetable {
         self.range = range
         self.column = column
         border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT))
+        border.alpha = 0.7
         super.init()
         _afterInit()
     }
@@ -97,9 +83,9 @@ class CreatureSpotSprite: SKNode, Targetable {
     }
     
     private func _redraw() {
-        if _isCurrentTarget {
+        if isCurrentTarget {
             border.strokeColor = BORDER_COLOR.currentTarget
-        } else if _isPossibleTarget {
+        } else if isPossibleTarget {
             border.strokeColor = BORDER_COLOR.possibleTarget
         } else {
             border.strokeColor = BORDER_COLOR.base

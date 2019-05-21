@@ -36,6 +36,7 @@ class CardSprite: SKNode, Tappable {
         }
     }
     
+    var isPosssibleToTap: Bool = false
     private var _isCurrentlyTapped: Bool = false
     var isCurrentlyTapped: Bool {
         get { return _isCurrentlyTapped }

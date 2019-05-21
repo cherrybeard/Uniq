@@ -80,12 +80,14 @@ class Battle: SKNode {
             activePlayer = human
         case .human:
             activePlayer = ai
-            aiTurn()
         }
+        highlightActionTargets(for: activePlayer)
+        if activePlayer.type == .ai { aiTurn() }
     }
     
     func endTurn(passed: Bool = false) {
         state = .turnEnd
+        removeActionTargets()
         if passed {
             activePlayer.passed = passed
             if activePlayer.type == .ai { passButton.readyToFight = true }
@@ -223,6 +225,18 @@ class Battle: SKNode {
             }
         }
         return nearbySpots
+    }
+    
+    func highlightActionTargets(for player: Player) {
+        for creature in creatures {
+            creature.isPosssibleToTap = (!creature.isActionTaken) && (creature.spot?.owner?.type == player.type)
+        }
+    }
+    
+    func removeActionTargets() {
+        for creature in creatures {
+            creature.isPosssibleToTap = false
+        }
     }
     
     /*

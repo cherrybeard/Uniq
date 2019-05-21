@@ -22,6 +22,7 @@ class PassButton: SKNode, Tappable, Targetable {
         }
     }
     
+    var isPosssibleToTap: Bool = false
     var isCurrentlyTapped: Bool = false
     var isPossibleTarget: Bool = false
     var isCurrentTarget: Bool = false

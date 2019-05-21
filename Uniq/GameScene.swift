@@ -112,31 +112,39 @@ class GameScene: SKScene {
                     possibleTargets = battle.creatureSpots.filter({
                         ($0.owner!.type == .human) && !$0.isTaken
                     })
+                    battle.removeActionTargets()
                     return
                 }
                 if let creatureSprite = node as? CreatureSprite {
                     if (creatureSprite.owner!.type == .human) && !creatureSprite.isActionTaken {
                         sourceNode = node
                         currentlyTapped = [creatureSprite]
-                        possibleTargets = battle.getNearbySpots(of: creatureSprite.spot!)
+                        let spots = battle.getNearbySpots(of: creatureSprite.spot!)
+                        possibleTargets = spots
+                        for spot in spots {
+                            if spot.creature != nil {
+                                possibleTargets.append(spot.creature!)
+                            }
+                        }
                         if (creatureSprite.activeAbilityCooldown == 0) {
                             possibleTargets.append(creatureSprite)
                             currentTargets = [creatureSprite]
                             delayedTask = DispatchWorkItem { [ weak self ] in
                                 // TODO: check if ability was really used
-                                self?.possibleTargets = []
-                                self?.currentTargets = []
+                                self?._resetTargets()
                                 if (creatureSprite.useActiveAbility(battle: self!.battle)) {
                                     self?.battle.endTurn()
                                 }
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
                         }
+                        battle.removeActionTargets()
                     }
                 }
                 if let passButton = node as? PassButton {
                     sourceNode = node
                     possibleTargets = [passButton]
+                    battle.removeActionTargets()
                     return
                 }
             }
@@ -153,7 +161,7 @@ class GameScene: SKScene {
             for node in touchedNodes {
                 if var target = node as? Targetable {
                     if target.isPossibleTarget {
-                        target.isCurrentTarget = true
+                        //target.isCurrentTarget = true
                         newTargets.append(target)
                     }
                 }
@@ -178,6 +186,7 @@ class GameScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !battle.isUnlocked { return }
+        var actionCancelled = true
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
@@ -192,6 +201,7 @@ class GameScene: SKScene {
                         if creatureSpot.owner!.type != .human { continue }  //TODO: use isPossibleTarget
                         if let creatureCard = sourceNode as? CreatureCardSprite {
                             if battle.play(creatureCard, to: creatureSpot) {
+                                actionCancelled = false
                                 battle.endTurn()
                                 break
                             }
@@ -202,6 +212,7 @@ class GameScene: SKScene {
                 if sourceNode?.name == "creature" {
                     if let targetSpot = node as? CreatureSpotSprite {
                         if let sourceSpotCreature = sourceNode as? CreatureSprite {
+                            actionCancelled = false
                             battle.swap(sourceSpotCreature.spot!, with: targetSpot)
                             battle.endTurn()
                             break
@@ -211,22 +222,27 @@ class GameScene: SKScene {
                 
                 if sourceNode?.name == "pass" {
                     if let _ = node as? PassButton {
+                        actionCancelled = false
                         battle.endTurn(passed: true)
                         break
                     }
                 }
             }
         }
-        
+        _resetTargets()
+        if actionCancelled { battle.highlightActionTargets(for: battle.activePlayer) }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        battle.update()
+    }
+    
+    private func _resetTargets() {
         sourceNode = nil
         currentTargets = []
         possibleTargets = []
         currentlyTapped = []
         cancelDelayedTask()
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        battle.update()
     }
     
     func makeComputerMove() {   //OBSLOLETE
