@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 enum BattleState {
-    case battleStart, actions, actionsPaused, turnEnd, roundEnd
+    case battleStart, actions, actionsPaused, turnEnd, roundEnd, fight, attack
 }
 
 class Battle: SKNode {
@@ -56,17 +56,21 @@ class Battle: SKNode {
     }
     
     func update() {
-        _animationPipeline.update()
-        if _animationPipeline.state == .finished {
+        let animationState = _animationPipeline.update()
+        if animationState == .finished {
             switch state {
             case .turnEnd:
                 startTurn()
             case .battleStart:
                 endRound()
             case .actions:
-                state = .actions
+                break
             case .roundEnd:
                 startTurn()
+            case .attack:
+                fight()
+            case .fight:
+                break
             case .actionsPaused:
                 state = .actions
             }
@@ -92,7 +96,7 @@ class Battle: SKNode {
             activePlayer.passed = passed
             if activePlayer.type == .ai { passButton.readyToFight = true }
             if human.passed && ai.passed {
-                endRound()
+                fight()
                 return
             }
         } else {
@@ -101,6 +105,26 @@ class Battle: SKNode {
         }
         let message = activePlayer.type == .ai ? "Your turn" : "Enemy turn"
         _announce(message)
+    }
+    
+    func fight() {
+        state = .fight
+        // get next attacker
+        let attackerSpot = _getNextAttackerSpot()
+        if attackerSpot == nil {
+            endRound()
+            return
+        }
+        let attacker = attackerSpot?.creature
+        attacker!.isActionTaken = true
+        let targetSpot = _findTargetSpot(for: attackerSpot!)
+        if targetSpot == nil {
+            fight()
+            return
+        } else {
+            state = .attack
+            attack(attacker: attacker!, target: targetSpot!.creature!)
+        }
     }
     
     func endRound() {
@@ -228,6 +252,7 @@ class Battle: SKNode {
     }
     
     func highlightActionTargets(for player: Player) {
+        // TODO: Remove player and use activePlayer instead
         for creature in creatures {
             creature.isPosssibleToTap = (!creature.isActionTaken) && (creature.spot?.owner?.type == player.type)
         }
@@ -237,6 +262,38 @@ class Battle: SKNode {
         for creature in creatures {
             creature.isPosssibleToTap = false
         }
+    }
+    
+    func attack(attacker: CreatureSprite, target: CreatureSprite) {
+        _animationPipeline.add( animation: AttackAnimation(attacker: attacker, target: target) )
+    }
+    
+    private func _getNextAttackerSpot() -> CreatureSpotSprite? {
+        let aiOrder = [4, 1, 5, 2, 6, 3]
+        let humanOrder = [7, 10, 8, 11, 9, 12]
+        let attackOrder: [Int] = (activePlayer.type == .ai) ? aiOrder + humanOrder : humanOrder + aiOrder
+        for index in attackOrder {
+            let attackerSpot = creatureSpots[index-1]
+            let attacker = attackerSpot.creature
+            if (attacker != nil) && !attacker!.isActionTaken && (attacker!.attack > 0) {
+                return attackerSpot
+            }
+        }
+        return nil
+    }
+    
+    private func _findTargetSpot(for spot: CreatureSpotSprite) -> CreatureSpotSprite? {
+        let sign = (spot.owner?.type == .ai) ? 1 : -1
+        let attackerIndex = spot.index
+        for i in [3, 6, 9] {
+            let targetIndex = attackerIndex + i * sign
+            if (targetIndex < 1) || (targetIndex > 12) { continue }
+            let targetSpot = creatureSpots[targetIndex-1]
+            if (targetSpot.creature != nil) && (targetSpot.owner!.type != spot.owner!.type) {
+                return targetSpot
+            }
+        }
+        return nil
     }
     
     /*

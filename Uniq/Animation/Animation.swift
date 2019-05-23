@@ -7,7 +7,7 @@
 //
 
 enum AnimationState: Int {
-    case ready = 0, inProgress, finished
+    case ready, inProgress, finished, idle
 }
 
 class Animation {

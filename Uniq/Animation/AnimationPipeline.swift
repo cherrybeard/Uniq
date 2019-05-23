@@ -8,6 +8,7 @@
 
 class AnimationPipeline {
     private var _queue: [Animation] = []
+    private var _lastState: AnimationState?
     var state: AnimationState {
         get { return (_queue.count > 0) ? .inProgress : .finished }
     }
@@ -16,8 +17,16 @@ class AnimationPipeline {
         _queue.append(animation)
     }
     
-    func update() {
-        if _queue.count == 0 { return }
+    func update() -> AnimationState {
+        if _queue.count == 0 {
+            if (_lastState == .finished) || (_lastState == .idle) {
+                _lastState = .idle
+                return .idle
+            } else {
+                _lastState = .finished
+                return .finished
+            }
+        }
         switch _queue[0].state {
         case .finished:
             _queue.remove(at: 0)
@@ -25,8 +34,10 @@ class AnimationPipeline {
             _queue[0].state = .inProgress
             _queue[0].play()
         default:
-            return
+            break
         }
+        _lastState = .inProgress
+        return .inProgress
     }
     
 }
