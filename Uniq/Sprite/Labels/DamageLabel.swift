@@ -8,43 +8,27 @@
 
 import SpriteKit
 
-class DamageLabel: SKLabelNode {
-    private let action: SKAction
+class DamageLabel: SKNode {
+    private let _label = SKLabelNode()
+    var damage: Int
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init() {
-        let damageAppear = SKAction.group([
-            SKAction.fadeIn(withDuration: 0.1),
-            SKAction.scale(to: 1.4, duration: 0.1)
-        ])
-        damageAppear.timingMode = .easeIn
-        
-        let damageHide = SKAction.fadeOut(withDuration: 0.1)
-        damageHide.timingMode = .easeIn
-        
-        action = SKAction.sequence([
-            damageAppear,
-            SKAction.scale(to: 1, duration: 0.1),
-            SKAction.wait(forDuration: 0.5),
-            damageHide
-        ])
-        
+    init(damage: Int) {
+        self.damage = damage
         super.init()
-        
-        fontColor = SKColor.white
-        fontName = "Courier-Bold"
-        fontSize = 32
-        alpha = 0
+        _label.fontColor = SKColor.white
+        _label.fontName = "AvenirNext-Regular"
+        _label.fontSize = 24
+        _label.verticalAlignmentMode = .center
+        _label.horizontalAlignmentMode = .center    
+        addChild(_label)
+        _redraw()
     }
     
-    func show(damage: Int) {
-        setScale(0.5)
-        text = "-" + String(damage)
-        run(action)
+    private func _redraw() {
+        _label.text = "–" + String(damage)
     }
-    
-    
 }

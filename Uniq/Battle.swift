@@ -289,7 +289,7 @@ class Battle: SKNode {
             let targetIndex = attackerIndex + i * sign
             if (targetIndex < 1) || (targetIndex > 12) { continue }
             let targetSpot = creatureSpots[targetIndex-1]
-            if (targetSpot.creature != nil) && (targetSpot.owner!.type != spot.owner!.type) {
+            if (targetSpot.creature != nil) && (targetSpot.owner!.type != spot.owner!.type) && (targetSpot.creature!.health > 0) {
                 return targetSpot
             }
         }

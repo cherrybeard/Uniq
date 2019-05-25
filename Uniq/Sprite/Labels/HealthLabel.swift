@@ -11,22 +11,23 @@ import SpriteKit
 class HealthLabel: SKNode {
     private struct TEXT_COLOR {
         static let base = UIColor(rgb: 0xEEEEEE)
+        static let damaged = UIColor(rgb: 0xA33D3D)
     }
-    var health: Int = 1 { didSet { _redraw() } }
+    var maxHealth: Int
+    var health: Int{ didSet { _redraw() } }
     
     private let _label = SKLabelNode()
     
-    override init() {
+    init(maxHealth: Int) {
+        self.maxHealth = maxHealth
+        health = maxHealth
         super.init()
         
-        _label.fontColor = TEXT_COLOR.base
         _label.fontName = "AvenirNext-DemiBold"
         _label.fontSize = 12
         _label.horizontalAlignmentMode = .right
         _label.verticalAlignmentMode = .center
         addChild(_label)
-        
-        _redraw()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -35,5 +36,6 @@ class HealthLabel: SKNode {
     
     private func _redraw() {
         _label.text = String(health)
+        _label.fontColor = (health == maxHealth) ? TEXT_COLOR.base : TEXT_COLOR.damaged
     }
 }

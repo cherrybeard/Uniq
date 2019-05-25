@@ -31,7 +31,6 @@ class AttackAnimation: Animation {
         let hittingTarget = SKAction.sequence([scaleUp, moveAndScale])
         
         // shaking the target
-        //let shaking = SKAction.shake(duration: 0.2, amplitudeX: 10, amplitudeY: 10)
         let impulseY = targetYPos - 6 * (targetYPos < 0 ? 1 : -1)
         let initialTargetY = _target.position.y
         let targetImpulse = SKAction.moveTo(y: impulseY, duration: 0.05)
@@ -41,33 +40,50 @@ class AttackAnimation: Animation {
         let targetMovement = SKAction.sequence([targetImpulse, targetReturning])
         
         // moving back
-        let wait = SKAction.wait(forDuration: 0.1)
+        let pauseAttacker = SKAction.wait(forDuration: 0.1)
         let initialY = _attacker?.position.y ?? 0
         let moveBack = SKAction.moveTo(y: initialY, duration: 0.5)
         moveBack.timingMode = .easeOut
-        let waitAndMoveBack = SKAction.sequence([wait, moveBack])
+        let waitAndMoveBack = SKAction.sequence([pauseAttacker, moveBack])
         
         _attacker?.zPosition = 1
         _attacker?.run(hittingTarget) {
+            self._target.dealDamage(self._attacker!.attack)
+            let isTargetDead = self._target.health <= 0
+            if isTargetDead {
+                self._target.isActionTaken = true
+            }
             // show damage
+            let damageLabel = DamageLabel(damage: self._attacker!.attack)
+            damageLabel.alpha = 0
+            damageLabel.setScale(0)
+            self._target.addChild(damageLabel)
+            let damageFadeIn = SKAction.fadeIn(withDuration: 0.1)
+            let damageScaleUp = SKAction.scale(to: 1, duration: 0.1)
+            let damageAppear = SKAction.group([damageFadeIn, damageScaleUp])
+            let damagePause = SKAction.wait(forDuration: 0.5)
+            let damageFadeOut = SKAction.fadeOut(withDuration: 0.3)
+            let damageAppearAndFade = SKAction.sequence([damageAppear, damagePause])
             self._target.run(targetMovement)
+            damageLabel.run(damageAppearAndFade) {
+                damageLabel.run(damageFadeOut)
+                if isTargetDead {
+                    // show destroy animation
+                    let shaking = SKAction.shake(duration: 0.5, amplitudeX: 5, amplitudeY: 5)
+                    let targetFadeOut = SKAction.fadeOut(withDuration: 1)
+                    let shakeAndFadeOut = SKAction.group([shaking, targetFadeOut])
+                    self.state = .finished
+                    self._target.run(shakeAndFadeOut) {
+                        self._target.removeFromParent()
+                        self._target.spot?.creature = nil
+                    }
+                }
+            }
             self._attacker?.run(waitAndMoveBack) {
                 self._attacker?.zPosition = 0
-                self.state = .finished
-            }
-            //self.state = .finished
-            
-            /*
-            self.defending.showDamage(self.attacking.attack)
-            if self.defending.attack > 0 {
-                self.attacking.showDamage(self.defending.attack)
+                if !isTargetDead { self.state = .finished }
             }
             
-            self.attacking.run(moveBack, completion: {
-                self.attacking.zPosition = 0
-                self.state = AnimationState.finished
-            })
-            */
         }
         
     }

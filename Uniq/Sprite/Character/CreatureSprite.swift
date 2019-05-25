@@ -21,7 +21,7 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     }
     private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111)
     
-    private let _healthLabel = HealthLabel()
+    private let _healthLabel: HealthLabel
     private let _attackLabel = AttackLabel()
     private let _abilityLabel = AbilityLabel()
     private let _border: SKShapeNode
@@ -50,6 +50,7 @@ class CreatureSprite: SKNode, Targetable, Tappable {
         self.creature = creature
         self.spot = spot
         _border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
+        _healthLabel = HealthLabel(maxHealth: creature.health)
         super.init()
         
         _border.lineWidth = 1
@@ -93,6 +94,10 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     
     func increaseAttack(by amount: Int) {
         _attackLabel.increaseAttack(by: amount)
+    }
+    
+    func dealDamage(_ amount: Int) {
+        _healthLabel.health -= amount
     }
     
     func decreaseAbilityCooldown() {
