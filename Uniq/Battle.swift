@@ -31,7 +31,7 @@ class Battle: SKNode {
     private let _animationPipeline = AnimationPipeline()
     
     var isUnlocked: Bool {
-        get { return (activePlayer.type == .human) && state == .actions }
+        get { return activePlayer.isHuman && state == .actions }
     }
     
     override init() {
@@ -85,8 +85,8 @@ class Battle: SKNode {
         case .human:
             activePlayer = ai
         }
-        highlightActionTargets(for: activePlayer)
-        if activePlayer.type == .ai { aiTurn() }
+        highlightActionTargets()
+        if activePlayer.isAi { aiTurn() }
     }
     
     func endTurn(passed: Bool = false) {
@@ -94,7 +94,7 @@ class Battle: SKNode {
         removeActionTargets()
         if passed {
             activePlayer.passed = passed
-            if activePlayer.type == .ai { passButton.readyToFight = true }
+            if activePlayer.isAi { passButton.readyToFight = true }
             if human.passed && ai.passed {
                 fight()
                 return
@@ -103,7 +103,7 @@ class Battle: SKNode {
             human.passed = false
             ai.passed = false
         }
-        let message = activePlayer.type == .ai ? "Your turn" : "Enemy turn"
+        let message = activePlayer.isAi ? "Your turn" : "Enemy turn"
         _announce(message)
     }
     
@@ -143,7 +143,7 @@ class Battle: SKNode {
     }
     
     func aiTurn() {
-        let aiCreatures = creatures.filter { $0.owner!.type == .ai }
+        let aiCreatures = creatures.filter { $0.owner!.isAi }
         let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiCreatures)
         var pass: Bool = true
         for creature in creaturesShuffled {
@@ -244,17 +244,22 @@ class Battle: SKNode {
             let newIndex = index + indexModifier
             if (newIndex < 1) || (newIndex > 12) { continue }
             let nearbySpot = getSpot(at: newIndex)
-            if !sameOwner || (nearbySpot.owner!.type == spot.owner!.type) {
+            if !sameOwner || (nearbySpot.owner == spot.owner) {
                 nearbySpots.append(nearbySpot)
             }
         }
         return nearbySpots
     }
     
-    func highlightActionTargets(for player: Player) {
-        // TODO: Remove player and use activePlayer instead
+    func highlightActionTargets() {
         for creature in creatures {
-            creature.isPosssibleToTap = (!creature.isActionTaken) && (creature.spot?.owner?.type == player.type)
+            creature.isPosssibleToTap = (!creature.isActionTaken) && (creature.spot?.owner == activePlayer)
+        }
+        if activePlayer.isHuman {
+            for card in human.deck.cards {
+                card.isPosssibleToTap = true
+            }
+            passButton.isPosssibleToTap = true
         }
     }
     
@@ -262,6 +267,10 @@ class Battle: SKNode {
         for creature in creatures {
             creature.isPosssibleToTap = false
         }
+        for card in human.deck.cards {
+            card.isPosssibleToTap = false
+        }
+        passButton.isPosssibleToTap = false
     }
     
     func attack(attacker: CreatureSprite, target: CreatureSprite) {
@@ -271,7 +280,7 @@ class Battle: SKNode {
     private func _getNextAttackerSpot() -> CreatureSpotSprite? {
         let aiOrder = [4, 1, 5, 2, 6, 3]
         let humanOrder = [7, 10, 8, 11, 9, 12]
-        let attackOrder: [Int] = (activePlayer.type == .ai) ? aiOrder + humanOrder : humanOrder + aiOrder
+        let attackOrder: [Int] = activePlayer.isHuman ? aiOrder + humanOrder : humanOrder + aiOrder
         for index in attackOrder {
             let attackerSpot = creatureSpots[index-1]
             let attacker = attackerSpot.creature
@@ -283,51 +292,16 @@ class Battle: SKNode {
     }
     
     private func _findTargetSpot(for spot: CreatureSpotSprite) -> CreatureSpotSprite? {
-        let sign = (spot.owner?.type == .ai) ? 1 : -1
+        let sign = spot.owner!.isAi ? 1 : -1
         let attackerIndex = spot.index
         for i in [3, 6, 9] {
             let targetIndex = attackerIndex + i * sign
             if (targetIndex < 1) || (targetIndex > 12) { continue }
             let targetSpot = creatureSpots[targetIndex-1]
-            if (targetSpot.creature != nil) && (targetSpot.owner!.type != spot.owner!.type) && (targetSpot.creature!.health > 0) {
+            if (targetSpot.creature != nil) && (targetSpot.owner != spot.owner) && (targetSpot.creature!.health > 0) {
                 return targetSpot
             }
         }
         return nil
     }
-    
-    /*
-    func attack(attacking: CharacterSprite, defending: CharacterSprite) {
-        defending.applyDamage(attacking.attack, battle: self)
-        attacking.applyDamage(defending.attack, battle: self)
-        attacking.canAttack = false
-        
-        let animation = AttackAnimation(attacking: attacking, defending: defending)
-        animationPipeline.add(animation: animation)
-    }
- 
-    func setCreaturesAttack(owner: PlayerType, canAttack: Bool) {
-        let ownerCreatures = creatures.filter({ creature in (creature.owner == owner) && (creature.attack > 0) })
-        for creature in ownerCreatures {
-            creature.canAttack = canAttack
-        }
-    }
-    
-    func markTargets(filter: CardTargetFilter = CardTargetFilters.all) {
-        _ = creatures.map { creature in creature.isTarget = false }
-        let filteredCreatures = creatures.filter(filter)
-        _ = filteredCreatures.map { creature in
-            creature.isTarget = true
-        }
-    }
-    
-    func removeDeadCreatures() {    // Change to removing certain creature
-        for (i, creature) in creatures.enumerated().reversed() {
-            if creature.destroyed {
-                creatures.remove(at: i)
-                creature.removeFromParent()
-            }
-        }
-    }
-    */
 }

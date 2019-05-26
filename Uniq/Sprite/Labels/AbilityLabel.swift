@@ -25,6 +25,9 @@ class AbilityLabel: SKNode {
         didSet { _redraw() }
     }
     
+    private var _isDisabled: Bool = false { didSet { _redraw() } }
+    var isDisabled: Bool { return _isDisabled }
+    
     private let _border = SKShapeNode(circleOfRadius: 9)
     private let _label = SKLabelNode()
     
@@ -54,9 +57,15 @@ class AbilityLabel: SKNode {
     }
     
     private func _redraw() {
+        _label.alpha = isDisabled ? 0.5 : 1
         _label.text = String(remaining)
-        _label.fontColor = (remaining == 0) ? TEXT_COLOR.ready : TEXT_COLOR.base
-        _border.strokeColor = (remaining == 0) ? BORDER_COLOR.ready : BORDER_COLOR.base
+        if (remaining == 0) && !isDisabled {
+            _label.fontColor = TEXT_COLOR.ready
+            _border.strokeColor = BORDER_COLOR.ready
+        } else {
+            _label.fontColor = TEXT_COLOR.base
+            _border.strokeColor = BORDER_COLOR.base
+        }
     }
     
     func resetCooldown() {
@@ -67,5 +76,13 @@ class AbilityLabel: SKNode {
         if ( remaining > 0 ) {
             remaining -= 1
         }
+    }
+    
+    func enable() {
+        _isDisabled = false
+    }
+    
+    func disable() {
+        _isDisabled = true
     }
 }

@@ -10,37 +10,39 @@ import SpriteKit
 
 
 class PassButton: SKNode, Tappable, Targetable {
-    let border = SKShapeNode(rectOf: CGSize(width: 40, height: 40))
-    let label = SKLabelNode(text: "Pass")
-    
-    private var _readyToFight: Bool = false
-    var readyToFight: Bool {
-        get { return _readyToFight }
-        set(newValue) {
-            _readyToFight = newValue
-            _redraw()
-        }
+    private let FILL_COLOR = UIColor(rgb: 0x111111)
+    private struct BORDER_COLOR {
+        static let base = UIColor(rgb: 0x484644)
+        static let possibleToTap = UIColor(rgb: 0x775534)
+    }
+    private struct FONT_COLOR {
+        static let base = UIColor(rgb: 0x484644)
+        static let possibleToTap = UIColor(rgb: 0xE3B47B)
     }
     
-    var isPosssibleToTap: Bool = false
+    var readyToFight: Bool = false { didSet { _redraw() } }
+    
+    var isPosssibleToTap: Bool = false { didSet { _redraw() } }
     var isCurrentlyTapped: Bool = false
     var isPossibleTarget: Bool = false
     var isCurrentTarget: Bool = false
     
+    private let _border = SKShapeNode(rectOf: CGSize(width: 40, height: 40))
+    private let _label = SKLabelNode(text: "Pass")
+    
     override init() {
         super.init()
         
-        border.zRotation = .pi / 4
-        border.lineWidth = 1.2
-        border.fillColor = UIColor(rgb: 0x19160D, alpha: 1)
-        border.strokeColor = UIColor(rgb: 0x9F978E, alpha: 1)
-        addChild(border)
+        _border.zRotation = .pi / 4
+        _border.lineWidth = 1.2
+        _border.fillColor = FILL_COLOR
+        addChild(_border)
         
-        label.fontSize = 12
-        label.fontName = "AvenirNext-Medium"
-        label.fontColor = UIColor(rgb: 0xE3B47B, alpha: 1)
-        label.position = CGPoint(x: 0, y: -5)
-        addChild(label)
+        _label.fontSize = 12
+        _label.fontName = "AvenirNext-Medium"
+        _label.verticalAlignmentMode = .center
+        _label.horizontalAlignmentMode = .center
+        addChild(_label)
         
         _redraw()
         
@@ -52,6 +54,13 @@ class PassButton: SKNode, Tappable, Targetable {
     }
     
     private func _redraw() {
-        label.text = _readyToFight ? "Fight" : "Pass"
+        _label.text = readyToFight ? "Fight" : "Pass"
+        if isPosssibleToTap {
+            _border.strokeColor = BORDER_COLOR.possibleToTap
+            _label.fontColor = FONT_COLOR.possibleToTap
+        } else {
+            _border.strokeColor = BORDER_COLOR.base
+            _label.fontColor = FONT_COLOR.base
+        }
     }
 }

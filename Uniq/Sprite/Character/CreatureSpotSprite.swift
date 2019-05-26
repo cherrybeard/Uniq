@@ -40,7 +40,7 @@ class CreatureSpotSprite: SKNode, Targetable {
     var index: Int {
         get {
             var shift: Int = column.rawValue + 2
-            if owner?.type == .human {
+            if owner!.isHuman {
                 shift += 6 + range.rawValue * 3
             } else {
                 shift += (range.rawValue-1) * -3

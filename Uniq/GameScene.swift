@@ -93,7 +93,6 @@ class GameScene: SKScene {
     }
     
     private func cancelDelayedTask() {
-        sourceNode = nil
         delayedTask?.cancel()
     }
     
@@ -109,14 +108,12 @@ class GameScene: SKScene {
                 if let card = node as? CreatureCardSprite {
                     sourceNode = node
                     currentlyTapped = [card]
-                    possibleTargets = battle.creatureSpots.filter({
-                        ($0.owner!.type == .human) && !$0.isTaken
-                    })
+                    possibleTargets = battle.creatureSpots.filter({ $0.owner!.isHuman && !$0.isTaken })
                     battle.removeActionTargets()
                     return
                 }
                 if let creatureSprite = node as? CreatureSprite {
-                    if (creatureSprite.owner!.type == .human) && !creatureSprite.isActionTaken {
+                    if creatureSprite.owner!.isHuman && !creatureSprite.isActionTaken {
                         sourceNode = node
                         currentlyTapped = [creatureSprite]
                         let spots = battle.getNearbySpots(of: creatureSprite.spot!)
@@ -127,8 +124,9 @@ class GameScene: SKScene {
                             }
                         }
                         if (creatureSprite.activeAbilityCooldown == 0) {
-                            possibleTargets.append(creatureSprite)
-                            currentTargets = [creatureSprite]
+                            creatureSprite.isCurrentlyHold = true
+                            
+                            //creating delayed task
                             delayedTask = DispatchWorkItem { [ weak self ] in
                                 // TODO: check if ability was really used
                                 self?._resetTargets()
@@ -161,7 +159,6 @@ class GameScene: SKScene {
             for node in touchedNodes {
                 if var target = node as? Targetable {
                     if target.isPossibleTarget {
-                        //target.isCurrentTarget = true
                         newTargets.append(target)
                     }
                 }
@@ -169,15 +166,14 @@ class GameScene: SKScene {
             if (delayedTask != nil) && !delayedTask!.isCancelled {
                 var stopTask = true
                 for node in touchedNodes {
-                    if let target = node as? Targetable {
-                        if target.isPossibleTarget {
+                    if let target = node as? Holdable {
+                        if target.isCurrentlyHold {
                             stopTask = false
                         }
                     }
                 }
                 if stopTask {
                     cancelDelayedTask()
-                    possibleTargets = []
                 }
             }
             currentTargets = newTargets
@@ -198,7 +194,7 @@ class GameScene: SKScene {
                 
                 if sourceNode?.name == "card" {
                     if let creatureSpot = node as? CreatureSpotSprite {
-                        if creatureSpot.owner!.type != .human { continue }  //TODO: use isPossibleTarget
+                        if creatureSpot.owner!.isAi { continue }  //TODO: use isPossibleTarget
                         if let creatureCard = sourceNode as? CreatureCardSprite {
                             if battle.play(creatureCard, to: creatureSpot) {
                                 actionCancelled = false
@@ -230,7 +226,7 @@ class GameScene: SKScene {
             }
         }
         _resetTargets()
-        if actionCancelled { battle.highlightActionTargets(for: battle.activePlayer) }
+        if actionCancelled { battle.highlightActionTargets() }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -245,26 +241,4 @@ class GameScene: SKScene {
         cancelDelayedTask()
     }
     
-    func makeComputerMove() {   //OBSLOLETE
-        /*
-         let creatures = battle.desk.creatures.filter { creature in (creature.owner == .ai) && creature.canAttack }
-         if creatures.count > 0 {
-         let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: creatures)
-         
-         for creature in creaturesShuffled {
-         let playerCreatures = battle.desk.creatures.filter { creature in (creature.owner == .human) && !creature.dead && (creature is CreatureSprite) }
-         var target: CharacterSprite
-         if playerCreatures.count != 0 {
-         let playerCreaturesShffled =  GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: playerCreatures)
-         target = playerCreaturesShffled[0] as! CharacterSprite
-         } else {
-         target = battle.desk.playerHero
-         }
-         
-         battle.attack(attacking: creature as! CharacterSprite, defending: target)
-         }
-         }
-         state = .computerEnd
-         */
-    }
 }

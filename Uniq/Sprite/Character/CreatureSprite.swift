@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class CreatureSprite: SKNode, Targetable, Tappable {
+class CreatureSprite: SKNode, Targetable, Tappable, Holdable {
     private let WIDTH: Int = 90
     private let HEIGHT: Int = 60
     private struct BORDER_COLOR {
@@ -36,8 +36,10 @@ class CreatureSprite: SKNode, Targetable, Tappable {
 
     var isActionTaken: Bool = false { didSet {
         if isActionTaken {
+            _abilityLabel.disable()
             _attackLabel.disable()
         } else {
+            _abilityLabel.enable()
             _attackLabel.enable()
         }
     } }
@@ -45,6 +47,7 @@ class CreatureSprite: SKNode, Targetable, Tappable {
     var isCurrentlyTapped: Bool = false { didSet { _redraw() } }
     var isPosssibleToTap: Bool = false { didSet { _redraw() } }
     var isCurrentTarget: Bool = false { didSet { _redraw() } }
+    var isCurrentlyHold: Bool = false
     
     init(of creature: CreatureCard, spot: CreatureSpotSprite) {
         self.creature = creature
