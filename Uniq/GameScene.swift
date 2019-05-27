@@ -86,10 +86,10 @@ class GameScene: SKScene {
         //TODO: Move to func startBattle() in class Battle
         for _ in 1...4 { battle.human.deck.draw() }
         
-        battle.summon("Yletia Pirate", to: 7)
-        battle.summon("Yletia Pirate", to: 3)
-        battle.summon("Bandit", to: 5)
-        battle.summon("Thug", to: 4)
+        battle.summon("Yletia Pirate", to: 6)
+        battle.summon("Yletia Pirate", to: 2)
+        battle.summon("Bandit", to: 4)
+        battle.summon("Thug", to: 3)
     }
     
     private func cancelDelayedTask() {
@@ -105,20 +105,20 @@ class GameScene: SKScene {
             for node in touchedNodes {
                 // TODO: rework to unified Tappable experience
                 // TODO: join Tapped with sourceNode
-                if let card = node as? CreatureCardSprite {
+                if let card = node as? CreatureCard {
                     sourceNode = node
                     currentlyTapped = [card]
-                    possibleTargets = battle.creatureSpots.filter({ $0.owner!.isHuman && !$0.isTaken })
+                    possibleTargets = battle.spots.filter({ $0.owner!.isHuman && !$0.isTaken })
                     battle.removeActionTargets()
                     return
                 }
-                if let creatureSprite = node as? CreatureSprite {
+                if let creatureSprite = node as? Creature {
                     if creatureSprite.owner!.isHuman && !creatureSprite.isActionTaken {
                         sourceNode = node
                         currentlyTapped = [creatureSprite]
                         let spots = battle.getNearbySpots(of: creatureSprite.spot!)
                         possibleTargets = spots
-                        for spot in spots {
+                        for spot in spots { // TODO: Rework this to not use creatures at all
                             if spot.creature != nil {
                                 possibleTargets.append(spot.creature!)
                             }
@@ -193,10 +193,10 @@ class GameScene: SKScene {
                 }
                 
                 if sourceNode?.name == "card" {
-                    if let creatureSpot = node as? CreatureSpotSprite {
-                        if creatureSpot.owner!.isAi { continue }  //TODO: use isPossibleTarget
-                        if let creatureCard = sourceNode as? CreatureCardSprite {
-                            if battle.play(creatureCard, to: creatureSpot) {
+                    if let spot = node as? Spot {
+                        if spot.owner!.isAi { continue }  //TODO: use isPossibleTarget
+                        if let creatureCard = sourceNode as? CreatureCard {
+                            if battle.play(creatureCard, to: spot) {
                                 actionCancelled = false
                                 battle.endTurn()
                                 break
@@ -206,8 +206,8 @@ class GameScene: SKScene {
                 }
                 
                 if sourceNode?.name == "creature" {
-                    if let targetSpot = node as? CreatureSpotSprite {
-                        if let sourceSpotCreature = sourceNode as? CreatureSprite {
+                    if let targetSpot = node as? Spot {
+                        if let sourceSpotCreature = sourceNode as? Creature {
                             actionCancelled = false
                             battle.swap(sourceSpotCreature.spot!, with: targetSpot)
                             battle.endTurn()

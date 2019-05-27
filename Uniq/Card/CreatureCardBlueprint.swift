@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class CreatureCard: Card {
+class CreatureCardBlueprint: CardBlueprint {
     var attack: Int
     var health: Int
     var activeAbility: ActiveAbility? = nil
@@ -18,12 +18,12 @@ class CreatureCard: Card {
         super.init(description: description)
     }
     
-    override func generateSprite() -> CreatureCardSprite {
-        return CreatureCardSprite(card: self)
+    override func generateSprite() -> CreatureCard {
+        return CreatureCard(blueprint: self)
     }
     
-    override func copy() -> Card {
-        let card = CreatureCard(
+    override func copy() -> CardBlueprint {
+        let card = CreatureCardBlueprint(
             description: description,
             attack: attack,
             health: health,

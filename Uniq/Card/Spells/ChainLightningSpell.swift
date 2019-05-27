@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class ChainLightningSpell: SpellCard {
+class ChainLightningSpell: SpellCardBlueprint {
     init() {
         super.init()
         description = "Deal 1 damage to all enemy creatures"

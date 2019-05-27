@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class BountyHunterCreature: CreatureCard {
+class BountyHunterCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 3, health: 2)
         //charge = true

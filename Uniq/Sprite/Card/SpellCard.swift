@@ -8,12 +8,12 @@
 
 import SpriteKit
 
-class SpellCardSprite: CardSprite {
+class SpellCard: Card {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init(card: Card) {
-        super.init(card: card)
+    override init(blueprint: CardBlueprint) {
+        super.init(blueprint: blueprint)
     }
 }

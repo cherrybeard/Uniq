@@ -8,7 +8,7 @@
 
 import GameplayKit
 
-class WitchCreature: CreatureCard {
+class WitchCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 3, health: 2)
         description = "Death: Summon creature from your hand"

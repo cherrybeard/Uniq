@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class MysticLancerCreature: CreatureCard {
+class MysticLancerCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 2, health: 2)
         description = "Death: Restore 4 health to your hero."

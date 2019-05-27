@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class HarmlessAffairSpell: SpellCard {
+class HarmlessAffairSpell: SpellCardBlueprint {
     init() {
         super.init(description: "Summon three 1/1 Fairies")
     }

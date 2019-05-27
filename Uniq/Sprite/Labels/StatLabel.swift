@@ -16,7 +16,7 @@ enum StatState {
     case initial, damaged, buffed
 }
 
-class StatLabel: SKNode {
+class StatLabel: SKNode {   // OBSOLETE
     private let TEXT_COLOR: [StatState: UIColor] = [
         .initial: UIColor(rgb: 0xffffff),
         .damaged: UIColor(hue: 12.0/360.0,  saturation: 64.0/100.0, brightness: 100.0/100.0, alpha: 1),

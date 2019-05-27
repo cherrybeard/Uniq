@@ -12,46 +12,44 @@ enum CardState {
     case deck, hand, discarded
 }
 
-class CardSprite: SKNode, Tappable {
-    let WIDTH = 60
-    let HEIGHT = 90
-    private let FILL_COLOR = UIColor(rgb: 0x111111)
+class Card: SKNode, Tappable {
+    static let WIDTH = 60
+    static let HEIGHT = 90
+    private static let FILL_COLOR = UIColor(rgb: 0x111111)
     private struct BORDER_COLOR {
-        static let currentlyTapped = UIColor(rgb: 0xAC7D4E)
         static let base: UIColor = UIColor(rgb: 0x484644)
+        static let currentlyTapped = UIColor(rgb: 0xAC7D4E)
         static let possibleToTap = UIColor(rgb: 0x775534)
     }
     
-    var card: Card
+    var blueprint: CardBlueprint
     var state: CardState = .deck
     
     var isPosssibleToTap: Bool = false { didSet { _redraw() } }
     var isCurrentlyTapped: Bool = false { didSet { _redraw() } }
     
-    let descriptionLabel = SKLabelNode(text: "")
-    private let _border: SKShapeNode
+    private let _label = SKLabelNode(text: "")
+    private let _border = SKShapeNode(rectOf: CGSize(width: Card.WIDTH, height: Card.HEIGHT), cornerRadius: 3)
     
-    init(card: Card) {
-        self.card = card
-        _border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
+    init(blueprint: CardBlueprint) {
+        self.blueprint = blueprint
         super.init()
         
         _border.lineWidth = 1
-        _border.fillColor = FILL_COLOR
-        _redraw()
-        
-        descriptionLabel.text = card.description
-        descriptionLabel.fontColor = SKColor.white
-        descriptionLabel.fontName = "AvenirNext-DemiBold"
-        descriptionLabel.fontSize = 8
-        descriptionLabel.preferredMaxLayoutWidth = 48
-        descriptionLabel.lineBreakMode = .byWordWrapping
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.position = CGPoint(x: 0, y: -40)
-        
+        _border.fillColor = Card.FILL_COLOR
         addChild(_border)
-        addChild(descriptionLabel)
         
+        _label.text = blueprint.description
+        _label.fontColor = SKColor.white
+        _label.fontName = "AvenirNext-DemiBold"
+        _label.fontSize = 8
+        _label.preferredMaxLayoutWidth = 48
+        _label.lineBreakMode = .byWordWrapping
+        _label.numberOfLines = 0
+        _label.position = CGPoint(x: 0, y: -40)
+        addChild(_label)
+        
+        _redraw()
         name = "card"
     }
     

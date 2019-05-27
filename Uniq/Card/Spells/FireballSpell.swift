@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class FireballSpell: SpellCard {
+class FireballSpell: SpellCardBlueprint {
     init() {
         super.init()
         description = "Deal 6 damage"

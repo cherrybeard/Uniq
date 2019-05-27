@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class FirelinkPriestCreature: CreatureCard {
+class FirelinkPriestCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 1, health: 1)
         description = "Battlecry: Set health to number of cards in your hand"

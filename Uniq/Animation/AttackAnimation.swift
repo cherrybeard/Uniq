@@ -9,10 +9,10 @@
 import SpriteKit
 
 class AttackAnimation: Animation {
-    private weak var _attacker: CreatureSprite?
-    private var _target: CreatureSprite
+    private weak var _attacker: Creature?
+    private var _target: Creature
     
-    init(attacker: CreatureSprite, target: CreatureSprite) {
+    init(attacker: Creature, target: Creature) {
         _attacker = attacker
         _target = target
     }

@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class CharacterSprite: SKNode {
+class CharacterSprite: SKNode { // OBSOLETE
     /*
     var owner: PlayerType = .human
     var destroyed: Bool = false

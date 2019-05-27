@@ -9,10 +9,10 @@
 import SpriteKit
 
 class CreatureSwapAnimation: Animation {
-    private var _sourceSpot: CreatureSpotSprite
-    private var _targetSpot: CreatureSpotSprite
+    private var _sourceSpot: Spot
+    private var _targetSpot: Spot
     
-    init(sourceSpot: CreatureSpotSprite, targetSpot: CreatureSpotSprite) {
+    init(sourceSpot: Spot, targetSpot: Spot) {
         _sourceSpot = sourceSpot
         _targetSpot = targetSpot
     }

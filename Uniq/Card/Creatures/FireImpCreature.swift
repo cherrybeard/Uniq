@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class FireImpCreature: CreatureCard {
+class FireImpCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 3, health: 2)
         description = "Battlecry: Deal 3 damage to your hero."

@@ -9,7 +9,7 @@
 import SpriteKit
 
 class HandSprite: SKNode {
-    var cards: [CardSprite] = []
+    var cards: [Card] = []
     let cardVolume = (50 + 20) / 2
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,7 +20,7 @@ class HandSprite: SKNode {
         super.init()
     }
     
-    func add(_ sprite: CardSprite) {
+    func add(_ sprite: Card) {
         sprite.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
         addChild(sprite)
         cards.append(sprite)

@@ -16,9 +16,9 @@ enum ColumnType: Int {
     case left = -1, center = 0, right = 1
 }
 
-class CreatureSpotSprite: SKNode, Targetable {
-    private let WIDTH: Int = 86
-    private let HEIGHT: Int = 56
+class Spot: SKNode, Targetable {
+    private static let WIDTH: Int = 86
+    private static let HEIGHT: Int = 56
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x1D1D1C)
         //static let possibleTarget = UIColor(rgb: 0x2E2924)
@@ -26,20 +26,20 @@ class CreatureSpotSprite: SKNode, Targetable {
         static let currentTarget = UIColor(rgb: 0x3065FF)
     }
     
-    private let border: SKShapeNode
-    
     weak var owner: Player?
     let range: RangeType
     let column: ColumnType
-    var creature: CreatureSprite? = nil
+    var creature: Creature? = nil
     var isTaken: Bool { return (creature != nil) }
     
     var isPossibleTarget: Bool = false { didSet { _redraw() } }
     var isCurrentTarget: Bool = false { didSet { _redraw() } }
+    
+    private let _border = SKShapeNode(rectOf: CGSize(width: Spot.WIDTH, height: Spot.HEIGHT), cornerRadius: 3)
 
     var index: Int {
         get {
-            var shift: Int = column.rawValue + 2
+            var shift: Int = column.rawValue + 1
             if owner!.isHuman {
                 shift += 6 + range.rawValue * 3
             } else {
@@ -49,70 +49,47 @@ class CreatureSpotSprite: SKNode, Targetable {
         }
     }
     
-    init(for player: Player, range: RangeType, column: ColumnType) {
-        self.owner = player
-        self.range = range
-        self.column = column
-        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT))
-        border.alpha = 0.7
-        super.init()
-        _afterInit()
-    }
-    
     init(at index: Int, battle: Battle) {
-        let ownerType = CreatureSpotSprite._getOwner(of: index)
+        let ownerType = Spot._getOwner(of: index)
         if ownerType == .human  {
             owner = battle.human
         } else {
             owner = battle.ai
         }
-        range = CreatureSpotSprite._getRange(of: index)
-        column = CreatureSpotSprite._getColumn(of: index)
-        border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
+        range = Spot._getRange(of: index)
+        column = Spot._getColumn(of: index)
         super.init()
-        _afterInit()
+        
+        _border.lineWidth = 1
+        addChild(_border)
+        
+        _redraw()
+        name = "spot"
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
-    private func _afterInit() {
-        border.lineWidth = 1
-        _redraw()
-        addChild(border)
-        name = "spot"
-    }
-    
     private func _redraw() {
         if isCurrentTarget {
-            border.strokeColor = BORDER_COLOR.currentTarget
+            _border.strokeColor = BORDER_COLOR.currentTarget
         } else if isPossibleTarget {
-            border.strokeColor = BORDER_COLOR.possibleTarget
+            _border.strokeColor = BORDER_COLOR.possibleTarget
         } else {
-            border.strokeColor = BORDER_COLOR.base
-        }
-    }
-    
-    static func checkIndex(_ index: Int) -> Int {
-        if (index < 1) || (index > 12) {
-            assertionFailure("Trying to set CreatureSpot.index out of range")
-            return abs(index % 12)
-        } else {
-            return index
+            _border.strokeColor = BORDER_COLOR.base
         }
     }
     
     static private func _getColumn(of index: Int) -> ColumnType {
-        let column = (checkIndex(index)-1) % 3 - 1
+        let column = index % 3 - 1
         return ColumnType(rawValue: column) ?? .center
     }
     
     static private func _getOwner(of index: Int) -> PlayerType {
-        return checkIndex(index) > 6 ? .human : .ai
+        return index > 5 ? .human : .ai
     }
     
     static private func _getRange(of index: Int) -> RangeType {
-        let checkedIndex = checkIndex(index)
-        if (checkedIndex > 3) && (checkedIndex < 10) {
+        if (index > 2) && (index < 9) {
             return .melee
         } else {
             return .range

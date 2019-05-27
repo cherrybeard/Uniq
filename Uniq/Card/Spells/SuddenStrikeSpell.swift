@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class SuddenStrikeSpell: SpellCard {
+class SuddenStrikeSpell: SpellCardBlueprint {
     init() {
         super.init()
         description = "Deal 2 damage to to undamaged creature"

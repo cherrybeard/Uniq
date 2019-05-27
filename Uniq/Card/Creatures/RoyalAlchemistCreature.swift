@@ -8,7 +8,7 @@
 
 import GameplayKit
 
-class RoyalAlchemistCreature: CreatureCard {
+class RoyalAlchemistCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 4, health: 2)
         description = "Battlecry: Give random allied creature +1/+1."

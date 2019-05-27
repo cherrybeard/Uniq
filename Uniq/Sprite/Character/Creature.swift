@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class CreatureSprite: SKNode, Targetable, Tappable, Holdable {
+class Creature: SKNode, Targetable, Tappable, Holdable {
     private let WIDTH: Int = 90
     private let HEIGHT: Int = 60
     private struct BORDER_COLOR {
@@ -26,8 +26,8 @@ class CreatureSprite: SKNode, Targetable, Tappable, Holdable {
     private let _abilityLabel = AbilityLabel()
     private let _border: SKShapeNode
     
-    var creature: CreatureCard
-    weak var spot: CreatureSpotSprite? = nil
+    var card: CreatureCardBlueprint
+    weak var spot: Spot? = nil
     
     var health: Int { return _healthLabel.health }
     var attack: Int { return _attackLabel.attack }
@@ -49,27 +49,27 @@ class CreatureSprite: SKNode, Targetable, Tappable, Holdable {
     var isCurrentTarget: Bool = false { didSet { _redraw() } }
     var isCurrentlyHold: Bool = false
     
-    init(of creature: CreatureCard, spot: CreatureSpotSprite) {
-        self.creature = creature
+    init(of card: CreatureCardBlueprint, spot: Spot) {
+        self.card = card
         self.spot = spot
         _border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
-        _healthLabel = HealthLabel(maxHealth: creature.health)
+        _healthLabel = HealthLabel(maxHealth: card.health)
         super.init()
         
         _border.lineWidth = 1
         _border.fillColor = FILL_COLOR
         addChild(_border)
         
-        _abilityLabel.cooldown = (creature.activeAbility == nil) ? -1 : creature.activeAbility!.cooldown
+        _abilityLabel.cooldown = (card.activeAbility == nil) ? -1 : card.activeAbility!.cooldown
         _abilityLabel.resetCooldown()
         _abilityLabel.position = CGPoint(x: 0, y: HEIGHT/2)
         addChild(_abilityLabel)
         
-        _attackLabel.attack = creature.attack
+        _attackLabel.attack = card.attack
         _attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 10)
         addChild(_attackLabel)
         
-        _healthLabel.health = creature.health
+        _healthLabel.health = card.health
         _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 10)
         addChild(_healthLabel)
         
@@ -109,7 +109,7 @@ class CreatureSprite: SKNode, Targetable, Tappable, Holdable {
     
     func useActiveAbility(battle: Battle) -> Bool {
         if (_abilityLabel.remaining == 0) && !isActionTaken {
-            if creature.activeAbility!.ability(battle, self) {
+            if card.activeAbility!.ability(battle, self) {
                 _abilityLabel.resetCooldown()
                 isActionTaken = true
                 return true

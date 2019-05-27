@@ -7,8 +7,8 @@
 //
 
 
-class SpellCard: Card {
-    override func generateSprite() -> SpellCardSprite {
-        return SpellCardSprite(card: self)
+class SpellCardBlueprint: CardBlueprint {
+    override func generateSprite() -> SpellCard {
+        return SpellCard(blueprint: self)
     }
 }

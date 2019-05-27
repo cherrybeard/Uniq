@@ -7,7 +7,7 @@
 //
 
 
-class RecallSpell: SpellCard {
+class RecallSpell: SpellCardBlueprint {
     init() {
         super.init(description: "Return friendly creature back to hand. Reduce its cost by 2")
         //requiresTarget = true

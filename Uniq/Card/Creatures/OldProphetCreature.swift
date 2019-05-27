@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class OldProphetCreature: CreatureCard {
+class OldProphetCreature: CreatureCardBlueprint {
     init() {
         super.init(attack: 1, health: 1)
         description = "Battlecry: Draw 1 card."

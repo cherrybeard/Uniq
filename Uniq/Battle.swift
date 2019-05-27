@@ -19,8 +19,7 @@ class Battle: SKNode {
     private let MELEE_RANGE_DISTANCE_FROM_CENTER: Int = 78
     
     let passButton = PassButton()
-    var creatureSpots: [CreatureSpotSprite] = []
-    var creatures: [CreatureSprite] = []
+    var spots: [Spot] = []
     
     let human = Player(as: .human)
     let ai = Player(as: .ai)
@@ -38,13 +37,13 @@ class Battle: SKNode {
         activePlayer = human
         super.init()
         
-        for index in 1...12 {
-            let creatureSpot = CreatureSpotSprite(at: index, battle: self)
-            creatureSpots.append(creatureSpot)
-            let yPos = creatureSpot.owner!.type.rawValue * (MELEE_RANGE_DISTANCE_FROM_CENTER + creatureSpot.range.rawValue * SPACE_BETWEEN_ROWS)
-            let xPos = creatureSpot.column.rawValue * SPACE_BETWEEN_COLUMNS
-            creatureSpot.position = CGPoint(x: xPos, y: yPos)
-            addChild(creatureSpot)
+        for index in 0...11 {
+            let spot = Spot(at: index, battle: self)
+            spots.append(spot)
+            let yPos = spot.owner!.type.rawValue * (MELEE_RANGE_DISTANCE_FROM_CENTER + spot.range.rawValue * SPACE_BETWEEN_ROWS)
+            let xPos = spot.column.rawValue * SPACE_BETWEEN_COLUMNS
+            spot.position = CGPoint(x: xPos, y: yPos)
+            addChild(spot)
         }
         
         name = "desk"
@@ -129,9 +128,12 @@ class Battle: SKNode {
     
     func endRound() {
         state = .roundEnd
-        for creature in creatures {
-            creature.decreaseAbilityCooldown()
-            creature.isActionTaken = false
+        for spot in spots {
+            let creature = spot.creature
+            if creature != nil {    // TODO: rework into creature?
+                creature!.decreaseAbilityCooldown()
+                creature!.isActionTaken = false
+            }
         }
         passButton.readyToFight = false
         for player in [human, ai] {
@@ -143,12 +145,13 @@ class Battle: SKNode {
     }
     
     func aiTurn() {
-        let aiCreatures = creatures.filter { $0.owner!.isAi }
-        let creaturesShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiCreatures)
+        let aiSpots = spots.filter { $0.owner!.isAi && $0.isTaken }
+        let aiSpotsShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiSpots)
         var pass: Bool = true
-        for creature in creaturesShuffled {
-            if let selectedCreature = creature as? CreatureSprite {
-                if selectedCreature.useActiveAbility(battle: self) {
+        for spot in aiSpotsShuffled {
+            if let selectedSpot = spot as? Spot {
+                let creature = selectedSpot.creature
+                if creature!.useActiveAbility(battle: self) {
                     pass = false
                     break
                 }
@@ -157,39 +160,32 @@ class Battle: SKNode {
         endTurn(passed: pass)
     }
     
-    func summon(_ creatureName: String, to creatureSpotIndex: Int) {    //TODO: Make all three functions make sense
-        if let creature = CardLibrary.getCard(creatureName) as? CreatureCard {
-            summon(creature, to: creatureSpotIndex)
-        }
-    }
-    
-    func summon(_ creature: CreatureCard, to creatureSpotIndex: Int) { // TODO: Return Bool
-        let checkedIndex = CreatureSpotSprite.checkIndex(creatureSpotIndex)
-        let creatureSpot = creatureSpots[checkedIndex-1]
-        summon(creature, to: creatureSpot)
+    func summon(_ creatureName: String, to index: Int) {    //TODO: Make all three functions make sense
+        if let creature = CardLibrary.getCard(creatureName) as? CreatureCardBlueprint {
+            let spot = spots[index]
+            summon(creature, to: spot)        }
     }
 
-    func summon(_ creature: CreatureCard, to creatureSpot: CreatureSpotSprite) { // TODO: Return Bool
-        let creatureSprite = CreatureSprite(of: creature, spot: creatureSpot)
-        creatureSprite.position = creatureSpot.position
+    func summon(_ creature: CreatureCardBlueprint, to spot: Spot) { // TODO: Return Bool
+        let creatureSprite = Creature(of: creature, spot: spot)
+        creatureSprite.position = spot.position
         creatureSprite.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
-        creatureSpot.creature = creatureSprite
+        spot.creature = creatureSprite
         addChild(creatureSprite)
-        creatures.append(creatureSprite)
     }
     
-    func play(_ creatureCard: CreatureCardSprite, to creatureSpot: CreatureSpotSprite) -> Bool {
-        if !creatureSpot.isTaken {
-            if let creature = creatureCard.card as? CreatureCard {
+    func play(_ creatureCard: CreatureCard, to spot: Spot) -> Bool {
+        if !spot.isTaken {
+            if let creature = creatureCard.blueprint as? CreatureCardBlueprint {
                 setCardState(card: creatureCard, state: .discarded)
-                summon(creature, to: creatureSpot)
+                summon(creature, to: spot)
                 return true
             }
         }
         return false
     }
     
-    func swap(_ sourceSpot: CreatureSpotSprite, with targetSpot: CreatureSpotSprite) {
+    func swap(_ sourceSpot: Spot, with targetSpot: Spot) {
         state = .actionsPaused
         
         // Swapping creatures and disabling actions for this turn
@@ -209,7 +205,7 @@ class Battle: SKNode {
         )
     }
     
-    func setCardState(card: CardSprite, state: CardState) {
+    func setCardState(card: Card, state: CardState) {
         card.state = state
         human.deck.hand.clean()
     }
@@ -223,27 +219,22 @@ class Battle: SKNode {
         _animationPipeline.add(animation: AnnouncerAnimation(announcer: announcer))
     }
     
-    func getSpot(of player: PlayerType, range: RangeType, column: ColumnType) -> CreatureSpotSprite {
-        return creatureSpots.first(where: {
+    func getSpot(of player: PlayerType, range: RangeType, column: ColumnType) -> Spot { // OBSOLETE
+        return spots.first(where: {
             ($0.owner!.type == player) && ($0.range == range) && ($0.column == column)
         })!
     }
     
-    func getSpot(at index: Int) -> CreatureSpotSprite {
-        let checkedIndex = CreatureSpotSprite.checkIndex(index)
-        return creatureSpots.first(where: { $0.index == checkedIndex })!
-    }
-    
-    func getNearbySpots(of spot: CreatureSpotSprite, sameOwner: Bool = true) -> [CreatureSpotSprite] {
-        var nearbySpots: [CreatureSpotSprite] = []
+    func getNearbySpots(of spot: Spot, sameOwner: Bool = true) -> [Spot] {
+        var nearbySpots: [Spot] = []
         let index = spot.index
         var indexModifiers = [-3, 3]
-        if index % 3 != 0 { indexModifiers.append(1) }
-        if index % 3 != 1 { indexModifiers.append(-1) }
+        if index % 3 != 2 { indexModifiers.append(1) }
+        if index % 3 != 0 { indexModifiers.append(-1) }
         for indexModifier in indexModifiers {
             let newIndex = index + indexModifier
-            if (newIndex < 1) || (newIndex > 12) { continue }
-            let nearbySpot = getSpot(at: newIndex)
+            if (newIndex < 0) || (newIndex > 11) { continue }
+            let nearbySpot = spots[newIndex]
             if !sameOwner || (nearbySpot.owner == spot.owner) {
                 nearbySpots.append(nearbySpot)
             }
@@ -252,8 +243,12 @@ class Battle: SKNode {
     }
     
     func highlightActionTargets() {
-        for creature in creatures {
-            creature.isPosssibleToTap = (!creature.isActionTaken) && (creature.spot?.owner == activePlayer)
+        let activePlayerSpots = spots.filter { $0.owner == activePlayer }
+        for spot in activePlayerSpots {
+            let creature = spot.creature
+            if creature != nil {
+                creature!.isPosssibleToTap = !creature!.isActionTaken
+            }
         }
         if activePlayer.isHuman {
             for card in human.deck.cards {
@@ -264,8 +259,8 @@ class Battle: SKNode {
     }
     
     func removeActionTargets() {
-        for creature in creatures {
-            creature.isPosssibleToTap = false
+        for spot in spots {
+            spot.creature?.isPosssibleToTap = false
         }
         for card in human.deck.cards {
             card.isPosssibleToTap = false
@@ -273,16 +268,16 @@ class Battle: SKNode {
         passButton.isPosssibleToTap = false
     }
     
-    func attack(attacker: CreatureSprite, target: CreatureSprite) {
+    func attack(attacker: Creature, target: Creature) {
         _animationPipeline.add( animation: AttackAnimation(attacker: attacker, target: target) )
     }
     
-    private func _getNextAttackerSpot() -> CreatureSpotSprite? {
-        let aiOrder = [4, 1, 5, 2, 6, 3]
-        let humanOrder = [7, 10, 8, 11, 9, 12]
+    private func _getNextAttackerSpot() -> Spot? {
+        let aiOrder = [3, 0, 4, 1, 5, 2]
+        let humanOrder = [6, 9, 7, 10, 8, 11]
         let attackOrder: [Int] = activePlayer.isHuman ? aiOrder + humanOrder : humanOrder + aiOrder
         for index in attackOrder {
-            let attackerSpot = creatureSpots[index-1]
+            let attackerSpot = spots[index]
             let attacker = attackerSpot.creature
             if (attacker != nil) && !attacker!.isActionTaken && (attacker!.attack > 0) {
                 return attackerSpot
@@ -291,13 +286,13 @@ class Battle: SKNode {
         return nil
     }
     
-    private func _findTargetSpot(for spot: CreatureSpotSprite) -> CreatureSpotSprite? {
+    private func _findTargetSpot(for spot: Spot) -> Spot? {
         let sign = spot.owner!.isAi ? 1 : -1
         let attackerIndex = spot.index
         for i in [3, 6, 9] {
             let targetIndex = attackerIndex + i * sign
-            if (targetIndex < 1) || (targetIndex > 12) { continue }
-            let targetSpot = creatureSpots[targetIndex-1]
+            if (targetIndex < 0) || (targetIndex > 11) { continue }
+            let targetSpot = spots[targetIndex]
             if (targetSpot.creature != nil) && (targetSpot.owner != spot.owner) && (targetSpot.creature!.health > 0) {
                 return targetSpot
             }

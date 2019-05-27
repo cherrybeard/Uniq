@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SparkSpell: SpellCard {
+class SparkSpell: SpellCardBlueprint {
     init() {
         super.init(description: "Deal 2 damage. Draw 1 card")
         //requiresTarget = true

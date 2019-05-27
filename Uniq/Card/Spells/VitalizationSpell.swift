@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class VitalizationSpell: SpellCard {
+class VitalizationSpell: SpellCardBlueprint {
     init() {
         super.init(description: "Double creature's health")
         //requiresTarget = true

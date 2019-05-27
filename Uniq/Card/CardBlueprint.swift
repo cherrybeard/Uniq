@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-typealias CardTargetFilter = (CreatureSprite) -> Bool
+typealias CardTargetFilter = (Creature) -> Bool
 
 struct CardTargetFilters {
     static let all: CardTargetFilter = { _ in true }
@@ -15,7 +15,7 @@ struct CardTargetFilters {
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 
-class Card {
+class CardBlueprint {
     var description: String
     //var targetFilter: CardTargetFilter? = CardTargetFilters.all
     //var requiresTarget: Bool = false
@@ -28,12 +28,12 @@ class Card {
         
     }
     
-    func generateSprite() -> CardSprite {
-        return CardSprite(card: self)
+    func generateSprite() -> Card {
+        return Card(blueprint: self)
     }
     
-    func copy() -> Card {
-        let card = Card(description: description)
+    func copy() -> CardBlueprint {
+        let card = CardBlueprint(description: description)
         //card.targetFilter = targetFilter
         //card.requiresTarget = requiresTarget
         return card
