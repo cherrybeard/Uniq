@@ -32,7 +32,7 @@ class Creature: SKNode, Targetable, Tappable, Holdable {
     var health: Int { return _healthLabel.health }
     var attack: Int { return _attackLabel.attack }
     var activeAbilityCooldown: Int { return _abilityLabel.remaining }
-    var owner: Player? { return spot?.owner }
+    var owner: PlayerType { return spot!.owner }
 
     var isActionTaken: Bool = false { didSet {
         if isActionTaken {

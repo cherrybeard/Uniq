@@ -26,7 +26,7 @@ class Spot: SKNode, Targetable {
         static let currentTarget = UIColor(rgb: 0x3065FF)
     }
     
-    weak var owner: Player?
+    let owner: PlayerType
     let range: RangeType
     let column: ColumnType
     var creature: Creature? = nil
@@ -40,7 +40,7 @@ class Spot: SKNode, Targetable {
     var index: Int {
         get {
             var shift: Int = column.rawValue + 1
-            if owner!.isHuman {
+            if owner == .human {
                 shift += 6 + range.rawValue * 3
             } else {
                 shift += (range.rawValue-1) * -3
@@ -49,13 +49,8 @@ class Spot: SKNode, Targetable {
         }
     }
     
-    init(at index: Int, battle: Battle) {
-        let ownerType = Spot._getOwner(of: index)
-        if ownerType == .human  {
-            owner = battle.human
-        } else {
-            owner = battle.ai
-        }
+    init(at index: Int) {
+        owner = Spot._getOwner(of: index)
         range = Spot._getRange(of: index)
         column = Spot._getColumn(of: index)
         super.init()

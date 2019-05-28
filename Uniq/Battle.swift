@@ -14,12 +14,8 @@ enum BattleState {
 }
 
 class Battle: SKNode {
-    private let SPACE_BETWEEN_COLUMNS: Int = 113
-    private let SPACE_BETWEEN_ROWS: Int = 90
-    private let MELEE_RANGE_DISTANCE_FROM_CENTER: Int = 78
-    
     let passButton = PassButton()
-    var spots: [Spot] = []
+    var spots = Spots()
     
     let human = Player(as: .human)
     let ai = Player(as: .ai)
@@ -36,16 +32,7 @@ class Battle: SKNode {
     override init() {
         activePlayer = human
         super.init()
-        
-        for index in 0...11 {
-            let spot = Spot(at: index, battle: self)
-            spots.append(spot)
-            let yPos = spot.owner!.type.rawValue * (MELEE_RANGE_DISTANCE_FROM_CENTER + spot.range.rawValue * SPACE_BETWEEN_ROWS)
-            let xPos = spot.column.rawValue * SPACE_BETWEEN_COLUMNS
-            spot.position = CGPoint(x: xPos, y: yPos)
-            addChild(spot)
-        }
-        
+        addChild(spots)
         name = "desk"
         update()
     }
@@ -108,31 +95,27 @@ class Battle: SKNode {
     
     func fight() {
         state = .fight
-        // get next attacker
-        let attackerSpot = _getNextAttackerSpot()
-        if attackerSpot == nil {
-            endRound()
-            return
-        }
-        let attacker = attackerSpot?.creature
-        attacker!.isActionTaken = true
-        let targetSpot = _findTargetSpot(for: attackerSpot!)
-        if targetSpot == nil {
-            fight()
-            return
+        if let attackerSpot = spots.nextAttacker(activePlayer: activePlayer.type) {
+            if let attacker = attackerSpot.creature {
+                attacker.isActionTaken = true
+                if let targetSpot = spots.target(for: attackerSpot) {
+                    state = .attack
+                    attack(attacker: attacker, target: targetSpot.creature!)
+                } else {
+                    fight()
+                }
+            }
         } else {
-            state = .attack
-            attack(attacker: attacker!, target: targetSpot!.creature!)
+            endRound()
         }
     }
     
     func endRound() {
         state = .roundEnd
         for spot in spots {
-            let creature = spot.creature
-            if creature != nil {    // TODO: rework into creature?
-                creature!.decreaseAbilityCooldown()
-                creature!.isActionTaken = false
+            if let creature = spot.creature {
+                creature.decreaseAbilityCooldown()
+                creature.isActionTaken = false
             }
         }
         passButton.readyToFight = false
@@ -145,7 +128,7 @@ class Battle: SKNode {
     }
     
     func aiTurn() {
-        let aiSpots = spots.filter { $0.owner!.isAi && $0.isTaken }
+        let aiSpots = spots.filter { $0.owner == .ai && $0.isTaken }
         let aiSpotsShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiSpots)
         var pass: Bool = true
         for spot in aiSpotsShuffled {
@@ -160,10 +143,10 @@ class Battle: SKNode {
         endTurn(passed: pass)
     }
     
-    func summon(_ creatureName: String, to index: Int) {    //TODO: Make all three functions make sense
+    func summon(_ creatureName: String, to index: Int) {
         if let creature = CardLibrary.getCard(creatureName) as? CreatureCardBlueprint {
-            let spot = spots[index]
-            summon(creature, to: spot)        }
+            summon(creature, to: spots[index])
+        }
     }
 
     func summon(_ creature: CreatureCardBlueprint, to spot: Spot) { // TODO: Return Bool
@@ -219,31 +202,8 @@ class Battle: SKNode {
         _animationPipeline.add(animation: AnnouncerAnimation(announcer: announcer))
     }
     
-    func getSpot(of player: PlayerType, range: RangeType, column: ColumnType) -> Spot { // OBSOLETE
-        return spots.first(where: {
-            ($0.owner!.type == player) && ($0.range == range) && ($0.column == column)
-        })!
-    }
-    
-    func getNearbySpots(of spot: Spot, sameOwner: Bool = true) -> [Spot] {
-        var nearbySpots: [Spot] = []
-        let index = spot.index
-        var indexModifiers = [-3, 3]
-        if index % 3 != 2 { indexModifiers.append(1) }
-        if index % 3 != 0 { indexModifiers.append(-1) }
-        for indexModifier in indexModifiers {
-            let newIndex = index + indexModifier
-            if (newIndex < 0) || (newIndex > 11) { continue }
-            let nearbySpot = spots[newIndex]
-            if !sameOwner || (nearbySpot.owner == spot.owner) {
-                nearbySpots.append(nearbySpot)
-            }
-        }
-        return nearbySpots
-    }
-    
     func highlightActionTargets() {
-        let activePlayerSpots = spots.filter { $0.owner == activePlayer }
+        let activePlayerSpots = spots.filter { $0.owner == activePlayer.type }
         for spot in activePlayerSpots {
             let creature = spot.creature
             if creature != nil {
@@ -251,7 +211,7 @@ class Battle: SKNode {
             }
         }
         if activePlayer.isHuman {
-            for card in human.deck.cards {
+            for card in human.deck.cards {  // TODO: .hand  ?
                 card.isPosssibleToTap = true
             }
             passButton.isPosssibleToTap = true
@@ -262,7 +222,7 @@ class Battle: SKNode {
         for spot in spots {
             spot.creature?.isPosssibleToTap = false
         }
-        for card in human.deck.cards {
+        for card in human.deck.cards {  // TODO: .hand  ?
             card.isPosssibleToTap = false
         }
         passButton.isPosssibleToTap = false
@@ -272,22 +232,8 @@ class Battle: SKNode {
         _animationPipeline.add( animation: AttackAnimation(attacker: attacker, target: target) )
     }
     
-    private func _getNextAttackerSpot() -> Spot? {
-        let aiOrder = [3, 0, 4, 1, 5, 2]
-        let humanOrder = [6, 9, 7, 10, 8, 11]
-        let attackOrder: [Int] = activePlayer.isHuman ? aiOrder + humanOrder : humanOrder + aiOrder
-        for index in attackOrder {
-            let attackerSpot = spots[index]
-            let attacker = attackerSpot.creature
-            if (attacker != nil) && !attacker!.isActionTaken && (attacker!.attack > 0) {
-                return attackerSpot
-            }
-        }
-        return nil
-    }
-    
-    private func _findTargetSpot(for spot: Spot) -> Spot? {
-        let sign = spot.owner!.isAi ? 1 : -1
+    private func _findTargetSpot(for spot: Spot) -> Spot? { // OBSOLETE
+        let sign = spot.owner == .ai ? 1 : -1
         let attackerIndex = spot.index
         for i in [3, 6, 9] {
             let targetIndex = attackerIndex + i * sign

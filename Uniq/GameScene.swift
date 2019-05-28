@@ -108,15 +108,15 @@ class GameScene: SKScene {
                 if let card = node as? CreatureCard {
                     sourceNode = node
                     currentlyTapped = [card]
-                    possibleTargets = battle.spots.filter({ $0.owner!.isHuman && !$0.isTaken })
+                    possibleTargets = battle.spots.filter({ $0.owner == .human && !$0.isTaken })
                     battle.removeActionTargets()
                     return
                 }
                 if let creatureSprite = node as? Creature {
-                    if creatureSprite.owner!.isHuman && !creatureSprite.isActionTaken {
+                    if creatureSprite.owner == .human && !creatureSprite.isActionTaken {
                         sourceNode = node
                         currentlyTapped = [creatureSprite]
-                        let spots = battle.getNearbySpots(of: creatureSprite.spot!)
+                        let spots = battle.spots.neighbors(of: creatureSprite.spot!)
                         possibleTargets = spots
                         for spot in spots { // TODO: Rework this to not use creatures at all
                             if spot.creature != nil {
@@ -194,7 +194,7 @@ class GameScene: SKScene {
                 
                 if sourceNode?.name == "card" {
                     if let spot = node as? Spot {
-                        if spot.owner!.isAi { continue }  //TODO: use isPossibleTarget
+                        if spot.owner == .ai { continue }  //TODO: use isPossibleTarget
                         if let creatureCard = sourceNode as? CreatureCard {
                             if battle.play(creatureCard, to: spot) {
                                 actionCancelled = false

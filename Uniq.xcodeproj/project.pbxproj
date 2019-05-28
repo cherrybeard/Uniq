@@ -36,6 +36,7 @@
 		5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */; };
 		5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D19203EB7B20026B445 /* Animation.swift */; };
 		5B7E2D1D203EB7D30026B445 /* AttackAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */; };
+		5B9E8CCD229C7E9A00A4BE18 /* Spots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
@@ -106,6 +107,7 @@
 		5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPipeline.swift; sourceTree = "<group>"; };
 		5B7E2D19203EB7B20026B445 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackAnimation.swift; sourceTree = "<group>"; };
+		5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spots.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				5B51A179227C537200111234 /* Spot.swift */,
+				5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */,
 				5BCA6F292039EE2300B81376 /* Creature.swift */,
 				5B116F812051A46F00396C0F /* CharacterSprite.swift */,
 			);
@@ -476,6 +479,7 @@
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
 				5B5025CB229AFFE100CEAA9D /* Holdable.swift in Sources */,
 				5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */,
+				5B9E8CCD229C7E9A00A4BE18 /* Spots.swift in Sources */,
 				5B669F43204AB02F00DC2760 /* CardBlueprint.swift in Sources */,
 				5B35E5D42057034E00678A10 /* WitchCreature.swift in Sources */,
 				5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */,
