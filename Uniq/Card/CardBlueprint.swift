@@ -6,12 +6,13 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-typealias CardTargetFilter = (Creature) -> Bool
+typealias TargetFilter = (Creature) -> Bool
 
-struct CardTargetFilters {
-    static let all: CardTargetFilter = { _ in true }
-    static let enemyCreatures: CardTargetFilter = { $0.owner == .ai }
-    static let ownerCreatures: CardTargetFilter = { $0.owner == .human }
+struct TargetFilters {
+    static let all: TargetFilter = { _ in true }
+    static let aiCreatures: TargetFilter = { $0.spot.owner.isAi }
+    static let ownerCreatures: TargetFilter = { $0.spot.owner.isHuman }
+    //static let ownerCreatures: TargetFilter = { $0.owner.isActivePlayer }
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 
@@ -33,9 +34,9 @@ class CardBlueprint {
     }
     
     func copy() -> CardBlueprint {
-        let card = CardBlueprint(description: description)
+        let blueprint = CardBlueprint(description: description)
         //card.targetFilter = targetFilter
         //card.requiresTarget = requiresTarget
-        return card
+        return blueprint
     }
 }

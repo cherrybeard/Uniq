@@ -20,10 +20,10 @@ class HandSprite: SKNode {
         super.init()
     }
     
-    func add(_ sprite: Card) {
-        sprite.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
-        addChild(sprite)
-        cards.append(sprite)
+    func add(_ card: Card) {
+        card.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
+        addChild(card)
+        cards.append(card)
         _repositionCards()
     }
     

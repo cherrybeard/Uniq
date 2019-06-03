@@ -43,10 +43,10 @@ class Deck {
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CardsData.self, from: data)
                 for cardData in jsonData.cards {
-                    if let card = CardLibrary.getCard(cardData.card) {
+                    if let blueprint = CardLibrary.getCard(cardData.card) {
                         if cardData.amount > 0 {
                             for _ in 1...cardData.amount {
-                                cards.append(card.generateSprite())
+                                cards.append(blueprint.generateSprite())
                             }
                         }
                     }
@@ -64,13 +64,15 @@ class Deck {
         hand.add(card)
     }
     
-    func draw() {
+    func draw() -> Card? {
         if drawPile.count > 0 {
             let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: drawPile)
             if let card = shuffled[0] as? Card {
                 draw(card: card)
+                return card
             }
         }
+        return nil
     }
     
 }

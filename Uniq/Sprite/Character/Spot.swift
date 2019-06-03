@@ -16,31 +16,35 @@ enum ColumnType: Int {
     case left = -1, center = 0, right = 1
 }
 
-class Spot: SKNode, Targetable {
+class Spot: SKNode, Interactive {
     private static let WIDTH: Int = 86
     private static let HEIGHT: Int = 56
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x1D1D1C)
-        //static let possibleTarget = UIColor(rgb: 0x2E2924)
-        static let possibleTarget = UIColor(rgb: 0x3752A1)
-        static let currentTarget = UIColor(rgb: 0x3065FF)
+        static let targetted = UIColor(rgb: 0x3065FF)
+        static let targetable = UIColor(rgb: 0x3752A1)
     }
     
-    let owner: PlayerType
+    let owner: Player
     let range: RangeType
     let column: ColumnType
-    var creature: Creature? = nil
-    var isTaken: Bool { return (creature != nil) }
+    weak var creature: Creature? = nil  // TODO: Move creature summoning into this class
+    var isTaken: Bool { return (creature != nil) }  // TODO: Try removing it
     
-    var isPossibleTarget: Bool = false { didSet { _redraw() } }
-    var isCurrentTarget: Bool = false { didSet { _redraw() } }
+    var status: Set<InteractiveStatus> = [] {
+        didSet {
+            creature?.status = status
+            _redraw()
+        }
+    }
+    var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
     private let _border = SKShapeNode(rectOf: CGSize(width: Spot.WIDTH, height: Spot.HEIGHT), cornerRadius: 3)
 
     var index: Int {
         get {
             var shift: Int = column.rawValue + 1
-            if owner == .human {
+            if owner.isHuman {
                 shift += 6 + range.rawValue * 3
             } else {
                 shift += (range.rawValue-1) * -3
@@ -49,11 +53,20 @@ class Spot: SKNode, Targetable {
         }
     }
     
-    init(at index: Int) {
-        owner = Spot._getOwner(of: index)
-        range = Spot._getRange(of: index)
-        column = Spot._getColumn(of: index)
+    init(owner: Player, range: RangeType, column: ColumnType) {
+        self.owner = owner
+        self.range = range
+        self.column = column
         super.init()
+        
+        let neighbors = Spots.neighbors(of: index)
+        
+        targetsFilter = {
+            if let spot = $0 as? Spot {
+                return neighbors.contains(spot.index)
+            }
+            return false
+        }
         
         _border.lineWidth = 1
         addChild(_border)
@@ -65,29 +78,12 @@ class Spot: SKNode, Targetable {
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     private func _redraw() {
-        if isCurrentTarget {
-            _border.strokeColor = BORDER_COLOR.currentTarget
-        } else if isPossibleTarget {
-            _border.strokeColor = BORDER_COLOR.possibleTarget
+        if status.contains(.targetted) {
+            _border.strokeColor = BORDER_COLOR.targetted
+        } else if status.contains(.targetable) {
+            _border.strokeColor = BORDER_COLOR.targetable
         } else {
             _border.strokeColor = BORDER_COLOR.base
-        }
-    }
-    
-    static private func _getColumn(of index: Int) -> ColumnType {
-        let column = index % 3 - 1
-        return ColumnType(rawValue: column) ?? .center
-    }
-    
-    static private func _getOwner(of index: Int) -> PlayerType {
-        return index > 5 ? .human : .ai
-    }
-    
-    static private func _getRange(of index: Int) -> RangeType {
-        if (index > 2) && (index < 9) {
-            return .melee
-        } else {
-            return .range
         }
     }
     

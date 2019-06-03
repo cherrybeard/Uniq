@@ -11,14 +11,14 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-    var scene: GameScene!
+    var scene: BattleScene!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
             view.isMultipleTouchEnabled = false
-            scene = GameScene(size: view.bounds.size)
+            scene = BattleScene(size: view.bounds.size)
             scene.scaleMode = .aspectFill
             view.presentScene(scene)
             

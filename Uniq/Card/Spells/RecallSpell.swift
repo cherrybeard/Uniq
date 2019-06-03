@@ -6,25 +6,25 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-
-class RecallSpell: SpellCardBlueprint {
-    init() {
-        super.init(description: "Return friendly creature back to hand. Reduce its cost by 2")
-        //requiresTarget = true
-        //targetFilter = CardTargetFilters.ownerCreatures
-    }
-    
-    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
-        /*
-        if let creature = target as? CreatureSprite {
-            let creatureCard = creature.creature
-            creatureCard.cost -= 2
-            if creatureCard.cost < 0 {
-                creatureCard.cost = 0
-            }
-            battle.player.deck.draw(card: CreatureCardSprite(card: creatureCard))
-            creature.destroyed = true
-        }
-         */
-    }
-}
+//
+//class RecallSpell: SpellCardBlueprint {
+//    init() {
+//        super.init(description: "Return friendly creature back to hand. Reduce its cost by 2")
+//        //requiresTarget = true
+//        //targetFilter = CardTargetFilters.ownerCreatures
+//    }
+//    
+//    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
+//        /*
+//        if let creature = target as? CreatureSprite {
+//            let creatureCard = creature.creature
+//            creatureCard.cost -= 2
+//            if creatureCard.cost < 0 {
+//                creatureCard.cost = 0
+//            }
+//            battle.player.deck.draw(card: CreatureCardSprite(card: creatureCard))
+//            creature.destroyed = true
+//        }
+//         */
+//    }
+//}

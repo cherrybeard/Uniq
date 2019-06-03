@@ -75,7 +75,7 @@ class AttackAnimation: Animation {
                     self.state = .finished
                     self._target.run(shakeAndFadeOut) {
                         self._target.removeFromParent()
-                        self._target.spot?.creature = nil
+                        self._target.spot.creature = nil
                     }
                 }
             }

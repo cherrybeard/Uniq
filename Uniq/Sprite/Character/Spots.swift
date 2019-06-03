@@ -12,17 +12,22 @@ class Spots: SKNode, Collection {
     private static let SPACE_BETWEEN_COLUMNS: Int = 113
     private static let SPACE_BETWEEN_ROWS: Int = 90
     private static let DISTANCE_FROM_CENTER: Int = 78
+    private static let START_INDEX: Int = 0
+    private static let END_INDEX: Int = 12
     
     private var _spots: [Spot] = []
-    var startIndex: Int = 0
-    var endIndex: Int = 12
+    var startIndex: Int = START_INDEX
+    var endIndex: Int = END_INDEX
     
-    override init() {
+    init(human: Player, ai: Player) {
         super.init()
         for index in startIndex ..< endIndex {
-            let spot = Spot(at: index)
+            let owner = (index > 5) ? human : ai
+            let range = Spots._range(of: index)
+            let column = Spots._column(of: index)
+            let spot = Spot(owner: owner, range: range, column: column)
             _spots.append(spot)
-            let yPos = spot.owner.rawValue * (Spots.DISTANCE_FROM_CENTER + spot.range.rawValue * Spots.SPACE_BETWEEN_ROWS)
+            let yPos = owner.type.rawValue * (Spots.DISTANCE_FROM_CENTER + spot.range.rawValue * Spots.SPACE_BETWEEN_ROWS)
             let xPos = spot.column.rawValue * Spots.SPACE_BETWEEN_COLUMNS
             spot.position = CGPoint(x: xPos, y: yPos)
             addChild(spot)
@@ -41,19 +46,48 @@ class Spots: SKNode, Collection {
         return _spots[position]
     }
     
-    func neighbors(of spot: Spot, sameOwner: Bool = true) -> [Spot] {
-        var neighbors: [Spot] = []
-        let index = spot.index
+    static private func _column(of index: Int) -> ColumnType {
+        let column = index % 3 - 1
+        return ColumnType(rawValue: column) ?? .center
+    }
+    
+    static private func _owner(of index: Int) -> PlayerType {
+        return index > 5 ? .human : .ai
+    }
+    
+    static private func _range(of index: Int) -> RangeType {
+        if (index > 2) && (index < 9) {
+            return .melee
+        } else {
+            return .range
+        }
+    }
+    
+    /// Returns indices all neighbors of the spot.
+    ///
+    /// - Parameters:
+    ///   - index: Index of the original spot.
+    ///   - sameOwner: false if allowed to include enemy spots in result.
+    /// - Returns: Array of indices of all neighbors of the original spot.
+    static func neighbors(of index: Int, sameOwner: Bool = true) -> [Int] {
+        var neighbors: [Int] = []
         var modifiers = [-3, 3]
         if index % 3 != 2 { modifiers.append(1) }
         if index % 3 != 0 { modifiers.append(-1) }
         for modifier in modifiers {
             let newIndex = index + modifier
-            if (newIndex < startIndex) || (newIndex >= endIndex) { continue }
-            let neighbor = _spots[newIndex]
-            if !sameOwner || (neighbor.owner == spot.owner) {
-                neighbors.append(neighbor)
+            if (newIndex < START_INDEX) || (newIndex >= END_INDEX) { continue }
+            if !sameOwner || (Spots._owner(of: index) == Spots._owner(of: newIndex)) {
+                neighbors.append(newIndex)
             }
+        }
+        return neighbors
+    }
+    
+    func neighbors(of spot: Spot, sameOwner: Bool = true) -> [Spot] {
+        var neighbors: [Spot] = []
+        for index in Spots.neighbors(of: spot.index, sameOwner: sameOwner) {
+            neighbors.append(_spots[index])
         }
         return neighbors
     }
@@ -74,7 +108,7 @@ class Spots: SKNode, Collection {
     }
     
     func target(for spot: Spot) -> Spot? {
-        let sign = (spot.owner == .ai) ? 1 : -1
+        let sign = spot.owner.isAi ? 1 : -1
         let attackerIndex = spot.index
         for i in [3, 6, 9] {
             let targetIndex = attackerIndex + i * sign

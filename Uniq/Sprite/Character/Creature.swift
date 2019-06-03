@@ -8,33 +8,31 @@
 
 import SpriteKit
 
-class Creature: SKNode, Targetable, Tappable, Holdable {
-    private let WIDTH: Int = 90
-    private let HEIGHT: Int = 60
+class Creature: SKNode {
+    private static let WIDTH: Int = 90
+    private static let HEIGHT: Int = 60
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x484644)
-        static let tapped = UIColor(rgb: 0x614F3F)
-        static let possibleToTap = UIColor(rgb: 0x775534)
-        static let currentlyTapped = UIColor(rgb: 0xAC7D4E)
-        static let currentTarget = UIColor(rgb: 0x1A54FB)
-        static let possibleTarget = UIColor(rgb: 0x3752A1)
+        static let interactive = UIColor(rgb: 0x775534)
+        static let interacted = UIColor(rgb: 0xAC7D4E)
+        static let targetable = UIColor(rgb: 0x3752A1)
+        static let targetted = UIColor(rgb: 0x1A54FB)
     }
     private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111)
     
     private let _healthLabel: HealthLabel
     private let _attackLabel = AttackLabel()
     private let _abilityLabel = AbilityLabel()
-    private let _border: SKShapeNode
+    private let _border = SKShapeNode(rectOf: CGSize(width: Creature.WIDTH, height: Creature.HEIGHT), cornerRadius: 3)
     
     var card: CreatureCardBlueprint
-    weak var spot: Spot? = nil
+    var spot: Spot
     
     var health: Int { return _healthLabel.health }
     var attack: Int { return _attackLabel.attack }
     var activeAbilityCooldown: Int { return _abilityLabel.remaining }
-    var owner: PlayerType { return spot!.owner }
 
-    var isActionTaken: Bool = false { didSet {
+    var isActionTaken: Bool = false { didSet {  // TODO: Move to Spot
         if isActionTaken {
             _abilityLabel.disable()
             _attackLabel.disable()
@@ -43,6 +41,9 @@ class Creature: SKNode, Targetable, Tappable, Holdable {
             _attackLabel.enable()
         }
     } }
+    
+    var status: Set<InteractiveStatus> = [] { didSet { _redraw() } }
+    
     var isPossibleTarget: Bool = false { didSet { _redraw() } }
     var isCurrentlyTapped: Bool = false { didSet { _redraw() } }
     var isPosssibleToTap: Bool = false { didSet { _redraw() } }
@@ -52,7 +53,6 @@ class Creature: SKNode, Targetable, Tappable, Holdable {
     init(of card: CreatureCardBlueprint, spot: Spot) {
         self.card = card
         self.spot = spot
-        _border = SKShapeNode(rectOf: CGSize(width: WIDTH, height: HEIGHT), cornerRadius: 3)
         _healthLabel = HealthLabel(maxHealth: card.health)
         super.init()
         
@@ -62,15 +62,15 @@ class Creature: SKNode, Targetable, Tappable, Holdable {
         
         _abilityLabel.cooldown = (card.activeAbility == nil) ? -1 : card.activeAbility!.cooldown
         _abilityLabel.resetCooldown()
-        _abilityLabel.position = CGPoint(x: 0, y: HEIGHT/2)
+        _abilityLabel.position = CGPoint(x: 0, y: Creature.HEIGHT/2)
         addChild(_abilityLabel)
         
         _attackLabel.attack = card.attack
-        _attackLabel.position = CGPoint(x: -WIDTH/2 + 6, y: -HEIGHT/2 + 10)
+        _attackLabel.position = CGPoint(x: -Creature.WIDTH/2 + 6, y: -Creature.HEIGHT/2 + 10)
         addChild(_attackLabel)
         
         _healthLabel.health = card.health
-        _healthLabel.position = CGPoint(x: WIDTH/2 - 6, y: -HEIGHT/2 + 10)
+        _healthLabel.position = CGPoint(x: Creature.WIDTH/2 - 6, y: -Creature.HEIGHT/2 + 10)
         addChild(_healthLabel)
         
         _redraw()
@@ -82,14 +82,14 @@ class Creature: SKNode, Targetable, Tappable, Holdable {
     }
     
     private func _redraw() {
-        if isCurrentTarget {
-            _border.strokeColor = BORDER_COLOR.currentTarget
-        } else if isPossibleTarget {
-            _border.strokeColor = BORDER_COLOR.possibleTarget
-        } else if isCurrentlyTapped {
-            _border.strokeColor = BORDER_COLOR.currentlyTapped
-        } else if isPosssibleToTap {
-            _border.strokeColor = BORDER_COLOR.possibleToTap
+        if status.contains(.targetted) {
+            _border.strokeColor = BORDER_COLOR.targetted
+        } else if status.contains(.targetable) {
+            _border.strokeColor = BORDER_COLOR.targetable
+        } else if status.contains(.interacted) {
+            _border.strokeColor = BORDER_COLOR.interacted
+        } else if status.contains(.interactive) {
+            _border.strokeColor = BORDER_COLOR.interactive
         } else {
             _border.strokeColor = BORDER_COLOR.base
         }

@@ -15,9 +15,10 @@ enum BattleState {
 
 class Battle: SKNode {
     let passButton = PassButton()
-    var spots = Spots()
+    var spots: Spots
+    var interactives: [Interactive] = []
     
-    let human = Player(as: .human)
+    let human = Player(as: .human)  // TODO: can we make it static?
     let ai = Player(as: .ai)
     var activePlayer: Player
     var state: BattleState = .battleStart
@@ -31,8 +32,26 @@ class Battle: SKNode {
     
     override init() {
         activePlayer = human
+        spots = Spots(human: human, ai: ai)
         super.init()
         addChild(spots)
+        
+        // TODO: Rework addChild to custom function which adds sprite to interactives array if it is Interactive
+        // spots passed tp it will be added to it. same with the hand
+        for spot in spots { interactives.append(spot) }
+        
+        for _ in 1...4 {
+            if let card = human.deck.draw() {
+                interactives.append(card)
+            }
+        }
+        interactives.append(passButton)
+        
+        summon("Yletia Pirate", to: 6)
+        summon("Yletia Pirate", to: 2)
+        summon("Bandit", to: 4)
+        summon("Thug", to: 3)
+        
         name = "desk"
         update()
     }
@@ -77,7 +96,7 @@ class Battle: SKNode {
     
     func endTurn(passed: Bool = false) {
         state = .turnEnd
-        removeActionTargets()
+        cleanInteractivesStatus()
         if passed {
             activePlayer.passed = passed
             if activePlayer.isAi { passButton.readyToFight = true }
@@ -121,14 +140,16 @@ class Battle: SKNode {
         passButton.readyToFight = false
         for player in [human, ai] {
             player.passed = false
-            player.deck.draw()
+            if let card = player.deck.draw() {
+                interactives.append(card)
+            }
         }
         round += 1
         _announce("Round \(round)")
     }
     
     func aiTurn() {
-        let aiSpots = spots.filter { $0.owner == .ai && $0.isTaken }
+        let aiSpots = spots.filter { $0.owner.isAi && $0.isTaken }
         let aiSpotsShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiSpots)
         var pass: Bool = true
         for spot in aiSpotsShuffled {
@@ -203,46 +224,46 @@ class Battle: SKNode {
     }
     
     func highlightActionTargets() {
-        let activePlayerSpots = spots.filter { $0.owner == activePlayer.type }
+        let activePlayerSpots = spots.filter { $0.owner == activePlayer }
         for spot in activePlayerSpots {
-            let creature = spot.creature
-            if creature != nil {
-                creature!.isPosssibleToTap = !creature!.isActionTaken
+            if let creature = spot.creature {
+                if !creature.isActionTaken {
+                    spot.status.insert(.interactive)
+                    if creature.activeAbilityCooldown == 0 {
+                        spot.status.insert(.activatable)
+                    }
+                }
             }
         }
         if activePlayer.isHuman {
             for card in human.deck.cards {  // TODO: .hand  ?
-                card.isPosssibleToTap = true
+                card.status.insert(.interactive)
             }
-            passButton.isPosssibleToTap = true
+            passButton.status.insert(.interactive)
         }
     }
     
-    func removeActionTargets() {
-        for spot in spots {
-            spot.creature?.isPosssibleToTap = false
+    func addInteractivesStatus(status: InteractiveStatus, filter: (Interactive) -> Bool) {
+        let targets = interactives.filter(filter)
+        for var target in targets {
+            target.status.insert(status)
         }
-        for card in human.deck.cards {  // TODO: .hand  ?
-            card.isPosssibleToTap = false
+    }
+    
+    
+    func removeInteractivesStatus(status: InteractiveStatus) {
+        for var target in interactives {
+            target.status.remove(status)
         }
-        passButton.isPosssibleToTap = false
+    }
+    
+    func cleanInteractivesStatus() {
+        for var interactive in interactives {
+            interactive.status = []
+        }
     }
     
     func attack(attacker: Creature, target: Creature) {
         _animationPipeline.add( animation: AttackAnimation(attacker: attacker, target: target) )
-    }
-    
-    private func _findTargetSpot(for spot: Spot) -> Spot? { // OBSOLETE
-        let sign = spot.owner == .ai ? 1 : -1
-        let attackerIndex = spot.index
-        for i in [3, 6, 9] {
-            let targetIndex = attackerIndex + i * sign
-            if (targetIndex < 0) || (targetIndex > 11) { continue }
-            let targetSpot = spots[targetIndex]
-            if (targetSpot.creature != nil) && (targetSpot.owner != spot.owner) && (targetSpot.creature!.health > 0) {
-                return targetSpot
-            }
-        }
-        return nil
     }
 }

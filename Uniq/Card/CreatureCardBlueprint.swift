@@ -23,12 +23,12 @@ class CreatureCardBlueprint: CardBlueprint {
     }
     
     override func copy() -> CardBlueprint {
-        let card = CreatureCardBlueprint(
+        let blueprint = CreatureCardBlueprint(
             description: description,
             attack: attack,
             health: health,
             activeAbility: activeAbility
         )
-        return card
+        return blueprint
     }
 }

@@ -9,23 +9,21 @@
 import SpriteKit
 
 
-class PassButton: SKNode, Tappable, Targetable {
+class PassButton: SKNode, Interactive {
     private let FILL_COLOR = UIColor(rgb: 0x111111)
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x484644)
-        static let possibleToTap = UIColor(rgb: 0x775534)
+        static let interactive = UIColor(rgb: 0x775534)
     }
     private struct FONT_COLOR {
         static let base = UIColor(rgb: 0x484644)
-        static let possibleToTap = UIColor(rgb: 0xE3B47B)
+        static let interactive = UIColor(rgb: 0xE3B47B)
     }
     
     var readyToFight: Bool = false { didSet { _redraw() } }
     
-    var isPosssibleToTap: Bool = false { didSet { _redraw() } }
-    var isCurrentlyTapped: Bool = false
-    var isPossibleTarget: Bool = false
-    var isCurrentTarget: Bool = false
+    var status: Set<InteractiveStatus> = []  { didSet { _redraw() } }
+    var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
     private let _border = SKShapeNode(rectOf: CGSize(width: 40, height: 40))
     private let _label = SKLabelNode(text: "Pass")
@@ -46,6 +44,8 @@ class PassButton: SKNode, Tappable, Targetable {
         
         _redraw()
         
+        targetsFilter = { return $0 is PassButton }
+        
         name = "pass"
     }
     
@@ -55,9 +55,9 @@ class PassButton: SKNode, Tappable, Targetable {
     
     private func _redraw() {
         _label.text = readyToFight ? "Fight" : "Pass"
-        if isPosssibleToTap {
-            _border.strokeColor = BORDER_COLOR.possibleToTap
-            _label.fontColor = FONT_COLOR.possibleToTap
+        if status.contains(.interactive) {
+            _border.strokeColor = BORDER_COLOR.interactive
+            _label.fontColor = FONT_COLOR.interactive
         } else {
             _border.strokeColor = BORDER_COLOR.base
             _label.fontColor = FONT_COLOR.base
