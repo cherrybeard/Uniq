@@ -8,11 +8,15 @@
 
 
 class SpellCardBlueprint: CardBlueprint {
-    let spell: (Battle) -> Bool
+    let spell: (Battle, Spot?) -> Bool
     
-    init(description: String = "", spell: @escaping (Battle) -> Bool) {
+    init(
+        description: String = "",
+        spotsFilter: @escaping SpotsFilter,
+        spell: @escaping (Battle, Spot?) -> Bool
+    ) {
         self.spell = spell
-        super.init(description: description)
+        super.init(description: description, spotsFilter: spotsFilter)
     }
     
     override func generateSprite() -> SpellCard {
@@ -22,6 +26,7 @@ class SpellCardBlueprint: CardBlueprint {
     override func copy() -> CardBlueprint {
         let blueprint = SpellCardBlueprint(
             description: description,
+            spotsFilter: spotsFilter,
             spell: spell
         )
         return blueprint

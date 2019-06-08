@@ -6,27 +6,27 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-typealias TargetFilter = (Creature) -> Bool
+typealias SpotsFilter = (Spot) -> Bool
 
-struct TargetFilters {
-    static let all: TargetFilter = { _ in true }
-    static let aiCreatures: TargetFilter = { $0.spot.owner.isAi }
-    static let ownerCreatures: TargetFilter = { $0.spot.owner.isHuman }
-    //static let ownerCreatures: TargetFilter = { $0.owner.isActivePlayer }
+struct SpotsFilters {
+    // TODO: Add ability to combine filters maybe in separate class
+    // Something like x = Filter([Filter.filterPreset1, Filter.filterPreset2, ...])
+    static let all: SpotsFilter = { _ in true }
+    static let owner: SpotsFilter = { $0.owner.isActive }
+    static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
+    static let enemy: SpotsFilter = { !$0.owner.isActive }
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 
 class CardBlueprint {
+    // var effect: (Battle, Spot?) -> Bool
     var description: String
-    //var targetFilter: CardTargetFilter? = CardTargetFilters.all
-    //var requiresTarget: Bool = false
+    var spotsFilter: SpotsFilter
+    //var requiresTarget: Bool = false  // TODO: Check if needed
     
-    init(description: String = "") {
+    init(description: String = "", spotsFilter: @escaping SpotsFilter) {
         self.description = description
-    }
-    
-    func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
-        
+        self.spotsFilter = spotsFilter
     }
     
     func generateSprite() -> Card {
@@ -34,9 +34,7 @@ class CardBlueprint {
     }
     
     func copy() -> CardBlueprint {
-        let blueprint = CardBlueprint(description: description)
-        //card.targetFilter = targetFilter
-        //card.requiresTarget = requiresTarget
+        let blueprint = CardBlueprint(description: description, spotsFilter: spotsFilter)
         return blueprint
     }
 }

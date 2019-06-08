@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B116F822051A46F00396C0F /* CharacterSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B116F812051A46F00396C0F /* CharacterSprite.swift */; };
 		5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC399203BB01200F3B921 /* HandSprite.swift */; };
 		5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC39B203C435A00F3B921 /* Deck.swift */; };
 		5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CA228A64E100DFE0EE /* CardLibrary.swift */; };
@@ -74,7 +73,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5B116F812051A46F00396C0F /* CharacterSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSprite.swift; sourceTree = "<group>"; };
 		5B1AC399203BB01200F3B921 /* HandSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandSprite.swift; sourceTree = "<group>"; };
 		5B1AC39B203C435A00F3B921 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		5B2622CA228A64E100DFE0EE /* CardLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLibrary.swift; sourceTree = "<group>"; };
@@ -158,7 +156,6 @@
 				5B51A179227C537200111234 /* Spot.swift */,
 				5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */,
 				5BCA6F292039EE2300B81376 /* Creature.swift */,
-				5B116F812051A46F00396C0F /* CharacterSprite.swift */,
 			);
 			path = Character;
 			sourceTree = "<group>";
@@ -463,7 +460,6 @@
 				5BE0B0C420504BBE009DA26E /* HarmlessAffairSpell.swift in Sources */,
 				5BE0B0C0204F4D91009DA26E /* SuddenStrikeSpell.swift in Sources */,
 				5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */,
-				5B116F822051A46F00396C0F /* CharacterSprite.swift in Sources */,
 				5BBF0F2022913DDD0071E9F7 /* CreatureSwapAnimation.swift in Sources */,
 				5BE0B0B9204F3884009DA26E /* VitalizationSpell.swift in Sources */,
 				5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */,

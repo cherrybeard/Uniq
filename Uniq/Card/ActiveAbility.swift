@@ -8,9 +8,9 @@
 
 class ActiveAbility {
     let cooldown: Int
-    let ability: (Battle, Creature?) -> Bool
+    let ability: (Battle, Spot?) -> Bool
     
-    init(description: String = "", cooldown: Int, ability: @escaping (Battle, Creature?) -> Bool) {
+    init(description: String = "", cooldown: Int, ability: @escaping (Battle, Spot?) -> Bool) {
         self.cooldown = cooldown
         self.ability = ability
     }

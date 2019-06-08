@@ -26,13 +26,24 @@ class Card: SKNode, Interactive {
     var state: CardState = .deck
     
     var status: Set<InteractiveStatus> = []  { didSet { _redraw() } }
-    var targetsFilter: (Interactive) -> Bool = { _ in return false }
+    var targetsFilter: (Interactive) -> Bool
     
     private let _label = SKLabelNode(text: "")
-    private let _border = SKShapeNode(rectOf: CGSize(width: Card.WIDTH, height: Card.HEIGHT), cornerRadius: 3)
+    private let _border = SKShapeNode(
+        rectOf: CGSize( width: Card.WIDTH, height: Card.HEIGHT ),
+        cornerRadius: 3
+    )
     
     init(blueprint: CardBlueprint) {
         self.blueprint = blueprint
+        
+        targetsFilter = { (interactive: Interactive) -> Bool in
+            if let spot = interactive as? Spot {
+                return blueprint.spotsFilter(spot)
+            }
+            return false
+        }
+        
         super.init()
         
         _border.lineWidth = 1
@@ -50,14 +61,6 @@ class Card: SKNode, Interactive {
         addChild(_label)
         
         _redraw()
-        
-        targetsFilter = {
-            if let spot = $0 as? Spot {
-                // TODO: Add check for activePlayer
-                return (spot.creature == nil) && spot.owner.isHuman
-            }
-            return false
-        }
         
         name = "card"
     }

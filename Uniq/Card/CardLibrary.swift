@@ -9,13 +9,7 @@
 
 class CardLibrary {
     private static let _cards: [String: CardBlueprint] = [
-        //"Bounty Hunter":    BountyHunterCreature(),
-        //"Old Prophet":      OldProphetCreature(),
-        //"Fire Imp":         FireImpCreature(),
-        //"Royal Alchemist":  RoyalAlchemistCreature(),
-        //"Firelink Priest":  FirelinkPriestCreature(),
-        //"Mystic Lancer":    MysticLancerCreature(),
-        //"Witch":            WitchCreature(),
+        // Creatures
         
         "Yletia Pirate": CreatureCardBlueprint(
             description: "Yletia Pirate",
@@ -24,9 +18,9 @@ class CardLibrary {
             activeAbility: ActiveAbility(
                 description: "Increase attack by 3",
                 cooldown: 2,
-                ability: { (Battle, creature: Creature?) -> Bool in
-                if creature != nil {
-                    creature!.increaseAttack(by: 3)
+                ability: { (Battle, spot: Spot?) -> Bool in
+                if let creature = spot?.creature {
+                    creature.increaseAttack(by: 3)
                     return true
                 }
                 return false
@@ -49,7 +43,19 @@ class CardLibrary {
             description: "Bandit",
             attack: 3,
             health: 32
-        )
+        ),
+        
+        // Spells
+        "Fireball": SpellCardBlueprint (
+            description: "Fireball",
+            spotsFilter: SpotsFilters.enemy,
+            spell: { (Battle, spot: Spot?) -> Bool in
+                if let creature = spot?.creature {
+                    creature.dealDamage(6)
+                    return true
+                }
+                return false
+        })
     ]
     
     static func getCard(_ name: String) -> CardBlueprint? {

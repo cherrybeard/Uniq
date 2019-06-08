@@ -109,7 +109,7 @@ class Creature: SKNode {
     
     func useActiveAbility(battle: Battle) -> Bool {
         if (_abilityLabel.remaining == 0) && !isActionTaken {
-            if card.activeAbility!.ability(battle, self) {
+            if card.activeAbility!.ability(battle, spot) {
                 _abilityLabel.resetCooldown()
                 isActionTaken = true
                 return true

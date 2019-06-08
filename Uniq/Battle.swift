@@ -20,7 +20,13 @@ class Battle: SKNode {
     
     let human = Player(as: .human)  // TODO: can we make it static?
     let ai = Player(as: .ai)
-    var activePlayer: Player
+    var activePlayer: Player {
+        willSet {
+            human.isActive = false
+            ai.isActive = false
+            newValue.isActive = true
+        }
+    }
     var state: BattleState = .battleStart
     var round: Int = 0
     

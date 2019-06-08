@@ -11,11 +11,16 @@ class CreatureCardBlueprint: CardBlueprint {
     var health: Int
     var activeAbility: ActiveAbility? = nil
     
-    init(description: String = "", attack: Int, health: Int, activeAbility: ActiveAbility? = nil) {
+    init(
+        description: String = "",
+        attack: Int,
+        health: Int,
+        activeAbility: ActiveAbility? = nil
+    ) {
         self.attack = attack
         self.health = health
         self.activeAbility = activeAbility
-        super.init(description: description)
+        super.init(description: description, spotsFilter: SpotsFilters.ownerFree)
     }
     
     override func generateSprite() -> CreatureCard {

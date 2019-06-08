@@ -16,6 +16,7 @@ class Player: Equatable {
     var deck: Deck
     var isHuman: Bool { return type == .human }
     var isAi: Bool { return type == .ai }
+    var isActive: Bool = false
     
     init(as type: PlayerType) {
         self.type = type
