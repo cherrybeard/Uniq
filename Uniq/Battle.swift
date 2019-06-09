@@ -125,7 +125,10 @@ class Battle: SKNode {
                 attacker.isActionTaken = true
                 if let targetSpot = spots.target(for: attackerSpot) {
                     state = .attack
-                    attack(attacker: attacker, target: targetSpot.creature!)
+                    attack(
+                        attackerSpot: attackerSpot,
+                        targetSpot: targetSpot
+                    )
                 } else {
                     fight()
                 }
@@ -269,7 +272,12 @@ class Battle: SKNode {
         }
     }
     
-    func attack(attacker: Creature, target: Creature) {
-        _animationPipeline.add( animation: AttackAnimation(attacker: attacker, target: target) )
+    func attack(attackerSpot: Spot, targetSpot: Spot) {
+        _animationPipeline.add(
+            animation: AttackAnimation(
+                attackerSpot: attackerSpot,
+                targetSpot: targetSpot
+            )
+        )
     }
 }

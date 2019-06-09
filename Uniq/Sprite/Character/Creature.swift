@@ -44,12 +44,6 @@ class Creature: SKNode {
     
     var status: Set<InteractiveStatus> = [] { didSet { _redraw() } }
     
-    var isPossibleTarget: Bool = false { didSet { _redraw() } }
-    var isCurrentlyTapped: Bool = false { didSet { _redraw() } }
-    var isPosssibleToTap: Bool = false { didSet { _redraw() } }
-    var isCurrentTarget: Bool = false { didSet { _redraw() } }
-    var isCurrentlyHold: Bool = false
-    
     init(of card: CreatureCardBlueprint, spot: Spot) {
         self.card = card
         self.spot = spot

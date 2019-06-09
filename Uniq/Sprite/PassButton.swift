@@ -14,6 +14,8 @@ class PassButton: SKNode, Interactive {
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x484644)
         static let interactive = UIColor(rgb: 0x775534)
+        static let targetable = UIColor(rgb: 0x3752A1)
+        static let targetted = UIColor(rgb: 0x1A54FB)
     }
     private struct FONT_COLOR {
         static let base = UIColor(rgb: 0x484644)
@@ -55,7 +57,13 @@ class PassButton: SKNode, Interactive {
     
     private func _redraw() {
         _label.text = readyToFight ? "Fight" : "Pass"
-        if status.contains(.interactive) {
+        if status.contains(.targetted) {
+            _border.strokeColor = BORDER_COLOR.targetted
+            _label.fontColor = FONT_COLOR.interactive
+        } else if status.contains(.targetable) {
+            _border.strokeColor = BORDER_COLOR.targetable
+            _label.fontColor = FONT_COLOR.interactive
+        } else if status.contains(.interactive) {
             _border.strokeColor = BORDER_COLOR.interactive
             _label.fontColor = FONT_COLOR.interactive
         } else {

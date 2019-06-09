@@ -99,7 +99,7 @@ class Spots: SKNode, Collection {
         for index in attackOrder {
             let attackerSpot = _spots[index]
             if let attacker = attackerSpot.creature {
-                if !attacker.isActionTaken && (attacker.attack > 0) {
+                if !attacker.isActionTaken && (attacker.attack > 0) && (attacker.health > 0) {
                     return attackerSpot
                 }
             }
