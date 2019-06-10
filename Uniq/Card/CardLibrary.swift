@@ -48,14 +48,16 @@ class CardLibrary {
         // Spells
         "Fireball": SpellCardBlueprint (
             description: "Fireball",
-            spotsFilter: SpotsFilters.enemy,
-            spell: { (Battle, spot: Spot?) -> Bool in
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.enemyCreatures,
+            effect: { (Battle, spot: Spot?) -> Bool in
                 if let creature = spot?.creature {
                     creature.dealDamage(6)
                     return true
                 }
                 return false
-        })
+            }
+        )
     ]
     
     static func getCard(_ name: String) -> CardBlueprint? {

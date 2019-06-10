@@ -15,18 +15,27 @@ struct SpotsFilters {
     static let owner: SpotsFilter = { $0.owner.isActive }
     static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
     static let enemy: SpotsFilter = { !$0.owner.isActive }
+    static let enemyCreatures: SpotsFilter = { !$0.owner.isActive && ($0.creature != nil) }
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 
 class CardBlueprint {
-    // var effect: (Battle, Spot?) -> Bool
-    var description: String
-    var spotsFilter: SpotsFilter
-    //var requiresTarget: Bool = false  // TODO: Check if needed
+    let description: String
+    let requiresTarget: Bool
+    let spotsFilter: SpotsFilter
     
-    init(description: String = "", spotsFilter: @escaping SpotsFilter) {
+    init(
+        description: String = "",
+        requiresTarget: Bool,
+        spotsFilter: @escaping SpotsFilter
+    ) {
         self.description = description
+        self.requiresTarget = requiresTarget
         self.spotsFilter = spotsFilter
+    }
+    
+    func play(battle: Battle, spot: Spot?) -> Bool {
+        return false
     }
     
     func generateSprite() -> Card {
@@ -34,7 +43,10 @@ class CardBlueprint {
     }
     
     func copy() -> CardBlueprint {
-        let blueprint = CardBlueprint(description: description, spotsFilter: spotsFilter)
-        return blueprint
+        return CardBlueprint(
+            description: description,
+            requiresTarget: requiresTarget,
+            spotsFilter: spotsFilter
+        )
     }
 }

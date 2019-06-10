@@ -20,11 +20,23 @@ class CreatureCardBlueprint: CardBlueprint {
         self.attack = attack
         self.health = health
         self.activeAbility = activeAbility
-        super.init(description: description, spotsFilter: SpotsFilters.ownerFree)
+        super.init(
+            description: description,
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.ownerFree
+        )
     }
     
     override func generateSprite() -> CreatureCard {
         return CreatureCard(blueprint: self)
+    }
+    
+    override func play(battle: Battle, spot: Spot?) -> Bool {
+        if spot != nil {
+            battle.summon(self, to: spot!)
+            return true
+        }
+        return false
     }
     
     override func copy() -> CardBlueprint {

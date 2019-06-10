@@ -180,13 +180,13 @@ class Battle: SKNode {
     }
 
     func summon(_ creature: CreatureCardBlueprint, to spot: Spot) { // TODO: Return Bool
-        let creatureSprite = Creature(of: creature, spot: spot)
-        creatureSprite.position = spot.position
-        creatureSprite.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
-        spot.creature = creatureSprite
-        addChild(creatureSprite)
+        let creature = Creature(of: creature, spot: spot)
+        creature.position = spot.position
+        creature.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
+        spot.creature = creature
+        addChild(creature)
     }
-    
+    /*
     func play(_ creatureCard: CreatureCard, to spot: Spot) -> Bool {
         if !spot.isTaken {
             if let creature = creatureCard.blueprint as? CreatureCardBlueprint {
@@ -196,6 +196,12 @@ class Battle: SKNode {
             }
         }
         return false
+    }*/
+    
+    func play(_ card: Card, to spot: Spot?) -> Bool {
+        if card.blueprint.requiresTarget && (spot == nil) { return false }
+        setCardState(card: card, state: .discarded)
+        return card.blueprint.play(battle: self, spot: spot)
     }
     
     func swap(_ sourceSpot: Spot, with targetSpot: Spot) {

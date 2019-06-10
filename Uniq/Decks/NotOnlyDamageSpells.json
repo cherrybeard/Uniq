@@ -30,6 +30,9 @@
         },{
             "card": "Witch",
             "amount": 2
+        },{
+            "card": "Fireball",
+            "amount": 2
         }
     ]
 }

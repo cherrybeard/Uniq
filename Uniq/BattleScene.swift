@@ -124,9 +124,8 @@ class BattleScene: SKScene {
                                     battle.endTurn()
                                     break
                                 }
-                            } else if let card = source as? CreatureCard {
+                            } else if let card = source as? Card {
                                 if let spot = node as? Spot {
-                                    // summon creature
                                     if battle.play(card, to: spot) {
                                         actionCancelled = false
                                         battle.endTurn()
