@@ -11,7 +11,7 @@ enum AnimationState: Int {
 }
 
 class Animation {
-    var state: AnimationState = AnimationState.ready
+    var state: AnimationState = .ready
     
     func play() {
         

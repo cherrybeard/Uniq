@@ -13,14 +13,16 @@ class HealthLabel: SKNode {
         static let base = UIColor(rgb: 0xEEEEEE)
         static let damaged = UIColor(rgb: 0xA33D3D)
     }
-    var maxHealth: Int
-    var health: Int{ didSet { _redraw() } }
+    var maxHealth: Int = 1 {
+        didSet { redraw() }
+    }
+    var health: Int = 1 {
+        didSet { redraw() }
+    }
     
     private let _label = SKLabelNode()
     
-    init(maxHealth: Int) {
-        self.maxHealth = maxHealth
-        health = maxHealth
+    override init() {
         super.init()
         
         _label.fontName = "AvenirNext-DemiBold"
@@ -34,7 +36,7 @@ class HealthLabel: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _redraw() {
+    private func redraw() {
         _label.text = String(health)
         _label.fontColor = (health == maxHealth) ? TEXT_COLOR.base : TEXT_COLOR.damaged
     }

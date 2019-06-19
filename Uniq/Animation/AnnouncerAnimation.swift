@@ -9,27 +9,28 @@
 import SpriteKit
 
 class AnnouncerAnimation: Animation {
-    private weak var _announcer: TurnAnnouncerSprite?
+    private let announcer = TurnAnnouncerSprite()
+    private static var fadeIn: SKAction {
+        let fadeIn = SKAction.fadeIn(withDuration: 0.3)
+        let wait  = SKAction.wait(forDuration: 0.5)
+        return SKAction.sequence([fadeIn, wait])
+    }
+    private static var fadeOut = SKAction.fadeOut(withDuration: 0.5)
     
-    init(announcer: TurnAnnouncerSprite) {
-        _announcer = announcer
+    init(battle: Battle, message: String) {
+        announcer.message = message
+        announcer.position = CGPoint(x: 0, y: -6)
+        announcer.alpha = 0
+        battle.addChild(announcer)
     }
     
     override func play() {
-        if _announcer == nil {
+        announcer.run(AnnouncerAnimation.fadeIn) {
             self.state = .finished
-            return
-        }
-        let fadeIn = SKAction.fadeIn(withDuration: 0.3)
-        let wait  = SKAction.wait(forDuration: 0.5)
-        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-        let sequence = SKAction.sequence([fadeIn, wait])
-        _announcer?.run(sequence) {
-            self.state = .finished
-            self._announcer?.run(fadeOut) {
-                self._announcer?.removeFromParent()
+            self.announcer.run(AnnouncerAnimation.fadeOut) {
+                self.announcer.removeFromParent()
             }
-            
         }
     }
+    
 }

@@ -25,21 +25,29 @@ class Spot: SKNode, Interactive {
         static let targetable = UIColor(rgb: 0x3752A1)
     }
     
-    let owner: Player
-    let range: RangeType
-    let column: ColumnType
-    weak var creature: Creature? = nil  // TODO: Move creature summoning into this class
-    var isTaken: Bool { return (creature != nil) }  // TODO: Try removing it
+    private let border = SKShapeNode(
+        rectOf: CGSize(
+            width: Spot.WIDTH,
+            height: Spot.HEIGHT
+        ),
+        cornerRadius: 3
+    )
     
     var status: Set<InteractiveStatus> = [] {
         didSet {
-            creature?.status = status
-            _redraw()
+            creature?.sprite.status = status
+            redraw()
         }
     }
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
-    private let _border = SKShapeNode(rectOf: CGSize(width: Spot.WIDTH, height: Spot.HEIGHT), cornerRadius: 3)
+    let owner: Player
+    let range: RangeType
+    let column: ColumnType
+    weak var creature: Creature? = nil { // TODO: Move creature summoning into this class
+        willSet { newValue?.spot = self }
+    }
+    var isTaken: Bool { return (creature != nil) }  // TODO: Is it actually being used? Try removing it
 
     var index: Int {
         get {
@@ -58,9 +66,7 @@ class Spot: SKNode, Interactive {
         self.range = range
         self.column = column
         super.init()
-        
         let neighbors = Spots.neighbors(of: index)
-        
         targetsFilter = {
             if let spot = $0 as? Spot {
                 return neighbors.contains(spot.index)
@@ -68,23 +74,22 @@ class Spot: SKNode, Interactive {
             return false
         }
         
-        _border.lineWidth = 1
-        addChild(_border)
-        
-        _redraw()
-        name = "spot"
+        border.lineWidth = 1
+        addChild(border)
+        redraw()
     }
     
-    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
-    private func _redraw() {
+    private func redraw() {
         if status.contains(.targetted) {
-            _border.strokeColor = BORDER_COLOR.targetted
+            border.strokeColor = BORDER_COLOR.targetted
         } else if status.contains(.targetable) {
-            _border.strokeColor = BORDER_COLOR.targetable
+            border.strokeColor = BORDER_COLOR.targetable
         } else {
-            _border.strokeColor = BORDER_COLOR.base
+            border.strokeColor = BORDER_COLOR.base
         }
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

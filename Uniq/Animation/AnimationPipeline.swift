@@ -7,36 +7,47 @@
 //
 
 class AnimationPipeline {
-    private var _queue: [Animation] = []
-    private var _lastState: AnimationState?
+    private var queue: [Animation] = []
+    private var lastState: AnimationState?
     var state: AnimationState {
-        get { return (_queue.count > 0) ? .inProgress : .finished }
+        get { return (queue.count > 0) ? .inProgress : .finished }
+    }
+    private var blocks: [() -> Void] = []
+    
+    func add(_ animations: [Animation]) {
+        for animation in animations {
+            add(animation)
+        }
     }
     
-    func add(animation: Animation) {
-        _queue.append(animation)
+    func add(_ animation: Animation, completion block: @escaping () -> Void = {}) {
+        queue.append(animation)
+        blocks.append(block)
     }
     
     func update() -> AnimationState {
-        if _queue.count == 0 {
-            if (_lastState == .finished) || (_lastState == .idle) {
-                _lastState = .idle
+        if queue.count == 0 {
+            if (lastState == .finished) || (lastState == .idle) {
+                lastState = .idle
                 return .idle
             } else {
-                _lastState = .finished
+                for block in blocks {
+                    block()
+                }
+                lastState = .finished
                 return .finished
             }
         }
-        switch _queue[0].state {
+        switch queue[0].state {
         case .finished:
-            _queue.remove(at: 0)
+            queue.remove(at: 0)
         case .ready:
-            _queue[0].state = .inProgress
-            _queue[0].play()
+            queue[0].state = .inProgress
+            queue[0].play()
         default:
             break
         }
-        _lastState = .inProgress
+        lastState = .inProgress
         return .inProgress
     }
     

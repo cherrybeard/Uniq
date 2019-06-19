@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B19083422B2600900CE8121 /* DamageAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083322B2600900CE8121 /* DamageAnimation.swift */; };
+		5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083522B2760E00CE8121 /* CreatureSprite.swift */; };
+		5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083722B282A300CE8121 /* SummonAnimation.swift */; };
+		5B19083C22B3527D00CE8121 /* PassiveAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083B22B3527D00CE8121 /* PassiveAbility.swift */; };
+		5B19083E22B3A13B00CE8121 /* BattleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083D22B3A13B00CE8121 /* BattleEvent.swift */; };
+		5B19084222B4DAB600CE8121 /* DeathAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19084122B4DAB600CE8121 /* DeathAnimation.swift */; };
+		5B19084422B696A700CE8121 /* RetreatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19084322B696A700CE8121 /* RetreatAnimation.swift */; };
+		5B19084622B6A01400CE8121 /* SwapResponseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */; };
+		5B19084922B6C29B00CE8121 /* SwapAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19084822B6C29B00CE8121 /* SwapAnimation.swift */; };
 		5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC399203BB01200F3B921 /* HandSprite.swift */; };
 		5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC39B203C435A00F3B921 /* Deck.swift */; };
 		5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CA228A64E100DFE0EE /* CardLibrary.swift */; };
@@ -39,7 +48,6 @@
 		5BBF0F1A228ED5620071E9F7 /* AbilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */; };
 		5BBF0F1C229012210071E9F7 /* AttackLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1B229012210071E9F7 /* AttackLabel.swift */; };
 		5BBF0F1E22908CDC0071E9F7 /* HealthLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1D22908CDC0071E9F7 /* HealthLabel.swift */; };
-		5BBF0F2022913DDD0071E9F7 /* CreatureSwapAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F1F22913DDD0071E9F7 /* CreatureSwapAnimation.swift */; };
 		5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F0B2038911000B81376 /* AppDelegate.swift */; };
 		5BCA6F122038911000B81376 /* BattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F112038911000B81376 /* BattleScene.swift */; };
 		5BCA6F142038911000B81376 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F132038911000B81376 /* GameViewController.swift */; };
@@ -53,7 +61,6 @@
 		5BDF3834229F6DCF0094EEC2 /* Interactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDF3833229F6DCF0094EEC2 /* Interactive.swift */; };
 		5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0B3204F0F29009DA26E /* Battle.swift */; };
 		5BE0B0B9204F3884009DA26E /* VitalizationSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0B8204F3884009DA26E /* VitalizationSpell.swift */; };
-		5BE0B0BC204F48E3009DA26E /* FireballSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0BB204F48E3009DA26E /* FireballSpell.swift */; };
 		5BE0B0BE204F4A27009DA26E /* ChainLightningSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0BD204F4A27009DA26E /* ChainLightningSpell.swift */; };
 		5BE0B0C0204F4D91009DA26E /* SuddenStrikeSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0BF204F4D91009DA26E /* SuddenStrikeSpell.swift */; };
 		5BE0B0C2205047D4009DA26E /* SparkSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0C1205047D4009DA26E /* SparkSpell.swift */; };
@@ -73,6 +80,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B19083322B2600900CE8121 /* DamageAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageAnimation.swift; sourceTree = "<group>"; };
+		5B19083522B2760E00CE8121 /* CreatureSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSprite.swift; sourceTree = "<group>"; };
+		5B19083722B282A300CE8121 /* SummonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonAnimation.swift; sourceTree = "<group>"; };
+		5B19083B22B3527D00CE8121 /* PassiveAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassiveAbility.swift; sourceTree = "<group>"; };
+		5B19083D22B3A13B00CE8121 /* BattleEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleEvent.swift; sourceTree = "<group>"; };
+		5B19084122B4DAB600CE8121 /* DeathAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathAnimation.swift; sourceTree = "<group>"; };
+		5B19084322B696A700CE8121 /* RetreatAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetreatAnimation.swift; sourceTree = "<group>"; };
+		5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapResponseAnimation.swift; sourceTree = "<group>"; };
+		5B19084822B6C29B00CE8121 /* SwapAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapAnimation.swift; sourceTree = "<group>"; };
 		5B1AC399203BB01200F3B921 /* HandSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandSprite.swift; sourceTree = "<group>"; };
 		5B1AC39B203C435A00F3B921 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		5B2622CA228A64E100DFE0EE /* CardLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLibrary.swift; sourceTree = "<group>"; };
@@ -107,7 +123,6 @@
 		5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityLabel.swift; sourceTree = "<group>"; };
 		5BBF0F1B229012210071E9F7 /* AttackLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackLabel.swift; sourceTree = "<group>"; };
 		5BBF0F1D22908CDC0071E9F7 /* HealthLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthLabel.swift; sourceTree = "<group>"; };
-		5BBF0F1F22913DDD0071E9F7 /* CreatureSwapAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSwapAnimation.swift; sourceTree = "<group>"; };
 		5BCA6F082038911000B81376 /* Uniq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uniq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BCA6F0B2038911000B81376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BCA6F112038911000B81376 /* BattleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleScene.swift; sourceTree = "<group>"; };
@@ -123,7 +138,6 @@
 		5BDF3833229F6DCF0094EEC2 /* Interactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactive.swift; sourceTree = "<group>"; };
 		5BE0B0B3204F0F29009DA26E /* Battle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battle.swift; sourceTree = "<group>"; };
 		5BE0B0B8204F3884009DA26E /* VitalizationSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalizationSpell.swift; sourceTree = "<group>"; };
-		5BE0B0BB204F48E3009DA26E /* FireballSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireballSpell.swift; sourceTree = "<group>"; };
 		5BE0B0BD204F4A27009DA26E /* ChainLightningSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainLightningSpell.swift; sourceTree = "<group>"; };
 		5BE0B0BF204F4D91009DA26E /* SuddenStrikeSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuddenStrikeSpell.swift; sourceTree = "<group>"; };
 		5BE0B0C1205047D4009DA26E /* SparkSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkSpell.swift; sourceTree = "<group>"; };
@@ -153,9 +167,10 @@
 		5B116F832051A47500396C0F /* Character */ = {
 			isa = PBXGroup;
 			children = (
-				5B51A179227C537200111234 /* Spot.swift */,
 				5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */,
+				5B51A179227C537200111234 /* Spot.swift */,
 				5BCA6F292039EE2300B81376 /* Creature.swift */,
+				5B19083522B2760E00CE8121 /* CreatureSprite.swift */,
 			);
 			path = Character;
 			sourceTree = "<group>";
@@ -229,9 +244,9 @@
 				5B4F7E762287570B00252113 /* PassButton.swift */,
 				5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */,
 				5B5025C6229AFFA900CEAA9D /* Protocols */,
-				5B116F852051A4AA00396C0F /* Labels */,
 				5B116F842051A48C00396C0F /* Card */,
 				5B116F832051A47500396C0F /* Character */,
+				5B116F852051A4AA00396C0F /* Labels */,
 			);
 			path = Sprite;
 			sourceTree = "<group>";
@@ -241,9 +256,14 @@
 			children = (
 				5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */,
 				5B7E2D19203EB7B20026B445 /* Animation.swift */,
-				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
 				5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */,
-				5BBF0F1F22913DDD0071E9F7 /* CreatureSwapAnimation.swift */,
+				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
+				5B19083322B2600900CE8121 /* DamageAnimation.swift */,
+				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
+				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
+				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
+				5B19084822B6C29B00CE8121 /* SwapAnimation.swift */,
+				5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -281,6 +301,7 @@
 				5BCA6F0B2038911000B81376 /* AppDelegate.swift */,
 				5BCA6F112038911000B81376 /* BattleScene.swift */,
 				5BE0B0B3204F0F29009DA26E /* Battle.swift */,
+				5B19083D22B3A13B00CE8121 /* BattleEvent.swift */,
 				5BE0B0B7204F3381009DA26E /* Player */,
 				5B66CE51204C0A930047A9DC /* Sprite */,
 				5B7E2D1B203EB7C20026B445 /* Animation */,
@@ -304,6 +325,7 @@
 				5B35E5C720557CC500678A10 /* SpellCardBlueprint.swift */,
 				5BCA6F272039E74200B81376 /* CreatureCardBlueprint.swift */,
 				5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */,
+				5B19083B22B3527D00CE8121 /* PassiveAbility.swift */,
 				5B35E5BF2051FB1500678A10 /* Creatures */,
 				5BE0B0BA204F466C009DA26E /* Spells */,
 			);
@@ -323,7 +345,6 @@
 			isa = PBXGroup;
 			children = (
 				5BE0B0B8204F3884009DA26E /* VitalizationSpell.swift */,
-				5BE0B0BB204F48E3009DA26E /* FireballSpell.swift */,
 				5BE0B0BD204F4A27009DA26E /* ChainLightningSpell.swift */,
 				5BE0B0BF204F4D91009DA26E /* SuddenStrikeSpell.swift */,
 				5BE0B0C1205047D4009DA26E /* SparkSpell.swift */,
@@ -445,6 +466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B19084222B4DAB600CE8121 /* DeathAnimation.swift in Sources */,
 				5B4F7E792287D0FE00252113 /* Player.swift in Sources */,
 				5BBF0F1E22908CDC0071E9F7 /* HealthLabel.swift in Sources */,
 				5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */,
@@ -456,18 +478,20 @@
 				5B35E5D02056D14C00678A10 /* FirelinkPriestCreature.swift in Sources */,
 				5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */,
 				5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */,
+				5B19083C22B3527D00CE8121 /* PassiveAbility.swift in Sources */,
 				5BE0B0C2205047D4009DA26E /* SparkSpell.swift in Sources */,
 				5BE0B0C420504BBE009DA26E /* HarmlessAffairSpell.swift in Sources */,
+				5B19084622B6A01400CE8121 /* SwapResponseAnimation.swift in Sources */,
 				5BE0B0C0204F4D91009DA26E /* SuddenStrikeSpell.swift in Sources */,
 				5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */,
-				5BBF0F2022913DDD0071E9F7 /* CreatureSwapAnimation.swift in Sources */,
+				5B19083422B2600900CE8121 /* DamageAnimation.swift in Sources */,
 				5BE0B0B9204F3884009DA26E /* VitalizationSpell.swift in Sources */,
 				5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */,
 				5B35E5CC2056AE1A00678A10 /* FireImpCreature.swift in Sources */,
 				5B35E5CA2056AA4300678A10 /* OldProphetCreature.swift in Sources */,
-				5BE0B0BC204F48E3009DA26E /* FireballSpell.swift in Sources */,
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
 				5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */,
+				5B19083E22B3A13B00CE8121 /* BattleEvent.swift in Sources */,
 				5B9E8CCD229C7E9A00A4BE18 /* Spots.swift in Sources */,
 				5B669F43204AB02F00DC2760 /* CardBlueprint.swift in Sources */,
 				5B35E5D42057034E00678A10 /* WitchCreature.swift in Sources */,
@@ -484,13 +508,17 @@
 				5BCA6F2A2039EE2300B81376 /* Creature.swift in Sources */,
 				5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */,
 				5B4F7E772287570B00252113 /* PassButton.swift in Sources */,
+				5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */,
 				5BCA6F2C203A283200B81376 /* Card.swift in Sources */,
 				5BCA6F2E203A2AB400B81376 /* CreatureCard.swift in Sources */,
+				5B19084922B6C29B00CE8121 /* SwapAnimation.swift in Sources */,
 				5B33A64C204116CF00CF2D76 /* SpellCard.swift in Sources */,
 				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
+				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,
+				5B19084422B696A700CE8121 /* RetreatAnimation.swift in Sources */,
 				5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */,
 				5BE889DB229704B2002B628F /* SKAction.swift in Sources */,
 			);

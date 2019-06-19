@@ -14,6 +14,7 @@ struct SpotsFilters {
     static let all: SpotsFilter = { _ in true }
     static let owner: SpotsFilter = { $0.owner.isActive }
     static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
+    static let ownerCreatures: SpotsFilter = { $0.owner.isActive && ($0.creature != nil) }
     static let enemy: SpotsFilter = { !$0.owner.isActive }
     static let enemyCreatures: SpotsFilter = { !$0.owner.isActive && ($0.creature != nil) }
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }

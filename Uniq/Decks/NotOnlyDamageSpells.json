@@ -1,15 +1,6 @@
 {
     "cards": [
         {
-            "card": "Vitalization",
-            "amount": 1
-        },{
-            "card": "Chain Lightning",
-            "amount": 2
-        },{
-            "card": "Harmless Affair",
-            "amount": 1
-        },{
             "card": "Bounty Hunter",
             "amount": 2
         },{
@@ -32,6 +23,9 @@
             "amount": 2
         },{
             "card": "Fireball",
+            "amount": 2
+        },{
+            "card": "Heal",
             "amount": 2
         }
     ]

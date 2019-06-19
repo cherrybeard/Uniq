@@ -9,22 +9,23 @@
 
 class CardLibrary {
     private static let _cards: [String: CardBlueprint] = [
-        // Creatures
         
+        // Creatures
         "Yletia Pirate": CreatureCardBlueprint(
             description: "Yletia Pirate",
             attack: 1,
             health: 4,
-            activeAbility: ActiveAbility(
+            ability: ActiveAbility(
                 description: "Increase attack by 3",
                 cooldown: 2,
-                ability: { (Battle, spot: Spot?) -> Bool in
-                if let creature = spot?.creature {
-                    creature.increaseAttack(by: 3)
-                    return true
+                effect: { (Battle, spot: Spot?) -> Bool in
+                    if let creature = spot?.creature {
+                        creature.increaseAttack(by: 3)
+                        return true
+                    }
+                    return false
                 }
-                return false
-            })
+            )
         ),
         
         "Fairy": CreatureCardBlueprint(
@@ -36,7 +37,19 @@ class CardLibrary {
         "Thug": CreatureCardBlueprint(
             description: "Thug",
             attack: 1,
-            health: 8
+            health: 8,
+            whenSummoned: PassiveAbility(
+                ability: { (battle: Battle, spot: Spot?) -> Bool in
+                    if let summonedPlayer = spot?.owner {
+                        let enemySpots = battle.spots.filter { $0.owner != summonedPlayer }
+                        for targetSpot in enemySpots {
+                            battle.dealDamage(1, to: targetSpot)
+                            return true
+                        }
+                    }
+                    return false
+                }
+            )
         ),
         
         "Bandit": CreatureCardBlueprint(
@@ -50,9 +63,22 @@ class CardLibrary {
             description: "Fireball",
             requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures,
-            effect: { (Battle, spot: Spot?) -> Bool in
-                if let creature = spot?.creature {
-                    creature.dealDamage(6)
+            effect: { (battle: Battle, spot: Spot?) -> Bool in
+                if spot != nil {
+                    battle.dealDamage(6, to: spot!)
+                    return true
+                }
+                return false
+            }
+        ),
+        
+        "Heal": SpellCardBlueprint (
+            description: "Heal",
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.ownerCreatures,
+            effect: { (battle: Battle, spot: Spot?) -> Bool in
+                if spot?.creature != nil {
+                    battle.heal(4, to: spot!)
                     return true
                 }
                 return false

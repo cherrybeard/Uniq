@@ -9,34 +9,48 @@
 import SpriteKit
 
 class CreatureSwapAnimation: Animation {
-    private var _sourceSpot: Spot
-    private var _targetSpot: Spot
+    private var sourceSpot: Spot
+    private var targetSpot: Spot
     
     init(sourceSpot: Spot, targetSpot: Spot) {
-        _sourceSpot = sourceSpot
-        _targetSpot = targetSpot
+        self.sourceSpot = sourceSpot
+        self.targetSpot = targetSpot
     }
     
     override func play() {
-        // Creating actions for the first creature
+        // Running actions for the second, optional creature
+        if let sourceCreature = sourceSpot.creature?.sprite {
+            sourceCreature.run(
+                moveToSource(position: sourceSpot.position)
+            )
+        }
+        
+        // Running actions for the first creature
+        if let targetCreature = targetSpot.creature?.sprite {
+            targetCreature.zPosition = 1
+            targetCreature.run(
+                moveToTarget(position: targetSpot.position)
+            ) {
+                targetCreature.zPosition = 0
+                self.state = .finished
+            }
+        }
+        self.state = .finished
+    }
+    
+    private func moveToTarget(position: CGPoint) -> SKAction {
         let scaleIn = SKAction.scale(to: 1.2, duration: 0.1)
         let wait = SKAction.wait(forDuration: 0.1)
         let scaleOut = SKAction.scale(to: 1, duration: 0.1)
         let scale = SKAction.sequence([scaleIn, wait, scaleOut])
-        let moveToTarget = SKAction.move(to: _targetSpot.position, duration: 0.3)
-        moveToTarget.timingMode = .easeIn
-        let moveToTargetAndScale = SKAction.group([moveToTarget, scale])
-        _targetSpot.creature?.zPosition = 1
-        
-        // Creating actions for the second, optional creature
-        let moveToSource = SKAction.move(to: _sourceSpot.position, duration: 0.3)
-        moveToSource.timingMode = .easeIn
-        
-        // Running animation
-        _sourceSpot.creature?.run(moveToSource)
-        _targetSpot.creature?.run(moveToTargetAndScale) {
-            self._targetSpot.zPosition = 0
-            self.state = .finished
-        }
+        let move = SKAction.move(to: position, duration: 0.3)
+        move.timingMode = .easeIn
+        return SKAction.group([move, scale])
+    }
+    
+    private func moveToSource(position: CGPoint) -> SKAction {
+        let action = SKAction.move(to: sourceSpot.position, duration: 0.3)
+        action.timingMode = .easeIn
+        return action
     }
 }

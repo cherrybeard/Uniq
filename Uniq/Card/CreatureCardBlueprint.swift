@@ -9,17 +9,22 @@
 class CreatureCardBlueprint: CardBlueprint {
     var attack: Int
     var health: Int
-    var activeAbility: ActiveAbility? = nil
+    var ability: ActiveAbility? = nil
+    var whenSummoned: PassiveAbility? = nil
+    var onSummon: PassiveAbility? = nil
     
     init(
         description: String = "",
         attack: Int,
         health: Int,
-        activeAbility: ActiveAbility? = nil
+        whenSummoned: PassiveAbility? = nil,
+        ability: ActiveAbility? = nil,
+        onSummon: PassiveAbility? = nil
     ) {
         self.attack = attack
         self.health = health
-        self.activeAbility = activeAbility
+        self.whenSummoned = whenSummoned
+        self.ability = ability
         super.init(
             description: description,
             requiresTarget: true,
@@ -44,7 +49,7 @@ class CreatureCardBlueprint: CardBlueprint {
             description: description,
             attack: attack,
             health: health,
-            activeAbility: activeAbility
+            ability: ability
         )
         return blueprint
     }

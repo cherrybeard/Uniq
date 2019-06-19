@@ -54,11 +54,11 @@ class BattleScene: SKScene {
                             if let spot = interactiveNode as? Spot {
                                 if let creature = spot.creature {
                                     wasActivated = true
-                                    delayedTask = DispatchWorkItem { [ weak self ] in
+                                    delayedTask = DispatchWorkItem {
                                         // TODO: check if ability was really used
-                                        self?.battle.cleanInteractivesStatus()
-                                        if (creature.useActiveAbility(battle: self!.battle)) {
-                                            self?.battle.endTurn()
+                                        self.battle.cleanInteractivesStatus()
+                                        if self.battle.useActiveAbility(of: creature) {
+                                            self.battle.endTurn()
                                         }
                                     }
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
