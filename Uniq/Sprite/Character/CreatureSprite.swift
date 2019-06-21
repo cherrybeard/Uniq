@@ -29,7 +29,7 @@ class CreatureSprite: SKNode {
     
     private let healthLabel = HealthLabel()
     private let attackLabel = AttackLabel()
-    private let abilityLabel = AbilityLabel()
+    let abilityLabel = AbilityLabel()
     
     var health: Int {
         get { return healthLabel.health }

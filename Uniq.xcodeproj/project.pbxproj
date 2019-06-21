@@ -34,6 +34,7 @@
 		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
 		5B4F7E792287D0FE00252113 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E782287D0FE00252113 /* Player.swift */; };
 		5B51A17A227C537200111234 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B51A179227C537200111234 /* Spot.swift */; };
+		5B65EC0422BAB6BB00576F85 /* CooldownDecreaseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */; };
 		5B669F3D2049B4BF00DC2760 /* NotOnlyDamageSpells.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */; };
 		5B669F43204AB02F00DC2760 /* CardBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B669F42204AB02F00DC2760 /* CardBlueprint.swift */; };
 		5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4D204BF6560047A9DC /* StatLabel.swift */; };
@@ -109,6 +110,7 @@
 		5B4F7E762287570B00252113 /* PassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5B4F7E782287D0FE00252113 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5B51A179227C537200111234 /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
+		5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooldownDecreaseAnimation.swift; sourceTree = "<group>"; };
 		5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotOnlyDamageSpells.json; sourceTree = "<group>"; };
 		5B669F42204AB02F00DC2760 /* CardBlueprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBlueprint.swift; sourceTree = "<group>"; };
 		5B66CE4D204BF6560047A9DC /* StatLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatLabel.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
 				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
 				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
+				5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */,
 				5B19084822B6C29B00CE8121 /* SwapAnimation.swift */,
 				5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */,
 			);
@@ -509,6 +512,7 @@
 				5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */,
 				5B4F7E772287570B00252113 /* PassButton.swift in Sources */,
 				5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */,
+				5B65EC0422BAB6BB00576F85 /* CooldownDecreaseAnimation.swift in Sources */,
 				5BCA6F2C203A283200B81376 /* Card.swift in Sources */,
 				5BCA6F2E203A2AB400B81376 /* CreatureCard.swift in Sources */,
 				5B19084922B6C29B00CE8121 /* SwapAnimation.swift in Sources */,

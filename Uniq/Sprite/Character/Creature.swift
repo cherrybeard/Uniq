@@ -20,11 +20,11 @@ class Creature {
 
     var isActionTaken: Bool = false
     
-    init(of card: CreatureCardBlueprint, spot: Spot) {
+    init(of card: CreatureCardBlueprint, at spot: Spot) {
         self.card = card
         self.spot = spot
         health = card.health
-        attack = card.health
+        attack = card.attack
         if let ability = card.ability {
             self.ability = ability.copy()
         }
@@ -33,10 +33,6 @@ class Creature {
     }
     
     /*
-    func decreaseAbilityCooldown() {
-        _abilityLabel.decreaseCooldown()
-    }
-    
     func useActiveAbility(battle: Battle) -> Bool {
         if (activeAbilityCooldown == 0) && !isActionTaken {
             if card.activeAbility!.ability(battle, spot) {
@@ -50,14 +46,14 @@ class Creature {
     */
 
     func increaseAttack(by amount: Int) {
-        attack += amount
+        //attack += amount
     }
     
     func dealDamage(_ amount: Int) {
-        health -= amount
+        //health -= amount
     }
     
     func heal(_ amount: Int) {
-        health += amount
+        //health += amount
     }
 }

@@ -31,6 +31,7 @@ class Battle: SKNode {
     }
     var state: BattleState = .preparing
     var round: Int = 0
+    var creatures: [Creature] = []
     
     var isUnlocked: Bool {  // TODO: Rework into settable variable
         get { return activePlayer.isHuman && state == .turn }
@@ -108,7 +109,7 @@ class Battle: SKNode {
             activePlayer.passed = true
             if activePlayer.isAi { passButton.readyToFight = true }
             if human.passed && ai.passed {
-                endRound()
+                fight()
                 return
             }
         } else {
@@ -141,7 +142,7 @@ class Battle: SKNode {
         state = .roundEnd
         for spot in spots {
             if let creature = spot.creature {
-                //creature.decreaseAbilityCooldown()
+                decreaseAbilityCooldown(of: creature)
                 creature.isActionTaken = false
             }
         }
@@ -191,26 +192,40 @@ class Battle: SKNode {
     }
 
     func summon(_ blueprint: CreatureCardBlueprint, to spot: Spot) { // TODO: Return Bool
-        if let _ = place(blueprint, to: spot) {
+        //place(blueprint, to: spot)
+        
+        let creature = Creature(of: blueprint, at: spot)
+        //spot.creature = creature
+        creatures.append(creature)
+        spot.creature = creature
+        
+        animationPipeline.add(
+            SummonAnimation(creature.sprite, at: spot, battle: self)
+        )
+//        for spot in spots {
+//            if let creature = spot.creature {
+//                print(creature.card.description)
+//            }
+//        }
+//        if let _ = place(blueprint, to: spot) {
             /*
             onSummon.raise(battle: self, spot: spot)
             if let ability = creature.onSummon?.ability {
                 onSummon.addHandler(ability)
             }
             _ = creature.card.whenSummoned?.ability(self, spot)*/
-        }
+//        }
     }
     
-    func place(_ blueprint: CreatureCardBlueprint, to spot: Spot) -> Creature? {
+    func place(_ blueprint: CreatureCardBlueprint, to spot: Spot) {
         // create creature
-        let creature = Creature(of: blueprint, spot: spot)
-        spot.creature = creature
-        
+//        let creature = Creature(of: blueprint, spot: spot)
+//        spot.creature = creature
         // add animation to pipeline
-        animationPipeline.add(
-            SummonAnimation(creature.sprite, at: spot)
-        )
-        return creature
+        //animationPipeline.add(
+        //    SummonAnimation(creature.sprite, at: spot)
+        //)
+        //return creature
     }
     
     func swap(_ sourceSpot: Spot, with targetSpot: Spot) {
@@ -289,6 +304,17 @@ class Battle: SKNode {
             }
         }
         return false
+    }
+    
+    func decreaseAbilityCooldown(of creature: Creature) {
+        if let ability = creature.ability {
+            if ability.left > 0 {
+                ability.left -= 1
+            }
+        }
+        animationPipeline.add(
+            CooldownDecreaseAnimation(creature: creature.sprite)
+        )
     }
     
     func setCardState(card: Card, state: CardState) {

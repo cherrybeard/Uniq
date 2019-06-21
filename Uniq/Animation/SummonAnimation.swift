@@ -10,19 +10,21 @@ import SpriteKit
 
 class SummonAnimation: Animation {
     private let creature: CreatureSprite
-    private let spot: Spot
+    private let position: CGPoint
+    private let battle: Battle
     private static let action = SKAction.scale(to: 1, duration: 0.3)
     
-    init(_ creature: CreatureSprite, at spot: Spot) {
+    init(_ creature: CreatureSprite, at spot: Spot, battle: Battle) {
         self.creature = creature
-        self.spot = spot
+        self.position = spot.position
+        self.battle = battle
     }
     
     override func play() {
         creature.setScale(1.2)
-        //creature.position = spot.position
+        creature.position = position
         creature.zRotation = CGFloat.random(in: -3...3) / 180 * .pi
-        spot.addChild(creature)
+        battle.addChild(creature)
         creature.run(SummonAnimation.action) {
             self.state = .finished
         }

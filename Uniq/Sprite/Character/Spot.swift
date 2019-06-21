@@ -44,9 +44,7 @@ class Spot: SKNode, Interactive {
     let owner: Player
     let range: RangeType
     let column: ColumnType
-    weak var creature: Creature? = nil { // TODO: Move creature summoning into this class
-        willSet { newValue?.spot = self }
-    }
+    weak var creature: Creature? = nil
     var isTaken: Bool { return (creature != nil) }  // TODO: Is it actually being used? Try removing it
 
     var index: Int {
@@ -77,6 +75,7 @@ class Spot: SKNode, Interactive {
         border.lineWidth = 1
         addChild(border)
         redraw()
+        name = "spot"
     }
     
     private func redraw() {

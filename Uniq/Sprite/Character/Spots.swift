@@ -15,7 +15,7 @@ class Spots: SKNode, Collection {
     private static let START_INDEX: Int = 0
     private static let END_INDEX: Int = 12
     
-    private var _spots: [Spot] = []
+    private var spots: [Spot] = []
     var startIndex: Int = START_INDEX
     var endIndex: Int = END_INDEX
     
@@ -26,7 +26,7 @@ class Spots: SKNode, Collection {
             let range = Spots._range(of: index)
             let column = Spots._column(of: index)
             let spot = Spot(owner: owner, range: range, column: column)
-            _spots.append(spot)
+            spots.append(spot)
             let yPos = owner.type.rawValue * (Spots.DISTANCE_FROM_CENTER + spot.range.rawValue * Spots.SPACE_BETWEEN_ROWS)
             let xPos = spot.column.rawValue * Spots.SPACE_BETWEEN_COLUMNS
             spot.position = CGPoint(x: xPos, y: yPos)
@@ -43,7 +43,7 @@ class Spots: SKNode, Collection {
     }
     
     subscript(position: Int) -> Spot {
-        return _spots[position]
+        return spots[position]
     }
     
     static private func _column(of index: Int) -> ColumnType {
@@ -87,7 +87,7 @@ class Spots: SKNode, Collection {
     func neighbors(of spot: Spot, sameOwner: Bool = true) -> [Spot] {
         var neighbors: [Spot] = []
         for index in Spots.neighbors(of: spot.index, sameOwner: sameOwner) {
-            neighbors.append(_spots[index])
+            neighbors.append(spots[index])
         }
         return neighbors
     }
@@ -97,7 +97,7 @@ class Spots: SKNode, Collection {
         let humanOrder = [6, 9, 7, 10, 8, 11]
         let attackOrder: [Int] = (activePlayer == .human) ? aiOrder + humanOrder : humanOrder + aiOrder
         for index in attackOrder {
-            let attackerSpot = _spots[index]
+            let attackerSpot = spots[index]
             if let attacker = attackerSpot.creature {
                 if !attacker.isActionTaken && (attacker.attack > 0) && (attacker.health > 0) {
                     return attackerSpot
@@ -113,7 +113,7 @@ class Spots: SKNode, Collection {
         for i in [3, 6, 9] {
             let targetIndex = attackerIndex + i * sign
             if (targetIndex < 0) || (targetIndex > 11) { continue }
-            let targetSpot = _spots[targetIndex]
+            let targetSpot = spots[targetIndex]
             if let target = targetSpot.creature {
                 if (targetSpot.owner != spot.owner) && (target.health > 0) {
                     return targetSpot
