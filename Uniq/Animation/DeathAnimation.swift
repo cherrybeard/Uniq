@@ -21,9 +21,9 @@ class DeathAnimation: Animation {
     }
     
     override func play() {
+        state = .finished
         creature.run(DeathAnimation.action) {
             self.creature.removeFromParent()
-            self.state = .finished
         }
     }
     

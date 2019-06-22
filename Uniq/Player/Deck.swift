@@ -59,16 +59,26 @@ class Deck {
         return nil
     }
     
-    func draw(card: Card) {
+    func draw(_ card: Card) { // TODO: Rename into moveToHand?
         card.state = .hand
         hand.add(card)
     }
     
-    func draw() -> Card? {
+    func addToHand(_ name: String) -> Card? {
+        if let blueprint = CardLibrary.getCard(name) {
+            let card = blueprint.generateSprite()
+            cards.append(card)
+            draw(card)
+            return card
+        }
+        return nil
+    }
+    
+    func draw() -> Card? { // TODO: Rename into drawRandomly?
         if drawPile.count > 0 {
             let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: drawPile)
             if let card = shuffled[0] as? Card {
-                draw(card: card)
+                draw(card)
                 return card
             }
         }

@@ -9,10 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-enum BattleState {
-    case preparing, turnStart, turn, turnEnd, roundEnd
-}
-
 class Battle: SKNode {
     let passButton = PassButton()
     var spots: Spots
@@ -29,16 +25,12 @@ class Battle: SKNode {
             newValue.isActive = true
         }
     }
-    var state: BattleState = .preparing
     var round: Int = 0
     var creatures: [Creature] = []
     
-    var isUnlocked: Bool {  // TODO: Rework into settable variable
-        get { return activePlayer.isHuman && state == .turn }
-    }
+    var isUnlocked: Bool = false
     
     override init() {
-        state = .preparing
         activePlayer = human
         spots = Spots(human: human, ai: ai)
         super.init()
@@ -49,9 +41,7 @@ class Battle: SKNode {
         for spot in spots { interactives.append(spot) }
         
         for _ in 1...4 {
-            if let card = human.deck.draw() {
-                interactives.append(card)
-            }
+            _ = draw(for: human)
         }
         interactives.append(passButton)
         
@@ -61,6 +51,8 @@ class Battle: SKNode {
         summon("Bandit", to: 4)
         summon("Thug", to: 3)
         
+        _ = addToHand(for: human, cardName: "Fireball")
+        
         startTurn()
     }
     
@@ -69,25 +61,12 @@ class Battle: SKNode {
     }
     
     func update() {
-        let animationState = animationPipeline.update()
-        if animationState == .finished {
-            switch state {
-            case .preparing:
-                break
-            case .turnStart:
-                break
-            case .turn:
-                break
-            case .turnEnd:
-                break
-            case .roundEnd:
-                break
-            }
-        }
+        let state = animationPipeline.update()
+        isUnlocked = (state == .finished) || (state == .idle)
     }
     
     func startTurn() {
-        state = .turnStart
+        activePlayer = activePlayer.isHuman ? ai : human
         let message = activePlayer.isHuman ? "Your turn" : "Enemy turn"
         animationPipeline.add(
             AnnouncerAnimation(battle: self, message: message)
@@ -98,12 +77,10 @@ class Battle: SKNode {
     
     func giveControls() {
         highlightActionTargets()
-        state = .turn
         if activePlayer.isAi { aiTurn() }
     }
     
     func endTurn(passed: Bool = false) {
-        state = .turnEnd
         cleanInteractivesStatus()
         if passed {
             activePlayer.passed = true
@@ -116,7 +93,6 @@ class Battle: SKNode {
             human.passed = false
             ai.passed = false
         }
-        activePlayer = activePlayer.isAi ? human : ai
         startTurn()
     }
     
@@ -125,21 +101,16 @@ class Battle: SKNode {
             if let attacker = attackerSpot.creature {
                 attacker.isActionTaken = true
                 if let targetSpot = spots.target(for: attackerSpot) {
-                    attack(
-                        attackerSpot: attackerSpot,
-                        targetSpot: targetSpot
-                    )
-                } else {
-                    fight()
-                    return
+                    attack( from: attackerSpot, to: targetSpot )
                 }
             }
+            fight()
+        } else {
+            endRound()
         }
-        endRound()
     }
     
     func endRound() {
-        state = .roundEnd
         for spot in spots {
             if let creature = spot.creature {
                 decreaseAbilityCooldown(of: creature)
@@ -177,6 +148,22 @@ class Battle: SKNode {
             }
         }
         endTurn(passed: pass)
+    }
+    
+    func draw(for player: Player) -> Card? {
+        if let card = player.deck.draw() {
+            interactives.append(card)
+            return card
+        }
+        return nil
+    }
+    
+    func addToHand(for player: Player, cardName: String) -> Card? {
+        if let card = player.deck.addToHand(cardName) {
+            interactives.append(card)
+            return card
+        }
+        return nil
     }
     
     func play(_ card: Card, to spot: Spot?) -> Bool {
@@ -252,7 +239,7 @@ class Battle: SKNode {
         
     }
     
-    func attack(attackerSpot: Spot, targetSpot: Spot) {
+    func attack(from attackerSpot: Spot, to targetSpot: Spot) {
         if let attacker = attackerSpot.creature {
             if let target = targetSpot.creature {
                 let attackerSprite = attacker.sprite

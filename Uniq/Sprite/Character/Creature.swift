@@ -15,7 +15,7 @@ class Creature {
     var attack: Int
     var ability: ActiveAbility?
     var onSummon: PassiveAbility?
-    var isDead: Bool { return !(health > 0) }
+    var isDead: Bool { return health <= 0 }
     //var activeAbilityCooldown: Int
 
     var isActionTaken: Bool = false
@@ -50,7 +50,7 @@ class Creature {
     }
     
     func dealDamage(_ amount: Int) {
-        //health -= amount
+        health -= amount
     }
     
     func heal(_ amount: Int) {
