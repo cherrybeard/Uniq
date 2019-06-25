@@ -31,46 +31,28 @@ class StatLabel: SKNode {   // OBSOLETE
     var type: StatType
     var isDimmed: Bool = false
     
-    private var _value: Int
-    var value: Int {
-        get { return _value }
-        set(newValue) {
-            _value = newValue
-            redraw()
-        }
-    }
-    
-    private var _state: StatState = .initial
-    var state: StatState {
-        get { return _state }
-        set(newState) {
-            _state = newState
-            redraw()
-        }
-    }
-    
-    let label: SKLabelNode
+    var value: Int = 1 { didSet { redraw() } }
+    var state: StatState = .initial { didSet { redraw() } }
+    let label = SKLabelNode()
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(type: StatType, value: Int = 1) {
+    init(type: StatType) {
         self.type = type
-        _value = value
-        label = SKLabelNode(text: String(value))
         super.init()
         
         label.horizontalAlignmentMode = TEXT_ALIGN[type]!
         label.fontName = "AvenirNext-DemiBold"
         label.fontSize = 12
-        redraw()
         addChild(label)
+        redraw()
     }
     
     func redraw() {
         label.alpha = isDimmed ? 0.5 : 1
-        label.fontColor = TEXT_COLOR[_state]
+        label.fontColor = TEXT_COLOR[state]
         label.text = String(value)
     }
 }

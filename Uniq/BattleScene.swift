@@ -15,6 +15,7 @@ class BattleScene: SKScene {
         static let left = -Int(UIScreen.main.bounds.size.width/2)
         static let right = Int(UIScreen.main.bounds.size.width/2)
     }
+    static let SCREEN_RIGHT = Int(UIScreen.main.bounds.size.width/2)
     
     let battle = Battle()   // TODO: Contains only links to battle objects functions to manipulate them
     var delayedTask: DispatchWorkItem? = nil
@@ -124,9 +125,9 @@ class BattleScene: SKScene {
                                     battle.endTurn()
                                     break
                                 }
-                            } else if let card = source as? Card {
+                            } else if let card = source as? CardSprite {
                                 if let spot = node as? Spot {
-                                    if battle.play(card, to: spot) {
+                                    if battle.play(card.card!, for: battle.human, to: spot) {
                                         actionCancelled = false
                                         battle.endTurn()
                                         break

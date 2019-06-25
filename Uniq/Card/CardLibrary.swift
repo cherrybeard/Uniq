@@ -8,10 +8,10 @@
 
 
 class CardLibrary {
-    private static let _cards: [String: CardBlueprint] = [
+    private static let _cards: [String: Card] = [
         
         // Creatures
-        "Yletia Pirate": CreatureCardBlueprint(
+        "Yletia Pirate": CreatureCard(
             description: "Yletia Pirate",
             attack: 1,
             health: 4,
@@ -28,13 +28,13 @@ class CardLibrary {
             )
         ),
         
-        "Fairy": CreatureCardBlueprint(
+        "Fairy": CreatureCard(
             description: "Fairy",
             attack: 0,
             health: 4
         ),
         
-        "Thug": CreatureCardBlueprint(
+        "Thug": CreatureCard(
             description: "Thug",
             attack: 1,
             health: 8,
@@ -52,14 +52,14 @@ class CardLibrary {
             )
         ),
         
-        "Bandit": CreatureCardBlueprint(
+        "Bandit": CreatureCard(
             description: "Bandit",
             attack: 3,
             health: 32
         ),
         
         // Spells
-        "Fireball": SpellCardBlueprint (
+        "Fireball": SpellCard (
             description: "Fireball",
             requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures,
@@ -72,7 +72,7 @@ class CardLibrary {
             }
         ),
         
-        "Heal": SpellCardBlueprint (
+        "Heal": SpellCard (
             description: "Heal",
             requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures,
@@ -86,7 +86,7 @@ class CardLibrary {
         )
     ]
     
-    static func getCard(_ name: String) -> CardBlueprint? {
+    static func getCard(_ name: String) -> Card? {
         if let card = CardLibrary._cards[name] {
             return card.copy()
         }

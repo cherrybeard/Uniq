@@ -1,81 +1,58 @@
 //
-//  CardSprite.swift
+//  Card.swift
 //  Uniq
 //
 //  Created by Steven Gusev on 19/02/2018.
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-import SpriteKit
+typealias SpotsFilter = (Spot) -> Bool
 
-enum CardState {
-    case deck, hand, discarded
+struct SpotsFilters {
+    // TODO: Add ability to combine filters maybe in separate class
+    // Something like x = Filter([Filter.filterPreset1, Filter.filterPreset2, ...])
+    static let all: SpotsFilter = { _ in true }
+    static let owner: SpotsFilter = { $0.owner.isActive }
+    static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
+    static let ownerCreatures: SpotsFilter = { $0.owner.isActive && ($0.creature != nil) }
+    static let enemy: SpotsFilter = { !$0.owner.isActive }
+    static let enemyCreatures: SpotsFilter = { !$0.owner.isActive && ($0.creature != nil) }
+    //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 
-class Card: SKNode, Interactive {
-    static let WIDTH = 60
-    static let HEIGHT = 90
-    private static let FILL_COLOR = UIColor(rgb: 0x111111)
-    private struct BORDER_COLOR {
-        static let base: UIColor = UIColor(rgb: 0x484644)
-        static let interactive = UIColor(rgb: 0x775534)
-        static let interacted = UIColor(rgb: 0xAC7D4E)
+enum CardState {
+    case library, deck, hand, discarded
+}
+
+class Card {    // TODO: Convert to protocol?
+    let description: String
+    let requiresTarget: Bool
+    let spotsFilter: SpotsFilter
+    var state: CardState = .library
+    var sprite: CardSprite
+    
+    init(
+        description: String = "",
+        requiresTarget: Bool,
+        spotsFilter: @escaping SpotsFilter
+    ) {
+        self.description = description
+        self.requiresTarget = requiresTarget
+        self.spotsFilter = spotsFilter
+        sprite = CardSprite()
+        sprite.card = self
     }
     
-    var blueprint: CardBlueprint
-    var state: CardState = .deck
-    
-    var status: Set<InteractiveStatus> = []  { didSet { _redraw() } }
-    var targetsFilter: (Interactive) -> Bool
-    
-    private let _label = SKLabelNode(text: "")
-    private let _border = SKShapeNode(
-        rectOf: CGSize( width: Card.WIDTH, height: Card.HEIGHT ),
-        cornerRadius: 3
-    )
-    
-    init(blueprint: CardBlueprint) {
-        self.blueprint = blueprint
-        
-        targetsFilter = { (interactive: Interactive) -> Bool in
-            if let spot = interactive as? Spot {
-                return blueprint.spotsFilter(spot)
-            }
-            return false
-        }
-        
-        super.init()
-        
-        _border.lineWidth = 1
-        _border.fillColor = Card.FILL_COLOR
-        addChild(_border)
-        
-        _label.text = blueprint.description
-        _label.fontColor = SKColor.white
-        _label.fontName = "AvenirNext-DemiBold"
-        _label.fontSize = 8
-        _label.preferredMaxLayoutWidth = 48
-        _label.lineBreakMode = .byWordWrapping
-        _label.numberOfLines = 0
-        _label.position = CGPoint(x: 0, y: -40)
-        addChild(_label)
-        
-        _redraw()
-        
-        name = "card"
+    func play(battle: Battle, spot: Spot?) -> Bool {
+        return false
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func _redraw() {
-        if status.contains(.interacted) {
-            _border.strokeColor = BORDER_COLOR.interacted
-        } else if status.contains(.interactive) {
-            _border.strokeColor = BORDER_COLOR.interactive
-        } else {
-            _border.strokeColor = BORDER_COLOR.base
-        }
+    func copy() -> Card {
+        let card = Card(
+            description: description,
+            requiresTarget: requiresTarget,
+            spotsFilter: spotsFilter
+        )
+        return card
     }
 }

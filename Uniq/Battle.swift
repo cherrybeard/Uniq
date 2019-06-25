@@ -40,9 +40,6 @@ class Battle: SKNode {
         // spots passed tp it will be added to it. same with the hand
         for spot in spots { interactives.append(spot) }
         
-        for _ in 1...4 {
-            _ = draw(for: human)
-        }
         interactives.append(passButton)
         
         // battle init
@@ -51,7 +48,11 @@ class Battle: SKNode {
         summon("Bandit", to: 4)
         summon("Thug", to: 3)
         
+        for _ in 1...2 {
+            _ = draw(for: human)
+        }
         _ = addToHand(for: human, cardName: "Fireball")
+        _ = addToHand(for: human, cardName: "Heal")
         
         startTurn()
     }
@@ -120,9 +121,7 @@ class Battle: SKNode {
         passButton.readyToFight = false
         for player in [human, ai] {
             player.passed = false
-            if let card = player.deck.draw() {
-                interactives.append(card)
-            }
+            _ = draw(for: player)
         }
         round += 1
         
@@ -152,7 +151,11 @@ class Battle: SKNode {
     
     func draw(for player: Player) -> Card? {
         if let card = player.deck.draw() {
-            interactives.append(card)
+            interactives.append(card.sprite)
+            animationPipeline.add([
+                RepositionHandAnimation(hand: player.deck.hand, addCard: true),
+                DrawCardAnimation(hand: player.deck.hand, card: card.sprite)
+            ])
             return card
         }
         return nil
@@ -160,28 +163,46 @@ class Battle: SKNode {
     
     func addToHand(for player: Player, cardName: String) -> Card? {
         if let card = player.deck.addToHand(cardName) {
-            interactives.append(card)
+            interactives.append(card.sprite)
+            
+            animationPipeline.add([
+                RepositionHandAnimation(hand: player.deck.hand, addCard: true),
+                DrawCardAnimation(hand: player.deck.hand, card: card.sprite)
+            ])
             return card
         }
         return nil
     }
     
-    func play(_ card: Card, to spot: Spot?) -> Bool {
-        if card.blueprint.requiresTarget && (spot == nil) { return false }
-        setCardState(card: card, state: .discarded)
-        return card.blueprint.play(battle: self, spot: spot)
+    func play(_ card: Card, for player: Player, to spot: Spot?) -> Bool {
+        if card.requiresTarget && (spot == nil) { return false }
+        
+        card.state = .discarded
+        card.sprite.isDiscarded = true
+        interactives.removeAll {
+            if let sprite = $0 as? CardSprite {
+                return sprite.isDiscarded
+            }
+            return false
+        }
+        
+        animationPipeline.add([
+            DiscardCardAnimaiton(card: card.sprite),
+            RepositionHandAnimation(hand: player.deck.hand)
+        ])
+        return card.play(battle: self, spot: spot)
     }
     
     func summon(_ creatureName: String, to index: Int) {
-        if let blueprint = CardLibrary.getCard(creatureName) as? CreatureCardBlueprint {
-            summon(blueprint, to: spots[index])
+        if let card = CardLibrary.getCard(creatureName) as? CreatureCard {
+            summon(card, to: spots[index])
         }
     }
 
-    func summon(_ blueprint: CreatureCardBlueprint, to spot: Spot) { // TODO: Return Bool
+    func summon(_ card: CreatureCard, to spot: Spot) { // TODO: Return Bool
         //place(blueprint, to: spot)
         
-        let creature = Creature(of: blueprint, at: spot)
+        let creature = Creature(of: card, at: spot)
         //spot.creature = creature
         creatures.append(creature)
         spot.creature = creature
@@ -204,7 +225,7 @@ class Battle: SKNode {
 //        }
     }
     
-    func place(_ blueprint: CreatureCardBlueprint, to spot: Spot) {
+    func place(_ blueprint: CreatureCard, to spot: Spot) {
         // create creature
 //        let creature = Creature(of: blueprint, spot: spot)
 //        spot.creature = creature
@@ -304,11 +325,6 @@ class Battle: SKNode {
         )
     }
     
-    func setCardState(card: Card, state: CardState) {
-        card.state = state
-        human.deck.hand.clean()
-    }
-    
     func highlightActionTargets() {
         let activePlayerSpots = spots.filter { $0.owner == activePlayer }
         for spot in activePlayerSpots {
@@ -323,7 +339,7 @@ class Battle: SKNode {
         }
         if activePlayer.isHuman {
             for card in human.deck.cards {  // TODO: .hand  ?
-                card.status.insert(.interactive)
+                card.sprite.status.insert(.interactive)
             }
             passButton.status.insert(.interactive)
         }

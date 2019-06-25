@@ -9,52 +9,18 @@
 import SpriteKit
 
 class HandSprite: SKNode {
-    var cards: [Card] = []
-    let cardVolume = (50 + 20) / 2
+    //static let ANGLE: CGFloat = .pi / 45
+    //var cards: [CardSprite] = []
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override init() {
-        super.init()
-    }
-    
-    func add(_ card: Card) {
-        card.position = CGPoint(x: Int(UIScreen.main.bounds.size.width/2), y: 25)
-        addChild(card)
-        cards.append(card)
-        _repositionCards()
-    }
-    
-    func clean() {
-        for (i, card) in cards.enumerated().reversed() {
-            if card.state == .discarded {
-                card.removeFromParent()
-                cards.remove(at: i)
-            }
-        }
-        _repositionCards()
-    }
-    
-    /*
-    func highlightCards(mana: Int = -1) {
-        for card in cards {
-            card.canPlay = (card.card.cost <= mana)
-        }
-    }
-    */
-    
-    private func _repositionCards() {
-        let duration:TimeInterval = 0.2
-        var multiplier = cards.count-1
-        
-        for card in cards {
-            let position = CGPoint(x: -(multiplier * cardVolume), y: 0)
-            let move = SKAction.move(to: position, duration: duration)
-            move.timingMode = .easeOut
-            card.run(move)
-            multiplier -= 2
-        }
+    static func cardPosition(at index: Int, total: Int) -> (CGPoint, CGFloat)  {
+        let center = CGFloat(total + 1) / 2
+        let shift = CGFloat(index) - center
+        let xPos = shift * CGFloat(CardSprite.WIDTH  + 10)
+        //let yPos = -10 * abs(shift)
+        let yPos: CGFloat = 0
+        let position = CGPoint(x: xPos, y: yPos)
+        //let rotation = -HandSprite.ANGLE * shift
+        let rotation: CGFloat = 0
+        return (position, rotation)
     }
 }

@@ -9,22 +9,48 @@
 import SpriteKit
 
 class CreatureCard: Card {
-    private let _health: StatLabel
-    private let _attack: StatLabel
+    var attack: Int
+    var health: Int
+    var ability: ActiveAbility? = nil
+    var whenSummoned: PassiveAbility? = nil
+    var onSummon: PassiveAbility? = nil
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    init(
+        description: String = "",
+        attack: Int,
+        health: Int,
+        whenSummoned: PassiveAbility? = nil,
+        ability: ActiveAbility? = nil,
+        onSummon: PassiveAbility? = nil
+    ) {
+        self.attack = attack
+        self.health = health
+        self.whenSummoned = whenSummoned
+        self.ability = ability
+        super.init(
+            description: description,
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.ownerFree
+        )
+        self.sprite = CreatureCardSprite()
+        sprite.card = self
     }
     
-    init(blueprint: CreatureCardBlueprint) {
-        _health = StatLabel(type: .health, value: blueprint.health)
-        _attack = StatLabel(type: .attack, value: blueprint.attack)
-        super.init(blueprint: blueprint)
-        
-        _attack.position = CGPoint(x: -Card.WIDTH/2 + 6, y: -Card.HEIGHT/2 + 6)
-        _health.position = CGPoint(x: Card.WIDTH/2 - 6, y: -Card.HEIGHT/2 + 6)
-        
-        addChild(_attack)
-        addChild(_health)
+    override func play(battle: Battle, spot: Spot?) -> Bool {
+        if spot != nil {
+            battle.summon(self, to: spot!)
+            return true
+        }
+        return false
+    }
+    
+    override func copy() -> CreatureCard {
+        let card = CreatureCard(
+            description: description,
+            attack: attack,
+            health: health,
+            ability: ability
+        )
+        return card
     }
 }

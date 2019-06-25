@@ -8,7 +8,7 @@
 
 class Creature {
     let sprite: CreatureSprite
-    var card: CreatureCardBlueprint
+    var card: CreatureCard
     var spot: Spot
     
     var health: Int
@@ -20,7 +20,7 @@ class Creature {
 
     var isActionTaken: Bool = false
     
-    init(of card: CreatureCardBlueprint, at spot: Spot) {
+    init(of card: CreatureCard, at spot: Spot) {
         self.card = card
         self.spot = spot
         health = card.health

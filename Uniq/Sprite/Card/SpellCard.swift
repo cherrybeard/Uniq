@@ -9,11 +9,35 @@
 import SpriteKit
 
 class SpellCard: Card {
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    let effect: (Battle, Spot?) -> Bool
+    
+    init(
+        description: String = "",
+        requiresTarget: Bool,
+        spotsFilter: @escaping SpotsFilter,
+        effect: @escaping (Battle, Spot?) -> Bool
+    ) {
+        self.effect = effect
+        super.init(
+            description: description,
+            requiresTarget: requiresTarget,
+            spotsFilter: spotsFilter
+        )
+//        self.sprite = SpellCardSprite()
+//        sprite.card = self
     }
     
-    override init(blueprint: CardBlueprint) {
-        super.init(blueprint: blueprint)
+    override func play(battle: Battle, spot: Spot?) -> Bool {
+        return effect(battle, spot)
+    }
+    
+    override func copy() -> SpellCard {
+        let card = SpellCard(
+            description: description,
+            requiresTarget: requiresTarget,
+            spotsFilter: spotsFilter,
+            effect: effect
+        )
+        return card
     }
 }

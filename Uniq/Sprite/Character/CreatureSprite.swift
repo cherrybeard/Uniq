@@ -56,7 +56,7 @@ class CreatureSprite: SKNode {
         }
     }
     
-    init(of card: CreatureCardBlueprint) {
+    init(of card: CreatureCard) {
         super.init()
         
         healthLabel.maxHealth = card.health
