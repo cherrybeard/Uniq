@@ -17,13 +17,11 @@ class CardLibrary {
             health: 4,
             ability: ActiveAbility(
                 description: "Increase attack by 3",
-                cooldown: 2,
-                effect: { (Battle, spot: Spot?) -> Bool in
-                    if let creature = spot?.creature {
-                        creature.increaseAttack(by: 3)
-                        return true
-                    }
-                    return false
+                cooldown: 1,
+                effect: { (battle: Battle, spot: Spot?) -> Bool in
+                    if spot == nil { return false }
+                    battle.buffAttack(by: 3, at: spot!)
+                    return true
                 }
             )
         ),

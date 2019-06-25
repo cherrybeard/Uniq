@@ -36,20 +36,19 @@ class Creature {
     }
     
     /*
-    func useActiveAbility(battle: Battle) -> Bool {
-        if (activeAbilityCooldown == 0) && !isActionTaken {
-            if card.activeAbility!.ability(battle, spot) {
-                _abilityLabel.resetCooldown()
+    func useAbility(battle: Battle) -> Bool {
+        if (ability?.left == 0) && !isActionTaken {
+            if ability!.effect(battle, spot) {
+                //_abilityLabel.resetCooldown()
                 isActionTaken = true
                 return true
             }
         }
         return false
-    }
-    */
+    }*/
 
     func increaseAttack(by amount: Int) {
-        //attack += amount
+        attack += amount
     }
     
     func dealDamage(_ amount: Int) {

@@ -137,13 +137,12 @@ class Battle: SKNode {
         var pass: Bool = true
         for spot in aiSpotsShuffled {
             if let selectedSpot = spot as? Spot {
-                let creature = selectedSpot.creature
-                /*
-                if creature!.useActiveAbility(battle: self) {
-                    pass = false
-                    break
+                if let creature = selectedSpot.creature {
+                    if useActiveAbility(of: creature) {
+                        pass = false
+                        break
+                    }
                 }
-                */
             }
         }
         endTurn(passed: pass)
@@ -242,6 +241,9 @@ class Battle: SKNode {
         sourceSpot.creature = targetSpot.creature
         targetSpot.creature = creature
         
+        sourceSpot.creature?.spot = sourceSpot
+        targetSpot.creature?.spot = targetSpot
+        
         if let primaryCreature = targetSpot.creature {
             // Disable primary creature actions for this turn
             primaryCreature.isActionTaken = true
@@ -286,6 +288,7 @@ class Battle: SKNode {
                 DamageAnimation( creature: sprite, amount: -amount, healthState: .damaged )
             )
             if creature.isDead {
+                spot.creature = nil
                 animationPipeline.add( DeathAnimation(creature: sprite) )
             }
         }
@@ -295,14 +298,36 @@ class Battle: SKNode {
         if let creature = spot.creature {
             let (healed, state) = creature.heal(amount)
              animationPipeline.add(
-                 DamageAnimation( creature: creature.sprite, amount: healed, healthState: state )
+                 DamageAnimation(
+                    creature: creature.sprite,
+                    amount: healed,
+                    healthState: state
+                )
              )
+        }
+    }
+    
+    func buffAttack(by amount: Int, at spot: Spot) {
+        if let creature = spot.creature {
+            creature.increaseAttack(by: amount)
+            
+            animationPipeline.add(
+                AttackBuffAnimation(
+                    creature: creature.sprite,
+                    attack: creature.attack
+                )
+            )
         }
     }
     
     func useActiveAbility(of creature: Creature) -> Bool {
         if let ability = creature.ability {
-            if ability.left == 0 {
+            if !creature.isActionTaken && (ability.left == 0) {
+                creature.isActionTaken = true
+                ability.left = ability.cooldown
+                animationPipeline.add(
+                    ResetCooldownAnimation(creature: creature.sprite)
+                )
                 return ability.effect(self, creature.spot)
             }
         }
@@ -326,7 +351,7 @@ class Battle: SKNode {
             if let creature = spot.creature {
                 if !creature.isActionTaken {
                     spot.status.insert(.interactive)
-                    if creature.ability?.cooldown == 0 {
+                    if creature.ability?.left == 0 {
                         spot.status.insert(.activatable)
                     }
                 }

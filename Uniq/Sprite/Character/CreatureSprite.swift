@@ -28,16 +28,12 @@ class CreatureSprite: SKNode {
     )
     
     private let healthLabel = HealthLabel()
-    private let attackLabel = AttackLabel()
+    let attackLabel = AttackLabel()
     let abilityLabel = AbilityLabel()
     
     var health: Int {
         get { return healthLabel.health }
         set { healthLabel.health = newValue }
-    }
-    var attack: Int {
-        get { return attackLabel.attack }
-        set { attackLabel.attack = newValue }
     }
     var activeAbilityCooldown: Int {
         get { return abilityLabel.remaining }

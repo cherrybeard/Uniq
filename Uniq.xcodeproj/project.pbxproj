@@ -33,6 +33,8 @@
 		5B3A29CA22C1648900CF1AE1 /* DiscardCardAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29C922C1648900CF1AE1 /* DiscardCardAnimation.swift */; };
 		5B3A29CC22C1994B00CF1AE1 /* RepositionHandAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29CB22C1994B00CF1AE1 /* RepositionHandAnimation.swift */; };
 		5B3A29D122C1FF5200CF1AE1 /* HealAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29D022C1FF5200CF1AE1 /* HealAnimation.swift */; };
+		5B3A29D522C28DC200CF1AE1 /* ResetCooldownAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29D422C28DC200CF1AE1 /* ResetCooldownAnimation.swift */; };
+		5B3A29D922C2991F00CF1AE1 /* AttackBuffAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29D822C2991F00CF1AE1 /* AttackBuffAnimation.swift */; };
 		5B3FE3F322807A1900470A5F /* UniqTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FE3F222807A1900470A5F /* UniqTests.swift */; };
 		5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C3493228536C1007D1E38 /* YletiaPirate.swift */; };
 		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
@@ -111,6 +113,8 @@
 		5B3A29C922C1648900CF1AE1 /* DiscardCardAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardCardAnimation.swift; sourceTree = "<group>"; };
 		5B3A29CB22C1994B00CF1AE1 /* RepositionHandAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositionHandAnimation.swift; sourceTree = "<group>"; };
 		5B3A29D022C1FF5200CF1AE1 /* HealAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealAnimation.swift; sourceTree = "<group>"; };
+		5B3A29D422C28DC200CF1AE1 /* ResetCooldownAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCooldownAnimation.swift; sourceTree = "<group>"; };
+		5B3A29D822C2991F00CF1AE1 /* AttackBuffAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackBuffAnimation.swift; sourceTree = "<group>"; };
 		5B3FE3F022807A1900470A5F /* UniqTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UniqTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3FE3F222807A1900470A5F /* UniqTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqTests.swift; sourceTree = "<group>"; };
 		5B3FE3F422807A1900470A5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -250,9 +254,11 @@
 				5B19083322B2600900CE8121 /* DamageAnimation.swift */,
 				5B3A29D022C1FF5200CF1AE1 /* HealAnimation.swift */,
 				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
+				5B3A29D822C2991F00CF1AE1 /* AttackBuffAnimation.swift */,
 				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
 				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
 				5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */,
+				5B3A29D422C28DC200CF1AE1 /* ResetCooldownAnimation.swift */,
 				5B19084822B6C29B00CE8121 /* SwapAnimation.swift */,
 				5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */,
 			);
@@ -499,6 +505,7 @@
 			files = (
 				5B19084222B4DAB600CE8121 /* DeathAnimation.swift in Sources */,
 				5B4F7E792287D0FE00252113 /* Player.swift in Sources */,
+				5B3A29D922C2991F00CF1AE1 /* AttackBuffAnimation.swift in Sources */,
 				5BBF0F1E22908CDC0071E9F7 /* HealthLabel.swift in Sources */,
 				5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */,
 				5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */,
@@ -510,6 +517,7 @@
 				5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */,
 				5B19083C22B3527D00CE8121 /* PassiveAbility.swift in Sources */,
 				5BE0B0C2205047D4009DA26E /* SparkSpell.swift in Sources */,
+				5B3A29D522C28DC200CF1AE1 /* ResetCooldownAnimation.swift in Sources */,
 				5BE0B0C420504BBE009DA26E /* HarmlessAffairSpell.swift in Sources */,
 				5B19084622B6A01400CE8121 /* SwapResponseAnimation.swift in Sources */,
 				5B6FCB1F22BE471600E189DD /* CardSprite.swift in Sources */,
