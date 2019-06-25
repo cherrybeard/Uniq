@@ -10,14 +10,14 @@ import SpriteKit
 
 class DamageLabel: SKNode {
     private let _label = SKLabelNode()
-    var damage: Int
+    var amount: Int
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(damage: Int) {
-        self.damage = damage
+    init(amount: Int) {
+        self.amount = amount
         super.init()
         _label.fontColor = SKColor.white
         _label.fontName = "AvenirNext-Regular"
@@ -29,6 +29,8 @@ class DamageLabel: SKNode {
     }
     
     private func _redraw() {
-        _label.text = "–" + String(damage)
+        let text = String(abs(amount))
+        let prefix = amount > 0 ? "+" : "–"
+        _label.text = prefix + text
     }
 }

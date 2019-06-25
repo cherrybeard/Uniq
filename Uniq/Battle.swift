@@ -283,7 +283,7 @@ class Battle: SKNode {
             let sprite = creature.sprite
             creature.dealDamage(amount)
             animationPipeline.add(
-                DamageAnimation( creature: sprite, amount: amount )
+                DamageAnimation( creature: sprite, amount: -amount, healthState: .damaged )
             )
             if creature.isDead {
                 animationPipeline.add( DeathAnimation(creature: sprite) )
@@ -293,15 +293,10 @@ class Battle: SKNode {
     
     func heal(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {
-            creature.heal(amount)
-            /*
+            let (healed, state) = creature.heal(amount)
              animationPipeline.add(
-                 animation: HealAnimation(
-                     creature: creature.sprite,
-                     amount: amount
-                 )
+                 DamageAnimation( creature: creature.sprite, amount: healed, healthState: state )
              )
-             */
         }
     }
     

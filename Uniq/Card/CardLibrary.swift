@@ -75,7 +75,7 @@ class CardLibrary {
         "Heal": SpellCard (
             description: "Heal",
             requiresTarget: true,
-            spotsFilter: SpotsFilters.ownerCreatures,
+            spotsFilter: { $0.owner.isActive && ($0.creature?.isDamaged ?? false) },
             effect: { (battle: Battle, spot: Spot?) -> Bool in
                 if spot?.creature != nil {
                     battle.heal(4, to: spot!)

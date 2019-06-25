@@ -12,10 +12,12 @@ class Creature {
     var spot: Spot
     
     var health: Int
+    var maxHealth: Int
     var attack: Int
     var ability: ActiveAbility?
     var onSummon: PassiveAbility?
     var isDead: Bool { return health <= 0 }
+    var isDamaged: Bool { return health < maxHealth }
     //var activeAbilityCooldown: Int
 
     var isActionTaken: Bool = false
@@ -23,8 +25,9 @@ class Creature {
     init(of card: CreatureCard, at spot: Spot) {
         self.card = card
         self.spot = spot
-        health = card.health
         attack = card.attack
+        health = card.health
+        maxHealth = health
         if let ability = card.ability {
             self.ability = ability.copy()
         }
@@ -53,7 +56,14 @@ class Creature {
         health -= amount
     }
     
-    func heal(_ amount: Int) {
-        //health += amount
+    func heal(_ amount: Int) -> (Int, StatState) {
+        var healed = maxHealth - health
+        var state: StatState = .initial
+        if healed > amount {
+            state = .damaged
+            healed = amount
+        }
+        health += healed
+        return (healed, state)
     }
 }

@@ -1,14 +1,14 @@
 //
-//  DamageAnimation.swift
+//  HealAnimation.swift
 //  Uniq
 //
-//  Created by Steven Gusev on 13/06/2019.
+//  Created by Steven Gusev on 25/06/2019.
 //  Copyright © 2019 Steven Gusev. All rights reserved.
 //
 
 import SpriteKit
 
-class DamageAnimation: Animation {
+class HealAnimation: Animation {
     let amount: Int
     var creature: CreatureSprite
     let label: DamageLabel
@@ -24,7 +24,7 @@ class DamageAnimation: Animation {
         return SKAction.sequence([appear, pause, hide])
     }
     
-    init(creature: CreatureSprite, amount: Int, healthState: StatState) {
+    init(creature: CreatureSprite, amount: Int) {
         self.creature = creature
         self.amount = amount
         
@@ -38,7 +38,7 @@ class DamageAnimation: Animation {
     
     override func play() {
         creature.health += amount
-        label.run(DamageAnimation.action) {
+        label.run(HealAnimation.action) {
             self.label.removeFromParent()
         }
         state = .finished

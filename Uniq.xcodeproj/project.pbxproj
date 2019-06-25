@@ -32,6 +32,7 @@
 		5B3A29C722C00E4000CF1AE1 /* CreatureCardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29C622C00E4000CF1AE1 /* CreatureCardSprite.swift */; };
 		5B3A29CA22C1648900CF1AE1 /* DiscardCardAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29C922C1648900CF1AE1 /* DiscardCardAnimation.swift */; };
 		5B3A29CC22C1994B00CF1AE1 /* RepositionHandAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29CB22C1994B00CF1AE1 /* RepositionHandAnimation.swift */; };
+		5B3A29D122C1FF5200CF1AE1 /* HealAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29D022C1FF5200CF1AE1 /* HealAnimation.swift */; };
 		5B3FE3F322807A1900470A5F /* UniqTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FE3F222807A1900470A5F /* UniqTests.swift */; };
 		5B4C3494228536C1007D1E38 /* YletiaPirate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C3493228536C1007D1E38 /* YletiaPirate.swift */; };
 		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
@@ -109,6 +110,7 @@
 		5B3A29C622C00E4000CF1AE1 /* CreatureCardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureCardSprite.swift; sourceTree = "<group>"; };
 		5B3A29C922C1648900CF1AE1 /* DiscardCardAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardCardAnimation.swift; sourceTree = "<group>"; };
 		5B3A29CB22C1994B00CF1AE1 /* RepositionHandAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositionHandAnimation.swift; sourceTree = "<group>"; };
+		5B3A29D022C1FF5200CF1AE1 /* HealAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealAnimation.swift; sourceTree = "<group>"; };
 		5B3FE3F022807A1900470A5F /* UniqTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UniqTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3FE3F222807A1900470A5F /* UniqTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniqTests.swift; sourceTree = "<group>"; };
 		5B3FE3F422807A1900470A5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
 				5B19083322B2600900CE8121 /* DamageAnimation.swift */,
+				5B3A29D022C1FF5200CF1AE1 /* HealAnimation.swift */,
 				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
 				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
 				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
@@ -546,6 +549,7 @@
 				5B3A29C522C00E1100CF1AE1 /* SpellCardSprite.swift in Sources */,
 				5B6FCB1D22BE44DE00E189DD /* DrawCardAnimation.swift in Sources */,
 				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
+				5B3A29D122C1FF5200CF1AE1 /* HealAnimation.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
 				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,
