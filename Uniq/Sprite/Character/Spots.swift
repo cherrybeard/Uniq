@@ -13,17 +13,35 @@ class Spots: SKNode, Collection {
     private static let hrzMargin: Int = 113
     private static let vrtMargin: Int = 90
     private static let marginFromCenter: Int = 78
-    private static let start: Int = 0
-    private static let end: Int = 12
+    private static let start: Int = 1
+    private static let end: Int = 13
     
     private var spots: [Spot] = []
     var startIndex: Int = start
     var endIndex: Int = end
     
+    
+    private static func column(of index: Int) -> ColumnType {
+        let column = (index - 1) % 3 - 1
+        return ColumnType(rawValue: column) ?? .center
+    }
+    
+    private static func owner(of index: Int) -> PlayerType {
+        return index > 6 ? .human : .ai
+    }
+    
+    private static func range(of index: Int) -> RangeType {
+        if (index > 3) && (index < 10) {
+            return .melee
+        } else {
+            return .range
+        }
+    }
+    
     init(human: Player, ai: Player) {
         super.init()
         for index in startIndex ..< endIndex {
-            let owner = (index > 5) ? human : ai
+            let owner = (index > 6) ? human : ai
             let range = Spots.range(of: index)
             let column = Spots.column(of: index)
             let spot = Spot(owner: owner, range: range, column: column)
@@ -44,24 +62,7 @@ class Spots: SKNode, Collection {
     }
     
     subscript(position: Int) -> Spot {
-        return spots[position]
-    }
-    
-    static private func column(of index: Int) -> ColumnType {
-        let column = index % 3 - 1
-        return ColumnType(rawValue: column) ?? .center
-    }
-    
-    static private func owner(of index: Int) -> PlayerType {
-        return index > 5 ? .human : .ai
-    }
-    
-    static private func range(of index: Int) -> RangeType {
-        if (index > 2) && (index < 9) {
-            return .melee
-        } else {
-            return .range
-        }
+        return spots[position-1]
     }
     
     func shuffledSpots(in filter: SpotsFilter) -> [Spot] {
@@ -70,6 +71,10 @@ class Spots: SKNode, Collection {
         return shuffled.map { $0 as! Spot }
     }
     
+    /// Returns random spot, optionally filtered.
+    ///
+    /// - Parameter filter: Filter to narrow search.
+    /// - Returns: Randomly selected spot.
     func randomSpot(in filter: SpotsFilter = SpotsFilters.all ) -> Spot? {
         let spotsShuffled = shuffledSpots(in: filter)
         if spotsShuffled.count > 0 {
@@ -87,8 +92,8 @@ class Spots: SKNode, Collection {
     static func neighbors(of index: Int, sameOwner: Bool = true) -> [Int] {
         var neighbors: [Int] = []
         var modifiers = [-3, 3]
-        if index % 3 != 2 { modifiers.append(1) }
-        if index % 3 != 0 { modifiers.append(-1) }
+        if index % 3 != 0 { modifiers.append(1) }
+        if index % 3 != 1 { modifiers.append(-1) }
         for modifier in modifiers {
             let newIndex = index + modifier
             if (newIndex < start) || (newIndex >= end) { continue }
@@ -108,11 +113,11 @@ class Spots: SKNode, Collection {
     }
     
     func nextAttacker(activePlayer: PlayerType) -> Spot? {
-        let aiOrder = [3, 0, 4, 1, 5, 2]
-        let humanOrder = [6, 9, 7, 10, 8, 11]
+        let aiOrder = [4, 1, 5, 2, 6, 3]
+        let humanOrder = [7, 10, 8, 11, 9, 12]
         let attackOrder: [Int] = (activePlayer == .human) ? aiOrder + humanOrder : humanOrder + aiOrder
         for index in attackOrder {
-            let attackerSpot = spots[index]
+            let attackerSpot = spots[index-1]
             if let attacker = attackerSpot.creature {
                 if !attacker.isActionTaken && (attacker.attack > 0) && (attacker.health > 0) {
                     return attackerSpot
@@ -127,8 +132,8 @@ class Spots: SKNode, Collection {
         let attackerIndex = spot.index
         for i in [3, 6, 9] {
             let targetIndex = attackerIndex + i * sign
-            if (targetIndex < 0) || (targetIndex > 11) { continue }
-            let targetSpot = spots[targetIndex]
+            if (targetIndex < startIndex) || (targetIndex >= endIndex) { continue }
+            let targetSpot = spots[targetIndex-1]
             if let target = targetSpot.creature {
                 if (targetSpot.owner != spot.owner) && (target.health > 0) {
                     return targetSpot

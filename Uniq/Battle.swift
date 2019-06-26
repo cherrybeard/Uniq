@@ -42,10 +42,10 @@ class Battle: SKNode {
         interactives.append(passButton)
         
         // battle init
-        summon("Yletia Pirate", to: 6)
-        summon("Yletia Pirate", to: 2)
-        summon("Bandit", to: 4)
-        summon("Thug", to: 3)
+        summon("Yletia Pirate", to: 7)
+        summon("Yletia Pirate", to: 3)
+        summon("Bandit", to: 5)
+        summon("Thug", to: 4)
         
         for _ in 1...2 {
             _ = draw(for: human)

@@ -49,7 +49,7 @@ class Spot: SKNode, Interactive {
 
     var index: Int {
         get {
-            var shift: Int = column.rawValue + 1
+            var shift: Int = column.rawValue + 2
             if owner.isHuman {
                 shift += 6 + range.rawValue * 3
             } else {
