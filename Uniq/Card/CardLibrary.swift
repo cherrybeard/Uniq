@@ -34,7 +34,7 @@ class CardLibrary {
                 description: "Give random allied creature +1/+1",
                 cooldown: 2,
                 effect: { (battle: Battle, spot: Spot?) -> Bool in
-                    if let randomSpot = battle.randomSpot(
+                    if let randomSpot = battle.spots.randomSpot(
                         in: { ($0 != spot ) && ($0.owner == spot!.owner) && ( $0.creature != nil ) }
                     ) {
                         battle.buffStat(.attack, by: 1, at: randomSpot)

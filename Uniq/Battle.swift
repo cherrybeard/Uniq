@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 class Battle: SKNode {
     let passButton = PassButton()
@@ -133,7 +132,7 @@ class Battle: SKNode {
     
     func aiTurn() {
         var pass: Bool = true
-        for spot in shuffledSpots(in: SpotsFilters.aiCreatures) {
+        for spot in spots.shuffledSpots(in: SpotsFilters.aiCreatures) {
             if useActiveAbility(of: spot.creature!) {
                 pass = false
                 break
@@ -345,20 +344,6 @@ class Battle: SKNode {
         animationPipeline.add(
             CooldownDecreaseAnimation(creature: creature.sprite)
         )
-    }
-    
-    func shuffledSpots(in filter: SpotsFilter) -> [Spot] {    // TODO: Move this and randomSpot to Spots?
-        let filtered = spots.filter(filter)
-        let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: filtered)
-        return shuffled.map { $0 as! Spot }
-    }
-    
-    func randomSpot(in filter: SpotsFilter = SpotsFilters.all ) -> Spot? {
-        let spotsShuffled = shuffledSpots(in: filter)
-        if spotsShuffled.count > 0 {
-            return spotsShuffled[0]
-        }
-        return nil
     }
     
     func highlightActionTargets() {
