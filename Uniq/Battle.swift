@@ -30,7 +30,7 @@ class Battle: SKNode {
     var isUnlocked: Bool = false
     
     override init() {
-        activePlayer = human
+        activePlayer = ai
         spots = Spots(human: human, ai: ai)
         super.init()
         addChild(spots)
@@ -76,8 +76,11 @@ class Battle: SKNode {
     }
     
     func giveControls() {
-        highlightActionTargets()
-        if activePlayer.isAi { aiTurn() }
+        if activePlayer.isAi {
+            aiTurn()
+        } else {
+            highlightActionTargets()
+        }
     }
     
     func endTurn(passed: Bool = false) {

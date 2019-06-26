@@ -20,9 +20,13 @@ class AnimationPipeline {
         }
     }
     
-    func add(_ animation: Animation, completion block: @escaping () -> Void = {}) {
+    func add(_ animation: Animation) {
         queue.append(animation)
+    }
+    
+    func add(_ animation: Animation, completion block: @escaping () -> Void = {}) {
         blocks.append(block)
+        queue.append(animation)
     }
     
     func update() -> AnimationState {
@@ -30,10 +34,11 @@ class AnimationPipeline {
             if (lastState == .finished) || (lastState == .idle) {
                 lastState = .idle
                 return .idle
+            } else if blocks.count > 0 {
+                let block = blocks.remove(at: 0)
+                block()
+                return .inProgress
             } else {
-                for block in blocks {
-                    block()
-                }
                 lastState = .finished
                 return .finished
             }

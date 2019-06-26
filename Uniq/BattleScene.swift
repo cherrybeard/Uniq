@@ -73,8 +73,11 @@ class BattleScene: SKScene {
                         interactiveNode.status.insert(.interacted)
                         if wasActivated { interactiveNode.status.insert(.activated) }
                         
-                        // highlight targets
+                        // highlight targets, and apply active targeting to itself
                         battle.addInteractivesStatus(status: .targetable, filter: interactiveNode.targetsFilter)
+                        if interactiveNode.status.contains(.targetable) {
+                            interactiveNode.status.insert(.targetted)
+                        }
                     }
                 }
             }
