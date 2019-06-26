@@ -27,36 +27,17 @@ class CreatureSprite: SKNode {
         cornerRadius: 3
     )
     
-    private let healthLabel = HealthLabel()
-    let attackLabel = AttackLabel()
+    let healthLabel = StatLabel(type: .health)
+    let attackLabel = StatLabel(type: .attack)
     let abilityLabel = AbilityLabel()
     
-    var health: Int {
-        get { return healthLabel.health }
-        set { healthLabel.health = newValue }
-    }
     var activeAbilityCooldown: Int {
         get { return abilityLabel.remaining }
         set { abilityLabel.remaining = newValue }
     }
     
-    var isActionTaken: Bool = false {
-        didSet {
-            if isActionTaken {
-                abilityLabel.disable()
-                attackLabel.disable()
-            } else {
-                abilityLabel.enable()
-                attackLabel.enable()
-            }
-        }
-    }
-    
     init(of card: CreatureCard) {
         super.init()
-        
-        healthLabel.maxHealth = card.health
-        healthLabel.health = card.health
         
         border.lineWidth = 1
         border.fillColor = FILL_COLOR
@@ -71,11 +52,13 @@ class CreatureSprite: SKNode {
         abilityLabel.position = CGPoint(x: 0, y: CreatureSprite.HEIGHT/2)
         addChild(abilityLabel)
         
-        attackLabel.attack = card.attack
+        
+        attackLabel.setValue(to: card.attack)
         attackLabel.position = CGPoint(x: -CreatureSprite.WIDTH/2 + 6, y: -CreatureSprite.HEIGHT/2 + 10)
         addChild(attackLabel)
         
-        healthLabel.health = card.health
+        
+        healthLabel.setValue(to: card.health)
         healthLabel.position = CGPoint(x: CreatureSprite.WIDTH/2 - 6, y: -CreatureSprite.HEIGHT/2 + 10)
         addChild(healthLabel)
         

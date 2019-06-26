@@ -37,7 +37,7 @@ class DamageAnimation: Animation {
     }
     
     override func play() {
-        creature.health += amount
+        creature.healthLabel.changeValue(by: amount)
         label.run(DamageAnimation.action) {
             self.label.removeFromParent()
         }

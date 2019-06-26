@@ -28,8 +28,8 @@ class CreatureCardSprite: CardSprite {
     
     override func updateCardData() {
         if let creatureCard = card as? CreatureCard {
-            attackLabel.value = creatureCard.attack
-            healthLabel.value = creatureCard.health
+            attackLabel.setValue(to: creatureCard.attack)
+            healthLabel.setValue(to: creatureCard.health)
         }
         super.updateCardData()
     }

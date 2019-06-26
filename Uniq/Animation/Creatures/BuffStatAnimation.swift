@@ -1,5 +1,5 @@
 //
-//  AttackBuffAnimation.swift
+//  BuffStatAnimation.swift
 //  Uniq
 //
 //  Created by Steven Gusev on 26/06/2019.
@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class AttackBuffAnimation: Animation {
+class BuffStatAnimation: Animation {
     private static var scaleUp: SKAction {
         let action = SKAction.scale(to: 2.5, duration: 0.1)
         action.timingMode = .easeOut
@@ -19,19 +19,23 @@ class AttackBuffAnimation: Animation {
         action.timingMode = .easeIn
         return action
     }
-    private let label: AttackLabel
-    private let attack: Int
+    private let label: StatLabel
+    private let newValue: Int
     
-    init(creature: CreatureSprite, attack: Int) {
-        label = creature.attackLabel
-        self.attack = attack
+    init(creature: CreatureSprite, stat: StatType, newValue: Int) {
+        switch stat {
+        case .attack:
+            label = creature.attackLabel
+        default:
+            label = creature.healthLabel
+        }
+        self.newValue = newValue
     }
     
     override func play() {
-        label.run(AttackBuffAnimation.scaleUp) {
-            self.label.isBuffed = self.attack > self.label.attack
-            self.label.attack = self.attack
-            self.label.run(AttackBuffAnimation.scaleDown) {
+        label.run(BuffStatAnimation.scaleUp) {
+            self.label.setValue(to: self.newValue, changeBase: false)
+            self.label.run(BuffStatAnimation.scaleDown) {
                 self.state = .finished
             }
         }

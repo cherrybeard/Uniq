@@ -47,8 +47,18 @@ class Creature {
         return false
     }*/
 
-    func increaseAttack(by amount: Int) {
-        attack += amount
+    func increaseStat(stat: StatType, by amount: Int) -> Int {
+        switch stat {
+        case .attack:
+            attack += amount
+            return attack
+        case .health:
+            health += amount
+            maxHealth += amount
+            return health
+        default:
+            return 0
+        }
     }
     
     func dealDamage(_ amount: Int) {

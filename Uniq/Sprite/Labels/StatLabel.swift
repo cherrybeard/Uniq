@@ -16,24 +16,35 @@ enum StatState {
     case initial, damaged, buffed
 }
 
+struct Value {
+    var current: Int = 1
+    var max: Int = 1
+    var base: Int = 1
+}
+
 class StatLabel: SKNode {   // OBSOLETE
-    private let TEXT_COLOR: [StatState: UIColor] = [
-        .initial: UIColor(rgb: 0xffffff),
-        .damaged: UIColor(hue: 12.0/360.0,  saturation: 64.0/100.0, brightness: 100.0/100.0, alpha: 1),
-        .buffed:  UIColor(rgb: 0xD9B282)
+    private static let textColor: [StatState: UIColor] = [
+        .initial: UIColor(rgb: 0xEEEEEE),
+        .damaged: UIColor(rgb: 0xA33D3D),
+        .buffed: UIColor(rgb: 0xD9B282)
     ]
-    private let TEXT_ALIGN: [StatType: SKLabelHorizontalAlignmentMode] = [
+    private static let textAlign: [StatType: SKLabelHorizontalAlignmentMode] = [
         .attack: .left,
-        .cooldown: .center,
         .health: .right
     ]
     
-    var type: StatType
+    private let label = SKLabelNode()
+    let type: StatType
+    private var value = Value()
+    private var states: Set<StatState> {
+        var list: Set<StatState> = [.initial]
+        if value.max > value.base { list.insert(.buffed) }
+        if value.current < value.max { list.insert(.damaged) }
+        return list
+    }
+    private var isBuffed: Bool { return value.max > value.base }
+    private var isDamaged: Bool { return value.current < value.max }
     var isDimmed: Bool = false
-    
-    var value: Int = 1 { didSet { redraw() } }
-    var state: StatState = .initial { didSet { redraw() } }
-    let label = SKLabelNode()
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -43,7 +54,8 @@ class StatLabel: SKNode {   // OBSOLETE
         self.type = type
         super.init()
         
-        label.horizontalAlignmentMode = TEXT_ALIGN[type]!
+        label.horizontalAlignmentMode = StatLabel.textAlign[type]!
+        label.verticalAlignmentMode = .center
         label.fontName = "AvenirNext-DemiBold"
         label.fontSize = 12
         addChild(label)
@@ -51,8 +63,29 @@ class StatLabel: SKNode {   // OBSOLETE
     }
     
     func redraw() {
-        label.alpha = isDimmed ? 0.5 : 1
-        label.fontColor = TEXT_COLOR[state]
-        label.text = String(value)
+        label.text = String(value.current)
+        for state: StatState in [.damaged, .buffed, .initial] {
+            if states.contains(state) {
+                label.fontColor = StatLabel.textColor[state]!
+                break
+            }
+        }
+        if type == .attack {
+            label.alpha = ( isDimmed || (value.current <= 0) ) ? 0.5 : 1
+        }
     }
+    
+    func setValue(to newValue: Int, changeBase: Bool = true, changeMax: Bool = true) {
+        value.current = newValue
+        if changeMax { value.max = newValue }
+        if changeBase { value.base = newValue }
+        redraw()
+    }
+    
+    func changeValue(by amount: Int, changeMax: Bool = false) {
+        value.current += amount
+        if changeMax { value.max += amount }
+        redraw()
+    }
+    
 }

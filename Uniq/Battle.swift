@@ -51,7 +51,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Fireball")
+        _ = addToHand(for: human, cardName: "Firelink Priest")
         _ = addToHand(for: human, cardName: "Heal")
         
         startTurn()
@@ -100,7 +100,7 @@ class Battle: SKNode {
     func fight() {
         if let attackerSpot = spots.nextAttacker(activePlayer: activePlayer.type) {
             if let attacker = attackerSpot.creature {
-                attacker.isActionTaken = true
+                setActionTakenState(of: attacker, toTaken: true)
                 if let targetSpot = spots.target(for: attackerSpot) {
                     attack( from: attackerSpot, to: targetSpot )
                 }
@@ -115,7 +115,7 @@ class Battle: SKNode {
         for spot in spots {
             if let creature = spot.creature {
                 decreaseAbilityCooldown(of: creature)
-                creature.isActionTaken = false
+                setActionTakenState(of: creature, toTaken: false)
             }
         }
         passButton.readyToFight = false
@@ -132,17 +132,11 @@ class Battle: SKNode {
     }
     
     func aiTurn() {
-        let aiSpots = spots.filter { $0.owner.isAi && $0.isTaken }
-        let aiSpotsShuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: aiSpots)
         var pass: Bool = true
-        for spot in aiSpotsShuffled {
-            if let selectedSpot = spot as? Spot {
-                if let creature = selectedSpot.creature {
-                    if useActiveAbility(of: creature) {
-                        pass = false
-                        break
-                    }
-                }
+        for spot in shuffledSpots(in: SpotsFilters.aiCreatures) {
+            if useActiveAbility(of: spot.creature!) {
+                pass = false
+                break
             }
         }
         endTurn(passed: pass)
@@ -246,7 +240,7 @@ class Battle: SKNode {
         
         if let primaryCreature = targetSpot.creature {
             // Disable primary creature actions for this turn
-            primaryCreature.isActionTaken = true
+            setActionTakenState(of: primaryCreature, toTaken: true)
             
             // Animate movement
             if let secondaryCreature = sourceSpot.creature {
@@ -260,6 +254,13 @@ class Battle: SKNode {
             )
         }
         
+    }
+    
+    func setActionTakenState(of creature: Creature, toTaken: Bool) {
+        creature.isActionTaken = toTaken
+        animationPipeline.add(
+            SetActionTakenStateAnimation(creature: creature.sprite, toTaken: toTaken)
+        )
     }
     
     func attack(from attackerSpot: Spot, to targetSpot: Spot) {
@@ -307,14 +308,15 @@ class Battle: SKNode {
         }
     }
     
-    func buffAttack(by amount: Int, at spot: Spot) {
+    func buffStat(_ stat: StatType, by amount: Int, at spot: Spot) {
         if let creature = spot.creature {
-            creature.increaseAttack(by: amount)
+            let newValue = creature.increaseStat(stat: stat, by: amount)
             
             animationPipeline.add(
-                AttackBuffAnimation(
+                BuffStatAnimation(
                     creature: creature.sprite,
-                    attack: creature.attack
+                    stat: stat,
+                    newValue: newValue
                 )
             )
         }
@@ -323,7 +325,7 @@ class Battle: SKNode {
     func useActiveAbility(of creature: Creature) -> Bool {
         if let ability = creature.ability {
             if !creature.isActionTaken && (ability.left == 0) {
-                creature.isActionTaken = true
+                setActionTakenState(of: creature, toTaken: true)
                 ability.left = ability.cooldown
                 animationPipeline.add(
                     ResetCooldownAnimation(creature: creature.sprite)
@@ -343,6 +345,20 @@ class Battle: SKNode {
         animationPipeline.add(
             CooldownDecreaseAnimation(creature: creature.sprite)
         )
+    }
+    
+    func shuffledSpots(in filter: SpotsFilter) -> [Spot] {    // TODO: Move this and randomSpot to Spots?
+        let filtered = spots.filter(filter)
+        let shuffled = GKMersenneTwisterRandomSource.sharedRandom().arrayByShufflingObjects(in: filtered)
+        return shuffled.map { $0 as! Spot }
+    }
+    
+    func randomSpot(in filter: SpotsFilter = SpotsFilters.all ) -> Spot? {
+        let spotsShuffled = shuffledSpots(in: filter)
+        if spotsShuffled.count > 0 {
+            return spotsShuffled[0]
+        }
+        return nil
     }
     
     func highlightActionTargets() {

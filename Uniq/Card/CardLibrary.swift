@@ -17,12 +17,32 @@ class CardLibrary {
             health: 4,
             ability: ActiveAbility(
                 description: "Increase attack by 3",
-                cooldown: 1,
+                cooldown: 2,
                 effect: { (battle: Battle, spot: Spot?) -> Bool in
                     if spot == nil { return false }
-                    battle.buffAttack(by: 3, at: spot!)
+                    battle.buffStat(.attack, by: 3, at: spot!)
                     return true
                 }
+            )
+        ),
+        
+        "Firelink Priest": CreatureCard(
+            description: "Firelink Priest",
+            attack: 1,
+            health: 2,
+            ability: ActiveAbility(
+                description: "Give random allied creature +1/+1",
+                cooldown: 2,
+                effect: { (battle: Battle, spot: Spot?) -> Bool in
+                    if let randomSpot = battle.randomSpot(
+                        in: { ($0 != spot ) && ($0.owner == spot!.owner) && ( $0.creature != nil ) }
+                    ) {
+                        battle.buffStat(.attack, by: 1, at: randomSpot)
+                        battle.buffStat(.health, by: 1, at: randomSpot)
+                        return true
+                    }
+                    return false
+            }
             )
         ),
         

@@ -91,4 +91,9 @@ class Spot: SKNode, Interactive {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    static func == (lhs: Spot, rhs: Spot) -> Bool {
+        return lhs.index == rhs.index
+    }
 }
