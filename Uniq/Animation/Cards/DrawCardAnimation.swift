@@ -21,7 +21,7 @@ class DrawCardAnimation: Animation {
     
     override func play() {
         //drawnCard.alpha = 0
-        let xPos = BattleScene.SCREEN_RIGHT + CardSprite.WIDTH + 20
+        let xPos = BattleScene.SCREEN_RIGHT + CardSprite.width + 20
         drawnCard.position = CGPoint(x: xPos, y: 0)
         //drawnCard.zRotation = .pi / 2
         hand.addChild(drawnCard)

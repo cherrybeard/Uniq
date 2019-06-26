@@ -9,14 +9,25 @@
 import SpriteKit
 
 class CardSprite: SKNode, Interactive {
-    static let WIDTH = 60
-    static let HEIGHT = 90
-    private static let FILL_COLOR = UIColor(rgb: 0x111111)
-    private struct BORDER_COLOR {
-        static let base: UIColor = UIColor(rgb: 0x484644)
-        static let interactive = UIColor(rgb: 0x775534)
-        static let interacted = UIColor(rgb: 0xAC7D4E)
+    static let width = 60
+    static let height = 90
+    private static let fillColor = UIColor(rgb: 0x111111)
+    private static let borderColor: [InteractiveStatus: UIColor] = [
+        .base: UIColor(rgb: 0x484644),
+        .interactive: UIColor(rgb: 0x775534),
+        .interacted: UIColor(rgb: 0xAC7D4E)
+    ]
+    private static var textStyle: NSMutableParagraphStyle {
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        style.lineBreakMode = .byWordWrapping
+        return style
     }
+    private static let textAttributes: [NSAttributedString.Key : Any] = [
+        .font: UIFont(name: "AvenirNext-DemiBold", size: 8)!,
+        .foregroundColor: UIColor(rgb: 0xffffff),
+        .paragraphStyle: CardSprite.textStyle
+    ]
     
     weak var card: Card? = nil { didSet { updateCardData() } }
     var status: Set<InteractiveStatus> = []  { didSet { redraw() } }
@@ -25,7 +36,7 @@ class CardSprite: SKNode, Interactive {
     
     private let label = SKLabelNode(text: "")
     private let border = SKShapeNode(
-        rectOf: CGSize( width: CardSprite.WIDTH, height: CardSprite.HEIGHT ),
+        rectOf: CGSize( width: CardSprite.width, height: CardSprite.height ),
         cornerRadius: 3
     )
     
@@ -33,16 +44,14 @@ class CardSprite: SKNode, Interactive {
         super.init()
         
         border.lineWidth = 1
-        border.fillColor = CardSprite.FILL_COLOR
+        border.fillColor = CardSprite.fillColor
         addChild(border)
         
-        label.fontColor = SKColor.white
-        label.fontName = "AvenirNext-DemiBold"
-        label.fontSize = 8
-        label.preferredMaxLayoutWidth = 48
-        label.lineBreakMode = .byWordWrapping
+        label.horizontalAlignmentMode = .center
+        label.verticalAlignmentMode = .center
+        label.preferredMaxLayoutWidth = 44
         label.numberOfLines = 0
-        label.position = CGPoint(x: 0, y: -40)
+        label.position = CGPoint(x: 0, y: 0)
         addChild(label)
         
         redraw()
@@ -56,6 +65,10 @@ class CardSprite: SKNode, Interactive {
     
     func updateCardData() {
         if card != nil {
+            label.attributedText = NSAttributedString(
+                string: card!.description,
+                attributes: CardSprite.textAttributes
+            )
             label.text = card!.description
             targetsFilter = { (interactive: Interactive) -> Bool in
                 if let spot = interactive as? Spot {
@@ -67,12 +80,11 @@ class CardSprite: SKNode, Interactive {
     }
     
     func redraw() {
-        if status.contains(.interacted) {
-            border.strokeColor = BORDER_COLOR.interacted
-        } else if status.contains(.interactive) {
-            border.strokeColor = BORDER_COLOR.interactive
-        } else {
-            border.strokeColor = BORDER_COLOR.base
+        for s: InteractiveStatus in [.interacted, .interactive, .base] {
+            if status.contains(s) || (s == .base) {
+                border.strokeColor = CardSprite.borderColor[s]!
+                break
+            }
         }
     }
     

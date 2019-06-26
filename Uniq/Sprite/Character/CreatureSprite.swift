@@ -9,8 +9,8 @@
 import SpriteKit
 
 class CreatureSprite: SKNode {
-    private static let WIDTH: Int = 90
-    private static let HEIGHT: Int = 60
+    private static let width: Int = 90
+    private static let height: Int = 60
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x484644)
         static let interactive = UIColor(rgb: 0x775534)
@@ -20,10 +20,10 @@ class CreatureSprite: SKNode {
     }
     private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111)
     
-    var status: Set<InteractiveStatus> = [] { didSet { _redraw() } }
+    var status: Set<InteractiveStatus> = [] { didSet { redraw() } }
     
     private let border = SKShapeNode(
-        rectOf: CGSize(width: CreatureSprite.WIDTH, height: CreatureSprite.HEIGHT),
+        rectOf: CGSize(width: CreatureSprite.width, height: CreatureSprite.height),
         cornerRadius: 3
     )
     
@@ -49,20 +49,19 @@ class CreatureSprite: SKNode {
         }
         abilityLabel.cooldown = cooldown
         abilityLabel.resetCooldown()
-        abilityLabel.position = CGPoint(x: 0, y: CreatureSprite.HEIGHT/2)
+        abilityLabel.position = CGPoint(x: 0, y: CreatureSprite.height/2)
         addChild(abilityLabel)
         
-        
+        let xPos = CreatureSprite.width/2 - 6
+        let yPos = CreatureSprite.height/2 - 10
         attackLabel.setValue(to: card.attack)
-        attackLabel.position = CGPoint(x: -CreatureSprite.WIDTH/2 + 6, y: -CreatureSprite.HEIGHT/2 + 10)
-        addChild(attackLabel)
-        
-        
         healthLabel.setValue(to: card.health)
-        healthLabel.position = CGPoint(x: CreatureSprite.WIDTH/2 - 6, y: -CreatureSprite.HEIGHT/2 + 10)
+        attackLabel.position = CGPoint(x: -xPos, y: -yPos)
+        healthLabel.position = CGPoint(x: +xPos, y: -yPos)
+        addChild(attackLabel)
         addChild(healthLabel)
         
-        _redraw()
+        redraw()
         name = "creature"
     }
     
@@ -70,7 +69,7 @@ class CreatureSprite: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _redraw() {
+    private func redraw() {
         if status.contains(.targetted) {
             border.strokeColor = BORDER_COLOR.targetted
         } else if status.contains(.targetable) {

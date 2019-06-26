@@ -6,7 +6,7 @@
 //  Copyright © 2019 Steven Gusev. All rights reserved.
 //
 enum InteractiveStatus {
-    case interactive, interacted, targetable, targetted, activatable, activated
+    case base, interactive, interacted, targetable, targetted, activatable, activated
 }
 
 protocol Interactive {

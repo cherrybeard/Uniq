@@ -13,8 +13,8 @@ class CreatureCardSprite: CardSprite {
     private let healthLabel = StatLabel(type: .health)
     
     override init() {
-        let xPos = CardSprite.WIDTH / 2 - 6
-        let yPos = CardSprite.HEIGHT / 2 - 6
+        let xPos = CardSprite.width / 2 - 6
+        let yPos = CardSprite.height / 2 - 10
         attackLabel.position = CGPoint(x: -xPos, y: -yPos)
         healthLabel.position = CGPoint(x: +xPos, y: -yPos)
         super.init()
