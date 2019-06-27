@@ -205,6 +205,11 @@ class Battle: SKNode {
         animationPipeline.add(
             SummonAnimation(creature.sprite, at: spot, battle: self)
         )
+        
+        if card.hasRush {
+            setActionTakenState(of: creature, toTaken: false)
+        }
+        
 //        for spot in spots {
 //            if let creature = spot.creature {
 //                print(creature.card.description)

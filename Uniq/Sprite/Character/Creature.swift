@@ -20,7 +20,7 @@ class Creature {
     var isDamaged: Bool { return health < maxHealth }
     //var activeAbilityCooldown: Int
 
-    var isActionTaken: Bool = false
+    var isActionTaken: Bool = true
     
     init(of card: CreatureCard, at spot: Spot) {
         self.card = card

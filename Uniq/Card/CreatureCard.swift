@@ -14,6 +14,7 @@ class CreatureCard: Card {
     var ability: ActiveAbility? = nil
     var whenSummoned: PassiveAbility? = nil
     var onSummon: PassiveAbility? = nil
+    var hasRush: Bool = false
     
     init(name: String, attack: Int, health: Int) {
         self.attack = attack
@@ -37,6 +38,9 @@ class CreatureCard: Card {
         let card = CreatureCard(name: name, attack: attack, health: health)
         card.description = description
         card.ability = ability
+        card.whenSummoned = whenSummoned
+        card.onSummon = onSummon
+        card.hasRush = hasRush
         return card
     }
 }
