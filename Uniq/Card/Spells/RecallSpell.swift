@@ -6,25 +6,22 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-//
-//class RecallSpell: SpellCardBlueprint {
-//    init() {
-//        super.init(description: "Return friendly creature back to hand. Reduce its cost by 2")
-//        //requiresTarget = true
-//        //targetFilter = CardTargetFilters.ownerCreatures
-//    }
-//    
-//    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
-//        /*
-//        if let creature = target as? CreatureSprite {
-//            let creatureCard = creature.creature
-//            creatureCard.cost -= 2
-//            if creatureCard.cost < 0 {
-//                creatureCard.cost = 0
-//            }
-//            battle.player.deck.draw(card: CreatureCardSprite(card: creatureCard))
-//            creature.destroyed = true
-//        }
-//         */
-//    }
-//}
+
+class RecallSpell: SpellCard {
+    init() {
+        super.init(name: "Recall")
+        description = "Recalls allied creature back to hand."
+        requiresTarget = true
+        spotsFilter = {
+            $0.owner.isActive && ($0.creature != nil)
+        }
+        effect = { (battle: Battle, spot: Spot?) -> Bool in
+            if let creature = spot?.creature {
+                battle.kill(at: spot!)  // TODO: Replace with remove() to remove silently
+                let card = battle.addToHand(for: battle.activePlayer, cardName: creature.card.name)
+                return (card != nil)
+            }
+            return false
+        }
+    }
+}

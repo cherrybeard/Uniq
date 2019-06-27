@@ -7,14 +7,16 @@
 //
 
 class HealSpell: SpellCard {
+    static private let heal: Int = 4
+    
     init() {
         super.init(name: "Heal")
-        description = "Heals 4 to selected target."
+        description = "Heals \(HealSpell.heal) to selected target."
         requiresTarget = true
         spotsFilter = { $0.owner.isActive && ($0.creature?.isDamaged ?? false) }
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if spot?.creature != nil {
-                battle.heal(4, to: spot!)
+                battle.heal(HealSpell.heal, to: spot!)
                 return true
             }
             return false

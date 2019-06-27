@@ -50,8 +50,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Firelink Priest")
-        _ = addToHand(for: human, cardName: "Heal")
+        _ = addToHand(for: human, cardName: "Fan of Knives")
         
         startTurn()
     }
@@ -290,15 +289,39 @@ class Battle: SKNode {
     
     func dealDamage(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {
-            let sprite = creature.sprite
             creature.dealDamage(amount)
             animationPipeline.add(
-                DamageAnimation( creature: sprite, amount: -amount, healthState: .damaged )
+                DamageAnimation( creature: creature.sprite, amount: -amount, healthState: .damaged )
             )
             if creature.isDead {
-                spot.creature = nil
-                animationPipeline.add( DeathAnimation(creature: sprite) )
+                kill(at: spot)
             }
+        }
+    }
+    
+    func dealDamage(_ amount: Int, to filter: SpotsFilter) {
+        let targets = spots.filter(filter)
+        var obituaries: [Spot] = []
+        for spot in targets {
+            if let creature = spot.creature {
+                creature.dealDamage(amount)
+                animationPipeline.add(
+                    DamageAnimation( creature: creature.sprite, amount: -amount, healthState: .damaged )
+                )
+                if creature.isDead {
+                    obituaries.append(spot)
+                }
+            }
+        }
+        for spot in obituaries {
+            kill(at: spot)
+        }
+    }
+    
+    func kill(at spot: Spot) {
+        if let creature = spot.creature {
+            spot.creature = nil
+            animationPipeline.add( DeathAnimation(creature: creature.sprite) )
         }
     }
     

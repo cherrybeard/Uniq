@@ -19,7 +19,11 @@ class CardLibrary {
         
         // Spells
         "Fireball": FireballSpell(),
-        "Heal": HealSpell()
+        "Heal": HealSpell(),
+        "Backstab": BackstabSpell(),
+        "Recall": RecallSpell(),
+        "Taking Aim": TakingAimSpell(),
+        "Fan of Knives": FanOfKnivesSpell()
     ]
     
     static func getCard(_ name: String) -> Card? {

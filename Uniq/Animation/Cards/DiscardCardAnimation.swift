@@ -9,7 +9,7 @@
 import SpriteKit
 
 class DiscardCardAnimaiton: Animation {
-    private static let ACTION = SKAction.fadeOut(withDuration: 0.5)
+    private static let ACTION = SKAction.fadeOut(withDuration: 0.2)
     private let card: CardSprite
     
     init(card: CardSprite) {
@@ -17,8 +17,8 @@ class DiscardCardAnimaiton: Animation {
     }
     
     override func play() {
-        state = .finished
         card.run(DiscardCardAnimaiton.ACTION) {
+            self.state = .finished
             self.card.removeFromParent()
         }
     }

@@ -2,16 +2,13 @@
     "cards": [
         {
             "card": "Bounty Hunter",
-            "amount": 2
+            "amount": 1
         },{
             "card": "Thug",
-            "amount": 3
+            "amount": 1
         },{
             "card": "Fairy",
-            "amount": 3
-        },{
-            "card": "Bandit",
-            "amount": 3
+            "amount": 2
         },{
             "card": "Firelink Priest",
             "amount": 2
@@ -27,6 +24,18 @@
         },{
             "card": "Heal",
             "amount": 2
+        },{
+            "card": "Backstab",
+            "amount": 1
+        },{
+            "card": "Recall",
+            "amount": 1
+        },{
+            "card": "Taking Aim",
+            "amount": 1
+        },{
+            "card": "Fan of Knives",
+            "amount": 1
         }
     ]
 }
