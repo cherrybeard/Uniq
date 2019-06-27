@@ -50,6 +50,7 @@
 		5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */; };
 		5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D19203EB7B20026B445 /* Animation.swift */; };
 		5B7E2D1D203EB7D30026B445 /* AttackAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */; };
+		5B9484C722C4F26700FA413C /* Interactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9484C622C4F26700FA413C /* Interactives.swift */; };
 		5B9E8CCD229C7E9A00A4BE18 /* Spots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
@@ -131,6 +132,7 @@
 		5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPipeline.swift; sourceTree = "<group>"; };
 		5B7E2D19203EB7B20026B445 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackAnimation.swift; sourceTree = "<group>"; };
+		5B9484C622C4F26700FA413C /* Interactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactives.swift; sourceTree = "<group>"; };
 		5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spots.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
@@ -190,12 +192,11 @@
 		5B116F842051A48C00396C0F /* Card */ = {
 			isa = PBXGroup;
 			children = (
+				5B2622CA228A64E100DFE0EE /* CardLibrary.swift */,
 				5BCA6F2B203A283200B81376 /* Card.swift */,
-				5B6FCB1E22BE471600E189DD /* CardSprite.swift */,
 				5B33A64B204116CF00CF2D76 /* SpellCard.swift */,
-				5B3A29C422C00E1100CF1AE1 /* SpellCardSprite.swift */,
 				5BCA6F2D203A2AB400B81376 /* CreatureCard.swift */,
-				5B3A29C622C00E4000CF1AE1 /* CreatureCardSprite.swift */,
+				5B9484C522C4B3C800FA413C /* Sprites */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -221,8 +222,8 @@
 		5B35E5BF2051FB1500678A10 /* Creatures */ = {
 			isa = PBXGroup;
 			children = (
-				5B35E5C02051FC1400678A10 /* BountyHunterCreature.swift */,
 				5B4C3493228536C1007D1E38 /* YletiaPirate.swift */,
+				5B35E5C02051FC1400678A10 /* BountyHunterCreature.swift */,
 				5B35E5CF2056D14C00678A10 /* FirelinkPriestCreature.swift */,
 				5B35E5CD2056BA6100678A10 /* RoyalAlchemistCreature.swift */,
 				5B35E5C92056AA4300678A10 /* OldProphetCreature.swift */,
@@ -305,6 +306,16 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
+		5B9484C522C4B3C800FA413C /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				5B6FCB1E22BE471600E189DD /* CardSprite.swift */,
+				5B3A29C422C00E1100CF1AE1 /* SpellCardSprite.swift */,
+				5B3A29C622C00E4000CF1AE1 /* CreatureCardSprite.swift */,
+			);
+			path = Sprites;
+			sourceTree = "<group>";
+		};
 		5BAC4310227E0EA100D15CA9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +350,7 @@
 				5BCA6F112038911000B81376 /* BattleScene.swift */,
 				5BE0B0B3204F0F29009DA26E /* Battle.swift */,
 				5B19083D22B3A13B00CE8121 /* BattleEvent.swift */,
+				5B9484C622C4F26700FA413C /* Interactives.swift */,
 				5BE0B0B7204F3381009DA26E /* Player */,
 				5B66CE51204C0A930047A9DC /* Sprite */,
 				5B7E2D1B203EB7C20026B445 /* Animation */,
@@ -357,7 +369,6 @@
 		5BCA6F31203B20DC00B81376 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				5B2622CA228A64E100DFE0EE /* CardLibrary.swift */,
 				5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */,
 				5B19083B22B3527D00CE8121 /* PassiveAbility.swift */,
 				5B35E5BF2051FB1500678A10 /* Creatures */,
@@ -556,6 +567,7 @@
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
 				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,
+				5B9484C722C4F26700FA413C /* Interactives.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,
 				5B19084422B696A700CE8121 /* RetreatAnimation.swift in Sources */,
 				5B253C3B22C365DB00D25927 /* BuffStatAnimation.swift in Sources */,

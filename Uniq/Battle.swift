@@ -11,7 +11,7 @@ import SpriteKit
 class Battle: SKNode {
     let passButton = PassButton()
     var spots: Spots
-    var interactives: [Interactive] = []
+    var interactives = Interactives()
     private let animationPipeline = AnimationPipeline()
     private let onSummon = BattleEvent()
     
@@ -84,7 +84,7 @@ class Battle: SKNode {
     }
     
     func endTurn(passed: Bool = false) {
-        cleanInteractivesStatus()
+        interactives.cleanAllStatus()
         if passed {
             activePlayer.passed = true
             if activePlayer.isAi { passButton.readyToFight = true }
@@ -366,25 +366,6 @@ class Battle: SKNode {
                 card.sprite.status.insert(.interactive)
             }
             passButton.status.insert(.interactive)
-        }
-    }
-    
-    func addInteractivesStatus(status: InteractiveStatus, filter: (Interactive) -> Bool) {
-        let targets = interactives.filter(filter)
-        for var target in targets {
-            target.status.insert(status)
-        }
-    }
-    
-    func removeInteractivesStatus(status: InteractiveStatus) {
-        for var target in interactives {
-            target.status.remove(status)
-        }
-    }
-    
-    func cleanInteractivesStatus() {
-        for var interactive in interactives {
-            interactive.status = []
         }
     }
     
