@@ -66,10 +66,10 @@ class CardSprite: SKNode, Interactive {
     func updateCardData() {
         if card != nil {
             label.attributedText = NSAttributedString(
-                string: card!.description,
+                string: card!.name,
                 attributes: CardSprite.textAttributes
             )
-            label.text = card!.description
+            label.text = card!.name
             targetsFilter = { (interactive: Interactive) -> Bool in
                 if let spot = interactive as? Spot {
                     return self.card!.spotsFilter(spot)

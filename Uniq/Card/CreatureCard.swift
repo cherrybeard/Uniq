@@ -15,24 +15,13 @@ class CreatureCard: Card {
     var whenSummoned: PassiveAbility? = nil
     var onSummon: PassiveAbility? = nil
     
-    init(
-        description: String = "",
-        attack: Int,
-        health: Int,
-        whenSummoned: PassiveAbility? = nil,
-        ability: ActiveAbility? = nil,
-        onSummon: PassiveAbility? = nil
-    ) {
+    init(name: String, attack: Int, health: Int) {
         self.attack = attack
         self.health = health
-        self.whenSummoned = whenSummoned
-        self.ability = ability
-        super.init(
-            description: description,
-            requiresTarget: true,
-            spotsFilter: SpotsFilters.ownerFree
-        )
-        self.sprite = CreatureCardSprite()
+        super.init(name: name)
+        requiresTarget = true
+        spotsFilter = SpotsFilters.ownerFree
+        sprite = CreatureCardSprite()
         sprite.card = self
     }
     
@@ -45,12 +34,9 @@ class CreatureCard: Card {
     }
     
     override func copy() -> CreatureCard {
-        let card = CreatureCard(
-            description: description,
-            attack: attack,
-            health: health,
-            ability: ability
-        )
+        let card = CreatureCard(name: name, attack: attack, health: health)
+        card.description = description
+        card.ability = ability
         return card
     }
 }

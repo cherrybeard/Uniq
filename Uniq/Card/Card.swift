@@ -26,22 +26,16 @@ enum CardState {
     case library, deck, hand, discarded
 }
 
-class Card {    // TODO: Convert to protocol?
-    let description: String
-    let requiresTarget: Bool
-    let spotsFilter: SpotsFilter
+class Card {
+    var name: String = ""
+    var description: String = "'"
+    var requiresTarget: Bool = false
+    var spotsFilter: SpotsFilter = SpotsFilters.all
     var state: CardState = .library
-    var sprite: CardSprite
+    var sprite: CardSprite = CardSprite()
     
-    init(
-        description: String = "",
-        requiresTarget: Bool,
-        spotsFilter: @escaping SpotsFilter
-    ) {
-        self.description = description
-        self.requiresTarget = requiresTarget
-        self.spotsFilter = spotsFilter
-        sprite = CardSprite()
+    init(name: String) {
+        self.name = name
         sprite.card = self
     }
     
@@ -49,12 +43,14 @@ class Card {    // TODO: Convert to protocol?
         return false
     }
     
+    /// Creates a copy of this card. State and sprite are not copied.
+    ///
+    /// - Returns: New instance of the same card.
     func copy() -> Card {
-        let card = Card(
-            description: description,
-            requiresTarget: requiresTarget,
-            spotsFilter: spotsFilter
-        )
+        let card = Card(name: name)
+        card.description = description
+        card.requiresTarget = requiresTarget
+        card.spotsFilter = spotsFilter
         return card
     }
 }
