@@ -17,8 +17,8 @@ enum ColumnType: Int {
 }
 
 class Spot: SKNode, Interactive {
-    private static let WIDTH: Int = 86
-    private static let HEIGHT: Int = 56
+    static let width: Int = 86
+    static let height: Int = 56
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x1D1D1C)
         static let targetted = UIColor(rgb: 0x3065FF)
@@ -27,8 +27,8 @@ class Spot: SKNode, Interactive {
     
     private let border = SKShapeNode(
         rectOf: CGSize(
-            width: Spot.WIDTH,
-            height: Spot.HEIGHT
+            width: Spot.width,
+            height: Spot.height
         ),
         cornerRadius: 3
     )

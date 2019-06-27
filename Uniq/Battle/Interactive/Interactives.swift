@@ -9,6 +9,10 @@
 class Interactives {
     private var interactives: [Interactive] = []
     
+    func filter(_ filter: (Interactive) -> Bool) -> [Interactive] {
+        return interactives.filter(filter)
+    }
+    
     func first(where filter: (Interactive) -> Bool) -> Interactive? {
         return interactives.first(where: filter)
     }

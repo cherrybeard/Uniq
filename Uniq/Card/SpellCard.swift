@@ -16,10 +16,12 @@ class SpellCard: Card {
     }
     
     override func copy() -> SpellCard {
-        let card = SpellCard(name: name)
+        let card = SpellCard(
+            name: name,
+            requiresTarget: requiresTarget,
+            spotsFilter: spotsFilter
+        )
         card.description = description
-        card.requiresTarget = requiresTarget
-        card.spotsFilter = spotsFilter
         card.effect = effect
         return card
     }

@@ -10,10 +10,12 @@ class TakingAimSpell: SpellCard {
     static private let damage: Int = 1
     
     init() {
-        super.init(name: "Taking Aim")
+        super.init(
+            name: "Taking Aim",
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.enemyCreatures
+        )
         description = "Deal \(TakingAimSpell.damage) damage to selected target and draw a card."
-        requiresTarget = true
-        spotsFilter = SpotsFilters.enemyCreatures
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if spot != nil {
                 battle.dealDamage(TakingAimSpell.damage, to: spot!)

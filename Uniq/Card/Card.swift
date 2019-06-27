@@ -11,6 +11,7 @@ typealias SpotsFilter = (Spot) -> Bool
 struct SpotsFilters {
     // TODO: Add ability to combine filters maybe in separate class
     // Something like x = Filter([Filter.filterPreset1, Filter.filterPreset2, ...])
+    static let none: SpotsFilter = { _ in false }
     static let all: SpotsFilter = { _ in true }
     static let owner: SpotsFilter = { $0.owner.isActive }
     static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
@@ -29,13 +30,19 @@ enum CardState {
 class Card {
     var name: String = ""
     var description: String = "'"
-    var requiresTarget: Bool = false
-    var spotsFilter: SpotsFilter = SpotsFilters.all
+    var requiresTarget: Bool
+    var spotsFilter: SpotsFilter
     var state: CardState = .library
     var sprite: CardSprite = CardSprite()
     
-    init(name: String) {
+    init(
+        name: String,
+        requiresTarget: Bool = false,
+        spotsFilter: @escaping SpotsFilter = SpotsFilters.none
+    ) {
         self.name = name
+        self.requiresTarget = requiresTarget
+        self.spotsFilter = spotsFilter
         sprite.card = self
     }
     
@@ -43,7 +50,7 @@ class Card {
         return false
     }
     
-    /// Creates a copy of this card. State and sprite are not copied.
+    /// Creates a copy of this card. State and sprite will not be copied.
     ///
     /// - Returns: New instance of the same card.
     func copy() -> Card {

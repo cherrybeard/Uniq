@@ -24,7 +24,7 @@ struct Value {
 
 class StatLabel: SKNode {   // OBSOLETE
     private static let textColor: [StatState: UIColor] = [
-        .initial: UIColor(rgb: 0xEEEEEE),
+        .initial: UIColor(rgb: 0xBBBBBB),
         .damaged: UIColor(rgb: 0xA33D3D),
         .buffed: UIColor(rgb: 0xD9B282)
     ]
@@ -71,7 +71,7 @@ class StatLabel: SKNode {   // OBSOLETE
             }
         }
         if type == .attack {
-            label.alpha = ( isDimmed || (value.current <= 0) ) ? 0.5 : 1
+            label.alpha = ( isDimmed || (value.current <= 0) ) ? 0.3 : 1
         }
     }
     

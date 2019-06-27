@@ -135,6 +135,12 @@ class BattleScene: SKScene {
                                         battle.endTurn()
                                         break
                                     }
+                                } else if node is Spots {
+                                    if battle.play(card.card!, for: battle.human) {
+                                        actionCancelled = false
+                                        battle.endTurn()
+                                        break
+                                    }
                                 }
                             } else if source is PassButton {
                                 if node is PassButton {

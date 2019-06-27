@@ -10,10 +10,12 @@ class FireballSpell: SpellCard {
     static private let damage: Int = 5
     
     init() {
-        super.init(name: "Fireball")
+        super.init(
+            name: "Fireball",
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.enemyCreatures
+        )
         description = "Deals \(FireballSpell.damage) damage to selected target."
-        requiresTarget = true
-        spotsFilter = SpotsFilters.enemyCreatures
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if spot != nil {
                 battle.dealDamage(FireballSpell.damage, to: spot!)

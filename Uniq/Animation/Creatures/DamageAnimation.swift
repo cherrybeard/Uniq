@@ -24,7 +24,7 @@ class DamageAnimation: Animation {
         return SKAction.sequence([appear, pause, hide])
     }
     
-    init(creature: CreatureSprite, amount: Int, healthState: StatState) {
+    init(creature: CreatureSprite, amount: Int) {
         self.creature = creature
         self.amount = amount
         

@@ -9,17 +9,32 @@
 import SpriteKit
 import GameplayKit
 
-class Spots: SKNode, Collection {
+class Spots: SKNode, Collection, Interactive {
     private static let hrzMargin: Int = 113
     private static let vrtMargin: Int = 90
     private static let marginFromCenter: Int = 78
     private static let start: Int = 1
     private static let end: Int = 13
+    private static let borderColor: [InteractiveStatus: UIColor] = [
+        .base: UIColor(rgb: 0x000000, alpha: 0),
+        .targetable: UIColor(rgb: 0x3752A1),
+        .targetted: UIColor(rgb: 0x1A54FB)
+    ]
     
     private var spots: [Spot] = []
     var startIndex: Int = start
     var endIndex: Int = end
     
+    var status: Set<InteractiveStatus> = [] { didSet { redraw() } }
+    var targetsFilter: (Interactive) -> Bool = { _ in return false }
+    
+    private let border = SKShapeNode(
+        rectOf: CGSize(
+            width: (Spot.width + Spots.hrzMargin * 2 + 40),
+            height: (Spot.height + Spots.vrtMargin * 2 + Spots.marginFromCenter * 2 + 40)
+        ),
+        cornerRadius: 8
+    )
     
     private static func column(of index: Int) -> ColumnType {
         let column = (index - 1) % 3 - 1
@@ -40,6 +55,12 @@ class Spots: SKNode, Collection {
     
     init(human: Player, ai: Player) {
         super.init()
+        
+        border.lineWidth = 1
+        border.alpha = 0.5
+        addChild(border)
+        redraw()
+        
         for index in startIndex ..< endIndex {
             let owner = (index > 6) ? human : ai
             let range = Spots.range(of: index)
@@ -51,6 +72,8 @@ class Spots: SKNode, Collection {
             spot.position = CGPoint(x: xPos, y: yPos)
             addChild(spot)
         }
+        
+        name = "spots"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -141,5 +164,14 @@ class Spots: SKNode, Collection {
             }
         }
         return nil
+    }
+    
+    func redraw() {
+        for s: InteractiveStatus in [.targetted, .targetable, .base] {
+            if status.contains(s) || (s == .base) {
+                border.strokeColor = Spots.borderColor[s]!
+                break
+            }
+        }
     }
 }

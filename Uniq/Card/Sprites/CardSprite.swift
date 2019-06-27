@@ -70,11 +70,15 @@ class CardSprite: SKNode, Interactive {
                 attributes: CardSprite.textAttributes
             )
             label.text = card!.name
-            targetsFilter = { (interactive: Interactive) -> Bool in
-                if let spot = interactive as? Spot {
-                    return self.card!.spotsFilter(spot)
+            if card!.requiresTarget {
+                targetsFilter = {
+                    if let spot = $0 as? Spot {
+                        return self.card!.spotsFilter(spot)
+                    }
+                    return false
                 }
-                return false
+            } else {
+                targetsFilter = { $0 is Spots }
             }
         }
     }

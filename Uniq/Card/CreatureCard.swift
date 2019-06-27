@@ -19,9 +19,11 @@ class CreatureCard: Card {
     init(name: String, attack: Int, health: Int) {
         self.attack = attack
         self.health = health
-        super.init(name: name)
-        requiresTarget = true
-        spotsFilter = SpotsFilters.ownerFree
+        super.init(
+            name: name,
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.ownerFree
+        )
         sprite = CreatureCardSprite()
         sprite.card = self
     }

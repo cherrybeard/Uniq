@@ -65,14 +65,12 @@ class Creature {
         health -= amount
     }
     
-    func heal(_ amount: Int) -> (Int, StatState) {
+    func heal(_ amount: Int) -> Int {
         var healed = maxHealth - health
-        var state: StatState = .initial
         if healed > amount {
-            state = .damaged
             healed = amount
         }
         health += healed
-        return (healed, state)
+        return healed
     }
 }

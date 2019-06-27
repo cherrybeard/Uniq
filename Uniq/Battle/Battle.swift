@@ -33,12 +33,12 @@ class Battle: SKNode {
         activePlayer = ai
         spots = Spots(human: human, ai: ai)
         super.init()
-        addChild(spots)
         
+        addChild(spots)
+        interactives.append(spots)
         // TODO: Rework addChild to custom function which adds sprite to interactives array if it is Interactive
         // spots passed tp it will be added to it. same with the hand
         for spot in spots { interactives.append(spot) }
-        
         interactives.append(passButton)
         
         // battle init
@@ -168,7 +168,7 @@ class Battle: SKNode {
         return nil
     }
     
-    func play(_ card: Card, for player: Player, to spot: Spot?) -> Bool {
+    func play(_ card: Card, for player: Player, to spot: Spot? = nil) -> Bool {
         if card.requiresTarget && (spot == nil) { return false }
         
         card.state = .discarded
@@ -291,7 +291,7 @@ class Battle: SKNode {
         if let creature = spot.creature {
             creature.dealDamage(amount)
             animationPipeline.add(
-                DamageAnimation( creature: creature.sprite, amount: -amount, healthState: .damaged )
+                DamageAnimation( creature: creature.sprite, amount: -amount )
             )
             if creature.isDead {
                 kill(at: spot)
@@ -306,7 +306,7 @@ class Battle: SKNode {
             if let creature = spot.creature {
                 creature.dealDamage(amount)
                 animationPipeline.add(
-                    DamageAnimation( creature: creature.sprite, amount: -amount, healthState: .damaged )
+                    DamageAnimation( creature: creature.sprite, amount: -amount )
                 )
                 if creature.isDead {
                     obituaries.append(spot)
@@ -327,13 +327,9 @@ class Battle: SKNode {
     
     func heal(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {
-            let (healed, state) = creature.heal(amount)
+            let healed = creature.heal(amount)
              animationPipeline.add(
-                 DamageAnimation(
-                    creature: creature.sprite,
-                    amount: healed,
-                    healthState: state
-                )
+                 DamageAnimation( creature: creature.sprite, amount: healed )
              )
         }
     }
@@ -390,8 +386,13 @@ class Battle: SKNode {
             }
         }
         if activePlayer.isHuman {
-            for card in human.deck.cards {  // TODO: .hand  ?
-                card.sprite.status.insert(.interactive)
+            for card in human.deck.handPile {
+                let sprite = card.sprite
+                if card.requiresTarget {
+                    let targets = interactives.filter(sprite.targetsFilter)
+                    if targets.count <= 0 { continue }
+                }
+                sprite.status.insert(.interactive)
             }
             passButton.status.insert(.interactive)
         }

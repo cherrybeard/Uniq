@@ -194,15 +194,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B116F832051A47500396C0F /* Character */ = {
+		5B116F832051A47500396C0F /* Creature */ = {
 			isa = PBXGroup;
 			children = (
-				5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */,
-				5B51A179227C537200111234 /* Spot.swift */,
 				5BCA6F292039EE2300B81376 /* Creature.swift */,
 				5B19083522B2760E00CE8121 /* CreatureSprite.swift */,
 			);
-			path = Character;
+			path = Creature;
 			sourceTree = "<group>";
 		};
 		5B116F852051A4AA00396C0F /* Labels */ = {
@@ -279,18 +277,48 @@
 			path = UniqTests;
 			sourceTree = "<group>";
 		};
-		5B66CE51204C0A930047A9DC /* Sprite */ = {
+		5B40055022C571FD005AABB6 /* Interactive */ = {
 			isa = PBXGroup;
 			children = (
 				5B9484C622C4F26700FA413C /* Interactives.swift */,
 				5BDF3833229F6DCF0094EEC2 /* Interactive.swift */,
+			);
+			path = Interactive;
+			sourceTree = "<group>";
+		};
+		5B40055122C57225005AABB6 /* Spot */ = {
+			isa = PBXGroup;
+			children = (
+				5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */,
+				5B51A179227C537200111234 /* Spot.swift */,
+			);
+			path = Spot;
+			sourceTree = "<group>";
+		};
+		5B40055322C57B17005AABB6 /* Battle */ = {
+			isa = PBXGroup;
+			children = (
+				5BCA6F112038911000B81376 /* BattleScene.swift */,
+				5BE0B0B3204F0F29009DA26E /* Battle.swift */,
+				5B19083D22B3A13B00CE8121 /* BattleEvent.swift */,
+				5B40055022C571FD005AABB6 /* Interactive */,
+				5B66CE51204C0A930047A9DC /* Misc */,
+				5B40055122C57225005AABB6 /* Spot */,
+				5B116F832051A47500396C0F /* Creature */,
+				5B116F852051A4AA00396C0F /* Labels */,
+			);
+			path = Battle;
+			sourceTree = "<group>";
+		};
+		5B66CE51204C0A930047A9DC /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				5B4F7E782287D0FE00252113 /* Player.swift */,
 				5B1AC399203BB01200F3B921 /* HandSprite.swift */,
 				5B4F7E762287570B00252113 /* PassButton.swift */,
 				5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */,
-				5B116F832051A47500396C0F /* Character */,
-				5B116F852051A4AA00396C0F /* Labels */,
 			);
-			path = Sprite;
+			path = Misc;
 			sourceTree = "<group>";
 		};
 		5B7E2D1B203EB7C20026B445 /* Animation */ = {
@@ -355,13 +383,9 @@
 			isa = PBXGroup;
 			children = (
 				5BCA6F0B2038911000B81376 /* AppDelegate.swift */,
-				5BCA6F112038911000B81376 /* BattleScene.swift */,
-				5BE0B0B3204F0F29009DA26E /* Battle.swift */,
-				5B19083D22B3A13B00CE8121 /* BattleEvent.swift */,
-				5B4F7E782287D0FE00252113 /* Player.swift */,
-				5B66CE51204C0A930047A9DC /* Sprite */,
-				5B7E2D1B203EB7C20026B445 /* Animation */,
+				5B40055322C57B17005AABB6 /* Battle */,
 				5BCA6F31203B20DC00B81376 /* Card */,
+				5B7E2D1B203EB7C20026B445 /* Animation */,
 				5B1AC39D203C612900F3B921 /* Decks */,
 				5BAC4310227E0EA100D15CA9 /* Extensions */,
 				5BCA6F132038911000B81376 /* GameViewController.swift */,

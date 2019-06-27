@@ -10,12 +10,14 @@ class BackstabSpell: SpellCard {
     static private let damage: Int = 8
     
     init() {
-        super.init(name: "Backstab")
+        super.init(
+            name: "Backstab",
+            requiresTarget: true,
+            spotsFilter: {
+                !$0.owner.isActive && ($0.creature != nil) && ($0.creature?.health == $0.creature?.maxHealth)
+            }
+        )
         description = "Deals \(BackstabSpell.damage) damage to undamaged creature."
-        requiresTarget = true
-        spotsFilter = {
-            !$0.owner.isActive && ($0.creature != nil) && ($0.creature?.health == $0.creature?.maxHealth)
-        }
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if spot != nil {
                 battle.dealDamage(BackstabSpell.damage, to: spot!)

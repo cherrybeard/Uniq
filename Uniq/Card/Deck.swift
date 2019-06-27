@@ -21,13 +21,8 @@ class Deck {
     var cards: [Card] = []
     var hand = HandSprite()
     
-    var drawPile: [Card] {
-        get { return cards.filter({ card in card.state == .deck }) }
-    }
-    
-    var handPile: [Card] {
-        get { return cards.filter({ card in card.state == .hand }) }
-    }
+    var drawPile: [Card] { return cards.filter { $0.state == .deck } }
+    var handPile: [Card] { return cards.filter { $0.state == .hand } }
     
     init(name: String = "") {
         if name != "" {

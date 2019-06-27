@@ -9,12 +9,14 @@
 
 class RecallSpell: SpellCard {
     init() {
-        super.init(name: "Recall")
+        super.init(
+            name: "Recall",
+            requiresTarget: true,
+            spotsFilter: {
+                $0.owner.isActive && ($0.creature != nil)
+            }
+        )
         description = "Recalls allied creature back to hand."
-        requiresTarget = true
-        spotsFilter = {
-            $0.owner.isActive && ($0.creature != nil)
-        }
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 battle.kill(at: spot!)  // TODO: Replace with remove() to remove silently
