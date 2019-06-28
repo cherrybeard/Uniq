@@ -6,7 +6,6 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-
 class RecallSpell: SpellCard {
     init() {
         super.init(

@@ -36,6 +36,12 @@
         },{
             "card": "Fan of Knives",
             "amount": 1
+        },{
+            "card": "Double Draw",
+            "amount": 1
+        },{
+            "card": "Whatever It Will Be",
+            "amount": 1
         }
     ]
 }

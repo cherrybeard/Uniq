@@ -8,7 +8,7 @@
 
 
 class CardLibrary {
-    private static let _cards: [String: Card] = [
+    private static let cards: [String: Card] = [
         
         // Creatures
         "Yletia Pirate": YletiaPirateCreature(),
@@ -22,14 +22,29 @@ class CardLibrary {
         "Heal": HealSpell(),
         "Backstab": BackstabSpell(),
         "Recall": RecallSpell(),
+        "Mass Recall": MassRecallSpell(),
         "Taking Aim": TakingAimSpell(),
-        "Fan of Knives": FanOfKnivesSpell()
+        "Fan of Knives": FanOfKnivesSpell(),
+        "Assasinate": AssassinateSpell(),
+        "Double Draw": DoubleDrawSpell(),
+        "Whatever It Will Be": WhateverItWillBeSpell(),
+        "Berserk": BerserkSpell(),
+        "Magic Storm": MagicStormSpell()
     ]
     
     static func getCard(_ name: String) -> Card? {
-        if let card = CardLibrary._cards[name] {
+        if let card = CardLibrary.cards[name] {
             return card.copy()
         }
         return nil
+    }
+    
+    static func getRandomCard() -> Card? {
+        return cards.randomElement()?.value
+    }
+    
+    static func getRandomCard(filter: (Card) -> Bool) -> Card? {
+        let filtered = cards.filter { filter($0.value) }
+        return filtered.randomElement()?.value
     }
 }

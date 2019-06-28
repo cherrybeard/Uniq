@@ -11,7 +11,7 @@ class TakingAimSpell: SpellCard {
     
     init() {
         super.init(
-            name: "Taking Aim",
+            name: "Taking Aim",   // "Spark" is good name too
             requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )

@@ -130,7 +130,7 @@ class Spots: SKNode, Collection, Interactive {
     func neighbors(of spot: Spot, sameOwner: Bool = true) -> [Spot] {
         var neighbors: [Spot] = []
         for index in Spots.neighbors(of: spot.index, sameOwner: sameOwner) {
-            neighbors.append(spots[index])
+            neighbors.append(spots[index-1])
         }
         return neighbors
     }

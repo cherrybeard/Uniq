@@ -50,7 +50,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Fan of Knives")
+        _ = addToHand(for: human, cardName: "Berserk")
         
         startTurn()
     }
@@ -370,6 +370,12 @@ class Battle: SKNode {
         }
         animationPipeline.add(
             CooldownDecreaseAnimation(creature: creature.sprite)
+        )
+    }
+    
+    func wait(for delay: TimeInterval) {
+        animationPipeline.add(
+            WaitAnimation(battle: self, delay: delay)
         )
     }
     
