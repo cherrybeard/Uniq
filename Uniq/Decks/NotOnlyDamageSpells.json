@@ -51,6 +51,12 @@
         },{
             "card": "Whip",
             "amount": 1
+        },{
+            "card": "Harmless Affair",
+            "amount": 1
+        },{
+            "card": "Anger",
+            "amount": 1
         }
     ]
 }

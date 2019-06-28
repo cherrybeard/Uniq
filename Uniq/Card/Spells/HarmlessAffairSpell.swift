@@ -6,19 +6,22 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 //
-//class HarmlessAffairSpell: SpellCardBlueprint {
-//    init() {
-//        super.init(description: "Summon three 1/1 Fairies")
-//    }
-//    
-//    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
-//        /*
-//        if let fairyCard = CardBook["Fairy"] as? CreatureCard {
-//            for _ in 1...3 {
-//                let fairy = CreatureSprite(creature: fairyCard, owner: owner)
-//                battle.summon(fairy)
-//            }
-//        }
-//        */
-//    }
-//}
+class HarmlessAffairSpell: SpellCard {
+    
+    init() {
+        super.init(
+            name: "Harmless Affair",
+            requiresTarget: false
+        )
+        description = "Summon 0/4 Fairies into your melee positions."
+        effect = { (battle: Battle, spot: Spot?) -> Bool in
+            let spots = battle.spots.filter {
+                $0.owner.isActive && ($0.range == .melee) && ($0.creature == nil)
+            }
+            for spot in spots {
+                battle.summon("Fairy", to: spot.index)
+            }
+            return true
+        }
+    }
+}

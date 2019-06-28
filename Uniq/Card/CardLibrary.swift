@@ -32,7 +32,10 @@ class CardLibrary {
         "Magic Storm": MagicStormSpell(),
         "Reckless Assault": RecklessAssaultSpell(),
         "Vitalization": VitalizationSpell(),
-        "Whip": WhipSpell()
+        "Whip": WhipSpell(),
+        "Harmless Affair": HarmlessAffairSpell(),
+        "Empathy": EmpathySpell(),
+        "Anger": AngerSpell()
     ]
     
     static func getCard(_ name: String) -> Card? {
