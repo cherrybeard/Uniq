@@ -29,7 +29,10 @@ class CardLibrary {
         "Double Draw": DoubleDrawSpell(),
         "Whatever It Will Be": WhateverItWillBeSpell(),
         "Berserk": BerserkSpell(),
-        "Magic Storm": MagicStormSpell()
+        "Magic Storm": MagicStormSpell(),
+        "Reckless Assault": RecklessAssaultSpell(),
+        "Vitalization": VitalizationSpell(),
+        "Whip": WhipSpell()
     ]
     
     static func getCard(_ name: String) -> Card? {

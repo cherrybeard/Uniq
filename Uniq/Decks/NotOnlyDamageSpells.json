@@ -42,6 +42,15 @@
         },{
             "card": "Whatever It Will Be",
             "amount": 1
+        },{
+            "card": "Reckless Assault",
+            "amount": 1
+        },{
+            "card": "Vitalization",
+            "amount": 1
+        },{
+            "card": "Whip",
+            "amount": 1
         }
     ]
 }

@@ -6,18 +6,21 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-//class VitalizationSpell: SpellCardBlueprint {
-//    init() {
-//        super.init(description: "Double creature's health")
-//        //requiresTarget = true
-//        //targetFilter = CardTargetFilters.all
-//    }
-//    
-//    /*
-//    override func play(battle: Battle, for owner: PlayerType, target: CharacterSprite? = nil) {
-//        if let creature = target {
-//            creature.increaseHealth(by: creature.health)
-//        }
-//    }
-// */
-//}
+class VitalizationSpell: SpellCard {
+    
+    init() {
+        super.init(
+            name: "Vitalization",
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.ownerCreatures
+        )
+        description = "Double creature's health"
+        effect = { (battle: Battle, spot: Spot?) -> Bool in
+            if let creature = spot?.creature {
+                battle.buffStat(.health, by: creature.health, at: spot!)
+                return true
+            }
+            return false
+        }
+    }
+}

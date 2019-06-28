@@ -50,7 +50,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Berserk")
+        _ = addToHand(for: human, cardName: "Whip")
         
         startTurn()
     }
@@ -336,13 +336,13 @@ class Battle: SKNode {
     
     func buffStat(_ stat: StatType, by amount: Int, at spot: Spot) {
         if let creature = spot.creature {
-            let newValue = creature.increaseStat(stat: stat, by: amount)
+            _ = creature.increaseStat(stat: stat, by: amount)
             
             animationPipeline.add(
                 BuffStatAnimation(
                     creature: creature.sprite,
                     stat: stat,
-                    newValue: newValue
+                    by: amount
                 )
             )
         }

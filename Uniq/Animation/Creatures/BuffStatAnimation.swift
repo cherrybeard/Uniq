@@ -20,21 +20,21 @@ class BuffStatAnimation: Animation {
         return action
     }
     private let label: StatLabel
-    private let newValue: Int
+    private let amount: Int
     
-    init(creature: CreatureSprite, stat: StatType, newValue: Int) {
+    init(creature: CreatureSprite, stat: StatType, by amount: Int) {
         switch stat {
         case .attack:
             label = creature.attackLabel
         default:
             label = creature.healthLabel
         }
-        self.newValue = newValue
+        self.amount = amount
     }
     
     override func play() {
         label.run(BuffStatAnimation.scaleUp) {
-            self.label.setValue(to: self.newValue, changeBase: false)
+            self.label.changeValue(by: self.amount, changeMax: true)
             self.label.run(BuffStatAnimation.scaleDown) {
                 self.state = .finished
             }

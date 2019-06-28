@@ -52,6 +52,8 @@
 		5B40055F22C59719005AABB6 /* BerserkSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40055E22C59719005AABB6 /* BerserkSpell.swift */; };
 		5B40056122C59AFA005AABB6 /* MagicStormSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40056022C59AFA005AABB6 /* MagicStormSpell.swift */; };
 		5B40056322C59C73005AABB6 /* WaitAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40056222C59C73005AABB6 /* WaitAnimation.swift */; };
+		5B40056522C59F7B005AABB6 /* RecklessAssaultSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40056422C59F7B005AABB6 /* RecklessAssaultSpell.swift */; };
+		5B40056722C61434005AABB6 /* WhipSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40056622C61434005AABB6 /* WhipSpell.swift */; };
 		5B4C3494228536C1007D1E38 /* YletiaPirateCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C3493228536C1007D1E38 /* YletiaPirateCreature.swift */; };
 		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
 		5B4F7E792287D0FE00252113 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E782287D0FE00252113 /* Player.swift */; };
@@ -146,6 +148,8 @@
 		5B40055E22C59719005AABB6 /* BerserkSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BerserkSpell.swift; sourceTree = "<group>"; };
 		5B40056022C59AFA005AABB6 /* MagicStormSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicStormSpell.swift; sourceTree = "<group>"; };
 		5B40056222C59C73005AABB6 /* WaitAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitAnimation.swift; sourceTree = "<group>"; };
+		5B40056422C59F7B005AABB6 /* RecklessAssaultSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecklessAssaultSpell.swift; sourceTree = "<group>"; };
+		5B40056622C61434005AABB6 /* WhipSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhipSpell.swift; sourceTree = "<group>"; };
 		5B4C3493228536C1007D1E38 /* YletiaPirateCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YletiaPirateCreature.swift; sourceTree = "<group>"; };
 		5B4F7E762287570B00252113 /* PassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5B4F7E782287D0FE00252113 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -437,7 +441,9 @@
 				5B40055C22C59383005AABB6 /* WhateverItWillBeSpell.swift */,
 				5B40055E22C59719005AABB6 /* BerserkSpell.swift */,
 				5B40056022C59AFA005AABB6 /* MagicStormSpell.swift */,
+				5B40056422C59F7B005AABB6 /* RecklessAssaultSpell.swift */,
 				5BE0B0B8204F3884009DA26E /* VitalizationSpell.swift */,
+				5B40056622C61434005AABB6 /* WhipSpell.swift */,
 				5BE0B0C320504BBE009DA26E /* HarmlessAffairSpell.swift */,
 			);
 			path = Spells;
@@ -617,10 +623,12 @@
 				5B6FCB1D22BE44DE00E189DD /* DrawCardAnimation.swift in Sources */,
 				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
 				5B3A29D122C1FF5200CF1AE1 /* HealAnimation.swift in Sources */,
+				5B40056722C61434005AABB6 /* WhipSpell.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
 				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,
 				5B40054D22C565C5005AABB6 /* TakingAimSpell.swift in Sources */,
+				5B40056522C59F7B005AABB6 /* RecklessAssaultSpell.swift in Sources */,
 				5B9484C722C4F26700FA413C /* Interactives.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,
 				5B19084422B696A700CE8121 /* RetreatAnimation.swift in Sources */,
