@@ -50,7 +50,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Anger")
+        _ = addToHand(for: human, cardName: "Tome Of Intelligence")
         
         startTurn()
     }
@@ -348,6 +348,13 @@ class Battle: SKNode {
         }
     }
     
+    func replaceAbility(of creature: Creature, with ability: ActiveAbility) {
+        creature.ability = ability
+        animationPipeline.add(
+            ReplaceAbilityAnimation(creature: creature.sprite, ability: ability)
+        )
+    }
+    
     func useActiveAbility(of creature: Creature) -> Bool {
         if let ability = creature.ability {
             if !creature.isActionTaken && (ability.left == 0) {
@@ -369,7 +376,7 @@ class Battle: SKNode {
             }
         }
         animationPipeline.add(
-            CooldownDecreaseAnimation(creature: creature.sprite)
+            DecreaseCooldownAnimation(creature: creature.sprite)
         )
     }
     

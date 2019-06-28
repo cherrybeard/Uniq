@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class CooldownDecreaseAnimation: Animation {
+class DecreaseCooldownAnimation: Animation {
     private let label: AbilityLabel
     
     init(creature: CreatureSprite) {

@@ -59,7 +59,7 @@
 		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
 		5B4F7E792287D0FE00252113 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E782287D0FE00252113 /* Player.swift */; };
 		5B51A17A227C537200111234 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B51A179227C537200111234 /* Spot.swift */; };
-		5B65EC0422BAB6BB00576F85 /* CooldownDecreaseAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */; };
+		5B65EC0422BAB6BB00576F85 /* DecreaseCooldownAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */; };
 		5B669F3D2049B4BF00DC2760 /* NotOnlyDamageSpells.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */; };
 		5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4D204BF6560047A9DC /* StatLabel.swift */; };
 		5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */; };
@@ -71,6 +71,8 @@
 		5B9484C722C4F26700FA413C /* Interactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9484C622C4F26700FA413C /* Interactives.swift */; };
 		5B9E8CCD229C7E9A00A4BE18 /* Spots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */; };
 		5BA1E8E322C631A900B9C2C2 /* AngerSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E8E222C631A900B9C2C2 /* AngerSpell.swift */; };
+		5BA1E8E522C6377900B9C2C2 /* TomeOfIntelligenceSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E8E422C6377900B9C2C2 /* TomeOfIntelligenceSpell.swift */; };
+		5BA1E8E722C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E8E622C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
@@ -157,7 +159,7 @@
 		5B4F7E762287570B00252113 /* PassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5B4F7E782287D0FE00252113 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5B51A179227C537200111234 /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
-		5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooldownDecreaseAnimation.swift; sourceTree = "<group>"; };
+		5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecreaseCooldownAnimation.swift; sourceTree = "<group>"; };
 		5B669F3C2049B4BF00DC2760 /* NotOnlyDamageSpells.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotOnlyDamageSpells.json; sourceTree = "<group>"; };
 		5B66CE4D204BF6560047A9DC /* StatLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatLabel.swift; sourceTree = "<group>"; };
 		5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageLabel.swift; sourceTree = "<group>"; };
@@ -169,6 +171,8 @@
 		5B9484C622C4F26700FA413C /* Interactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactives.swift; sourceTree = "<group>"; };
 		5B9E8CCC229C7E9A00A4BE18 /* Spots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spots.swift; sourceTree = "<group>"; };
 		5BA1E8E222C631A900B9C2C2 /* AngerSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngerSpell.swift; sourceTree = "<group>"; };
+		5BA1E8E422C6377900B9C2C2 /* TomeOfIntelligenceSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomeOfIntelligenceSpell.swift; sourceTree = "<group>"; };
+		5BA1E8E622C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceAbilityAnimation.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
@@ -276,8 +280,9 @@
 				5B3732CA22C399C500985B8C /* SetActionTakenStateAnimation.swift */,
 				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
 				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
-				5B65EC0322BAB6BB00576F85 /* CooldownDecreaseAnimation.swift */,
+				5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */,
 				5B3A29D422C28DC200CF1AE1 /* ResetCooldownAnimation.swift */,
+				5BA1E8E622C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift */,
 				5B19084822B6C29B00CE8121 /* SwapAnimation.swift */,
 				5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */,
 			);
@@ -451,6 +456,7 @@
 				5BE0B0C320504BBE009DA26E /* HarmlessAffairSpell.swift */,
 				5B40056822C62FFB005AABB6 /* EmpathySpell.swift */,
 				5BA1E8E222C631A900B9C2C2 /* AngerSpell.swift */,
+				5BA1E8E422C6377900B9C2C2 /* TomeOfIntelligenceSpell.swift */,
 			);
 			path = Spells;
 			sourceTree = "<group>";
@@ -585,6 +591,7 @@
 				5B40056922C62FFB005AABB6 /* EmpathySpell.swift in Sources */,
 				5B19083C22B3527D00CE8121 /* PassiveAbility.swift in Sources */,
 				5B3A29D522C28DC200CF1AE1 /* ResetCooldownAnimation.swift in Sources */,
+				5BA1E8E722C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift in Sources */,
 				5BE0B0C420504BBE009DA26E /* HarmlessAffairSpell.swift in Sources */,
 				5B19084622B6A01400CE8121 /* SwapResponseAnimation.swift in Sources */,
 				5B6FCB1F22BE471600E189DD /* CardSprite.swift in Sources */,
@@ -617,7 +624,7 @@
 				5B40054B22C55E1C005AABB6 /* BackstabSpell.swift in Sources */,
 				5B40054522C53FE8005AABB6 /* BanditCreature.swift in Sources */,
 				5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */,
-				5B65EC0422BAB6BB00576F85 /* CooldownDecreaseAnimation.swift in Sources */,
+				5B65EC0422BAB6BB00576F85 /* DecreaseCooldownAnimation.swift in Sources */,
 				5B40054722C54069005AABB6 /* FireballSpell.swift in Sources */,
 				5BCA6F2C203A283200B81376 /* Card.swift in Sources */,
 				5B3A29CC22C1994B00CF1AE1 /* RepositionHandAnimation.swift in Sources */,
@@ -630,6 +637,7 @@
 				5B3A29C522C00E1100CF1AE1 /* SpellCardSprite.swift in Sources */,
 				5B6FCB1D22BE44DE00E189DD /* DrawCardAnimation.swift in Sources */,
 				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
+				5BA1E8E522C6377900B9C2C2 /* TomeOfIntelligenceSpell.swift in Sources */,
 				5B3A29D122C1FF5200CF1AE1 /* HealAnimation.swift in Sources */,
 				5B40056722C61434005AABB6 /* WhipSpell.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,

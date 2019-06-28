@@ -57,6 +57,9 @@
         },{
             "card": "Anger",
             "amount": 1
+        },{
+            "card": "Tome Of Intelligence",
+            "amount": 1
         }
     ]
 }
