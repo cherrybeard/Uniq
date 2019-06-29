@@ -50,7 +50,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Silence")
+        _ = addToHand(for: human, cardName: "Mass Hysteria")
         
         startTurn()
     }

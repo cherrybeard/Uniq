@@ -82,6 +82,7 @@
 		5BA1E8F722C6D49E00B9C2C2 /* InnerStrengthSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E8F622C6D49E00B9C2C2 /* InnerStrengthSpell.swift */; };
 		5BA1E8FF22C78EA300B9C2C2 /* InnerFireSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E8FE22C78EA300B9C2C2 /* InnerFireSpell.swift */; };
 		5BA1E90122C791EA00B9C2C2 /* SilenceSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */; };
+		5BA1E90422C81FF900B9C2C2 /* MassHysteriaSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
@@ -191,6 +192,7 @@
 		5BA1E8F622C6D49E00B9C2C2 /* InnerStrengthSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerStrengthSpell.swift; sourceTree = "<group>"; };
 		5BA1E8FE22C78EA300B9C2C2 /* InnerFireSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerFireSpell.swift; sourceTree = "<group>"; };
 		5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceSpell.swift; sourceTree = "<group>"; };
+		5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MassHysteriaSpell.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
@@ -391,6 +393,16 @@
 			path = Abilities;
 			sourceTree = "<group>";
 		};
+		5BA1E90222C7A12000B9C2C2 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				5B2622CA228A64E100DFE0EE /* CardLibrary.swift */,
+				5BE0B0BA204F466C009DA26E /* Spells */,
+				5B35E5BF2051FB1500678A10 /* Creatures */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		5BAC4310227E0EA100D15CA9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,15 +451,13 @@
 		5BCA6F31203B20DC00B81376 /* Card */ = {
 			isa = PBXGroup;
 			children = (
-				5B2622CA228A64E100DFE0EE /* CardLibrary.swift */,
 				5B1AC39B203C435A00F3B921 /* Deck.swift */,
 				5BCA6F2B203A283200B81376 /* Card.swift */,
 				5B33A64B204116CF00CF2D76 /* SpellCard.swift */,
 				5BCA6F2D203A2AB400B81376 /* CreatureCard.swift */,
 				5B9484C522C4B3C800FA413C /* Sprites */,
 				5B9484C822C5182800FA413C /* Abilities */,
-				5BE0B0BA204F466C009DA26E /* Spells */,
-				5B35E5BF2051FB1500678A10 /* Creatures */,
+				5BA1E90222C7A12000B9C2C2 /* Library */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -484,6 +494,7 @@
 				5BA1E8F622C6D49E00B9C2C2 /* InnerStrengthSpell.swift */,
 				5BA1E8FE22C78EA300B9C2C2 /* InnerFireSpell.swift */,
 				5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */,
+				5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */,
 			);
 			path = Spells;
 			sourceTree = "<group>";
@@ -655,6 +666,7 @@
 				5B40054B22C55E1C005AABB6 /* BackstabSpell.swift in Sources */,
 				5B40054522C53FE8005AABB6 /* BanditCreature.swift in Sources */,
 				5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */,
+				5BA1E90422C81FF900B9C2C2 /* MassHysteriaSpell.swift in Sources */,
 				5B65EC0422BAB6BB00576F85 /* DecreaseCooldownAnimation.swift in Sources */,
 				5BA1E8EB22C678B400B9C2C2 /* HexSpell.swift in Sources */,
 				5B40054722C54069005AABB6 /* FireballSpell.swift in Sources */,

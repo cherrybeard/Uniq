@@ -9,10 +9,7 @@
 class HarmlessAffairSpell: SpellCard {
     
     init() {
-        super.init(
-            name: "Harmless Affair",
-            requiresTarget: false
-        )
+        super.init(name: "Harmless Affair")
         description = "Summon 0/4 Fairies into your melee positions."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             let spots = battle.spots.filter {

@@ -9,10 +9,7 @@
 class WhateverItWillBeSpell: SpellCard {
     
     init() {
-        super.init(
-            name: "Whatever It Will Be",
-            requiresTarget: false
-        )
+        super.init(name: "Whatever It Will Be")
         description = "Add a random creature card to your hand."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let card = CardLibrary.getRandomCard(filter: { $0 is CreatureCard } ) {

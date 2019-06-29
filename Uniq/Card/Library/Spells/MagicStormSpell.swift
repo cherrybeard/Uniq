@@ -11,10 +11,7 @@ class MagicStormSpell: SpellCard {
     static private let times: Int = 4
     
     init() {
-        super.init(
-            name: "Magic Storm",
-            requiresTarget: false
-        )
+        super.init(name: "Magic Storm")
         description = "Deals \(MagicStormSpell.damage) damage to \(MagicStormSpell.times) random targets."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             for _ in 1...MagicStormSpell.times {

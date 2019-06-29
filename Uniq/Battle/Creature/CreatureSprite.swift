@@ -9,8 +9,8 @@
 import SpriteKit
 
 class CreatureSprite: SKNode {
-    private static let width: Int = 90
-    private static let height: Int = 60
+    static let width: Int = 90
+    static let height: Int = 60
     private struct BORDER_COLOR {
         static let base = UIColor(rgb: 0x484644)
         static let interactive = UIColor(rgb: 0x775534)

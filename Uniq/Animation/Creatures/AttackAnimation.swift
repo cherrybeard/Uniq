@@ -11,13 +11,21 @@ import SpriteKit
 class AttackAnimation: Animation {
     private var creature: CreatureSprite
     private var targetYPos: CGFloat
+    private var targetXPos: CGFloat
     
     private var hitTarget: SKAction {
-        let hitY = targetYPos + 54 * (targetYPos < 0 ? 1 : -1)
+        let xSign = Int(creature.position.x - targetXPos).signum()
+        let hitX = targetXPos + CGFloat( (CreatureSprite.width - 6) * xSign )
+        
+        let ySign = Int(creature.position.y - targetYPos).signum()
+        let hitY = targetYPos + CGFloat( (CreatureSprite.height - 6) * ySign )
         
         let scaleUp = SKAction.scale(to: 1.15, duration: 0.2)
         let scaleBack = SKAction.scale(to: 1, duration: 0.1)
-        let move = SKAction.moveTo(y: hitY, duration: 0.1)
+        let move = SKAction.move(
+            to: CGPoint(x: hitX, y: hitY),
+            duration: 0.1
+        )
         move.timingMode = .easeOut
         let moveAndScale = SKAction.group([scaleBack, move])
         
@@ -39,6 +47,7 @@ class AttackAnimation: Animation {
     init(creature: CreatureSprite, target: CreatureSprite) {
         self.creature = creature
         targetYPos = target.position.y
+        targetXPos = target.position.x
     }
     
     override func play() {

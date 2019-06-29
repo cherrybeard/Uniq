@@ -46,7 +46,8 @@ class CardLibrary {
         "Mind Control": MindControlSpell(),
         "Inner Strength": InnerStrengthSpell(),
         "Inner Fire": InnerFireSpell(),
-        "Silence": SilenceSpell()
+        "Silence": SilenceSpell(),
+        "Mass Hysteria": MassHysteriaSpell()
     ]
     
     static func getCard(_ name: String) -> Card? {

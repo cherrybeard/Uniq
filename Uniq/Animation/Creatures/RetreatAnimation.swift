@@ -10,17 +10,17 @@ import SpriteKit
 
 class RetreatAnimation: Animation {
     private let creature: CreatureSprite
-    private let position: CGFloat
+    private let position: CGPoint
     private var action: SKAction {
         let pause = SKAction.wait(forDuration: 0.1)
-        let moveBack = SKAction.moveTo(y: position, duration: 0.5)
+        let moveBack = SKAction.move(to: position, duration: 0.5)
         moveBack.timingMode = .easeOut
         return SKAction.sequence([pause, moveBack])
     }
     
     init(creature: CreatureSprite, spot: Spot) {
         self.creature = creature
-        position = spot.position.y
+        position = spot.position
     }
     
     override func play() {
