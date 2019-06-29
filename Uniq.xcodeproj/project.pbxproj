@@ -83,6 +83,7 @@
 		5BA1E8FF22C78EA300B9C2C2 /* InnerFireSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E8FE22C78EA300B9C2C2 /* InnerFireSpell.swift */; };
 		5BA1E90122C791EA00B9C2C2 /* SilenceSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */; };
 		5BA1E90422C81FF900B9C2C2 /* MassHysteriaSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */; };
+		5BA1E90622C82BCD00B9C2C2 /* StaggerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90522C82BCD00B9C2C2 /* StaggerAnimation.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
@@ -193,6 +194,7 @@
 		5BA1E8FE22C78EA300B9C2C2 /* InnerFireSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerFireSpell.swift; sourceTree = "<group>"; };
 		5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceSpell.swift; sourceTree = "<group>"; };
 		5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MassHysteriaSpell.swift; sourceTree = "<group>"; };
+		5BA1E90522C82BCD00B9C2C2 /* StaggerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggerAnimation.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
@@ -293,17 +295,11 @@
 			isa = PBXGroup;
 			children = (
 				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
-				5B19083322B2600900CE8121 /* DamageAnimation.swift */,
-				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
 				5B253C3A22C365DB00D25927 /* BuffStatAnimation.swift */,
 				5B3732CA22C399C500985B8C /* SetActionTakenStateAnimation.swift */,
-				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
-				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
-				5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */,
-				5B3A29D422C28DC200CF1AE1 /* ResetCooldownAnimation.swift */,
-				5BA1E8E622C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift */,
-				5B19084822B6C29B00CE8121 /* SwapAnimation.swift */,
-				5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */,
+				5BA1E90922C82C0900B9C2C2 /* Swap */,
+				5BA1E90722C82BED00B9C2C2 /* Attack */,
+				5BA1E90822C82BFD00B9C2C2 /* Ability */,
 			);
 			path = Creatures;
 			sourceTree = "<group>";
@@ -401,6 +397,37 @@
 				5B35E5BF2051FB1500678A10 /* Creatures */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		5BA1E90722C82BED00B9C2C2 /* Attack */ = {
+			isa = PBXGroup;
+			children = (
+				5B19083322B2600900CE8121 /* DamageAnimation.swift */,
+				5B7E2D1C203EB7D30026B445 /* AttackAnimation.swift */,
+				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
+				5BA1E90522C82BCD00B9C2C2 /* StaggerAnimation.swift */,
+				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
+			);
+			path = Attack;
+			sourceTree = "<group>";
+		};
+		5BA1E90822C82BFD00B9C2C2 /* Ability */ = {
+			isa = PBXGroup;
+			children = (
+				5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */,
+				5B3A29D422C28DC200CF1AE1 /* ResetCooldownAnimation.swift */,
+				5BA1E8E622C63BB300B9C2C2 /* ReplaceAbilityAnimation.swift */,
+			);
+			path = Ability;
+			sourceTree = "<group>";
+		};
+		5BA1E90922C82C0900B9C2C2 /* Swap */ = {
+			isa = PBXGroup;
+			children = (
+				5B19084822B6C29B00CE8121 /* SwapAnimation.swift */,
+				5B19084522B6A01400CE8121 /* SwapResponseAnimation.swift */,
+			);
+			path = Swap;
 			sourceTree = "<group>";
 		};
 		5BAC4310227E0EA100D15CA9 /* Extensions */ = {
@@ -692,6 +719,7 @@
 				5B40056522C59F7B005AABB6 /* RecklessAssaultSpell.swift in Sources */,
 				5B9484C722C4F26700FA413C /* Interactives.swift in Sources */,
 				5BA1E8E922C63E2D00B9C2C2 /* BrawlSpell.swift in Sources */,
+				5BA1E90622C82BCD00B9C2C2 /* StaggerAnimation.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,
 				5B19084422B696A700CE8121 /* RetreatAnimation.swift in Sources */,
 				5BA1E8FF22C78EA300B9C2C2 /* InnerFireSpell.swift in Sources */,
