@@ -36,7 +36,17 @@ class CardLibrary {
         "Harmless Affair": HarmlessAffairSpell(),
         "Empathy": EmpathySpell(),
         "Anger": AngerSpell(),
-        "Tome Of Intelligence": TomeOfIntelligenceSpell()
+        "Tome Of Intelligence": TomeOfIntelligenceSpell(),
+        "Brawl": BrawlSpell(),
+        "Hex": HexSpell(),
+        "Holy Light": HolyLightSpell(),
+        "Chain Lightning": ChainLightningSpell(),
+        "Call of Battle": CallOfBattleSpell(),
+        "Lesser Destuction": LesserDestuctionSpell(),
+        "Mind Control": MindControlSpell(),
+        "Inner Strength": InnerStrengthSpell(),
+        "Inner Fire": InnerFireSpell(),
+        "Silence": SilenceSpell()
     ]
     
     static func getCard(_ name: String) -> Card? {

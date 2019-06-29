@@ -50,7 +50,7 @@ class Battle: SKNode {
         for _ in 1...2 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Tome Of Intelligence")
+        _ = addToHand(for: human, cardName: "Silence")
         
         startTurn()
     }
@@ -348,7 +348,21 @@ class Battle: SKNode {
         }
     }
     
-    func replaceAbility(of creature: Creature, with ability: ActiveAbility) {
+    func setStat(_ stat: StatType, to amount: Int, at spot: Spot) {
+        if let creature = spot.creature {
+            _ = creature.setStat(stat: stat, to: amount)
+            
+            animationPipeline.add(
+                BuffStatAnimation(
+                    creature: creature.sprite,
+                    stat: stat,
+                    to: amount
+                )
+            )
+        }
+    }
+    
+    func replaceAbility(of creature: Creature, with ability: ActiveAbility?) {
         creature.ability = ability
         animationPipeline.add(
             ReplaceAbilityAnimation(creature: creature.sprite, ability: ability)

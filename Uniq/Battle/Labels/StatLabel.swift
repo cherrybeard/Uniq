@@ -75,17 +75,16 @@ class StatLabel: SKNode {   // OBSOLETE
         }
     }
     
-    func setValue(to newValue: Int, changeBase: Bool = true, changeMax: Bool = true) {
-        value.current = newValue
-        if changeMax { value.max = newValue }
-        if changeBase { value.base = newValue }
-        redraw()
-    }
-    
-    func changeValue(by amount: Int, changeMax: Bool = false) {
+    func changeValue(by amount: Int, changeMax: Bool = true) {
         value.current += amount
         if changeMax { value.max += amount }
         redraw()
     }
     
+    func changeValue(to amount: Int, changeMax: Bool = true, changeBase: Bool = true) {
+        value.current = amount
+        if changeMax { value.max = amount }
+        if changeBase { value.base = amount }
+        redraw()
+    }
 }

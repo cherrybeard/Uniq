@@ -12,9 +12,13 @@ class ReplaceAbilityAnimation: Animation {
     private let creature: CreatureSprite
     private let cooldown: Int
     
-    init(creature: CreatureSprite, ability: ActiveAbility) {
+    init(creature: CreatureSprite, ability: ActiveAbility?) {
         self.creature = creature
-        cooldown = ability.cooldown
+        if ability != nil {
+            cooldown = ability!.cooldown
+        } else {
+            cooldown = -1
+        }
     }
     
     override func play() {

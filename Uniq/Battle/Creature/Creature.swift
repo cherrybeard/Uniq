@@ -61,6 +61,18 @@ class Creature {
         }
     }
     
+    func setStat(stat: StatType, to amount: Int) {
+        switch stat {
+        case .attack:
+            attack = amount
+        case .health:
+            health = amount
+            maxHealth = amount
+        default:
+            return
+        }
+    }
+    
     func dealDamage(_ amount: Int) {
         health -= amount
     }

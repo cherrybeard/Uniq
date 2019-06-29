@@ -13,6 +13,7 @@ struct SpotsFilters {
     // Something like x = Filter([Filter.filterPreset1, Filter.filterPreset2, ...])
     static let none: SpotsFilter = { _ in false }
     static let all: SpotsFilter = { _ in true }
+    static let allCreatures: SpotsFilter = { $0.creature != nil }
     static let owner: SpotsFilter = { $0.owner.isActive }
     static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
     static let ownerCreatures: SpotsFilter = { $0.owner.isActive && ($0.creature != nil) }

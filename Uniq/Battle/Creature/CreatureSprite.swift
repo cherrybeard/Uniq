@@ -54,8 +54,8 @@ class CreatureSprite: SKNode {
         
         let xPos = CreatureSprite.width/2 - 6
         let yPos = CreatureSprite.height/2 - 10
-        attackLabel.setValue(to: card.attack)
-        healthLabel.setValue(to: card.health)
+        attackLabel.changeValue(to: card.attack)
+        healthLabel.changeValue(to: card.health)
         attackLabel.position = CGPoint(x: -xPos, y: -yPos)
         healthLabel.position = CGPoint(x: +xPos, y: -yPos)
         addChild(attackLabel)

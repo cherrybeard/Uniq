@@ -21,6 +21,7 @@ class BuffStatAnimation: Animation {
     }
     private let label: StatLabel
     private let amount: Int
+    private let absolute: Bool
     
     init(creature: CreatureSprite, stat: StatType, by amount: Int) {
         switch stat {
@@ -30,11 +31,27 @@ class BuffStatAnimation: Animation {
             label = creature.healthLabel
         }
         self.amount = amount
+        self.absolute = false
+    }
+    
+    init(creature: CreatureSprite, stat: StatType, to amount: Int) {
+        switch stat {
+        case .attack:
+            label = creature.attackLabel
+        default:
+            label = creature.healthLabel
+        }
+        self.amount = amount
+        self.absolute = true
     }
     
     override func play() {
         label.run(BuffStatAnimation.scaleUp) {
-            self.label.changeValue(by: self.amount, changeMax: true)
+            if self.absolute {
+                self.label.changeValue(to: self.amount, changeBase: false)
+            } else {
+                self.label.changeValue(by: self.amount)
+            }
             self.label.run(BuffStatAnimation.scaleDown) {
                 self.state = .finished
             }

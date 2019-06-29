@@ -60,6 +60,12 @@
         },{
             "card": "Tome Of Intelligence",
             "amount": 1
+        },{
+            "card": "Holy Light",
+            "amount": 1
+        },{
+            "card": "Call of Battle",
+            "amount": 1
         }
     ]
 }
