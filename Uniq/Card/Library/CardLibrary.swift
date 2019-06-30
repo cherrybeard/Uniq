@@ -40,6 +40,7 @@ class CardLibrary {
         "Mass Hysteria": MassHysteriaSpell(),
         "Mass Recall": MassRecallSpell(),
         "Mind Control": MindControlSpell(),
+        "Mirror Image": MirrorImageSpell(),
         "Recall": RecallSpell(),
         "Taking Aim": TakingAimSpell(),
         "Reckless Assault": RecklessAssaultSpell(),

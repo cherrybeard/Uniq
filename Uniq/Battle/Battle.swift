@@ -53,12 +53,9 @@ class Battle: SKNode {
         }
         
         for _ in 1...3 {
-            //_ = draw(for: human)
+            _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Fairy")
-        _ = addToHand(for: human, cardName: "Thug")
-        _ = addToHand(for: human, cardName: "Fairy")
-        _ = addToHand(for: human, cardName: "Secret Advantage")
+        _ = addToHand(for: human, cardName: "Mirror Image")
         
         startTurn()
     }

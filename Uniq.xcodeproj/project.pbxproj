@@ -11,6 +11,7 @@
 		5B11821322C8888E007D963A /* RecallAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821222C8888E007D963A /* RecallAnimation.swift */; };
 		5B11821522C89374007D963A /* SecretAdvantageSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821422C89374007D963A /* SecretAdvantageSpell.swift */; };
 		5B11821722C8BB28007D963A /* BuffCardStatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821622C8BB28007D963A /* BuffCardStatAnimation.swift */; };
+		5B11821922C927A6007D963A /* MirrorImageSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821822C927A6007D963A /* MirrorImageSpell.swift */; };
 		5B19083422B2600900CE8121 /* DamageAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083322B2600900CE8121 /* DamageAnimation.swift */; };
 		5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083522B2760E00CE8121 /* CreatureSprite.swift */; };
 		5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083722B282A300CE8121 /* SummonAnimation.swift */; };
@@ -123,6 +124,7 @@
 		5B11821222C8888E007D963A /* RecallAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecallAnimation.swift; sourceTree = "<group>"; };
 		5B11821422C89374007D963A /* SecretAdvantageSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretAdvantageSpell.swift; sourceTree = "<group>"; };
 		5B11821622C8BB28007D963A /* BuffCardStatAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuffCardStatAnimation.swift; sourceTree = "<group>"; };
+		5B11821822C927A6007D963A /* MirrorImageSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorImageSpell.swift; sourceTree = "<group>"; };
 		5B19083322B2600900CE8121 /* DamageAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageAnimation.swift; sourceTree = "<group>"; };
 		5B19083522B2760E00CE8121 /* CreatureSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSprite.swift; sourceTree = "<group>"; };
 		5B19083722B282A300CE8121 /* SummonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonAnimation.swift; sourceTree = "<group>"; };
@@ -522,6 +524,7 @@
 				5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */,
 				5B40055822C5903F005AABB6 /* MassRecallSpell.swift */,
 				5BA1E8F422C6C5FC00B9C2C2 /* MindControlSpell.swift */,
+				5B11821822C927A6007D963A /* MirrorImageSpell.swift */,
 				5BE0B0C5205050D8009DA26E /* RecallSpell.swift */,
 				5B40056422C59F7B005AABB6 /* RecklessAssaultSpell.swift */,
 				5B11821422C89374007D963A /* SecretAdvantageSpell.swift */,
@@ -741,6 +744,7 @@
 				5BCA6F0C2038911000B81376 /* AppDelegate.swift in Sources */,
 				5BE889DB229704B2002B628F /* SKAction.swift in Sources */,
 				5B40056322C59C73005AABB6 /* WaitAnimation.swift in Sources */,
+				5B11821922C927A6007D963A /* MirrorImageSpell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
