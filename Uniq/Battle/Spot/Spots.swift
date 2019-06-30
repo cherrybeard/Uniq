@@ -10,22 +10,29 @@ import SpriteKit
 import GameplayKit
 
 class Spots: SKNode, Collection, Interactive {
+    
+    private enum SpriteState: String, CaseIterable {
+        case targetted = "targetted"
+        case targetable = "targetable"
+        case base = "base"
+    }
+    
     private static let hrzMargin: Int = 113
     private static let vrtMargin: Int = 90
     private static let marginFromCenter: Int = 78
     private static let start: Int = 1
     private static let end: Int = 13
-    private static let strokeColor: [InteractiveStatus: UIColor] = [
-        .base: UIColor(rgb: 0x000000, alpha: 0),
+    private static let strokeColor: [SpriteState: UIColor] = [
+        .targetted: UIColor(rgb: 0x1A54FB),
         .targetable: UIColor(rgb: 0x3752A1),
-        .targetted: UIColor(rgb: 0x1A54FB)
+        .base: UIColor(rgb: 0x000000, alpha: 0)
     ]
     
     private var spots: [Spot] = []
     var startIndex: Int = start
     var endIndex: Int = end
     
-    var status: Set<InteractiveStatus> = [] { didSet { redraw() } }
+    var state: Set<InteractiveState> = [] { didSet { redraw() } }
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
     private let border = SKShapeNode(
@@ -142,7 +149,7 @@ class Spots: SKNode, Collection, Interactive {
         for index in attackOrder {
             let attackerSpot = spots[index-1]
             if let attacker = attackerSpot.creature {
-                if !attacker.isActionTaken && (attacker.attack > 0) && (attacker.health > 0) {
+                if !attacker.isExhausted && (attacker.attack > 0) && (attacker.health > 0) {
                     return attackerSpot
                 }
             }
@@ -167,11 +174,15 @@ class Spots: SKNode, Collection, Interactive {
     }
     
     func redraw() {
-        for s: InteractiveStatus in [.targetted, .targetable, .base] {
-            if status.contains(s) || (s == .base) {
-                border.strokeColor = Spots.strokeColor[s]!
-                break
+        var spriteState: SpriteState = .base
+        for s in SpriteState.allCases {
+            if let interactiveState = InteractiveState(rawValue: s.rawValue) {
+                if state.contains(interactiveState) {
+                    spriteState = s
+                    break
+                }
             }
         }
+        border.strokeColor = Spots.strokeColor[spriteState]!
     }
 }

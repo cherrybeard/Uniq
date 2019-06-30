@@ -8,25 +8,24 @@
 
 import SpriteKit
 
-enum AbilityLabelState {
-    case base, ready
-}
-
 class AbilityLabel: SKNode {
-    private static let textColor: [AbilityLabelState: UIColor] = [
+    
+    enum State {
+        case base, ready
+    }
+    
+    private static let textColor: [State: UIColor] = [
         .base: UIColor(rgb: 0x675F56),
         .ready: UIColor(rgb: 0xE3B47B)
     ]
-    private static let strokeColor: [AbilityLabelState: UIColor] = [
+    private static let strokeColor: [State: UIColor] = [
         .base: UIColor(rgb: 0x484644),
         .ready: UIColor(rgb: 0xC69F78)
     ]
     
     var cooldown: Int = -1 { didSet { updateVisibility() } }
     var remaining: Int = -1 { didSet { redraw() } }
-    
-    private var _isDisabled: Bool = false { didSet { redraw() } }
-    var isDisabled: Bool { return _isDisabled }
+    var isDimmed: Bool = false { didSet { redraw() } }
     
     private let border = SKShapeNode(circleOfRadius: 9)
     private let label = SKLabelNode()
@@ -57,9 +56,9 @@ class AbilityLabel: SKNode {
     }
     
     private func redraw() {
-        label.alpha = isDisabled ? 0.5 : 1
+        label.alpha = isDimmed ? 0.5 : 1
         label.text = String(remaining)
-        let state: AbilityLabelState = ((remaining == 0) && !isDisabled) ? .ready : .base
+        let state: State = ((remaining == 0) && !isDimmed) ? .ready : .base
         label.fontColor = AbilityLabel.textColor[state]!
         border.strokeColor = AbilityLabel.strokeColor[state]!
     }
@@ -72,13 +71,5 @@ class AbilityLabel: SKNode {
         if ( remaining > 0 ) {
             remaining -= 1
         }
-    }
-    
-    func enable() {
-        _isDisabled = false
-    }
-    
-    func disable() {
-        _isDisabled = true
     }
 }

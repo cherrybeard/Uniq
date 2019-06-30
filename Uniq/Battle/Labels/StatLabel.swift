@@ -44,7 +44,7 @@ class StatLabel: SKNode {
     }
     private var isBuffed: Bool { return value.max > value.base }
     private var isDamaged: Bool { return value.current < value.max }
-    var isDimmed: Bool = false
+    var isDimmed: Bool = false { didSet { redraw() } }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

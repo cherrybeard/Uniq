@@ -14,7 +14,10 @@ class BerserkSpell: SpellCard {
             requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
-        description = "Force enemy creature to deal damage to all creatures next to it. Exaust berserk creature."
+        description = """
+            Force enemy creature to deal damage to all creatures next to it. Exhaust berserk \
+            creature.
+        """
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 let neighbors = battle.spots.neighbors(of: spot!, sameOwner: false)
@@ -23,7 +26,7 @@ class BerserkSpell: SpellCard {
                     for neighborSpot in neighbors {
                         battle.attack(from: spot!, to: neighborSpot)
                     }
-                    creature.isActionTaken = true
+                    creature.isExhausted = true
                     return true
                 }
             }

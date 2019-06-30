@@ -17,12 +17,19 @@ enum ColumnType: Int {
 }
 
 class Spot: SKNode, Interactive {
+    
+    private enum SpriteState: String, CaseIterable {
+        case targetted = "targetted"
+        case targetable = "targetable"
+        case base = "base"
+    }
+    
     static let width: Int = 86
     static let height: Int = 56
-    private static let strokeColor: [InteractiveStatus: UIColor] = [
-        .base: UIColor(rgb: 0x1D1D1C),
+    private static let strokeColor: [SpriteState: UIColor] = [
         .targetted: UIColor(rgb: 0x3065FF),
-        .targetable: UIColor(rgb: 0x3752A1)
+        .targetable: UIColor(rgb: 0x3752A1),
+        .base: UIColor(rgb: 0x1D1D1C)
     ]
     
     private let border = SKShapeNode(
@@ -30,9 +37,9 @@ class Spot: SKNode, Interactive {
         cornerRadius: 3
     )
     
-    var status: Set<InteractiveStatus> = [] {
+    var state: Set<InteractiveState> = [] {
         didSet {
-            creature?.sprite.status = status
+            creature?.sprite.state = state
             redraw()
         }
     }
@@ -76,12 +83,16 @@ class Spot: SKNode, Interactive {
     }
     
     private func redraw() {
-        for s: InteractiveStatus in [.targetted, .targetable, .base] {
-            if status.contains(s) || (s == .base) {
-                border.strokeColor = Spot.strokeColor[s]!
-                break
+        var spriteState: SpriteState = .base
+        for s in SpriteState.allCases {
+            if let interactiveState = InteractiveState(rawValue: s.rawValue) {
+                if state.contains(interactiveState) {
+                    spriteState = s
+                    break
+                }
             }
         }
+        border.strokeColor = Spot.strokeColor[spriteState]!
     }
     
     required init?(coder aDecoder: NSCoder) {

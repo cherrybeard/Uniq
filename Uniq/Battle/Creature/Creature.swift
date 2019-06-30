@@ -20,7 +20,7 @@ class Creature {
     var isDamaged: Bool { return health < maxHealth }
     //var activeAbilityCooldown: Int
 
-    var isActionTaken: Bool = true
+    var isExhausted: Bool = true
     
     init(of card: CreatureCard, at spot: Spot) {
         self.card = card
@@ -37,10 +37,10 @@ class Creature {
     
     /*
     func useAbility(battle: Battle) -> Bool {
-        if (ability?.left == 0) && !isActionTaken {
+        if (ability?.left == 0) && !isExhausted {
             if ability!.effect(battle, spot) {
                 //_abilityLabel.resetCooldown()
-                isActionTaken = true
+                isExhausted = true
                 return true
             }
         }

@@ -15,11 +15,11 @@ class WhipSpell: SpellCard {
             requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
-        description = "Deal \(WhipSpell.damage) damage to your creature and remove its exaustion."
+        description = "Deal \(WhipSpell.damage) damage to your creature and remove its exhaustion."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 battle.dealDamage(WhipSpell.damage, to: spot!)
-                battle.setActionTakenState(of: creature, toTaken: false)
+                battle.setExhaustion(of: creature, to: false)
                 return true
             }
             return false

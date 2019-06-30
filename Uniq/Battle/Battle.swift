@@ -106,7 +106,7 @@ class Battle: SKNode {
     func fight() {
         if let attackerSpot = spots.nextAttacker(activePlayer: activePlayer.type) {
             if let attacker = attackerSpot.creature {
-                setActionTakenState(of: attacker, toTaken: true)
+                setExhaustion(of: attacker, to: true)
                 if let targetSpot = spots.target(for: attackerSpot) {
                     attack( from: attackerSpot, to: targetSpot )
                 }
@@ -121,7 +121,7 @@ class Battle: SKNode {
         for spot in spots {
             if let creature = spot.creature {
                 decreaseAbilityCooldown(of: creature)
-                setActionTakenState(of: creature, toTaken: false)
+                setExhaustion(of: creature, to: false)
             }
         }
         passButton.readyToFight = false
@@ -211,7 +211,7 @@ class Battle: SKNode {
         )
         
         if card.hasRush {
-            setActionTakenState(of: creature, toTaken: false)
+            setExhaustion(of: creature, to: false)
         }
         
 //        for spot in spots {
@@ -251,7 +251,7 @@ class Battle: SKNode {
         
         if let primaryCreature = targetSpot.creature {
             // Disable primary creature actions for this turn
-            setActionTakenState(of: primaryCreature, toTaken: true)
+            setExhaustion(of: primaryCreature, to: true)
             
             // Animate movement
             if let secondaryCreature = sourceSpot.creature {
@@ -267,10 +267,10 @@ class Battle: SKNode {
         
     }
     
-    func setActionTakenState(of creature: Creature, toTaken: Bool) {
-        creature.isActionTaken = toTaken
+    func setExhaustion(of creature: Creature, to exhausted: Bool) {
+        creature.isExhausted = exhausted
         animationPipeline.add(
-            SetActionTakenStateAnimation(creature: creature.sprite, toTaken: toTaken)
+            SetExhaustionAnimation(creature: creature.sprite, to: exhausted)
         )
     }
     
@@ -376,8 +376,8 @@ class Battle: SKNode {
     
     func useActiveAbility(of creature: Creature) -> Bool {
         if let ability = creature.ability {
-            if !creature.isActionTaken && (ability.left == 0) {
-                setActionTakenState(of: creature, toTaken: true)
+            if !creature.isExhausted && (ability.left == 0) {
+                setExhaustion(of: creature, to: true)
                 ability.left = ability.cooldown
                 animationPipeline.add(
                     ResetCooldownAnimation(creature: creature.sprite)
@@ -409,10 +409,10 @@ class Battle: SKNode {
         let activePlayerSpots = spots.filter { $0.owner == activePlayer }
         for spot in activePlayerSpots {
             if let creature = spot.creature {
-                if !creature.isActionTaken {
-                    spot.status.insert(.interactive)
+                if !creature.isExhausted {
+                    spot.state.insert(.interactive)
                     if creature.ability?.left == 0 {
-                        spot.status.insert(.activatable)
+                        spot.state.insert(.activatable)
                     }
                 }
             }
@@ -424,9 +424,9 @@ class Battle: SKNode {
                     let targets = interactives.filter(sprite.targetsFilter)
                     if targets.count <= 0 { continue }
                 }
-                sprite.status.insert(.interactive)
+                sprite.state.insert(.interactive)
             }
-            passButton.status.insert(.interactive)
+            passButton.state.insert(.interactive)
         }
     }
     

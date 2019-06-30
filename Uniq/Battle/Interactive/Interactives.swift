@@ -6,7 +6,7 @@
 //  Copyright © 2019 Steven Gusev. All rights reserved.
 //
 
-class Interactives {
+class Interactives {    // TODO: Inherit Collection
     private var interactives: [Interactive] = []
     
     func filter(_ filter: (Interactive) -> Bool) -> [Interactive] {
@@ -25,22 +25,22 @@ class Interactives {
         interactives.append(item)
     }
     
-    func addStatus(_ status: InteractiveStatus, filter: (Interactive) -> Bool) {
+    func addStatus(_ status: InteractiveState, filter: (Interactive) -> Bool) {
         let targets = interactives.filter(filter)
         for var target in targets {
-            target.status.insert(status)
+            target.state.insert(status)
         }
     }
     
-    func removeStatus(_ status: InteractiveStatus) {
+    func removeStatus(_ status: InteractiveState) {
         for var target in interactives {
-            target.status.remove(status)
+            target.state.remove(status)
         }
     }
     
     func cleanAllStatus() {
         for var interactive in interactives {
-            interactive.status = []
+            interactive.state = []
         }
     }
 }

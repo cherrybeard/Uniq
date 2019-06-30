@@ -9,18 +9,29 @@
 import SpriteKit
 
 class CreatureSprite: SKNode {
+    
+    private enum SpriteState: String, CaseIterable {
+        case targetted = "targetted"
+        case targetable = "targetable"
+        case interacted = "interacted"
+        case interactive = "interactive"
+        case base = "base"
+        case exhausted = "exhausted"
+    }
+    
     static let width: Int = 90
     static let height: Int = 60
-    private static let strokeColor: [InteractiveStatus: UIColor] = [
-        .base: UIColor(rgb: 0x484644),
-        .interactive: UIColor(rgb: 0x775534),
-        .interacted: UIColor(rgb: 0xAC7D4E),
+    private static let strokeColor: [SpriteState: UIColor] = [
+        .targetted: UIColor(rgb: 0x1A54FB),
         .targetable: UIColor(rgb: 0x3752A1),
-        .targetted: UIColor(rgb: 0x1A54FB)
+        .interacted: UIColor(rgb: 0xAC7D4E),
+        .interactive: UIColor(rgb: 0x775534),
+        .base: UIColor(rgb: 0x483726),
+        .exhausted: UIColor(rgb: 0x32302F)
     ]
     private static let fillColor: UIColor = UIColor(rgb: 0x111111)
     
-    var status: Set<InteractiveStatus> = [] { didSet { redraw() } }
+    var state: Set<InteractiveState> = [] { didSet { redraw() } }
     
     private let border = SKShapeNode(
         rectOf: CGSize(width: CreatureSprite.width, height: CreatureSprite.height),
@@ -30,11 +41,11 @@ class CreatureSprite: SKNode {
     let healthLabel = StatLabel(type: .health)
     let attackLabel = StatLabel(type: .attack)
     let abilityLabel = AbilityLabel()
-    
-    var activeAbilityCooldown: Int {
-        get { return abilityLabel.remaining }
-        set { abilityLabel.remaining = newValue }
-    }
+    var isExhausted: Bool = true { didSet {
+        attackLabel.isDimmed = isExhausted
+        abilityLabel.isDimmed = isExhausted
+        redraw()
+    } }
     
     init(of card: CreatureCard) {
         super.init()
@@ -70,12 +81,19 @@ class CreatureSprite: SKNode {
     }
     
     private func redraw() {
-        for s: InteractiveStatus in [.targetted, .targetable, .interacted, .interactive, .base] {
-            if status.contains(s) || (s == .base) {
-                border.strokeColor = CreatureSprite.strokeColor[s]!
+        var spriteState: SpriteState = .exhausted
+        for s in SpriteState.allCases {
+            if let interactiveState = InteractiveState(rawValue: s.rawValue) {
+                if state.contains(interactiveState) {
+                    spriteState = s
+                    break
+                }
+            } else if ((s == .base) && !isExhausted) {
+                spriteState = s
                 break
             }
         }
+        border.strokeColor = CreatureSprite.strokeColor[spriteState]!
     }
     
 }

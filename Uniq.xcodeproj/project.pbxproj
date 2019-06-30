@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B11821122C8746E007D963A /* SetExhaustionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821022C8746D007D963A /* SetExhaustionAnimation.swift */; };
 		5B19083422B2600900CE8121 /* DamageAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083322B2600900CE8121 /* DamageAnimation.swift */; };
 		5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083522B2760E00CE8121 /* CreatureSprite.swift */; };
 		5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083722B282A300CE8121 /* SummonAnimation.swift */; };
@@ -29,7 +30,6 @@
 		5B35E5D02056D14C00678A10 /* FirelinkPriestCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5CF2056D14C00678A10 /* FirelinkPriestCreature.swift */; };
 		5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5D12056D92C00678A10 /* MysticLancerCreature.swift */; };
 		5B35E5D42057034E00678A10 /* WitchCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B35E5D32057034E00678A10 /* WitchCreature.swift */; };
-		5B3732CB22C399C500985B8C /* SetActionTakenStateAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3732CA22C399C500985B8C /* SetActionTakenStateAnimation.swift */; };
 		5B3A29C522C00E1100CF1AE1 /* SpellCardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29C422C00E1100CF1AE1 /* SpellCardSprite.swift */; };
 		5B3A29C722C00E4000CF1AE1 /* CreatureCardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29C622C00E4000CF1AE1 /* CreatureCardSprite.swift */; };
 		5B3A29CA22C1648900CF1AE1 /* DiscardCardAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3A29C922C1648900CF1AE1 /* DiscardCardAnimation.swift */; };
@@ -116,6 +116,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B11821022C8746D007D963A /* SetExhaustionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetExhaustionAnimation.swift; sourceTree = "<group>"; };
 		5B19083322B2600900CE8121 /* DamageAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageAnimation.swift; sourceTree = "<group>"; };
 		5B19083522B2760E00CE8121 /* CreatureSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSprite.swift; sourceTree = "<group>"; };
 		5B19083722B282A300CE8121 /* SummonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonAnimation.swift; sourceTree = "<group>"; };
@@ -138,7 +139,6 @@
 		5B35E5CF2056D14C00678A10 /* FirelinkPriestCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirelinkPriestCreature.swift; sourceTree = "<group>"; };
 		5B35E5D12056D92C00678A10 /* MysticLancerCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MysticLancerCreature.swift; sourceTree = "<group>"; };
 		5B35E5D32057034E00678A10 /* WitchCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WitchCreature.swift; sourceTree = "<group>"; };
-		5B3732CA22C399C500985B8C /* SetActionTakenStateAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetActionTakenStateAnimation.swift; sourceTree = "<group>"; };
 		5B3A29C422C00E1100CF1AE1 /* SpellCardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellCardSprite.swift; sourceTree = "<group>"; };
 		5B3A29C622C00E4000CF1AE1 /* CreatureCardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureCardSprite.swift; sourceTree = "<group>"; };
 		5B3A29C922C1648900CF1AE1 /* DiscardCardAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardCardAnimation.swift; sourceTree = "<group>"; };
@@ -296,7 +296,7 @@
 			children = (
 				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
 				5B253C3A22C365DB00D25927 /* BuffStatAnimation.swift */,
-				5B3732CA22C399C500985B8C /* SetActionTakenStateAnimation.swift */,
+				5B11821022C8746D007D963A /* SetExhaustionAnimation.swift */,
 				5BA1E90922C82C0900B9C2C2 /* Swap */,
 				5BA1E90722C82BED00B9C2C2 /* Attack */,
 				5BA1E90822C82BFD00B9C2C2 /* Ability */,
@@ -645,7 +645,6 @@
 				5B4F7E792287D0FE00252113 /* Player.swift in Sources */,
 				5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */,
 				5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */,
-				5B3732CB22C399C500985B8C /* SetActionTakenStateAnimation.swift in Sources */,
 				5B40055D22C59383005AABB6 /* WhateverItWillBeSpell.swift in Sources */,
 				5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */,
 				5B35E5CE2056BA6100678A10 /* RoyalAlchemistCreature.swift in Sources */,
@@ -714,6 +713,7 @@
 				5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
+				5B11821122C8746E007D963A /* SetExhaustionAnimation.swift in Sources */,
 				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,
 				5B40054D22C565C5005AABB6 /* TakingAimSpell.swift in Sources */,
 				5B40056522C59F7B005AABB6 /* RecklessAssaultSpell.swift in Sources */,

@@ -49,9 +49,9 @@ class BattleScene: SKScene {
                 // TODO: join Tapped with sourceNode
                 // TODO: Move checking interactive to the touchesNodes filter above
                 if var interactiveNode = node as? Interactive {
-                    if interactiveNode.status.contains(.interactive) {
+                    if interactiveNode.state.contains(.interactive) {
                         var wasActivated = false
-                        if interactiveNode.status.contains(.activatable) {
+                        if interactiveNode.state.contains(.activatable) {
                             if let spot = interactiveNode as? Spot {
                                 if let creature = spot.creature {
                                     wasActivated = true
@@ -70,13 +70,13 @@ class BattleScene: SKScene {
                         battle.interactives.cleanAllStatus()
                         
                         // highlight itself
-                        interactiveNode.status.insert(.interacted)
-                        if wasActivated { interactiveNode.status.insert(.activated) }
+                        interactiveNode.state.insert(.interacted)
+                        if wasActivated { interactiveNode.state.insert(.activated) }
                         
                         // highlight targets, and apply active targeting to itself
                         battle.interactives.addStatus(.targetable, filter: interactiveNode.targetsFilter)
-                        if interactiveNode.status.contains(.targetable) {
-                            interactiveNode.status.insert(.targetted)
+                        if interactiveNode.state.contains(.targetable) {
+                            interactiveNode.state.insert(.targetted)
                         }
                     }
                 }
@@ -94,10 +94,10 @@ class BattleScene: SKScene {
             battle.interactives.removeStatus(.targetted)
             for node in touchedNodes {
                 if var interactiveNode = node as? Interactive {
-                    if interactiveNode.status.contains(.targetable) {
-                        interactiveNode.status.insert(.targetted)
+                    if interactiveNode.state.contains(.targetable) {
+                        interactiveNode.state.insert(.targetted)
                     }
-                    if interactiveNode.status.contains(.activated) {
+                    if interactiveNode.state.contains(.activated) {
                         stopTask = false
                     }
                 }
@@ -115,10 +115,10 @@ class BattleScene: SKScene {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
             
-            if let source = battle.interactives.first(where: { $0.status.contains(.interacted) }) {
+            if let source = battle.interactives.first(where: { $0.state.contains(.interacted) }) {
                 for node in touchedNodes {
                     if var interactiveNode = node as? Interactive {
-                        if interactiveNode.status.contains(.targetted) {
+                        if interactiveNode.state.contains(.targetted) {
                             // find out what source node type is
                             if let sourceSpot = source as? Spot {
                                 if let targetSpot = node as? Spot {
