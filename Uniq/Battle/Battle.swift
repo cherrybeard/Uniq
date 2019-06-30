@@ -55,7 +55,7 @@ class Battle: SKNode {
         for _ in 1...3 {
             _ = draw(for: human)
         }
-        //_ = addToHand(for: human, cardName: "Berserk")
+        //_ = addToHand(for: human, cardName: "Recall")
         
         startTurn()
     }
@@ -323,10 +323,14 @@ class Battle: SKNode {
         }
     }
     
-    func kill(at spot: Spot) {
+    func kill(at spot: Spot, killAnimation: Bool = true) {
         if let creature = spot.creature {
             spot.creature = nil
-            animationPipeline.add( DeathAnimation(creature: creature.sprite) )
+            if killAnimation {
+                animationPipeline.add( DeathAnimation(creature: creature.sprite) )
+            } else {
+                animationPipeline.add( RecallAnimation(creature: creature.sprite) )
+            }
         }
     }
     

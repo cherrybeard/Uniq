@@ -17,7 +17,7 @@ class HexSpell: SpellCard {
         )
         description = "Transform target creature into \(HexSpell.creatureName)."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
-            battle.kill(at: spot!)
+            battle.kill(at: spot!, killAnimation: false)
             battle.summon(HexSpell.creatureName, to: spot!.index)
             return true
         }

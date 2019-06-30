@@ -16,7 +16,7 @@ class RecallSpell: SpellCard {
         description = "Recalls allied creature back to hand."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
-                battle.kill(at: spot!)  // TODO: Replace with remove() to remove silently
+                battle.kill(at: spot!, killAnimation: false)  // TODO: Replace with remove() to remove silently
                 let card = battle.addToHand(for: battle.activePlayer, cardName: creature.card.name)
                 return (card != nil)
             }

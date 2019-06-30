@@ -12,8 +12,8 @@ class DeathAnimation: Animation {
     private let creature: CreatureSprite
     private static var action: SKAction {
         let shaking = SKAction.shake(duration: 0.5, amplitudeX: 5, amplitudeY: 5)
-        let targetFadeOut = SKAction.fadeOut(withDuration: 1)
-        return SKAction.group([shaking, targetFadeOut])
+        let fadeOut = SKAction.fadeOut(withDuration: 1)
+        return SKAction.group([shaking, fadeOut])
     }
     
     init(creature: CreatureSprite) {

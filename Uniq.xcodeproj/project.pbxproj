@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B11821122C8746E007D963A /* SetExhaustionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821022C8746D007D963A /* SetExhaustionAnimation.swift */; };
+		5B11821322C8888E007D963A /* RecallAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821222C8888E007D963A /* RecallAnimation.swift */; };
 		5B19083422B2600900CE8121 /* DamageAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083322B2600900CE8121 /* DamageAnimation.swift */; };
 		5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083522B2760E00CE8121 /* CreatureSprite.swift */; };
 		5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083722B282A300CE8121 /* SummonAnimation.swift */; };
@@ -117,6 +118,7 @@
 
 /* Begin PBXFileReference section */
 		5B11821022C8746D007D963A /* SetExhaustionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetExhaustionAnimation.swift; sourceTree = "<group>"; };
+		5B11821222C8888E007D963A /* RecallAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecallAnimation.swift; sourceTree = "<group>"; };
 		5B19083322B2600900CE8121 /* DamageAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageAnimation.swift; sourceTree = "<group>"; };
 		5B19083522B2760E00CE8121 /* CreatureSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSprite.swift; sourceTree = "<group>"; };
 		5B19083722B282A300CE8121 /* SummonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonAnimation.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				5B19084322B696A700CE8121 /* RetreatAnimation.swift */,
 				5BA1E90522C82BCD00B9C2C2 /* StaggerAnimation.swift */,
 				5B19084122B4DAB600CE8121 /* DeathAnimation.swift */,
+				5B11821222C8888E007D963A /* RecallAnimation.swift */,
 			);
 			path = Attack;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				5B40054722C54069005AABB6 /* FireballSpell.swift in Sources */,
 				5BCA6F2C203A283200B81376 /* Card.swift in Sources */,
 				5B3A29CC22C1994B00CF1AE1 /* RepositionHandAnimation.swift in Sources */,
+				5B11821322C8888E007D963A /* RecallAnimation.swift in Sources */,
 				5B40055B22C59220005AABB6 /* DoubleDrawSpell.swift in Sources */,
 				5BCA6F2E203A2AB400B81376 /* CreatureCard.swift in Sources */,
 				5BA1E8E322C631A900B9C2C2 /* AngerSpell.swift in Sources */,
