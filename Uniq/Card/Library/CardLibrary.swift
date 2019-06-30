@@ -11,11 +11,12 @@ class CardLibrary {
     private static let cards: [String: Card] = [
         
         // Creatures
-        "Yletia Pirate": YletiaPirateCreature(),
-        "Firelink Priest": FirelinkPriestCreature(),
-        "Fairy": FairyCreature(),
-        "Thug": ThugCreature(),
         "Bandit": BanditCreature(),
+        "Elven Archer": ElvenArcherCreature(),
+        "Fairy": FairyCreature(),
+        "Firelink Priest": FirelinkPriestCreature(),
+        "Thug": ThugCreature(),
+        "Yletia Pirate": YletiaPirateCreature(),
         
         // Spells
         "Assasinate": AssassinateSpell(),

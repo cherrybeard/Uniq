@@ -13,14 +13,11 @@ class Creature {
     
     var health: Value
     var attack: Value
-    //var health: Int
-    //var maxHealth: Int
-    //var attack: Int
     var ability: ActiveAbility?
     var onSummon: PassiveAbility?
+    var whenSummoned: PassiveAbility?
     var isDead: Bool { return health.current <= 0 }
     var isDamaged: Bool { return health.current < health.max }
-    //var activeAbilityCooldown: Int
 
     var isExhausted: Bool = true
     
@@ -33,20 +30,9 @@ class Creature {
             self.ability = ability.copy()
         }
         onSummon = card.onSummon
+        whenSummoned = card.whenSummoned
         sprite = CreatureSprite(of: card)
     }
-    
-    /*
-    func useAbility(battle: Battle) -> Bool {
-        if (ability?.left == 0) && !isExhausted {
-            if ability!.effect(battle, spot) {
-                //_abilityLabel.resetCooldown()
-                isExhausted = true
-                return true
-            }
-        }
-        return false
-    }*/
 
     func increaseStat(stat: StatLabel.Kind, by amount: Int) -> Int {
         switch stat {

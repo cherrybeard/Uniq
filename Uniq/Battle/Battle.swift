@@ -55,7 +55,7 @@ class Battle: SKNode {
         for _ in 1...3 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Mirror Image")
+        _ = addToHand(for: human, cardName: "Elven Archer")
         
         startTurn()
     }
@@ -202,7 +202,6 @@ class Battle: SKNode {
         //place(blueprint, to: spot)
         
         let creature = Creature(of: card, at: spot)
-        //spot.creature = creature
         creatures.append(creature)
         spot.creature = creature
         
@@ -210,15 +209,12 @@ class Battle: SKNode {
             SummonAnimation(creature.sprite, at: spot, battle: self)
         )
         
-        if card.hasRush {
-            setExhaustion(of: creature, to: false)
+        if card.hasRush { setExhaustion(of: creature, to: false) }
+        
+        if let ability = creature.whenSummoned {
+            _ = ability.effect(self, creature.spot)
         }
         
-//        for spot in spots {
-//            if let creature = spot.creature {
-//                print(creature.card.description)
-//            }
-//        }
 //        if let _ = place(blueprint, to: spot) {
             /*
             onSummon.raise(battle: self, spot: spot)
