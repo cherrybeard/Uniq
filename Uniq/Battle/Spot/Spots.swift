@@ -15,7 +15,7 @@ class Spots: SKNode, Collection, Interactive {
     private static let marginFromCenter: Int = 78
     private static let start: Int = 1
     private static let end: Int = 13
-    private static let borderColor: [InteractiveStatus: UIColor] = [
+    private static let strokeColor: [InteractiveStatus: UIColor] = [
         .base: UIColor(rgb: 0x000000, alpha: 0),
         .targetable: UIColor(rgb: 0x3752A1),
         .targetted: UIColor(rgb: 0x1A54FB)
@@ -169,7 +169,7 @@ class Spots: SKNode, Collection, Interactive {
     func redraw() {
         for s: InteractiveStatus in [.targetted, .targetable, .base] {
             if status.contains(s) || (s == .base) {
-                border.strokeColor = Spots.borderColor[s]!
+                border.strokeColor = Spots.strokeColor[s]!
                 break
             }
         }

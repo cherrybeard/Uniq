@@ -8,45 +8,46 @@
 
 import SpriteKit
 
-
 class PassButton: SKNode, Interactive {
-    private let FILL_COLOR = UIColor(rgb: 0x111111)
-    private struct BORDER_COLOR {
-        static let base = UIColor(rgb: 0x484644)
-        static let interactive = UIColor(rgb: 0x775534)
-        static let targetable = UIColor(rgb: 0x3752A1)
-        static let targetted = UIColor(rgb: 0x1A54FB)
-    }
-    private struct FONT_COLOR {
-        static let base = UIColor(rgb: 0x484644)
-        static let interactive = UIColor(rgb: 0xE3B47B)
-    }
+    private static let fillColor = UIColor(rgb: 0x111111)
+    private static let strokeColor: [InteractiveStatus: UIColor] = [
+        .base: UIColor(rgb: 0x484644),
+        .interactive: UIColor(rgb: 0x775534),
+        .targetable: UIColor(rgb: 0x3752A1),
+        .targetted: UIColor(rgb: 0x1A54FB)
+    ]
+    private static let fontColor: [InteractiveStatus: UIColor] = [
+        .base: UIColor(rgb: 0x484644),
+        .interactive: UIColor(rgb: 0xE3B47B),
+        .targetable: UIColor(rgb: 0xE3B47B),
+        .targetted: UIColor(rgb: 0xE3B47B)
+    ]
     
-    var readyToFight: Bool = false { didSet { _redraw() } }
+    var readyToFight: Bool = false { didSet { redraw() } }
     
-    var status: Set<InteractiveStatus> = []  { didSet { _redraw() } }
+    var status: Set<InteractiveStatus> = []  { didSet { redraw() } }
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
-    private let _border = SKShapeNode(rectOf: CGSize(width: 40, height: 40))
-    private let _label = SKLabelNode(text: "Pass")
+    private let border = SKShapeNode(rectOf: CGSize(width: 40, height: 40))
+    private let label = SKLabelNode(text: "Pass")
     
     override init() {
         super.init()
         
-        _border.zRotation = .pi / 4
-        _border.lineWidth = 1.2
-        _border.fillColor = FILL_COLOR
-        addChild(_border)
+        border.zRotation = .pi / 4
+        border.lineWidth = 1.2
+        border.fillColor = PassButton.fillColor
+        addChild(border)
         
-        _label.fontSize = 12
-        _label.fontName = "AvenirNext-Medium"
-        _label.verticalAlignmentMode = .center
-        _label.horizontalAlignmentMode = .center
-        addChild(_label)
+        label.fontSize = 12
+        label.fontName = "AvenirNext-Medium"
+        label.verticalAlignmentMode = .center
+        label.horizontalAlignmentMode = .center
+        addChild(label)
         
-        _redraw()
+        redraw()
         
-        targetsFilter = { return $0 is PassButton }
+        targetsFilter = { $0 is PassButton }
         
         name = "pass"
     }
@@ -55,20 +56,15 @@ class PassButton: SKNode, Interactive {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _redraw() {
-        _label.text = readyToFight ? "Fight" : "Pass"
-        if status.contains(.targetted) {
-            _border.strokeColor = BORDER_COLOR.targetted
-            _label.fontColor = FONT_COLOR.interactive
-        } else if status.contains(.targetable) {
-            _border.strokeColor = BORDER_COLOR.targetable
-            _label.fontColor = FONT_COLOR.interactive
-        } else if status.contains(.interactive) {
-            _border.strokeColor = BORDER_COLOR.interactive
-            _label.fontColor = FONT_COLOR.interactive
-        } else {
-            _border.strokeColor = BORDER_COLOR.base
-            _label.fontColor = FONT_COLOR.base
+    private func redraw() {
+        label.text = readyToFight ? "Fight" : "Pass"
+        for s: InteractiveStatus in [.targetted, .targetable, .interactive, .base] {
+            if status.contains(s) || (s == .base) {
+                border.strokeColor = PassButton.strokeColor[s]!
+                label.fontColor = PassButton.fontColor[s]!
+                break
+            }
         }
     }
+    
 }

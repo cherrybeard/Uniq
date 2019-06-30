@@ -15,7 +15,7 @@ class FirelinkPriestCreature: CreatureCard {
             cooldown: 2,
             effect: { (battle: Battle, spot: Spot?) -> Bool in
                 if let randomSpot = battle.spots.randomSpot(
-                    in: { ($0 != spot ) && ($0.owner == spot!.owner) && ( $0.creature != nil ) }
+                    in: { ($0 != spot) && ($0.owner == spot!.owner) && !$0.isFree }
                 ) {
                     battle.buffStat(.attack, by: 1, at: randomSpot)
                     battle.buffStat(.health, by: 1, at: randomSpot)

@@ -11,14 +11,14 @@ import SpriteKit
 class CreatureSprite: SKNode {
     static let width: Int = 90
     static let height: Int = 60
-    private struct BORDER_COLOR {
-        static let base = UIColor(rgb: 0x484644)
-        static let interactive = UIColor(rgb: 0x775534)
-        static let interacted = UIColor(rgb: 0xAC7D4E)
-        static let targetable = UIColor(rgb: 0x3752A1)
-        static let targetted = UIColor(rgb: 0x1A54FB)
-    }
-    private let FILL_COLOR: UIColor = UIColor(rgb: 0x111111)
+    private static let strokeColor: [InteractiveStatus: UIColor] = [
+        .base: UIColor(rgb: 0x484644),
+        .interactive: UIColor(rgb: 0x775534),
+        .interacted: UIColor(rgb: 0xAC7D4E),
+        .targetable: UIColor(rgb: 0x3752A1),
+        .targetted: UIColor(rgb: 0x1A54FB)
+    ]
+    private static let fillColor: UIColor = UIColor(rgb: 0x111111)
     
     var status: Set<InteractiveStatus> = [] { didSet { redraw() } }
     
@@ -40,7 +40,7 @@ class CreatureSprite: SKNode {
         super.init()
         
         border.lineWidth = 1
-        border.fillColor = FILL_COLOR
+        border.fillColor = CreatureSprite.fillColor
         addChild(border)
         
         var cooldown: Int = -1
@@ -70,16 +70,11 @@ class CreatureSprite: SKNode {
     }
     
     private func redraw() {
-        if status.contains(.targetted) {
-            border.strokeColor = BORDER_COLOR.targetted
-        } else if status.contains(.targetable) {
-            border.strokeColor = BORDER_COLOR.targetable
-        } else if status.contains(.interacted) {
-            border.strokeColor = BORDER_COLOR.interacted
-        } else if status.contains(.interactive) {
-            border.strokeColor = BORDER_COLOR.interactive
-        } else {
-            border.strokeColor = BORDER_COLOR.base
+        for s: InteractiveStatus in [.targetted, .targetable, .interacted, .interactive, .base] {
+            if status.contains(s) || (s == .base) {
+                border.strokeColor = CreatureSprite.strokeColor[s]!
+                break
+            }
         }
     }
     

@@ -15,7 +15,7 @@ class MagicStormSpell: SpellCard {
         description = "Deals \(MagicStormSpell.damage) damage to \(MagicStormSpell.times) random targets."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             for _ in 1...MagicStormSpell.times {
-                if let target = battle.spots.randomSpot(in: { $0.creature != nil }) {
+                if let target = battle.spots.randomSpot(in: SpotsFilters.creatures) {
                     battle.dealDamage(MagicStormSpell.damage, to: target)
                     battle.wait(for: 1)
                 }

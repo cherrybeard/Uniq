@@ -55,7 +55,6 @@
 		5B40056722C61434005AABB6 /* WhipSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40056622C61434005AABB6 /* WhipSpell.swift */; };
 		5B40056922C62FFB005AABB6 /* EmpathySpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40056822C62FFB005AABB6 /* EmpathySpell.swift */; };
 		5B4C3494228536C1007D1E38 /* YletiaPirateCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C3493228536C1007D1E38 /* YletiaPirateCreature.swift */; };
-		5B4F7E772287570B00252113 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E762287570B00252113 /* PassButton.swift */; };
 		5B4F7E792287D0FE00252113 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4F7E782287D0FE00252113 /* Player.swift */; };
 		5B51A17A227C537200111234 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B51A179227C537200111234 /* Spot.swift */; };
 		5B65EC0422BAB6BB00576F85 /* DecreaseCooldownAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */; };
@@ -84,6 +83,7 @@
 		5BA1E90122C791EA00B9C2C2 /* SilenceSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */; };
 		5BA1E90422C81FF900B9C2C2 /* MassHysteriaSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */; };
 		5BA1E90622C82BCD00B9C2C2 /* StaggerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90522C82BCD00B9C2C2 /* StaggerAnimation.swift */; };
+		5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
@@ -166,7 +166,6 @@
 		5B40056622C61434005AABB6 /* WhipSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhipSpell.swift; sourceTree = "<group>"; };
 		5B40056822C62FFB005AABB6 /* EmpathySpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpathySpell.swift; sourceTree = "<group>"; };
 		5B4C3493228536C1007D1E38 /* YletiaPirateCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YletiaPirateCreature.swift; sourceTree = "<group>"; };
-		5B4F7E762287570B00252113 /* PassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5B4F7E782287D0FE00252113 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5B51A179227C537200111234 /* Spot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		5B65EC0322BAB6BB00576F85 /* DecreaseCooldownAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecreaseCooldownAnimation.swift; sourceTree = "<group>"; };
@@ -195,6 +194,7 @@
 		5BA1E90022C791EA00B9C2C2 /* SilenceSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilenceSpell.swift; sourceTree = "<group>"; };
 		5BA1E90322C81FF900B9C2C2 /* MassHysteriaSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MassHysteriaSpell.swift; sourceTree = "<group>"; };
 		5BA1E90522C82BCD00B9C2C2 /* StaggerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggerAnimation.swift; sourceTree = "<group>"; };
+		5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
@@ -351,7 +351,7 @@
 			children = (
 				5B4F7E782287D0FE00252113 /* Player.swift */,
 				5B1AC399203BB01200F3B921 /* HandSprite.swift */,
-				5B4F7E762287570B00252113 /* PassButton.swift */,
+				5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */,
 				5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */,
 			);
 			path = Misc;
@@ -689,7 +689,6 @@
 				5B3A29CA22C1648900CF1AE1 /* DiscardCardAnimation.swift in Sources */,
 				5B35E5D22056D92C00678A10 /* MysticLancerCreature.swift in Sources */,
 				5BA1E8EF22C67FE900B9C2C2 /* ChainLightningSpell.swift in Sources */,
-				5B4F7E772287570B00252113 /* PassButton.swift in Sources */,
 				5B40054B22C55E1C005AABB6 /* BackstabSpell.swift in Sources */,
 				5B40054522C53FE8005AABB6 /* BanditCreature.swift in Sources */,
 				5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */,
@@ -712,6 +711,7 @@
 				5B66CE50204BFEDD0047A9DC /* DamageLabel.swift in Sources */,
 				5BA1E8E522C6377900B9C2C2 /* TomeOfIntelligenceSpell.swift in Sources */,
 				5B40056722C61434005AABB6 /* WhipSpell.swift in Sources */,
+				5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */,
 				5BE0B0C6205050D8009DA26E /* RecallSpell.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
 				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,

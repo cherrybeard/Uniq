@@ -14,8 +14,7 @@ class LesserDestuctionSpell: SpellCard {
             name: "Lesser Destuction",
             requiresTarget: true,
             spotsFilter: {
-                !$0.owner.isActive
-                    && ($0.creature != nil)
+                !$0.owner.isActive && !$0.isFree
                     && ($0.creature!.attack <= LesserDestuctionSpell.maxAttack)
             }
         )

@@ -10,10 +10,7 @@ class DoubleDrawSpell: SpellCard {
     private static let amount: Int = 2
     
     init() {
-        super.init(
-            name: "Double Draw",
-            requiresTarget: false
-        )
+        super.init(name: "Double Draw")
         description = "Draws \(DoubleDrawSpell.amount) cards."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             for _ in 1...DoubleDrawSpell.amount {

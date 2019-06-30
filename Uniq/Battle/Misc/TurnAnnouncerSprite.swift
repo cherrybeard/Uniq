@@ -9,28 +9,23 @@
 import SpriteKit
 
 class TurnAnnouncerSprite: SKNode {
-    private let _label = SKLabelNode()
+    private static let attributes: [NSAttributedString.Key : Any] = [
+        .kern: 4,
+        .font: UIFont(name: "AvenirNext-Regular", size: 20)!,
+        .foregroundColor: UIColor(rgb: 0xffffff)
+    ]
     
-    private var _message: String = ""
-    var message: String {
-        get { return _message }
-        set(newMessage) {
-            _message = newMessage
-            _label.attributedText = NSAttributedString(
-                string: _message.uppercased(),
-                attributes: [
-                    .kern: 4,
-                    .font: UIFont(name: "AvenirNext-Regular", size: 20)!,
-                    .foregroundColor: UIColor(rgb: 0xffffff)
-                ]
-            )
-        }
-    }
+    var message: String = "" { didSet {
+        label.attributedText = NSAttributedString(
+            string: message.uppercased(),
+            attributes: TurnAnnouncerSprite.attributes
+        )
+    } }
+    private let label = SKLabelNode()
     
     override init() {
         super.init()
-        
-        addChild(_label)
+        addChild(label)
     }
     
     required init?(coder aDecoder: NSCoder) {

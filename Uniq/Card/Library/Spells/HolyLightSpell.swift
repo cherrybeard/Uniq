@@ -13,7 +13,7 @@ class HolyLightSpell: SpellCard {
         super.init(
             name: "Holy Light",
             requiresTarget: true,
-            spotsFilter: { $0.creature != nil }
+            spotsFilter: SpotsFilters.creatures
         )
         description = "Heals \(HolyLightSpell.damage) to selected target. If it is already at full health, damage him instead."
         effect = { (battle: Battle, spot: Spot?) -> Bool in

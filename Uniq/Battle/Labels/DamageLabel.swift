@@ -9,7 +9,7 @@
 import SpriteKit
 
 class DamageLabel: SKNode {
-    private let _label = SKLabelNode()
+    private let label = SKLabelNode()
     var amount: Int
     
     required init?(coder aDecoder: NSCoder) {
@@ -19,18 +19,18 @@ class DamageLabel: SKNode {
     init(amount: Int) {
         self.amount = amount
         super.init()
-        _label.fontColor = SKColor.white
-        _label.fontName = "AvenirNext-Regular"
-        _label.fontSize = 24
-        _label.verticalAlignmentMode = .center
-        _label.horizontalAlignmentMode = .center    
-        addChild(_label)
-        _redraw()
+        label.fontColor = SKColor.white
+        label.fontName = "AvenirNext-Regular"
+        label.fontSize = 24
+        label.verticalAlignmentMode = .center
+        label.horizontalAlignmentMode = .center    
+        addChild(label)
+        redraw()
     }
     
-    private func _redraw() {
+    private func redraw() {
         let text = String(abs(amount))
         let prefix = amount > 0 ? "+" : "–"
-        _label.text = prefix + text
+        label.text = prefix + text
     }
 }

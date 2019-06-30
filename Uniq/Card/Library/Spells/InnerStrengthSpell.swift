@@ -12,7 +12,7 @@ class InnerStrengthSpell: SpellCard {
         super.init(
             name: "Inner Strength",
             requiresTarget: true,
-            spotsFilter: SpotsFilters.allCreatures
+            spotsFilter: SpotsFilters.creatures
         )
         description = "Swap creature's Attack and Health."
         effect = { (battle: Battle, spot: Spot?) -> Bool in

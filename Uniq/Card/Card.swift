@@ -13,16 +13,20 @@ struct SpotsFilters {
     // Something like x = Filter([Filter.filterPreset1, Filter.filterPreset2, ...])
     static let none: SpotsFilter = { _ in false }
     static let all: SpotsFilter = { _ in true }
-    static let allCreatures: SpotsFilter = { $0.creature != nil }
+    static let creatures: SpotsFilter = { !$0.isFree }
+    
     static let owner: SpotsFilter = { $0.owner.isActive }
-    static let ownerFree: SpotsFilter = { $0.owner.isActive && ($0.creature == nil) }
-    static let ownerCreatures: SpotsFilter = { $0.owner.isActive && ($0.creature != nil) }
+    static let ownerFree: SpotsFilter = { $0.owner.isActive && $0.isFree }
+    static let ownerCreatures: SpotsFilter = { $0.owner.isActive && !$0.isFree }
+    
     static let enemy: SpotsFilter = { !$0.owner.isActive }
-    static let enemyCreatures: SpotsFilter = { !$0.owner.isActive && ($0.creature != nil) }
+    static let enemyCreatures: SpotsFilter = { !$0.owner.isActive && !$0.isFree }
+    
     static let ai: SpotsFilter = { $0.owner.isAi }
-    static let aiCreatures: SpotsFilter = { $0.owner.isAi && ($0.creature != nil) }
-    static let aiFree: SpotsFilter = { $0.owner.isAi && ($0.creature == nil) }
-    static let humanFree: SpotsFilter = { $0.owner.isHuman && ($0.creature == nil) }
+    static let aiCreatures: SpotsFilter = { $0.owner.isAi && !$0.isFree }
+    static let aiFree: SpotsFilter = { $0.owner.isAi && $0.isFree }
+    
+    static let humanFree: SpotsFilter = { $0.owner.isHuman && $0.isFree }
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 

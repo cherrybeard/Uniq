@@ -17,7 +17,7 @@ class HealSpell: SpellCard {
         )
         description = "Heals \(HealSpell.heal) to selected target."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
-            if spot?.creature != nil {
+            if !(spot?.isFree ?? true) {
                 battle.heal(HealSpell.heal, to: spot!)
                 return true
             }

@@ -22,7 +22,7 @@ struct Value {
     var base: Int = 1
 }
 
-class StatLabel: SKNode {   // OBSOLETE
+class StatLabel: SKNode {
     private static let textColor: [StatState: UIColor] = [
         .initial: UIColor(rgb: 0xBBBBBB),
         .damaged: UIColor(rgb: 0xA33D3D),

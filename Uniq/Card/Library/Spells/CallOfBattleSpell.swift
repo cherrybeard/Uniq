@@ -11,7 +11,7 @@ class CallOfBattleSpell: SpellCard {
         super.init(
             name: "Call of Battle",
             requiresTarget: true,
-            spotsFilter: { $0.owner.isActive && $0.creature == nil }
+            spotsFilter: SpotsFilters.ownerFree
         )
         description = "Summons random creature from the hand to selected position and remove its exaustion."
         effect = { (battle: Battle, spot: Spot?) -> Bool in

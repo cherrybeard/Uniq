@@ -12,7 +12,7 @@ class InnerFireSpell: SpellCard {
         super.init(
             name: "Inner Fire",
             requiresTarget: true,
-            spotsFilter: SpotsFilters.allCreatures
+            spotsFilter: SpotsFilters.creatures
         )
         description = "Set creature's Attack to its Health."
         effect = { (battle: Battle, spot: Spot?) -> Bool in

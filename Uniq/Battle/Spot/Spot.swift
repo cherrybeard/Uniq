@@ -19,17 +19,14 @@ enum ColumnType: Int {
 class Spot: SKNode, Interactive {
     static let width: Int = 86
     static let height: Int = 56
-    private struct BORDER_COLOR {
-        static let base = UIColor(rgb: 0x1D1D1C)
-        static let targetted = UIColor(rgb: 0x3065FF)
-        static let targetable = UIColor(rgb: 0x3752A1)
-    }
+    private static let strokeColor: [InteractiveStatus: UIColor] = [
+        .base: UIColor(rgb: 0x1D1D1C),
+        .targetted: UIColor(rgb: 0x3065FF),
+        .targetable: UIColor(rgb: 0x3752A1)
+    ]
     
     private let border = SKShapeNode(
-        rectOf: CGSize(
-            width: Spot.width,
-            height: Spot.height
-        ),
+        rectOf: CGSize(width: Spot.width, height: Spot.height),
         cornerRadius: 3
     )
     
@@ -45,7 +42,7 @@ class Spot: SKNode, Interactive {
     let range: RangeType
     let column: ColumnType
     weak var creature: Creature? = nil
-    var isTaken: Bool { return (creature != nil) }  // TODO: Is it actually being used? Try removing it
+    var isFree: Bool { return (creature == nil) }
 
     var index: Int {
         get {
@@ -79,19 +76,17 @@ class Spot: SKNode, Interactive {
     }
     
     private func redraw() {
-        if status.contains(.targetted) {
-            border.strokeColor = BORDER_COLOR.targetted
-        } else if status.contains(.targetable) {
-            border.strokeColor = BORDER_COLOR.targetable
-        } else {
-            border.strokeColor = BORDER_COLOR.base
+        for s: InteractiveStatus in [.targetted, .targetable, .base] {
+            if status.contains(s) || (s == .base) {
+                border.strokeColor = Spot.strokeColor[s]!
+                break
+            }
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     static func == (lhs: Spot, rhs: Spot) -> Bool {
         return lhs.index == rhs.index

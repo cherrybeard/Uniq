@@ -24,7 +24,7 @@ class Battle: SKNode {
             newValue.isActive = true
         }
     }
-    var round: Int = 0
+    var round: Int = 1
     var creatures: [Creature] = []
     
     var isUnlocked: Bool = false

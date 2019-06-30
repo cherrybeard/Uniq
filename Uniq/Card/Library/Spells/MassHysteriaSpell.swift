@@ -11,11 +11,11 @@ class MassHysteriaSpell: SpellCard {
         super.init(name: "Mass Hysteria")
         description = "Force each creature to attack another random creature."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
-            let spots = battle.spots.shuffledSpots(in: SpotsFilters.allCreatures)
+            let spots = battle.spots.shuffledSpots(in: SpotsFilters.creatures)
             for spot in spots {
                 if let creature = spot.creature {
                     if creature.attack <= 0 { continue }
-                    let targetSpot = battle.spots.randomSpot { ($0.creature != nil) && ($0 != spot) }
+                    let targetSpot = battle.spots.randomSpot { !$0.isFree && ($0 != spot) }
                     if targetSpot == nil { continue }
                     battle.attack(from: spot, to: targetSpot!)
                 }

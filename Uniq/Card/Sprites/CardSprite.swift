@@ -12,7 +12,7 @@ class CardSprite: SKNode, Interactive {
     static let width = 60
     static let height = 90
     private static let fillColor = UIColor(rgb: 0x111111)
-    private static let borderColor: [InteractiveStatus: UIColor] = [
+    private static let strokeColor: [InteractiveStatus: UIColor] = [
         .base: UIColor(rgb: 0x484644),
         .interactive: UIColor(rgb: 0x775534),
         .interacted: UIColor(rgb: 0xAC7D4E)
@@ -86,7 +86,7 @@ class CardSprite: SKNode, Interactive {
     func redraw() {
         for s: InteractiveStatus in [.interacted, .interactive, .base] {
             if status.contains(s) || (s == .base) {
-                border.strokeColor = CardSprite.borderColor[s]!
+                border.strokeColor = CardSprite.strokeColor[s]!
                 break
             }
         }

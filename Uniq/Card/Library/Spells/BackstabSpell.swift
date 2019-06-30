@@ -14,7 +14,7 @@ class BackstabSpell: SpellCard {
             name: "Backstab",
             requiresTarget: true,
             spotsFilter: {
-                !$0.owner.isActive && ($0.creature != nil) && ($0.creature?.health == $0.creature?.maxHealth)
+                !$0.owner.isActive && !$0.isFree && !$0.creature!.isDamaged
             }
         )
         description = "Deals \(BackstabSpell.damage) damage to undamaged creature."

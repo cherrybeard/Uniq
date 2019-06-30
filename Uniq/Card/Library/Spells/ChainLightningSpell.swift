@@ -13,18 +13,18 @@ class ChainLightningSpell: SpellCard {
         super.init(
             name: "Chain Lightning",
             requiresTarget: true,
-            spotsFilter: { $0.creature != nil }
+            spotsFilter: SpotsFilters.enemyCreatures
         )
         description = "Deals \(ChainLightningSpell.damage) to selected target. Deals 2 times less damage to the random target next to it. Repeat it 2 times more."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
-            if spot?.creature != nil {
+            if !(spot?.isFree ?? true) {
                 var targetSpot = spot!
                 for multiplier in [1, 0.5, 0.25, 0.125] {
                     let damage = Int(Double(ChainLightningSpell.damage) * multiplier)
                     battle.dealDamage(damage, to: targetSpot)
                     battle.wait(for: 0.7)
                     let neighbors = battle.spots.neighbors(of: targetSpot, sameOwner: false)
-                    let notEmptyNeighbors = neighbors.filter { $0.creature != nil }
+                    let notEmptyNeighbors = neighbors.filter(SpotsFilters.creatures)
                     if notEmptyNeighbors.count <= 0 { return true }
                     targetSpot = notEmptyNeighbors.randomElement()!
                 }

@@ -23,9 +23,7 @@ class TomeOfIntelligenceSpell: SpellCard {
         super.init(
             name: "Tome Of Intelligence",
             requiresTarget: true,
-            spotsFilter: {
-                $0.owner.isActive && ($0.creature != nil)
-            }
+            spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Replaces allied creature's ability with \(TomeOfIntelligenceSpell.ability.description)"
         effect = { (battle: Battle, spot: Spot?) -> Bool in

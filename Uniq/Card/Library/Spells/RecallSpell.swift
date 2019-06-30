@@ -11,9 +11,7 @@ class RecallSpell: SpellCard {
         super.init(
             name: "Recall",
             requiresTarget: true,
-            spotsFilter: {
-                $0.owner.isActive && ($0.creature != nil)
-            }
+            spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Recalls allied creature back to hand."
         effect = { (battle: Battle, spot: Spot?) -> Bool in

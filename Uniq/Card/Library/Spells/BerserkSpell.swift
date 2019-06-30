@@ -18,7 +18,7 @@ class BerserkSpell: SpellCard {
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 let neighbors = battle.spots.neighbors(of: spot!, sameOwner: false)
-                let notEmptyNeighbors = neighbors.filter { $0.creature != nil }
+                let notEmptyNeighbors = neighbors.filter(SpotsFilters.creatures)
                 if notEmptyNeighbors.count > 0 {
                     for neighborSpot in neighbors {
                         battle.attack(from: spot!, to: neighborSpot)

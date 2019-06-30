@@ -13,7 +13,7 @@ class FanOfKnivesSpell: SpellCard {
         super.init(name: "Fan of Knives")
         description = "Deal \(FanOfKnivesSpell.damage) damage to selected target and draw a card."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
-            let targets = battle.spots.filter { !$0.owner.isActive && ($0.creature != nil) }
+            let targets = battle.spots.filter(SpotsFilters.enemyCreatures)
             for spot in targets {
                 battle.dealDamage(FanOfKnivesSpell.damage, to: spot)
             }
