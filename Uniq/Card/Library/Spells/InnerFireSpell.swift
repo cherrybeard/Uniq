@@ -17,7 +17,7 @@ class InnerFireSpell: SpellCard {
         description = "Set creature's Attack to its Health."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
-                let health = creature.health
+                let health = creature.health.current
                 battle.setStat(.attack, to: health, at: spot!)
                 return true
             }

@@ -19,8 +19,8 @@ class InnerStrengthSpell: SpellCard {
             if let creature = spot?.creature {
                 let health = creature.health
                 let attack = creature.attack
-                battle.setStat(.attack, to: health, at: spot!)
-                battle.setStat(.health, to: attack, at: spot!)
+                battle.setStat(.attack, to: health.current, at: spot!)
+                battle.setStat(.health, to: attack.current, at: spot!)
                 return true
             }
             return false

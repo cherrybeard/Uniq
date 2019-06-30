@@ -17,7 +17,7 @@ class AssassinateSpell: SpellCard {
         description = "Destroy enemy creature."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
-                battle.dealDamage(creature.health, to: spot!)
+                battle.dealDamage(creature.health.current, to: spot!)
                 return true
             }
             return false

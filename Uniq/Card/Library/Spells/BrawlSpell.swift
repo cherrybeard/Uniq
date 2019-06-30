@@ -16,7 +16,7 @@ class BrawlSpell: SpellCard {
             _ = spots.remove(at: 0)
             for spot in spots {
                 if let creature = spot.creature {
-                    battle.dealDamage(creature.health, to: spot)
+                    battle.dealDamage(creature.health.current, to: spot)
                     battle.wait(for: 0.7)
                 }
             }

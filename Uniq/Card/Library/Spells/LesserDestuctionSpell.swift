@@ -15,13 +15,13 @@ class LesserDestuctionSpell: SpellCard {
             requiresTarget: true,
             spotsFilter: {
                 !$0.owner.isActive && !$0.isFree
-                    && ($0.creature!.attack <= LesserDestuctionSpell.maxAttack)
+                    && ($0.creature!.attack.current <= LesserDestuctionSpell.maxAttack)
             }
         )
         description = "Destroy creature with \(LesserDestuctionSpell.maxAttack) attack or less."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
-                battle.dealDamage(creature.health, to: spot!)
+                battle.dealDamage(creature.health.current, to: spot!)
             }
             return true
         }

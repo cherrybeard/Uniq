@@ -11,13 +11,15 @@ class Creature {
     var card: CreatureCard
     var spot: Spot
     
-    var health: Int
-    var maxHealth: Int
-    var attack: Int
+    var health: Value
+    var attack: Value
+    //var health: Int
+    //var maxHealth: Int
+    //var attack: Int
     var ability: ActiveAbility?
     var onSummon: PassiveAbility?
-    var isDead: Bool { return health <= 0 }
-    var isDamaged: Bool { return health < maxHealth }
+    var isDead: Bool { return health.current <= 0 }
+    var isDamaged: Bool { return health.current < health.max }
     //var activeAbilityCooldown: Int
 
     var isExhausted: Bool = true
@@ -27,7 +29,6 @@ class Creature {
         self.spot = spot
         attack = card.attack
         health = card.health
-        maxHealth = health
         if let ability = card.ability {
             self.ability = ability.copy()
         }
@@ -50,12 +51,13 @@ class Creature {
     func increaseStat(stat: StatLabel.Kind, by amount: Int) -> Int {
         switch stat {
         case .attack:
-            attack += amount
-            return attack
+            attack.current += amount
+            attack.max += amount
+            return attack.current
         case .health:
-            health += amount
-            maxHealth += amount
-            return health
+            health.current += amount
+            health.max += amount
+            return health.current
         default:
             return 0
         }
@@ -64,25 +66,26 @@ class Creature {
     func setStat(stat: StatLabel.Kind, to amount: Int) {
         switch stat {
         case .attack:
-            attack = amount
+            attack.current = amount
+            attack.current = amount
         case .health:
-            health = amount
-            maxHealth = amount
+            health.current = amount
+            health.current = amount
         default:
             return
         }
     }
     
     func dealDamage(_ amount: Int) {
-        health -= amount
+        health.current -= amount
     }
     
     func heal(_ amount: Int) -> Int {
-        var healed = maxHealth - health
+        var healed = health.max - health.current
         if healed > amount {
             healed = amount
         }
-        health += healed
+        health.current += healed
         return healed
     }
 }

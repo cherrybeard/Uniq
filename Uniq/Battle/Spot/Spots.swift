@@ -145,11 +145,13 @@ class Spots: SKNode, Collection, Interactive {
     func nextAttacker(activePlayer: Player.Kind) -> Spot? {
         let aiOrder = [4, 1, 5, 2, 6, 3]
         let humanOrder = [7, 10, 8, 11, 9, 12]
-        let attackOrder: [Int] = (activePlayer == .human) ? aiOrder + humanOrder : humanOrder + aiOrder
+        let attackOrder: [Int] = (activePlayer == .human) ?
+            aiOrder + humanOrder : humanOrder + aiOrder
         for index in attackOrder {
             let attackerSpot = spots[index-1]
             if let attacker = attackerSpot.creature {
-                if !attacker.isExhausted && (attacker.attack > 0) && (attacker.health > 0) {
+                if !attacker.isExhausted
+                    && (attacker.attack.current > 0) && (attacker.health.current > 0) {
                     return attackerSpot
                 }
             }
@@ -165,7 +167,7 @@ class Spots: SKNode, Collection, Interactive {
             if (targetIndex < startIndex) || (targetIndex >= endIndex) { continue }
             let targetSpot = spots[targetIndex-1]
             if let target = targetSpot.creature {
-                if (targetSpot.owner != spot.owner) && (target.health > 0) {
+                if (targetSpot.owner != spot.owner) && (target.health.current > 0) {
                     return targetSpot
                 }
             }

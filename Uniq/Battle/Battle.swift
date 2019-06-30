@@ -53,9 +53,12 @@ class Battle: SKNode {
         }
         
         for _ in 1...3 {
-            _ = draw(for: human)
+            //_ = draw(for: human)
         }
-        //_ = addToHand(for: human, cardName: "Recall")
+        _ = addToHand(for: human, cardName: "Fairy")
+        _ = addToHand(for: human, cardName: "Thug")
+        _ = addToHand(for: human, cardName: "Fairy")
+        _ = addToHand(for: human, cardName: "Secret Advantage")
         
         startTurn()
     }
@@ -283,7 +286,7 @@ class Battle: SKNode {
                 animationPipeline.add(
                     AttackAnimation( creature: attackerSprite, target: targetSprite )
                 )
-                dealDamage(attacker.attack, to: targetSpot)
+                dealDamage(attacker.attack.current, to: targetSpot)
                 animationPipeline.add(
                     RetreatAnimation( creature: attackerSprite, spot: attackerSpot )
                 )
@@ -350,6 +353,20 @@ class Battle: SKNode {
             animationPipeline.add(
                 BuffStatAnimation(
                     creature: creature.sprite,
+                    stat: stat,
+                    by: amount
+                )
+            )
+        }
+    }
+    
+    func buffStat(_ stat: StatLabel.Kind, by amount: Int, to card: CreatureCard) {
+        if let sprite = card.sprite as? CreatureCardSprite {
+            card.increaseStat(stat, by: amount)
+            
+            animationPipeline.add(
+                BuffCardStatAnimation(
+                    card: sprite,
                     stat: stat,
                     by: amount
                 )

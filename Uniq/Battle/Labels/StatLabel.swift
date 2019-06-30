@@ -12,6 +12,18 @@ struct Value {
     var current: Int = 1
     var max: Int = 1
     var base: Int = 1
+    
+    init(_ value: Int) {
+        current = value
+        max = value
+        base = value
+    }
+    
+    mutating func setAll(to value: Int) {
+        current = value
+        max = value
+        base = value
+    }
 }
 
 class StatLabel: SKNode {
@@ -36,7 +48,7 @@ class StatLabel: SKNode {
     
     private let label = SKLabelNode()
     let type: Kind
-    private var value = Value()
+    private var value = Value(1) { didSet { redraw() } }
     private var states: Set<State> {
         var list: Set<State> = [.initial]
         if value.max > value.base { list.insert(.buffed) }
@@ -79,13 +91,15 @@ class StatLabel: SKNode {
     func changeValue(by amount: Int, changeMax: Bool = true) {
         value.current += amount
         if changeMax { value.max += amount }
-        redraw()
     }
     
     func changeValue(to amount: Int, changeMax: Bool = true, changeBase: Bool = true) {
         value.current = amount
         if changeMax { value.max = amount }
         if changeBase { value.base = amount }
-        redraw()
+    }
+    
+    func changeValue(to newValue: Value) {
+        value = newValue
     }
 }

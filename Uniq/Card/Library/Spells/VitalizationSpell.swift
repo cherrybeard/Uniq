@@ -17,7 +17,7 @@ class VitalizationSpell: SpellCard {
         description = "Double creature's health"
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
-                battle.buffStat(.health, by: creature.health, at: spot!)
+                battle.buffStat(.health, by: creature.health.current, at: spot!)
                 return true
             }
             return false

@@ -9,14 +9,26 @@
 import SpriteKit
 
 class CreatureCard: Card {
-    var attack: Int
-    var health: Int
+    var attack: Value
+    var health: Value
     var ability: ActiveAbility? = nil
     var whenSummoned: PassiveAbility? = nil
     var onSummon: PassiveAbility? = nil
     var hasRush: Bool = false
     
     init(name: String, attack: Int, health: Int) {
+        self.attack = Value(attack)
+        self.health = Value(health)
+        super.init(
+            name: name,
+            requiresTarget: true,
+            spotsFilter: SpotsFilters.ownerFree
+        )
+        sprite = CreatureCardSprite()
+        sprite.card = self
+    }
+    
+    init(name: String, attack: Value, health: Value) {
         self.attack = attack
         self.health = health
         super.init(
@@ -34,6 +46,17 @@ class CreatureCard: Card {
             return true
         }
         return false
+    }
+    
+    func increaseStat(_ stat: StatLabel.Kind, by amount: Int) {
+        switch stat {
+        case .attack:
+            attack.current += amount
+            attack.max += amount
+        default:
+            health.current += amount
+            health.max += amount
+        }
     }
     
     override func copy() -> CreatureCard {
