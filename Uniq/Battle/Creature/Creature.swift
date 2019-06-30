@@ -47,7 +47,7 @@ class Creature {
         return false
     }*/
 
-    func increaseStat(stat: StatType, by amount: Int) -> Int {
+    func increaseStat(stat: StatLabel.Kind, by amount: Int) -> Int {
         switch stat {
         case .attack:
             attack += amount
@@ -61,7 +61,7 @@ class Creature {
         }
     }
     
-    func setStat(stat: StatType, to amount: Int) {
+    func setStat(stat: StatLabel.Kind, to amount: Int) {
         switch stat {
         case .attack:
             attack = amount

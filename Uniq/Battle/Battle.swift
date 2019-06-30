@@ -88,7 +88,7 @@ class Battle: SKNode {
     }
     
     func endTurn(passed: Bool = false) {
-        interactives.cleanAllStatus()
+        interactives.clean()
         if passed {
             activePlayer.passed = true
             if activePlayer.isAi { passButton.readyToFight = true }
@@ -339,7 +339,7 @@ class Battle: SKNode {
         }
     }
     
-    func buffStat(_ stat: StatType, by amount: Int, at spot: Spot) {
+    func buffStat(_ stat: StatLabel.Kind, by amount: Int, at spot: Spot) {
         if let creature = spot.creature {
             _ = creature.increaseStat(stat: stat, by: amount)
             
@@ -353,7 +353,7 @@ class Battle: SKNode {
         }
     }
     
-    func setStat(_ stat: StatType, to amount: Int, at spot: Spot) {
+    func setStat(_ stat: StatLabel.Kind, to amount: Int, at spot: Spot) {
         if let creature = spot.creature {
             _ = creature.setStat(stat: stat, to: amount)
             

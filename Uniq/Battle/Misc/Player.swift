@@ -6,19 +6,21 @@
 //  Copyright © 2019 Steven Gusev. All rights reserved.
 //
 
-enum PlayerType: Int {
-    case human = -1, ai = 1
-}
 
 class Player: Equatable {
-    let type: PlayerType
+    
+    enum Kind: Int {
+        case human = -1, ai = 1
+    }
+    
+    let type: Kind
     var passed: Bool = false
     var deck: Deck
     var isHuman: Bool { return type == .human }
     var isAi: Bool { return type == .ai }
     var isActive: Bool = false
     
-    init(as type: PlayerType) {
+    init(as type: Kind) {
         self.type = type
         let name = (type == .human) ? "NotOnlyDamageSpells" : ""
         deck = Deck(name: name)

@@ -30,16 +30,17 @@ struct SpotsFilters {
     //static let fullHealthCreatures: CardTargetFilter = { $0.isFullHealth }
 }
 
-enum CardState {
-    case library, deck, hand, discarded
-}
-
 class Card {
+    
+    enum State {
+        case library, deck, hand, discarded
+    }
+    
     var name: String = ""
     var description: String = "'"
     var requiresTarget: Bool
     var spotsFilter: SpotsFilter
-    var state: CardState = .library
+    var state: State = .library
     var sprite: CardSprite = CardSprite()
     
     init(

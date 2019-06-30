@@ -8,21 +8,25 @@
 
 import SpriteKit
 
-enum RangeType: Int {
-    case melee = 0, range = 1
-}
-
-enum ColumnType: Int {
-    case left = -1, center = 0, right = 1
-}
-
 class Spot: SKNode, Interactive {
+    
+    enum Range: Int {
+        case melee = 0
+        case range = 1
+    }
+    
+    enum Column: Int {
+        case left = -1
+        case center = 0
+        case right = 1
+    }
     
     private enum SpriteState: String, CaseIterable {
         case targetted = "targetted"
         case targetable = "targetable"
         case base = "base"
     }
+    
     
     static let width: Int = 86
     static let height: Int = 56
@@ -46,8 +50,8 @@ class Spot: SKNode, Interactive {
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
     let owner: Player
-    let range: RangeType
-    let column: ColumnType
+    let range: Range
+    let column: Column
     weak var creature: Creature? = nil
     var isFree: Bool { return (creature == nil) }
 
@@ -63,7 +67,7 @@ class Spot: SKNode, Interactive {
         }
     }
     
-    init(owner: Player, range: RangeType, column: ColumnType) {
+    init(owner: Player, range: Range, column: Column) {
         self.owner = owner
         self.range = range
         self.column = column

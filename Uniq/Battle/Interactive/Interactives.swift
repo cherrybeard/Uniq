@@ -25,20 +25,20 @@ class Interactives {    // TODO: Inherit Collection
         interactives.append(item)
     }
     
-    func addStatus(_ status: InteractiveState, filter: (Interactive) -> Bool) {
+    func addState(_ state: InteractiveState, filter: (Interactive) -> Bool) {
         let targets = interactives.filter(filter)
         for var target in targets {
-            target.state.insert(status)
+            target.state.insert(state)
         }
     }
     
-    func removeStatus(_ status: InteractiveState) {
+    func removeState(_ state: InteractiveState) {
         for var target in interactives {
-            target.state.remove(status)
+            target.state.remove(state)
         }
     }
     
-    func cleanAllStatus() {
+    func clean() {
         for var interactive in interactives {
             interactive.state = []
         }

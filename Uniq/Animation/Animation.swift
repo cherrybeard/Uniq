@@ -6,12 +6,13 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-enum AnimationState: Int {
-    case ready, inProgress, finished, idle
-}
-
 class Animation {
-    var state: AnimationState = .ready
+    
+    enum State: Int {
+        case ready, inProgress, finished, idle
+    }
+    
+    var state: State = .ready
     
     func play() {
         

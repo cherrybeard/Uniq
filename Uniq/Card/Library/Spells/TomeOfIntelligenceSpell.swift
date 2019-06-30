@@ -25,7 +25,9 @@ class TomeOfIntelligenceSpell: SpellCard {
             requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
-        description = "Replaces allied creature's ability with \(TomeOfIntelligenceSpell.ability.description)"
+        description = """
+            Replaces allied creature's ability with \(TomeOfIntelligenceSpell.ability.description).
+        """
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 battle.replaceAbility(of: creature, with: TomeOfIntelligenceSpell.ability)

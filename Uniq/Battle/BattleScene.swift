@@ -57,7 +57,7 @@ class BattleScene: SKScene {
                                     wasActivated = true
                                     delayedTask = DispatchWorkItem {
                                         // TODO: check if ability was really used
-                                        self.battle.interactives.cleanAllStatus()
+                                        self.battle.interactives.clean()
                                         if self.battle.useActiveAbility(of: creature) {
                                             self.battle.endTurn()
                                         }
@@ -67,14 +67,14 @@ class BattleScene: SKScene {
                             }
                         }
                         // remove interactive highlights
-                        battle.interactives.cleanAllStatus()
+                        battle.interactives.clean()
                         
                         // highlight itself
                         interactiveNode.state.insert(.interacted)
                         if wasActivated { interactiveNode.state.insert(.activated) }
                         
                         // highlight targets, and apply active targeting to itself
-                        battle.interactives.addStatus(.targetable, filter: interactiveNode.targetsFilter)
+                        battle.interactives.addState(.targetable, filter: interactiveNode.targetsFilter)
                         if interactiveNode.state.contains(.targetable) {
                             interactiveNode.state.insert(.targetted)
                         }
@@ -91,7 +91,7 @@ class BattleScene: SKScene {
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
             
             var stopTask = (delayedTask != nil) && !delayedTask!.isCancelled
-            battle.interactives.removeStatus(.targetted)
+            battle.interactives.removeState(.targetted)
             for node in touchedNodes {
                 if var interactiveNode = node as? Interactive {
                     if interactiveNode.state.contains(.targetable) {
@@ -159,7 +159,7 @@ class BattleScene: SKScene {
         
         // reset targets highlighting
         delayedTask?.cancel()
-        battle.interactives.cleanAllStatus()
+        battle.interactives.clean()
         if actionCancelled {
             battle.highlightActionTargets()
         }

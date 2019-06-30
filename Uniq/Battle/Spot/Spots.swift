@@ -43,16 +43,16 @@ class Spots: SKNode, Collection, Interactive {
         cornerRadius: 8
     )
     
-    private static func column(of index: Int) -> ColumnType {
+    private static func column(of index: Int) -> Spot.Column {
         let column = (index - 1) % 3 - 1
-        return ColumnType(rawValue: column) ?? .center
+        return Spot.Column(rawValue: column) ?? .center
     }
     
-    private static func owner(of index: Int) -> PlayerType {
+    private static func owner(of index: Int) -> Player.Kind {
         return index > 6 ? .human : .ai
     }
     
-    private static func range(of index: Int) -> RangeType {
+    private static func range(of index: Int) -> Spot.Range {
         if (index > 3) && (index < 10) {
             return .melee
         } else {
@@ -142,7 +142,7 @@ class Spots: SKNode, Collection, Interactive {
         return neighbors
     }
     
-    func nextAttacker(activePlayer: PlayerType) -> Spot? {
+    func nextAttacker(activePlayer: Player.Kind) -> Spot? {
         let aiOrder = [4, 1, 5, 2, 6, 3]
         let humanOrder = [7, 10, 8, 11, 9, 12]
         let attackOrder: [Int] = (activePlayer == .human) ? aiOrder + humanOrder : humanOrder + aiOrder

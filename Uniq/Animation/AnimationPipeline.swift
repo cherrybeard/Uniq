@@ -8,8 +8,8 @@
 
 class AnimationPipeline {
     private var queue: [Animation] = []
-    private var lastState: AnimationState?
-    var state: AnimationState {
+    private var lastState: Animation.State?
+    var state: Animation.State {
         get { return (queue.count > 0) ? .inProgress : .finished }
     }
     private var blocks: [() -> Void] = []
@@ -29,7 +29,7 @@ class AnimationPipeline {
         queue.append(animation)
     }
     
-    func update() -> AnimationState {
+    func update() -> Animation.State {
         if queue.count == 0 {
             if (lastState == .finished) || (lastState == .idle) {
                 lastState = .idle

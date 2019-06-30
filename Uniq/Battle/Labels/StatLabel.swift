@@ -8,14 +8,6 @@
 
 import SpriteKit
 
-enum StatType {
-    case cooldown, attack, health
-}
-
-enum StatState {
-    case initial, damaged, buffed
-}
-
 struct Value {
     var current: Int = 1
     var max: Int = 1
@@ -23,21 +15,30 @@ struct Value {
 }
 
 class StatLabel: SKNode {
-    private static let textColor: [StatState: UIColor] = [
+    
+    enum Kind {
+        case cooldown, attack, health
+    }
+    
+    enum State {
+        case initial, damaged, buffed
+    }
+    
+    private static let textColor: [State: UIColor] = [
         .initial: UIColor(rgb: 0xBBBBBB),
         .damaged: UIColor(rgb: 0xA33D3D),
         .buffed: UIColor(rgb: 0xD9B282)
     ]
-    private static let textAlign: [StatType: SKLabelHorizontalAlignmentMode] = [
+    private static let textAlign: [Kind: SKLabelHorizontalAlignmentMode] = [
         .attack: .left,
         .health: .right
     ]
     
     private let label = SKLabelNode()
-    let type: StatType
+    let type: Kind
     private var value = Value()
-    private var states: Set<StatState> {
-        var list: Set<StatState> = [.initial]
+    private var states: Set<State> {
+        var list: Set<State> = [.initial]
         if value.max > value.base { list.insert(.buffed) }
         if value.current < value.max { list.insert(.damaged) }
         return list
@@ -50,7 +51,7 @@ class StatLabel: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(type: StatType) {
+    init(type: Kind) {
         self.type = type
         super.init()
         
@@ -64,7 +65,7 @@ class StatLabel: SKNode {
     
     func redraw() {
         label.text = String(value.current)
-        for state: StatState in [.damaged, .buffed, .initial] {
+        for state: State in [.damaged, .buffed, .initial] {
             if states.contains(state) {
                 label.fontColor = StatLabel.textColor[state]!
                 break

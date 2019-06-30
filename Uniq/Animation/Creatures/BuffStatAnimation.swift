@@ -23,7 +23,7 @@ class BuffStatAnimation: Animation {
     private let amount: Int
     private let absolute: Bool
     
-    init(creature: CreatureSprite, stat: StatType, by amount: Int) {
+    init(creature: CreatureSprite, stat: StatLabel.Kind, by amount: Int) {
         switch stat {
         case .attack:
             label = creature.attackLabel
@@ -34,7 +34,7 @@ class BuffStatAnimation: Animation {
         self.absolute = false
     }
     
-    init(creature: CreatureSprite, stat: StatType, to amount: Int) {
+    init(creature: CreatureSprite, stat: StatLabel.Kind, to amount: Int) {
         switch stat {
         case .attack:
             label = creature.attackLabel
