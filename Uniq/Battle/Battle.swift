@@ -42,15 +42,20 @@ class Battle: SKNode {
         interactives.append(passButton)
         
         // battle init
-        summon("Yletia Pirate", to: 7)
-        summon("Yletia Pirate", to: 3)
-        summon("Bandit", to: 5)
-        summon("Thug", to: 4)
+        for creature in ["Yletia Pirate", "Thug", "Bandit"] {
+            if let spot = spots.randomSpot(in: SpotsFilters.aiFree) {
+                summon(creature, to: spot.index)
+            }
+        }
         
-        for _ in 1...2 {
+        if let spot = spots.randomSpot(in: SpotsFilters.humanFree) {
+            summon("Yletia Pirate", to: spot.index)
+        }
+        
+        for _ in 1...3 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Mass Hysteria")
+        //_ = addToHand(for: human, cardName: "Berserk")
         
         startTurn()
     }
