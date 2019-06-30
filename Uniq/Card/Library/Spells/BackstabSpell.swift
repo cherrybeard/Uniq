@@ -12,7 +12,6 @@ class BackstabSpell: SpellCard {
     init() {
         super.init(
             name: "Backstab",
-            requiresTarget: true,
             spotsFilter: {
                 !$0.owner.isActive && !$0.isFree && !$0.creature!.isDamaged
             }

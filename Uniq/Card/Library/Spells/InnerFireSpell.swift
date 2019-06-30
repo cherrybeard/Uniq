@@ -11,7 +11,6 @@ class InnerFireSpell: SpellCard {
     init() {
         super.init(
             name: "Inner Fire",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.creatures
         )
         description = "Set creature's Attack to its Health."

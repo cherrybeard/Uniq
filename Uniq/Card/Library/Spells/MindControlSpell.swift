@@ -11,7 +11,6 @@ class MindControlSpell: SpellCard {
     init() {
         super.init(
             name: "Mind Control",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = "Take control of the enemy creature."

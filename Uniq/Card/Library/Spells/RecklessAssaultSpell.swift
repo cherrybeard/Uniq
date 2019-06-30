@@ -8,7 +8,10 @@
 
 class RecklessAssaultSpell: SpellCard {
     init() {
-        super.init(name: "Reckless Assault")
+        super.init(
+            name: "Reckless Assault",
+            requiresTarget: false
+        )
         description = """
             Deals damage equal to your creatures count to random enemy. Repeat for each of your \
             creatures.

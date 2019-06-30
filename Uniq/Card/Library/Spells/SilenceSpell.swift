@@ -10,7 +10,6 @@ class SilenceSpell: SpellCard {
     init() {
         super.init(
             name: "Silence",
-            requiresTarget: true,
             spotsFilter: { !$0.owner.isActive && ($0.creature?.ability != nil) }
         )
         description = "Remove target creature's active ability."

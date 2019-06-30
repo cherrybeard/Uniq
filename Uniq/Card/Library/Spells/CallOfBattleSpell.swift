@@ -10,7 +10,6 @@ class CallOfBattleSpell: SpellCard {
     init() {
         super.init(
             name: "Call of Battle",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerFree
         )
         description = """

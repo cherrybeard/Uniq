@@ -12,7 +12,6 @@ class TakingAimSpell: SpellCard {
     init() {
         super.init(
             name: "Taking Aim",   // "Spark" is a good name too
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = "Deal \(TakingAimSpell.damage) damage to selected target and draw a card."

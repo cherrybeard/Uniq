@@ -21,7 +21,6 @@ class CreatureCard: Card {
         self.health = Value(health)
         super.init(
             name: name,
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerFree
         )
         sprite = CreatureCardSprite()

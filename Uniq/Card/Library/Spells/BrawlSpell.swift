@@ -9,7 +9,10 @@
 class BrawlSpell: SpellCard {
     
     init() {
-        super.init(name: "Brawl")
+        super.init(
+            name: "Brawl",
+            requiresTarget: false
+        )
         description = "Destroy all creatures except random one."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             var spots = battle.spots.shuffledSpots(in: SpotsFilters.creatures)

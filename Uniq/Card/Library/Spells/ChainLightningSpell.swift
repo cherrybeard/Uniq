@@ -12,7 +12,6 @@ class ChainLightningSpell: SpellCard {
     init() {
         super.init(
             name: "Chain Lightning",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = """

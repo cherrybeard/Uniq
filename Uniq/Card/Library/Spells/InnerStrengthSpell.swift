@@ -11,7 +11,6 @@ class InnerStrengthSpell: SpellCard {
     init() {
         super.init(
             name: "Inner Strength",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.creatures
         )
         description = "Swap creature's Attack and Health."

@@ -12,7 +12,6 @@ class HolyLightSpell: SpellCard {
     init() {
         super.init(
             name: "Holy Light",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.creatures
         )
         description = """

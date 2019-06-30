@@ -10,7 +10,6 @@ class RecallSpell: SpellCard {
     init() {
         super.init(
             name: "Recall",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Recalls allied creature back to hand."

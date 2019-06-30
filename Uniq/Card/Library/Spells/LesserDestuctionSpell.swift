@@ -12,7 +12,6 @@ class LesserDestuctionSpell: SpellCard {
     init() {
         super.init(
             name: "Lesser Destuction",
-            requiresTarget: true,
             spotsFilter: {
                 !$0.owner.isActive && !$0.isFree
                     && ($0.creature!.attack.current <= LesserDestuctionSpell.maxAttack)

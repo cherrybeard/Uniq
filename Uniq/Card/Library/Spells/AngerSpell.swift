@@ -13,7 +13,6 @@ class AngerSpell: SpellCard {
     init() {
         super.init(
             name: "Anger",
-            requiresTarget: true,
             spotsFilter: {
                 $0.owner.isActive && ($0.creature?.isDamaged ?? false)
             }

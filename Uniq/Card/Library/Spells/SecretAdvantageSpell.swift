@@ -10,7 +10,10 @@ class SecretAdvantageSpell: SpellCard {
     private static let bonus: Int = 2
     
     init() {
-        super.init(name: "Secret Advantage")
+        super.init(
+            name: "Secret Advantage",
+            requiresTarget: false
+        )
         description = "Gives all minions in hand +\(SecretAdvantageSpell.bonus) attack."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             let cards = battle.activePlayer.deck.handPile.compactMap { $0 as? CreatureCard }

@@ -11,7 +11,6 @@ class AssassinateSpell: SpellCard {
     init() {
         super.init(
             name: "Assassinate",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = "Destroy enemy creature."

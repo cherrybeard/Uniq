@@ -12,7 +12,6 @@ class HealSpell: SpellCard {
     init() {
         super.init(
             name: "Heal",
-            requiresTarget: true,
             spotsFilter: { $0.owner.isActive && ($0.creature?.isDamaged ?? false) }
         )
         description = "Heals \(HealSpell.heal) to selected target."

@@ -11,7 +11,6 @@ class BerserkSpell: SpellCard {
     init() {
         super.init(
             name: "Berserk",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = """

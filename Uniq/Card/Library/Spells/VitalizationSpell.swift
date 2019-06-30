@@ -11,7 +11,6 @@ class VitalizationSpell: SpellCard {
     init() {
         super.init(
             name: "Vitalization",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Double creature's health"

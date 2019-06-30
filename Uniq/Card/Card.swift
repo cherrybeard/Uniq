@@ -45,7 +45,7 @@ class Card {
     
     init(
         name: String,
-        requiresTarget: Bool = false,
+        requiresTarget: Bool = true,
         spotsFilter: @escaping SpotsFilter = SpotsFilters.none
     ) {
         self.name = name

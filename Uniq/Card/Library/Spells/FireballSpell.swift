@@ -12,7 +12,6 @@ class FireballSpell: SpellCard {
     init() {
         super.init(
             name: "Fireball",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = "Deals \(FireballSpell.damage) damage to selected target."

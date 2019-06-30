@@ -12,7 +12,6 @@ class WhipSpell: SpellCard {
     init() {
         super.init(
             name: "Whip",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Deal \(WhipSpell.damage) damage to your creature and remove its exhaustion."

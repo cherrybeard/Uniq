@@ -8,7 +8,10 @@
 
 class MassRecallSpell: SpellCard {
     init() {
-        super.init(name: "Mass Recall")
+        super.init(
+            name: "Mass Recall",
+            requiresTarget: false
+        )
         description = "Recalls all allied creatures back to hand."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             for spot in battle.spots.filter(SpotsFilters.ownerCreatures) {

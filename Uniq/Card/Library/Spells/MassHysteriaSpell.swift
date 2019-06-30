@@ -8,7 +8,10 @@
 
 class MassHysteriaSpell: SpellCard {
     init() {
-        super.init(name: "Mass Hysteria")
+        super.init(
+            name: "Mass Hysteria",
+            requiresTarget: false
+        )
         description = "Force each creature to attack another random creature."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             let spots = battle.spots.shuffledSpots(in: SpotsFilters.creatures)

@@ -9,7 +9,10 @@
 class EmpathySpell: SpellCard {
     
     init() {
-        super.init(name: "Empathy")
+        super.init(
+            name: "Empathy",
+            requiresTarget: false
+        )
         description = "Get a card for each damaged allied creature."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             let spots = battle.spots.filter {

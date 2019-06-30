@@ -12,7 +12,6 @@ class HexSpell: SpellCard {
     init() {
         super.init(
             name: "Hex",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.enemyCreatures
         )
         description = "Transform target creature into \(HexSpell.creatureName)."

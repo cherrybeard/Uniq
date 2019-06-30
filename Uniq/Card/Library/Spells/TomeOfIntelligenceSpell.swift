@@ -22,7 +22,6 @@ class TomeOfIntelligenceSpell: SpellCard {
     init() {
         super.init(
             name: "Tome Of Intelligence",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
         description = """

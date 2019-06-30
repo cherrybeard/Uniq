@@ -10,7 +10,6 @@ class MirrorImageSpell: SpellCard {
     init() {
         super.init(
             name: "Mirror Image",
-            requiresTarget: true,
             spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Summon a copy of target creature with 1/1 to the random spot."

@@ -10,7 +10,10 @@ class FanOfKnivesSpell: SpellCard {
     static private let damage: Int = 1
     
     init() {
-        super.init(name: "Fan of Knives")
+        super.init(
+            name: "Fan of Knives",
+            requiresTarget: false
+        )
         description = "Deal \(FanOfKnivesSpell.damage) damage to selected target and draw a card."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             let targets = battle.spots.filter(SpotsFilters.enemyCreatures)
