@@ -12,7 +12,7 @@ class SwiftShotAbility: PassiveAbility {
     
     init() {
         super.init(
-            ability: { (battle: Battle, spot: Spot?) -> Bool in
+            effect: { (battle: Battle, spot: Spot?) -> Bool in
                 var spots = battle.spots.filter(SpotsFilters.enemyCreatures).shuffled()
                 for _ in 0..<SwiftShotAbility.targetsCount {
                     if let targetSpot = spots.first {

@@ -1,23 +1,14 @@
 //
-//  OldProphet.swift
+//  OldProphetCreature.swift
 //  Uniq
 //
 //  Created by Steven Gusev on 12/03/2018.
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
-//
-//class OldProphetCreature: CreatureCardBlueprint {
-//    init() {
-//        super.init(attack: 1, health: 1)
-//        description = "Battlecry: Draw 1 card."
-//    }
-//    
-//    /*
-//    override func battlecry(battle: Battle, creature: CreatureSprite) {
-//        /*
-//        if creature.owner == .player {
-//            battle.player.deck.draw()
-//        }
-//        */
-//    }*/
-//}
+
+class OldProphetCreature: CreatureCard {
+    init() {
+        super.init(name: "Old Prophet", attack: 1, health: 1)
+        onSummon = BlessOfTheEldersAbility()
+    }
+}

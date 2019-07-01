@@ -15,6 +15,7 @@ class CardLibrary {
         "Elven Archer": ElvenArcherCreature(),
         "Fairy": FairyCreature(),
         "Firelink Priest": FirelinkPriestCreature(),
+        "Old Prophet": OldProphetCreature(),
         "Thug": ThugCreature(),
         "Yletia Pirate": YletiaPirateCreature(),
         

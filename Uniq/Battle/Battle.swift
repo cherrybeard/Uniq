@@ -55,7 +55,8 @@ class Battle: SKNode {
         for _ in 1...3 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Elven Archer")
+        _ = addToHand(for: human, cardName: "Old Prophet")
+        _ = addToHand(for: human, cardName: "Thug")
         
         startTurn()
     }
@@ -209,20 +210,23 @@ class Battle: SKNode {
             SummonAnimation(creature.sprite, at: spot, battle: self)
         )
         
+        // Rush
         if card.hasRush { setExhaustion(of: creature, to: false) }
         
+        // When summoned ability
         if let ability = creature.whenSummoned {
             _ = ability.effect(self, creature.spot)
         }
         
-//        if let _ = place(blueprint, to: spot) {
-            /*
-            onSummon.raise(battle: self, spot: spot)
-            if let ability = creature.onSummon?.ability {
-                onSummon.addHandler(ability)
+        // Procedure onSummon abilities of others
+        let reactiveSpots = spots.filter {
+            ($0 != spot) && !$0.isFree && ($0.creature?.onSummon != nil)
+        }
+        for reactiveSpot in reactiveSpots {
+            if let ability = reactiveSpot.creature?.onSummon {
+                ability.effect(self, reactiveSpot, spot)
             }
-            _ = creature.card.whenSummoned?.ability(self, spot)*/
-//        }
+        }
     }
     
     func place(_ blueprint: CreatureCard, to spot: Spot) {

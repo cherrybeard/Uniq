@@ -14,6 +14,8 @@
 		5B11821922C927A6007D963A /* MirrorImageSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821822C927A6007D963A /* MirrorImageSpell.swift */; };
 		5B11821B22C9660F007D963A /* ElvenArcherCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821A22C9660F007D963A /* ElvenArcherCreature.swift */; };
 		5B11821E22C96902007D963A /* SwiftShotAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821D22C96902007D963A /* SwiftShotAbility.swift */; };
+		5B11822022C97AD5007D963A /* BlessOfTheEldersAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11821F22C97AD5007D963A /* BlessOfTheEldersAbility.swift */; };
+		5B11822222C98313007D963A /* OnSummonAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B11822122C98313007D963A /* OnSummonAbility.swift */; };
 		5B19083422B2600900CE8121 /* DamageAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083322B2600900CE8121 /* DamageAnimation.swift */; };
 		5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083522B2760E00CE8121 /* CreatureSprite.swift */; };
 		5B19083822B282A300CE8121 /* SummonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19083722B282A300CE8121 /* SummonAnimation.swift */; };
@@ -128,6 +130,8 @@
 		5B11821822C927A6007D963A /* MirrorImageSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorImageSpell.swift; sourceTree = "<group>"; };
 		5B11821A22C9660F007D963A /* ElvenArcherCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElvenArcherCreature.swift; sourceTree = "<group>"; };
 		5B11821D22C96902007D963A /* SwiftShotAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftShotAbility.swift; sourceTree = "<group>"; };
+		5B11821F22C97AD5007D963A /* BlessOfTheEldersAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlessOfTheEldersAbility.swift; sourceTree = "<group>"; };
+		5B11822122C98313007D963A /* OnSummonAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnSummonAbility.swift; sourceTree = "<group>"; };
 		5B19083322B2600900CE8121 /* DamageAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DamageAnimation.swift; sourceTree = "<group>"; };
 		5B19083522B2760E00CE8121 /* CreatureSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureSprite.swift; sourceTree = "<group>"; };
 		5B19083722B282A300CE8121 /* SummonAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummonAnimation.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				5B11821D22C96902007D963A /* SwiftShotAbility.swift */,
+				5B11821F22C97AD5007D963A /* BlessOfTheEldersAbility.swift */,
 			);
 			path = Abilities;
 			sourceTree = "<group>";
@@ -404,6 +409,7 @@
 			children = (
 				5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */,
 				5B19083B22B3527D00CE8121 /* PassiveAbility.swift */,
+				5B11822122C98313007D963A /* OnSummonAbility.swift */,
 			);
 			path = Abilities;
 			sourceTree = "<group>";
@@ -675,6 +681,7 @@
 				5B35E5CE2056BA6100678A10 /* RoyalAlchemistCreature.swift in Sources */,
 				5B51A17A227C537200111234 /* Spot.swift in Sources */,
 				5B35E5D02056D14C00678A10 /* FirelinkPriestCreature.swift in Sources */,
+				5B11822022C97AD5007D963A /* BlessOfTheEldersAbility.swift in Sources */,
 				5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */,
 				5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */,
 				5B40056922C62FFB005AABB6 /* EmpathySpell.swift in Sources */,
@@ -728,6 +735,7 @@
 				5BCA6F2E203A2AB400B81376 /* CreatureCard.swift in Sources */,
 				5BA1E8E322C631A900B9C2C2 /* AngerSpell.swift in Sources */,
 				5B40055922C5903F005AABB6 /* MassRecallSpell.swift in Sources */,
+				5B11822222C98313007D963A /* OnSummonAbility.swift in Sources */,
 				5BA1E8F122C68AA900B9C2C2 /* CallOfBattleSpell.swift in Sources */,
 				5B19084922B6C29B00CE8121 /* SwapAnimation.swift in Sources */,
 				5B33A64C204116CF00CF2D76 /* SpellCard.swift in Sources */,

@@ -13,7 +13,7 @@ class CreatureCard: Card {
     var health: Value
     var ability: ActiveAbility? = nil
     var whenSummoned: PassiveAbility? = nil
-    var onSummon: PassiveAbility? = nil
+    var onSummon: OnSummonAbility? = nil
     var hasRush: Bool = false
     
     init(name: String, attack: Int, health: Int) {

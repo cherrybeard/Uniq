@@ -14,8 +14,8 @@ class Creature {
     var health: Value
     var attack: Value
     var ability: ActiveAbility?
-    var onSummon: PassiveAbility?
     var whenSummoned: PassiveAbility?
+    var onSummon: OnSummonAbility?
     var isDead: Bool { return health.current <= 0 }
     var isDamaged: Bool { return health.current < health.max }
 

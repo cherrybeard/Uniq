@@ -11,7 +11,7 @@ class PassiveAbility {
     var description: String = ""
     let effect: (Battle, Spot?) -> Bool
     
-    init(ability: @escaping (Battle, Spot?) -> Bool ) {
-        self.effect = ability
+    init(effect: @escaping (Battle, Spot?) -> Bool ) {
+        self.effect = effect
     }
 }
