@@ -36,8 +36,8 @@ class Battle: SKNode {
         
         addChild(spots)
         interactives.append(spots)
-        // TODO: Rework addChild to custom function which adds sprite to interactives array if it is Interactive
-        // spots passed tp it will be added to it. same with the hand
+        // TODO: Rework addChild to custom function which adds sprite to interactives array
+        // if it is Interactive. Spots passed to it will be added to it. Same with the hand.
         for spot in spots { interactives.append(spot) }
         interactives.append(passButton)
         
@@ -55,10 +55,10 @@ class Battle: SKNode {
         for _ in 1...3 {
             _ = draw(for: human)
         }
-        _ = addToHand(for: human, cardName: "Old Prophet")
-        _ = addToHand(for: human, cardName: "Thug")
+        //_ = addToHand(for: human, cardName: "Old Prophet")
+        //_ = addToHand(for: human, cardName: "Thug")
         
-        startTurn()
+        aiTurn()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -70,38 +70,24 @@ class Battle: SKNode {
         isUnlocked = (state == .finished) || (state == .idle)
     }
     
-    func startTurn() {
-        activePlayer = activePlayer.isHuman ? ai : human
-        let message = activePlayer.isHuman ? "Your turn" : "Enemy turn"
+    func humanTurn() {
+        activePlayer = human
         animationPipeline.add(
-            AnnouncerAnimation(battle: self, message: message)
+            AnnouncerAnimation(battle: self, message: "Your turn")
         ) {
-            self.giveControls()
+            self.highlightActionTargets()
         }
     }
     
-    func giveControls() {
-        if activePlayer.isAi {
-            aiTurn()
-        } else {
-            highlightActionTargets()
+    func actionDone() {
+        animationPipeline.add() {
+            self.highlightActionTargets()
         }
     }
     
-    func endTurn(passed: Bool = false) {
+    func endTurn() {
         interactives.clean()
-        if passed {
-            activePlayer.passed = true
-            if activePlayer.isAi { passButton.readyToFight = true }
-            if human.passed && ai.passed {
-                fight()
-                return
-            }
-        } else {
-            human.passed = false
-            ai.passed = false
-        }
-        startTurn()
+        fight()
     }
     
     func fight() {
@@ -125,9 +111,7 @@ class Battle: SKNode {
                 setExhaustion(of: creature, to: false)
             }
         }
-        passButton.readyToFight = false
         for player in [human, ai] {
-            player.passed = false
             _ = draw(for: player)
         }
         round += 1
@@ -135,18 +119,15 @@ class Battle: SKNode {
         animationPipeline.add(
             AnnouncerAnimation(battle: self, message: "Round \(round)")
         )
-        startTurn()
+        aiTurn()
     }
     
     func aiTurn() {
-        var pass: Bool = true
+        activePlayer = ai
         for spot in spots.shuffledSpots(in: SpotsFilters.aiCreatures) {
-            if useActiveAbility(of: spot.creature!) {
-                pass = false
-                break
-            }
+            _ = useActiveAbility(of: spot.creature!)
         }
-        endTurn(passed: pass)
+        humanTurn()
     }
     
     func draw(for player: Player) -> Card? {

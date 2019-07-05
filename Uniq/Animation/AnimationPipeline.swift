@@ -24,20 +24,22 @@ class AnimationPipeline {
         queue.append(animation)
     }
     
-    func add(_ animation: Animation, completion block: @escaping () -> Void = {}) {
+    func add(_ animation: Animation? = nil, completion block: @escaping () -> Void) {
         blocks.append(block)
-        queue.append(animation)
+        if animation != nil {
+            queue.append(animation!)
+        }
     }
     
     func update() -> Animation.State {
         if queue.count == 0 {
-            if (lastState == .finished) || (lastState == .idle) {
-                lastState = .idle
-                return .idle
-            } else if blocks.count > 0 {
+            if blocks.count > 0 {
                 let block = blocks.remove(at: 0)
                 block()
                 return .inProgress
+            } else if (lastState == .finished) || (lastState == .idle) {
+                lastState = .idle
+                return .idle
             } else {
                 lastState = .finished
                 return .finished

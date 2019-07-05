@@ -59,7 +59,7 @@ class BattleScene: SKScene {
                                         // TODO: check if ability was really used
                                         self.battle.interactives.clean()
                                         if self.battle.useActiveAbility(of: creature) {
-                                            self.battle.endTurn()
+                                            self.battle.actionDone()
                                         }
                                     }
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
@@ -108,7 +108,6 @@ class BattleScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !battle.isUnlocked { return }
-        var actionCancelled = true
         
         for touch in touches {
             // TODO: Optimize these cycles by moving out type convertions
@@ -124,29 +123,20 @@ class BattleScene: SKScene {
                                 if let targetSpot = node as? Spot {
                                     // move creature
                                     battle.swap(sourceSpot, with: targetSpot)
-                                    actionCancelled = false
-                                    battle.endTurn()
                                     break
                                 }
                             } else if let card = source as? CardSprite {
                                 if let spot = node as? Spot {
-                                    if battle.play(card.card!, for: battle.human, to: spot) {
-                                        actionCancelled = false
-                                        battle.endTurn()
-                                        break
-                                    }
+                                    _ = battle.play(card.card!, for: battle.human, to: spot)
+                                    break
                                 } else if node is Spots {
-                                    if battle.play(card.card!, for: battle.human) {
-                                        actionCancelled = false
-                                        battle.endTurn()
-                                        break
-                                    }
+                                    _ = battle.play(card.card!, for: battle.human)
+                                    break
                                 }
                             } else if source is PassButton {
                                 if node is PassButton {
                                     // next turn
-                                    actionCancelled = false
-                                    battle.endTurn(passed: true)
+                                    battle.endTurn()
                                     break
                                 }
                             }
@@ -160,9 +150,7 @@ class BattleScene: SKScene {
         // reset targets highlighting
         delayedTask?.cancel()
         battle.interactives.clean()
-        if actionCancelled {
-            battle.highlightActionTargets()
-        }
+        battle.actionDone()
     }
     
     override func update(_ currentTime: TimeInterval) {
