@@ -46,15 +46,19 @@ class Battle: SKNode {
         interactives.append(passButton)
         
         // battle init
-        for creature in ["Yletia Pirate", "Thug", "Bandit"] {
+        let enemiesCount = Int.random(in: 0..<4)
+        for _ in 0...enemiesCount {
             if let spot = spots.randomSpot(in: SpotsFilters.aiFree) {
-                summon(creature, to: spot.index)
+                let card = CardLibrary.getRandomCard { $0 is CreatureCard }
+                if let creature = card as? CreatureCard {
+                    _ = place(creature, to: spot)
+                }
             }
         }
-        
+        /*
         if let spot = spots.randomSpot(in: SpotsFilters.humanFree) {
             summon("Yletia Pirate", to: spot.index)
-        }
+        }*/
         
         for _ in 1...3 {
             _ = draw(for: human)
@@ -189,15 +193,8 @@ class Battle: SKNode {
     }
 
     func summon(_ card: CreatureCard, to spot: Spot) { // TODO: Return Bool
-        //place(blueprint, to: spot)
-        
-        let creature = Creature(of: card, at: spot)
-        creatures.append(creature)
-        spot.creature = creature
-        
-        animationPipeline.add(
-            SummonAnimation(creature.sprite as! CreatureSprite, at: spot, battle: self)
-        )
+        // Place creature
+        let creature = place(card, to: spot)
         
         // Rush
         if card.hasRush { setExhaustion(of: creature, to: false) }
@@ -218,15 +215,15 @@ class Battle: SKNode {
         }
     }
     
-    func place(_ blueprint: CreatureCard, to spot: Spot) {
-        // create creature
-//        let creature = Creature(of: blueprint, spot: spot)
-//        spot.creature = creature
-        // add animation to pipeline
-        //animationPipeline.add(
-        //    SummonAnimation(creature.sprite, at: spot)
-        //)
-        //return creature
+    func place(_ card: CreatureCard, to spot: Spot) -> Creature {
+        let creature = Creature(of: card, at: spot)
+        creatures.append(creature)
+        spot.creature = creature
+        
+        animationPipeline.add(
+            SummonAnimation(creature.sprite as! CreatureSprite, at: spot, battle: self)
+        )
+        return creature
     }
     
     func swap(_ sourceSpot: Spot, with targetSpot: Spot) {

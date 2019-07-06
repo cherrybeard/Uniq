@@ -40,8 +40,8 @@
             "card": "Double Draw",
             "amount": 1
         },{
-            "card": "Whatever It Will Be",
-            "amount": 1
+            "card": "Elven Archer",
+            "amount": 2
         },{
             "card": "Reckless Assault",
             "amount": 1
@@ -66,6 +66,9 @@
         },{
             "card": "Call of Battle",
             "amount": 1
+        },{
+            "card": "Yletia Pirate",
+            "amount": 2
         }
     ]
 }

@@ -12,7 +12,7 @@ class Hero: Character {
     var isDead: Bool { return health.current <= 0 }
     
     init() {
-        health = Value(9)
+        health = Value(16)
         sprite = HeroSprite(health: health)
     }
     
