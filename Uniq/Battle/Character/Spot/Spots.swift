@@ -21,7 +21,7 @@ class Spots: SKNode, Collection, Interactive {
     static let height = Spot.height + Spots.vrtMargin * 2 + Spots.marginFromCenter * 2 + 40
     private static let hrzMargin: Int = 113
     private static let vrtMargin: Int = 90
-    private static let marginFromCenter: Int = 78
+    private static let marginFromCenter: Int = 50
     private static let start: Int = 1
     private static let end: Int = 13
     private static let strokeColor: [SpriteState: UIColor] = [

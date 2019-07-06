@@ -30,7 +30,9 @@ class BattleScene: SKScene {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
         //TODO: Move all this to class Battle
-        battle.human.deck.hand.position = CGPoint(x: 0, y: SCREEN.bottom + 45 + 20)
+        battle.position = CGPoint(x: 0, y: 40)
+        let handYPos = SCREEN.bottom + (CardSprite.height / 2) + 10
+        battle.human.deck.hand.position = CGPoint(x: 0, y: handYPos)
         //battle.desk.playerHero.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 160)
         battle.passButton.position = CGPoint(x: SCREEN.left + 40, y: SCREEN.bottom + 160)
         

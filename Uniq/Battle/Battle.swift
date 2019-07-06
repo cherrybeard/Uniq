@@ -347,14 +347,15 @@ class Battle: SKNode {
         }
     }
     
-    
     func kill(_ character: Character, killAnimation: Bool = true) {
         if let creature = character as? Creature {
             creature.spot.creature = nil
-            if killAnimation {
+            if !killAnimation {
                 animationPipeline.add(
                     RecallAnimation(creature: creature.sprite as! CreatureSprite)
                 )
+            } else {
+                animationPipeline.add( DeathAnimation(character: character.sprite) )
             }
         } else {
             animationPipeline.add( DeathAnimation(character: character.sprite) )
