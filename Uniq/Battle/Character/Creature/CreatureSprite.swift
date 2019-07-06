@@ -41,6 +41,7 @@ class CreatureSprite: SKNode, CharacterSprite {
     let healthLabel = StatLabel(type: .health)
     let attackLabel = StatLabel(type: .attack)
     let abilityLabel = AbilityLabel()
+    let passiveAbilityLabel = SKShapeNode(circleOfRadius: 3)
     var isExhausted: Bool = true { didSet {
         attackLabel.isDimmed = isExhausted
         abilityLabel.isDimmed = isExhausted
@@ -71,6 +72,12 @@ class CreatureSprite: SKNode, CharacterSprite {
         healthLabel.position = CGPoint(x: +xPos, y: -yPos)
         addChild(attackLabel)
         addChild(healthLabel)
+        
+        passiveAbilityLabel.lineWidth = 0
+        passiveAbilityLabel.fillColor = UIColor(rgb: 0xBBBBBB)
+        passiveAbilityLabel.position = CGPoint(x: 0, y: -yPos)
+        passiveAbilityLabel.alpha = card.onSummon == nil ? 0 : 1
+        addChild(passiveAbilityLabel)
         
         redraw()
         name = "creature"

@@ -63,8 +63,7 @@ class Battle: SKNode {
         for _ in 1...3 {
             _ = draw(for: human)
         }
-        //_ = addToHand(for: human, cardName: "Old Prophet")
-        //_ = addToHand(for: human, cardName: "Thug")
+        _ = addToHand(for: human, cardName: "Old Prophet")
         
         aiTurn()
     }
