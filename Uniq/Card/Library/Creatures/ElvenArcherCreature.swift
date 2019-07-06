@@ -10,5 +10,6 @@ class ElvenArcherCreature: CreatureCard {
     init() {
         super.init(name: "Elven Archer", attack: 2, health: 5)
         whenSummoned = SwiftShotAbility()
+        power = 3
     }
 }

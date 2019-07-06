@@ -18,5 +18,6 @@ class YletiaPirateCreature: CreatureCard {
                 return true
             }
         )
+        power = 5
     }
 }

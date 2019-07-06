@@ -10,5 +10,6 @@ class FairyCreature: CreatureCard {
     init() {
         super.init(name: "Fairy", attack: 0, health: 4)
         hasRush = true
+        power = 1
     }
 }

@@ -15,6 +15,7 @@ class CreatureCard: Card {
     var whenSummoned: PassiveAbility? = nil
     var onSummon: OnSummonAbility? = nil
     var hasRush: Bool = false
+    var power: Int = 0
     
     init(name: String, attack: Int, health: Int) {
         self.attack = Value(attack)

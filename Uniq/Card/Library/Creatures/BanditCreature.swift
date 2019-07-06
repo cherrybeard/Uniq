@@ -9,5 +9,6 @@
 class BanditCreature: CreatureCard {
     init() {
         super.init(name: "Bandit", attack: 3, health: 32)
+        power = 15
     }
 }

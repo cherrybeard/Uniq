@@ -10,5 +10,6 @@ class OldProphetCreature: CreatureCard {
     init() {
         super.init(name: "Old Prophet", attack: 1, health: 1)
         onSummon = BlessOfTheEldersAbility()
+        power = 1
     }
 }

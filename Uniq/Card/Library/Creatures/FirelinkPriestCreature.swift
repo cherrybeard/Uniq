@@ -24,6 +24,7 @@ class FirelinkPriestCreature: CreatureCard {
                 return false
             }
         )
+        power = 2
     }
     /*
     override func battlecry(battle: Battle, creature: CreatureSprite) {

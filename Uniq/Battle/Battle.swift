@@ -45,14 +45,9 @@ class Battle: SKNode {
         for spot in spots { interactives.append(spot) }
         interactives.append(passButton)
         
-        // battle init
-        let enemiesCount = Int.random(in: 0..<4)
-        for _ in 0...enemiesCount {
+        for creature in generateRandomComposition() {
             if let spot = spots.randomSpot(in: SpotsFilters.aiFree) {
-                let card = CardLibrary.getRandomCard { $0 is CreatureCard }
-                if let creature = card as? CreatureCard {
-                    _ = place(creature, to: spot)
-                }
+                _ = place(creature, to: spot)
             }
         }
         /*
@@ -470,6 +465,26 @@ class Battle: SKNode {
             }
             passButton.state.insert(.interactive)
         }
+    }
+    
+    private func generateRandomComposition() -> [CreatureCard] {
+        var power = 0
+        var composition: [CreatureCard] = []
+        
+        repeat {
+            let count = Int.random(in: 1...6)
+            for _ in 0..<count {
+                let card = CardLibrary.getRandomCard { $0 is CreatureCard }
+                composition.append(card as! CreatureCard)
+            }
+            power = composition.map( { $0.power } ).reduce(0, +)
+            
+            while (power > 25) && (composition.count > 0) {
+                composition.remove(at: 0)
+                power = composition.map( { $0.power } ).reduce(0, +)
+            }
+        } while (power < 15)
+        return composition
     }
     
 }
