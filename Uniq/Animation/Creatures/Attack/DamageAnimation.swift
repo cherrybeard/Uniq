@@ -10,7 +10,7 @@ import SpriteKit
 
 class DamageAnimation: Animation {
     let amount: Int
-    var creature: CreatureSprite
+    var character: CharacterSprite
     let label: DamageLabel
     // TODO: hideAfter: Bool to not hide in case it's final damage
     
@@ -24,20 +24,20 @@ class DamageAnimation: Animation {
         return SKAction.sequence([appear, pause, hide])
     }
     
-    init(creature: CreatureSprite, amount: Int) {
-        self.creature = creature
+    init(character: CharacterSprite, amount: Int) {
+        self.character = character
         self.amount = amount
         
         label = DamageLabel(amount: amount)
         label.alpha = 0
         label.setScale(0)
-        creature.addChild(label)
+        character.addChild(label)
         
         super.init()
     }
     
     override func play() {
-        creature.healthLabel.changeValue(by: amount, changeMax: false)
+        character.healthLabel.changeValue(by: amount, changeMax: false)
         label.run(DamageAnimation.action) {
             self.label.removeFromParent()
         }

@@ -9,8 +9,8 @@
 import SpriteKit
 
 class AttackAnimation: Animation {
-    private var creature: CreatureSprite
-    private var target: CreatureSprite
+    private var creature: CharacterSprite
+    private var target: CharacterSprite
     private var targetPosX: CGFloat { return target.position.x }
     private var targetPosY: CGFloat { return target.position.y }
     
@@ -55,7 +55,7 @@ class AttackAnimation: Animation {
         return SKAction.sequence([response, restore])
     }
     
-    init(creature: CreatureSprite, target: CreatureSprite) {
+    init(creature: CharacterSprite, target: CharacterSprite) {
         self.creature = creature
         self.target = target
     }

@@ -31,8 +31,6 @@ class PassButton: SKNode, Interactive {
         .base: UIColor(rgb: 0x484644),
     ]
     
-    var readyToFight: Bool = false { didSet { redraw() } }
-    
     var state: Set<InteractiveState> = []  { didSet { redraw() } }
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
@@ -51,6 +49,7 @@ class PassButton: SKNode, Interactive {
         label.fontName = "AvenirNext-Medium"
         label.verticalAlignmentMode = .center
         label.horizontalAlignmentMode = .center
+        label.text = "Fight"
         addChild(label)
         
         redraw()
@@ -65,7 +64,6 @@ class PassButton: SKNode, Interactive {
     }
     
     private func redraw() {
-        label.text = readyToFight ? "Fight" : "Pass"
         var spriteState: SpriteState = .base
         for s in SpriteState.allCases {
             if let interactiveState = InteractiveState(rawValue: s.rawValue) {

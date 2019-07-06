@@ -43,7 +43,9 @@ class Spot: SKNode, Interactive {
     
     var state: Set<InteractiveState> = [] {
         didSet {
-            creature?.sprite.state = state
+            if let sprite = creature?.sprite as? CreatureSprite {
+                sprite.state = state
+            }
             redraw()
         }
     }

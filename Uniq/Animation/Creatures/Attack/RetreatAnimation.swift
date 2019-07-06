@@ -9,7 +9,7 @@
 import SpriteKit
 
 class RetreatAnimation: Animation {
-    private let creature: CreatureSprite
+    private let creature: CharacterSprite
     private let position: CGPoint
     private var action: SKAction {
         let pause = SKAction.wait(forDuration: 0.1)
@@ -18,7 +18,7 @@ class RetreatAnimation: Animation {
         return SKAction.sequence([pause, moveBack])
     }
     
-    init(creature: CreatureSprite, spot: Spot) {
+    init(creature: CharacterSprite, spot: Spot) {
         self.creature = creature
         position = spot.position
     }

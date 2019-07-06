@@ -19,6 +19,7 @@ class Player: Equatable {
     var isHuman: Bool { return type == .human }
     var isAi: Bool { return type == .ai }
     var isActive: Bool = false
+    var hero = Hero()
     
     init(as type: Kind) {
         self.type = type

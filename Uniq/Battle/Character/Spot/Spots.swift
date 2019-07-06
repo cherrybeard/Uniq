@@ -17,6 +17,8 @@ class Spots: SKNode, Collection, Interactive {
         case base = "base"
     }
     
+    static let width = Spot.width + Spots.hrzMargin * 2 + 40
+    static let height = Spot.height + Spots.vrtMargin * 2 + Spots.marginFromCenter * 2 + 40
     private static let hrzMargin: Int = 113
     private static let vrtMargin: Int = 90
     private static let marginFromCenter: Int = 78
@@ -36,10 +38,7 @@ class Spots: SKNode, Collection, Interactive {
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     
     private let border = SKShapeNode(
-        rectOf: CGSize(
-            width: (Spot.width + Spots.hrzMargin * 2 + 40),
-            height: (Spot.height + Spots.vrtMargin * 2 + Spots.marginFromCenter * 2 + 40)
-        ),
+        rectOf: CGSize( width: Spots.width, height: Spots.height ),
         cornerRadius: 8
     )
     

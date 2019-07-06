@@ -9,7 +9,7 @@
 import SpriteKit
 
 class SwapResponseAnimation: Animation {
-    private let creature: CreatureSprite
+    private let creature: CharacterSprite
     private let position: CGPoint
     private var action: SKAction {
         let action = SKAction.move(to: position, duration: 0.3)
@@ -17,7 +17,7 @@ class SwapResponseAnimation: Animation {
         return action
     }
     
-    init(creature: CreatureSprite, spot: Spot) {
+    init(creature: CharacterSprite, spot: Spot) {
         self.creature = creature
         self.position = spot.position
     }

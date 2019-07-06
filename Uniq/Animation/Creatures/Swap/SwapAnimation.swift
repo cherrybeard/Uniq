@@ -9,7 +9,7 @@
 import SpriteKit
 
 class SwapAnimation: Animation {
-    private var creature: CreatureSprite
+    private var creature: CharacterSprite
     private var position: CGPoint
     
     private var action: SKAction {
@@ -22,7 +22,7 @@ class SwapAnimation: Animation {
         return SKAction.group([move, scale])
     }
     
-    init(creature: CreatureSprite, spot: Spot) {
+    init(creature: CharacterSprite, spot: Spot) {
         self.creature = creature
         position = spot.position
     }

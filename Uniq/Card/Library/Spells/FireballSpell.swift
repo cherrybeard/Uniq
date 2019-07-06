@@ -16,8 +16,8 @@ class FireballSpell: SpellCard {
         )
         description = "Deals \(FireballSpell.damage) damage to selected target."
         effect = { (battle: Battle, spot: Spot?) -> Bool in
-            if spot != nil {
-                battle.dealDamage(FireballSpell.damage, to: spot!)
+            if let creature = spot?.creature {
+                battle.dealDamage(FireballSpell.damage, to: creature)
                 return true
             }
             return false

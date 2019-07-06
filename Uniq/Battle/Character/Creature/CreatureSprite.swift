@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class CreatureSprite: SKNode {
+class CreatureSprite: SKNode, CharacterSprite {
     
     private enum SpriteState: String, CaseIterable {
         case targetted = "targetted"

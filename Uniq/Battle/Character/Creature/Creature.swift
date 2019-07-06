@@ -6,8 +6,8 @@
 //  Copyright © 2018 Steven Gusev. All rights reserved.
 //
 
-class Creature {
-    let sprite: CreatureSprite
+class Creature: Character {
+    let sprite: CharacterSprite
     var card: CreatureCard
     var spot: Spot
     

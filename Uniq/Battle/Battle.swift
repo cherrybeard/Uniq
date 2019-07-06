@@ -34,6 +34,10 @@ class Battle: SKNode {
         spots = Spots(human: human, ai: ai)
         super.init()
         
+        let yPos = Spots.height / 2 + 40
+        human.hero.sprite.position = CGPoint(x: 0, y: -yPos)
+        addChild(human.hero.sprite)
+        
         addChild(spots)
         interactives.append(spots)
         // TODO: Rework addChild to custom function which adds sprite to interactives array
@@ -95,7 +99,11 @@ class Battle: SKNode {
             if let attacker = attackerSpot.creature {
                 setExhaustion(of: attacker, to: true)
                 if let targetSpot = spots.target(for: attackerSpot) {
-                    attack( from: attackerSpot, to: targetSpot )
+                    if let creature = targetSpot.creature {
+                        attack( attacker: attacker, target: creature )
+                    }
+                } else if attackerSpot.owner.isAi {
+                    attack( attacker: attacker, target: human.hero )
                 }
             }
             fight()
@@ -188,7 +196,7 @@ class Battle: SKNode {
         spot.creature = creature
         
         animationPipeline.add(
-            SummonAnimation(creature.sprite, at: spot, battle: self)
+            SummonAnimation(creature.sprite as! CreatureSprite, at: spot, battle: self)
         )
         
         // Rush
@@ -251,7 +259,7 @@ class Battle: SKNode {
     func setExhaustion(of creature: Creature, to exhausted: Bool) {
         creature.isExhausted = exhausted
         animationPipeline.add(
-            SetExhaustionAnimation(creature: creature.sprite, to: exhausted)
+            SetExhaustionAnimation(creature: creature.sprite as! CreatureSprite, to: exhausted)
         )
     }
     
@@ -273,18 +281,40 @@ class Battle: SKNode {
         }
     }
     
+    func attack(attacker: Creature, target: Character) {
+        let attackerSprite = attacker.sprite
+        
+        animationPipeline.add(
+            AttackAnimation( creature: attackerSprite, target: target.sprite )
+        )
+        dealDamage(attacker.attack.current, to: target)
+        animationPipeline.add(
+            RetreatAnimation( creature: attackerSprite, spot: attacker.spot )
+        )
+    }
+    
+    func dealDamage(_ amount: Int, to character: Character) {
+        character.dealDamage(amount)
+        animationPipeline.add(
+            DamageAnimation( character: character.sprite, amount: -amount )
+        )
+        if character.isDead {
+            kill(character)
+        }
+    }
+    
     func dealDamage(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {
             creature.dealDamage(amount)
             animationPipeline.add(
-                DamageAnimation( creature: creature.sprite, amount: -amount )
+                DamageAnimation( character: creature.sprite, amount: -amount )
             )
             if creature.isDead {
-                kill(at: spot)
+                kill(creature)
             }
         }
     }
-    
+    /*
     func dealDamage(_ amount: Int, to filter: SpotsFilter) {
         let targets = spots.filter(filter)
         var obituaries: [Spot] = []
@@ -302,16 +332,32 @@ class Battle: SKNode {
         for spot in obituaries {
             kill(at: spot)
         }
-    }
+    }*/
     
     func kill(at spot: Spot, killAnimation: Bool = true) {
         if let creature = spot.creature {
             spot.creature = nil
             if killAnimation {
-                animationPipeline.add( DeathAnimation(creature: creature.sprite) )
+                animationPipeline.add( DeathAnimation(character: creature.sprite) )
             } else {
-                animationPipeline.add( RecallAnimation(creature: creature.sprite) )
+                animationPipeline.add(
+                    RecallAnimation(creature: creature.sprite as! CreatureSprite)
+                )
             }
+        }
+    }
+    
+    
+    func kill(_ character: Character, killAnimation: Bool = true) {
+        if let creature = character as? Creature {
+            creature.spot.creature = nil
+            if killAnimation {
+                animationPipeline.add(
+                    RecallAnimation(creature: creature.sprite as! CreatureSprite)
+                )
+            }
+        } else {
+            animationPipeline.add( DeathAnimation(character: character.sprite) )
         }
     }
     
@@ -319,7 +365,7 @@ class Battle: SKNode {
         if let creature = spot.creature {
             let healed = creature.heal(amount)
              animationPipeline.add(
-                 DamageAnimation( creature: creature.sprite, amount: healed )
+                 DamageAnimation( character: creature.sprite, amount: healed )
              )
         }
     }
@@ -330,7 +376,7 @@ class Battle: SKNode {
             
             animationPipeline.add(
                 BuffStatAnimation(
-                    creature: creature.sprite,
+                    creature: creature.sprite as! CreatureSprite,
                     stat: stat,
                     by: amount
                 )
@@ -358,7 +404,7 @@ class Battle: SKNode {
             
             animationPipeline.add(
                 BuffStatAnimation(
-                    creature: creature.sprite,
+                    creature: creature.sprite as! CreatureSprite,
                     stat: stat,
                     to: amount
                 )
@@ -369,7 +415,7 @@ class Battle: SKNode {
     func replaceAbility(of creature: Creature, with ability: ActiveAbility?) {
         creature.ability = ability
         animationPipeline.add(
-            ReplaceAbilityAnimation(creature: creature.sprite, ability: ability)
+            ReplaceAbilityAnimation(creature: creature.sprite as! CreatureSprite, ability: ability)
         )
     }
     
@@ -379,7 +425,7 @@ class Battle: SKNode {
                 setExhaustion(of: creature, to: true)
                 ability.left = ability.cooldown
                 animationPipeline.add(
-                    ResetCooldownAnimation(creature: creature.sprite)
+                    ResetCooldownAnimation(creature: creature.sprite as! CreatureSprite)
                 )
                 return ability.effect(self, creature.spot)
             }
@@ -394,7 +440,7 @@ class Battle: SKNode {
             }
         }
         animationPipeline.add(
-            DecreaseCooldownAnimation(creature: creature.sprite)
+            DecreaseCooldownAnimation(creature: creature.sprite as! CreatureSprite)
         )
     }
     
