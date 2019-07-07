@@ -57,16 +57,16 @@ class Spot: SKNode, Interactive {
     weak var creature: Creature? = nil
     var isFree: Bool { return (creature == nil) }
 
-    var index: Int {
-        get {
-            var shift: Int = column.rawValue + 2
-            if owner.isHuman {
-                shift += 6 + range.rawValue * 3
-            } else {
-                shift += (range.rawValue-1) * -3
-            }
-            return shift
+    var index: Int { return Spot.indexOf(owner: owner.type, range: range, column: column) }
+    
+    static func indexOf(owner: Player.Kind, range: Range, column: Column) -> Int {
+        var shift: Int = column.rawValue + 2
+        if owner == .human {
+            shift += 6 + range.rawValue * 3
+        } else {
+            shift += (range.rawValue-1) * -3
         }
+        return shift
     }
     
     init(owner: Player, range: Range, column: Column) {

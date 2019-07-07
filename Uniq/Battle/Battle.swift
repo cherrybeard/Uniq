@@ -131,7 +131,27 @@ class Battle: SKNode {
     func aiTurn() {
         activePlayer = ai
         for spot in spots.shuffledSpots(in: SpotsFilters.aiCreatures) {
-            _ = useActiveAbility(of: spot.creature!)
+            if let creature = spot.creature {
+                _ = useActiveAbility(of: creature)
+                /*
+                // determine if creature should move
+                if let target = spots.target(for: spot)?.creature {
+                    let ownThreat = spots.threat(from: spot)
+                    
+                    if target.health.current < ownThreat {
+                        let threat = spots.threat(from: spot, reverse: true)
+                        let health = creature.health.current
+                        let threats: [Spot.Column: Int] = []
+                        
+                        if threat > creature.health.current {
+                            
+                        }
+                    }
+                }*/
+                // if threat on line < hunan creature hp
+                // and if a line nearby has threat < this creature hp
+                // move creature
+            }
         }
         humanTurn()
     }

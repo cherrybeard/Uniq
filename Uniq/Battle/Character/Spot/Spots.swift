@@ -174,6 +174,33 @@ class Spots: SKNode, Collection, Interactive {
         return nil
     }
     
+    func threat(column: Spot.Column, direction owner: Player) -> Int {
+        var threat = 0
+        let enemyPlayer: Player.Kind = owner.isHuman ? .ai : .human
+        for range: Spot.Range in [.melee, .range] {
+            let index = Spot.indexOf(owner: enemyPlayer, range: range, column: column)
+            if let creature = spots[index].creature {
+                threat += creature.attack.current
+            }
+        }
+        return threat
+    }
+    
+    func threat(from spot: Spot, reverse: Bool = false) -> Int {
+        var threat = 0
+        var owner = spot.owner.type
+        if reverse {
+            owner = spot.owner.isHuman ? .ai : .human
+        }
+        for range: Spot.Range in [.melee, .range] {
+            let index = Spot.indexOf(owner: owner, range: range, column: spot.column)
+            if let creature = spots[index].creature {
+                threat += creature.attack.current
+            }
+        }
+        return threat
+    }
+    
     func redraw() {
         var spriteState: SpriteState = .base
         for s in SpriteState.allCases {
