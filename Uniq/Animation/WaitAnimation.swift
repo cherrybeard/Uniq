@@ -10,12 +10,12 @@ import SpriteKit
 
 class WaitAnimation: Animation {
     private let delay: TimeInterval
-    private let battle: Battle
+    private let battle: BattleSprite
     private var action: SKAction {
         return SKAction.wait(forDuration: delay)
     }
     
-    internal init(battle: Battle, delay: TimeInterval) {
+    internal init(battle: BattleSprite, delay: TimeInterval) {
         self.battle = battle
         self.delay = delay
     }

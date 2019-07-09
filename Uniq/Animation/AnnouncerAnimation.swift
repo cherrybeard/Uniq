@@ -17,7 +17,7 @@ class AnnouncerAnimation: Animation {
     }
     private static var fadeOut = SKAction.fadeOut(withDuration: 0.5)
     
-    init(battle: Battle, message: String) {
+    init(battle: BattleSprite, message: String) {
         announcer.message = message
         announcer.position = CGPoint(x: 0, y: -6)
         announcer.alpha = 0

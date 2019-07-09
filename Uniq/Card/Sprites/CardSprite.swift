@@ -8,20 +8,20 @@
 
 import SpriteKit
 
-class CardSprite: SKNode, Interactive {
+class CardSprite: SKNode {
     
-    private enum SpriteState: String, CaseIterable {
-        case interacted = "interacted"
-        case interactive = "interactive"
-        case base = "base"
+    enum State: CaseIterable {
+        case selected
+        case selectable
+        case base
     }
     
     static let width = 60
     static let height = 90
     private static let fillColor = UIColor(rgb: 0x111111)
-    private static let strokeColor: [SpriteState: UIColor] = [
-        .interacted: UIColor(rgb: 0xAC7D4E),
-        .interactive: UIColor(rgb: 0x775534),
+    private static let strokeColor: [State: UIColor] = [
+        .selected: UIColor(rgb: 0xAC7D4E),
+        .selectable: UIColor(rgb: 0x775534),
         .base: UIColor(rgb: 0x484644)
     ]
     private static var textStyle: NSMutableParagraphStyle {
@@ -37,7 +37,7 @@ class CardSprite: SKNode, Interactive {
     ]
     
     weak var card: Card? = nil { didSet { updateCardData() } }
-    var state: Set<InteractiveState> = []  { didSet { redraw() } }
+    var state: Set<State> = []  { didSet { redraw() } }
     var targetsFilter: (Interactive) -> Bool = { _ in return false }
     var isDiscarded: Bool = false
     
@@ -76,7 +76,7 @@ class CardSprite: SKNode, Interactive {
                 string: card!.name,
                 attributes: CardSprite.textAttributes
             )
-            label.text = card!.name
+            /*
             if card!.requiresTarget {
                 targetsFilter = {
                     if let spot = $0 as? Spot {
@@ -86,21 +86,17 @@ class CardSprite: SKNode, Interactive {
                 }
             } else {
                 targetsFilter = { $0 is Spots }
-            }
+            }*/
         }
     }
     
     func redraw() {
-        var spriteState: SpriteState = .base
-        for s in SpriteState.allCases {
-            if let interactiveState = InteractiveState(rawValue: s.rawValue) {
-                if state.contains(interactiveState) {
-                    spriteState = s
-                    break
-                }
+        for s in State.allCases {
+            if state.contains(s) {
+                border.strokeColor = CardSprite.strokeColor[s]!
+                break
             }
         }
-        border.strokeColor = CardSprite.strokeColor[spriteState]!
     }
     
 }

@@ -18,6 +18,7 @@ class HolyLightSpell: SpellCard {
             Heals \(HolyLightSpell.damage) to selected target. If it is already at full health, \
             damage him instead.
         """
+        /*
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 if creature.isDamaged {
@@ -29,5 +30,6 @@ class HolyLightSpell: SpellCard {
             }
             return false
         }
+        */
     }
 }

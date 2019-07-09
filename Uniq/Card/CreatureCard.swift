@@ -11,19 +11,14 @@ import SpriteKit
 class CreatureCard: Card {
     var attack: Value
     var health: Value
-    var ability: ActiveAbility? = nil
-    var whenSummoned: PassiveAbility? = nil
-    var onSummon: OnSummonAbility? = nil
+    var abilities: [ActiveAbility] = []
     var hasRush: Bool = false
     var power: Int = 0
     
     init(name: String, attack: Int, health: Int) {
         self.attack = Value(attack)
         self.health = Value(health)
-        super.init(
-            name: name,
-            spotsFilter: SpotsFilters.ownerFree
-        )
+        super.init(name: name, requiresTarget: false)
         sprite = CreatureCardSprite()
         sprite.card = self
     }
@@ -33,21 +28,17 @@ class CreatureCard: Card {
         self.health = health
         super.init(
             name: name,
-            requiresTarget: true,
-            spotsFilter: SpotsFilters.ownerFree
+            requiresTarget: false
         )
         sprite = CreatureCardSprite()
         sprite.card = self
     }
     
-    override func play(battle: Battle, spot: Spot?) -> Bool {
-        if spot != nil {
-            battle.summon(self, to: spot!)
-            return true
-        }
-        return false
+    override func play(battle: Battle, for player: Player?, target: Character?) {
+        let creature = Creature(of: self)
+        _ = battle.place(creature, for: player ?? battle.activePlayer)
     }
-    
+    /*
     func increaseStat(_ stat: StatLabel.Kind, by amount: Int) {
         switch stat {
         case .attack:
@@ -57,15 +48,14 @@ class CreatureCard: Card {
             health.current += amount
             health.max += amount
         }
-    }
+    }*/
     
     override func copy() -> CreatureCard {
         let card = CreatureCard(name: name, attack: attack, health: health)
         card.description = description
-        card.ability = ability
-        card.whenSummoned = whenSummoned
-        card.onSummon = onSummon
+        card.abilities = abilities
         card.hasRush = hasRush
+        card.power = power
         return card
     }
 }

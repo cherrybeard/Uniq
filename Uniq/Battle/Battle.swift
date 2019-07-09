@@ -8,12 +8,11 @@
 
 import SpriteKit
 
-class Battle: SKNode {
+class Battle {
     let passButton = PassButton()
-    var spots: Spots
-    var interactives = Interactives()
+    //var interactives = Interactives()
     private let animationPipeline = AnimationPipeline()
-    private let onSummon = BattleEvent()
+    private var selectedCreature: Character? = nil
     
     let human = Player(as: .human)  // TODO: can we make it static?
     let ai = Player(as: .ai)
@@ -25,40 +24,34 @@ class Battle: SKNode {
         }
     }
     var round: Int = 1
-    var creatures: [Creature] = []
+    var characters: [Character] = []
     
     var isUnlocked: Bool = false
+    var sprite = BattleSprite()
     
-    override init() {
+    init() {
         activePlayer = ai
-        spots = Spots(human: human, ai: ai)
-        super.init()
-        
-        let yPos = Spots.height / 2 + 40
-        human.hero.sprite.position = CGPoint(x: 0, y: -yPos)
-        addChild(human.hero.sprite)
-        
-        addChild(spots)
-        interactives.append(spots)
-        // TODO: Rework addChild to custom function which adds sprite to interactives array
-        // if it is Interactive. Spots passed to it will be added to it. Same with the hand.
-        for spot in spots { interactives.append(spot) }
-        interactives.append(passButton)
-        
+        _ = place( Hero(), for: human )
+        for _ in 0..<3 {
+            _ = place(
+                Creature( of: FairyCreature() ), for: ai
+            )
+        }
+        /*
         for creature in generateRandomComposition() {
             if let spot = spots.randomSpot(in: SpotsFilters.aiFree) {
                 _ = place(creature, to: spot)
             }
-        }
+        }*/
         /*
         if let spot = spots.randomSpot(in: SpotsFilters.humanFree) {
             summon("Yletia Pirate", to: spot.index)
         }*/
-        
+        /*
         for _ in 1...3 {
             _ = draw(for: human)
-        }
-        _ = addToHand(for: human, cardName: "Old Prophet")
+        }*/
+        //_ = addToHand(for: human, cardName: "Old Prophet")
         
         aiTurn()
     }
@@ -75,23 +68,23 @@ class Battle: SKNode {
     func humanTurn() {
         activePlayer = human
         animationPipeline.add(
-            AnnouncerAnimation(battle: self, message: "Your turn")
+            AnnouncerAnimation(battle: sprite, message: "Your turn")
         ) {
-            self.highlightActionTargets()
+            //self.highlightActionTargets()
         }
     }
     
     func actionDone() {
         animationPipeline.add() {
-            self.highlightActionTargets()
+            //self.highlightActionTargets()
         }
     }
     
     func endTurn() {
-        interactives.clean()
-        fight()
+        //interactives.clean()
+        //fight()
     }
-    
+    /*
     func fight() {
         if let attackerSpot = spots.nextAttacker(activePlayer: activePlayer.type) {
             if let attacker = attackerSpot.creature {
@@ -108,29 +101,29 @@ class Battle: SKNode {
         } else {
             endRound()
         }
-    }
+    }*/
     
     func endRound() {
-        for spot in spots {
-            if let creature = spot.creature {
-                decreaseAbilityCooldown(of: creature)
-                setExhaustion(of: creature, to: false)
-            }
+        for character in characters {
+            //decreaseAbilityCooldown(of: creature)
+            //setExhaustion(of: creature, to: false)
         }
+        /*
         for player in [human, ai] {
             _ = draw(for: player)
-        }
+        }*/
         round += 1
         
         animationPipeline.add(
-            AnnouncerAnimation(battle: self, message: "Round \(round)")
+            AnnouncerAnimation(battle: sprite, message: "Round \(round)")
         )
         aiTurn()
     }
     
     func aiTurn() {
         activePlayer = ai
-        for spot in spots.shuffledSpots(in: SpotsFilters.aiCreatures) {
+        /*
+        for spot in spots.shuffledSpots(in: CreatureFilters.aiCreatures) {
             if let creature = spot.creature {
                 _ = useActiveAbility(of: creature)
                 /*
@@ -152,10 +145,10 @@ class Battle: SKNode {
                 // and if a line nearby has threat < this creature hp
                 // move creature
             }
-        }
+        }*/
         humanTurn()
     }
-    
+    /*
     func draw(for player: Player) -> Card? {
         if let card = player.deck.draw() {
             interactives.append(card.sprite)
@@ -166,8 +159,8 @@ class Battle: SKNode {
             return card
         }
         return nil
-    }
-    
+    }*/
+    /*
     func addToHand(for player: Player, cardName: String) -> Card? {
         if let card = player.deck.addToHand(cardName) {
             interactives.append(card.sprite)
@@ -179,13 +172,14 @@ class Battle: SKNode {
             return card
         }
         return nil
-    }
+    }*/
     
-    func play(_ card: Card, for player: Player, to spot: Spot? = nil) -> Bool {
-        if card.requiresTarget && (spot == nil) { return false }
+    func play(_ card: Card, for player: Player?, target: Character?) {
+        if card.requiresTarget && (target == nil) { return }
         
         card.state = .discarded
         card.sprite.isDiscarded = true
+        /*
         interactives.removeAll {
             if let sprite = $0 as? CardSprite {
                 return sprite.isDiscarded
@@ -196,10 +190,10 @@ class Battle: SKNode {
         animationPipeline.add([
             DiscardCardAnimaiton(card: card.sprite),
             RepositionHandAnimation(hand: player.deck.hand)
-        ])
-        return card.play(battle: self, spot: spot)
+        ])*/
+        card.play(battle: self, for: player ?? activePlayer, target: target)
     }
-    
+    /*
     func summon(_ creatureName: String, to index: Int) {
         if let card = CardLibrary.getCard(creatureName) as? CreatureCard {
             summon(card, to: spots[index])
@@ -227,8 +221,21 @@ class Battle: SKNode {
                 ability.effect(self, reactiveSpot, spot)
             }
         }
+    }*/
+    
+    func place(_ character: Character, for player: Player) {
+        characters.append(character)    // TODO: Move characters array to Player
+        character.owner = player
+        let sprite = character.generateSprite()
+        character.sprite = sprite
+        if let formation = self.sprite.formations[player.type] {
+            animationPipeline.add(
+                SummonAnimation(sprite, to: formation)
+            )
+        }
     }
     
+    /*
     func place(_ card: CreatureCard, to spot: Spot) -> Creature {
         let creature = Creature(of: card, at: spot)
         creatures.append(creature)
@@ -238,42 +245,16 @@ class Battle: SKNode {
             SummonAnimation(creature.sprite as! CreatureSprite, at: spot, battle: self)
         )
         return creature
-    }
-    
-    func swap(_ sourceSpot: Spot, with targetSpot: Spot) {
-        // Swap creatures
-        let creature = sourceSpot.creature
-        sourceSpot.creature = targetSpot.creature
-        targetSpot.creature = creature
-        
-        sourceSpot.creature?.spot = sourceSpot
-        targetSpot.creature?.spot = targetSpot
-        
-        if let primaryCreature = targetSpot.creature {
-            // Disable primary creature actions for this turn
-            setExhaustion(of: primaryCreature, to: true)
-            
-            // Animate movement
-            if let secondaryCreature = sourceSpot.creature {
-                animationPipeline.add(
-                    SwapResponseAnimation( creature: secondaryCreature.sprite, spot: sourceSpot)
-                )
-            }
-            
-            animationPipeline.add(
-                SwapAnimation( creature: primaryCreature.sprite, spot: targetSpot )
-            )
-        }
-        
-    }
+    }*/
     
     func setExhaustion(of creature: Creature, to exhausted: Bool) {
         creature.isExhausted = exhausted
+        /*
         animationPipeline.add(
             SetExhaustionAnimation(creature: creature.sprite as! CreatureSprite, to: exhausted)
-        )
+        )*/
     }
-    
+    /*
     func attack(from attackerSpot: Spot, to targetSpot: Spot) {
         if let attacker = attackerSpot.creature {
             if let target = targetSpot.creature {
@@ -302,8 +283,8 @@ class Battle: SKNode {
         animationPipeline.add(
             RetreatAnimation( creature: attackerSprite, spot: attacker.spot )
         )
-    }
-    
+    }*/
+    /*
     func dealDamage(_ amount: Int, to character: Character) {
         character.dealDamage(amount)
         animationPipeline.add(
@@ -324,7 +305,7 @@ class Battle: SKNode {
                 kill(creature)
             }
         }
-    }
+    }*/
     /*
     func dealDamage(_ amount: Int, to filter: SpotsFilter) {
         let targets = spots.filter(filter)
@@ -344,7 +325,7 @@ class Battle: SKNode {
             kill(at: spot)
         }
     }*/
-    
+    /*
     func kill(at spot: Spot, killAnimation: Bool = true) {
         if let creature = spot.creature {
             spot.creature = nil
@@ -371,8 +352,8 @@ class Battle: SKNode {
         } else {
             animationPipeline.add( DeathAnimation(character: character.sprite) )
         }
-    }
-    
+    }*/
+    /*
     func heal(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {
             let healed = creature.heal(amount)
@@ -422,8 +403,8 @@ class Battle: SKNode {
                 )
             )
         }
-    }
-    
+    }*/
+    /*
     func replaceAbility(of creature: Creature, with ability: ActiveAbility?) {
         creature.ability = ability
         animationPipeline.add(
@@ -454,14 +435,27 @@ class Battle: SKNode {
         animationPipeline.add(
             DecreaseCooldownAnimation(creature: creature.sprite as! CreatureSprite)
         )
-    }
+    }*/
     
     func wait(for delay: TimeInterval) {
         animationPipeline.add(
-            WaitAnimation(battle: self, delay: delay)
+            WaitAnimation(battle: sprite, delay: delay)
         )
     }
-    
+    /*
+    func showAbilitiesList(of creature: Creature) {
+        // TODO: Move it to selectedCreature.set()
+        if selectedCreature != nil {
+            animationPipeline.add(
+                HideAbilitiesListAnimation(of: selectedCreature!)
+            )
+        }
+        selectedCreature = creature
+        animationPipeline.add(
+            ShowAbilitiesListAnimation(of: creature)
+        )
+    }*/
+    /*
     func highlightActionTargets() {
         let activePlayerSpots = spots.filter { $0.owner == activePlayer }
         for spot in activePlayerSpots {
@@ -505,6 +499,6 @@ class Battle: SKNode {
             }
         } while (power < 15)
         return composition
-    }
+    }*/
     
 }

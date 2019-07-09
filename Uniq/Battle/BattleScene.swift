@@ -17,8 +17,8 @@ class BattleScene: SKScene {
     }
     static let SCREEN_RIGHT = Int(UIScreen.main.bounds.size.width/2)
     
-    let battle = Battle()   // TODO: Contains only links to battle objects functions to manipulate them
-    var delayedTask: DispatchWorkItem? = nil
+    let battle = Battle()
+    // TODO: Contains only links to battle objects functions to manipulate them
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
@@ -29,16 +29,16 @@ class BattleScene: SKScene {
         backgroundColor = UIColor(rgb: 0x000000)
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
+        battle.sprite.position = CGPoint(x: 0, y: 0)
+        addChild(battle.sprite)
         //TODO: Move all this to class Battle
-        battle.position = CGPoint(x: 0, y: 40)
-        let handYPos = SCREEN.bottom + (CardSprite.height / 2) + 10
-        battle.human.deck.hand.position = CGPoint(x: 0, y: handYPos)
+        //let handYPos = SCREEN.bottom + (CardSprite.height / 2) + 10
+        //battle.human.deck.hand.position = CGPoint(x: 0, y: handYPos)
         //battle.desk.playerHero.position = CGPoint(x: 0, y: ScreenBoundaries.bottom + 160)
-        battle.passButton.position = CGPoint(x: SCREEN.left + 40, y: SCREEN.bottom + 160)
+        //battle.passButton.position = CGPoint(x: SCREEN.left + 40, y: SCREEN.bottom + 160)
         
-        addChild(battle.human.deck.hand)
-        addChild(battle)
-        addChild(battle.passButton)
+        //addChild(battle.human.deck.hand)
+        //addChild(battle.passButton)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -47,41 +47,29 @@ class BattleScene: SKScene {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
             for node in touchedNodes {
+                /*
                 // TODO: rework to unified Tappable experience
                 // TODO: join Tapped with sourceNode
                 // TODO: Move checking interactive to the touchesNodes filter above
                 if var interactiveNode = node as? Interactive {
                     if interactiveNode.state.contains(.interactive) {
-                        var wasActivated = false
-                        if interactiveNode.state.contains(.activatable) {
-                            if let spot = interactiveNode as? Spot {
-                                if let creature = spot.creature {
-                                    wasActivated = true
-                                    delayedTask = DispatchWorkItem {
-                                        // TODO: check if ability was really used
-                                        self.battle.interactives.clean()
-                                        if self.battle.useActiveAbility(of: creature) {
-                                            self.battle.actionDone()
-                                        }
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: delayedTask!)
-                                }
-                            }
-                        }
                         // remove interactive highlights
                         battle.interactives.clean()
                         
                         // highlight itself
                         interactiveNode.state.insert(.interacted)
-                        if wasActivated { interactiveNode.state.insert(.activated) }
                         
                         // highlight targets, and apply active targeting to itself
-                        battle.interactives.addState(.targetable, filter: interactiveNode.targetsFilter)
+                        battle.interactives.addState(
+                            .targetable,
+                            filter: interactiveNode.targetsFilter
+                        )
                         if interactiveNode.state.contains(.targetable) {
                             interactiveNode.state.insert(.targetted)
                         }
                     }
                 }
+                */
             }
         }
     }
@@ -91,7 +79,7 @@ class BattleScene: SKScene {
         for touch in touches {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
-            
+            /*
             var stopTask = (delayedTask != nil) && !delayedTask!.isCancelled
             battle.interactives.removeState(.targetted)
             for node in touchedNodes {
@@ -105,6 +93,7 @@ class BattleScene: SKScene {
                 }
             }
             if stopTask { delayedTask?.cancel() }
+            */
         }
     }
     
@@ -115,7 +104,7 @@ class BattleScene: SKScene {
             // TODO: Optimize these cycles by moving out type convertions
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
-            
+            /*
             if let source = battle.interactives.first(where: { $0.state.contains(.interacted) }) {
                 for node in touchedNodes {
                     if var interactiveNode = node as? Interactive {
@@ -146,12 +135,11 @@ class BattleScene: SKScene {
                         }
                     }
                 }
-            }
+            }*/
         }
         
         // reset targets highlighting
-        delayedTask?.cancel()
-        battle.interactives.clean()
+        //battle.interactives.clean()
         battle.actionDone()
     }
     

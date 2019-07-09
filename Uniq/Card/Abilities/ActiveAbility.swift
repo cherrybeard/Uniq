@@ -7,12 +7,19 @@
 //
 
 class ActiveAbility {
+    let name: String
     let description: String
     var left: Int
     var cooldown: Int
-    let effect: (Battle, Spot?) -> Bool
+    let effect: (Battle, Character?) -> ()
     
-    init(description: String = "", cooldown: Int, effect: @escaping (Battle, Spot?) -> Bool) {
+    init(
+        name: String = "",
+        description: String = "",
+        cooldown: Int,
+        effect: @escaping (Battle, Character?) -> ()
+    ) {
+        self.name = name
         self.description = description
         self.cooldown = cooldown
         self.left = cooldown

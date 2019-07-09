@@ -18,6 +18,7 @@ class ChainLightningSpell: SpellCard {
             Deals \(ChainLightningSpell.damage) to selected target. Deals 2 times less damage to \
             the random target next to it. Repeat it 2 times more.
         """
+        /*
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if !(spot?.isFree ?? true) {
                 var targetSpot = spot!
@@ -33,5 +34,6 @@ class ChainLightningSpell: SpellCard {
             }
             return false
         }
+        */
     }
 }

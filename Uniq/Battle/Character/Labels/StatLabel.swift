@@ -48,7 +48,7 @@ class StatLabel: SKNode {
     
     private let label = SKLabelNode()
     let type: Kind
-    private var value = Value(1) { didSet { redraw() } }
+    var value = Value(1) { didSet { redraw() } }
     private var states: Set<State> {
         var list: Set<State> = [.initial]
         if value.max > value.base { list.insert(.buffed) }

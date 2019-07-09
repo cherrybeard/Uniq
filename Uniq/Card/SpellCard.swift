@@ -9,17 +9,17 @@
 import SpriteKit
 
 class SpellCard: Card {
-    var effect: (Battle, Spot?) -> Bool = { _,_  in return false }
+    var effect: (Battle, Character?) -> () = { _,_  in return }
     
-    override func play(battle: Battle, spot: Spot?) -> Bool {
-        return effect(battle, spot)
+    override func play(battle: Battle, for player: Player?, target: Character?) {
+        effect(battle, target)
     }
     
     override func copy() -> SpellCard {
         let card = SpellCard(
             name: name,
             requiresTarget: requiresTarget,
-            spotsFilter: spotsFilter
+            targetFilter: targetFilter
         )
         card.description = description
         card.effect = effect

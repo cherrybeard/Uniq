@@ -9,10 +9,10 @@
 class OnSummonAbility {
     var name: String = ""
     var description: String = ""
-    let effect: (Battle, Spot, Spot) -> ()
+    let effect: (Battle, Character, Character) -> ()
     //var filter: (Creature, Creature) -> Bool = { _ in true }
     
-    init(effect: @escaping (Battle, Spot, Spot) -> () ) {
+    init(effect: @escaping (Battle, Character, Character) -> () ) {
         self.effect = effect
     }
 }

@@ -9,8 +9,10 @@
 
 class CardLibrary {
     private static let cards: [String: Card] = [
-        
         // Creatures
+        "Fairy": FairyCreature()
+        
+        /*
         "Bandit": BanditCreature(),
         "Elven Archer": ElvenArcherCreature(),
         "Fairy": FairyCreature(),
@@ -51,7 +53,7 @@ class CardLibrary {
         "Tome Of Intelligence": TomeOfIntelligenceSpell(),
         "Vitalization": VitalizationSpell(),
         "Whatever It Will Be": WhateverItWillBeSpell(),
-        "Whip": WhipSpell()
+        "Whip": WhipSpell()*/
     ]
     
     static func getCard(_ name: String) -> Card? {

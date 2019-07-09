@@ -13,6 +13,7 @@ class MassHysteriaSpell: SpellCard {
             requiresTarget: false
         )
         description = "Force each creature to attack another random creature."
+        /*
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             let spots = battle.spots.shuffledSpots(in: SpotsFilters.creatures)
             for spot in spots {
@@ -24,6 +25,6 @@ class MassHysteriaSpell: SpellCard {
                 }
             }
             return true
-        }
+        }*/
     }
 }

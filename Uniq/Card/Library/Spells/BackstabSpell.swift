@@ -12,11 +12,12 @@ class BackstabSpell: SpellCard {
     init() {
         super.init(
             name: "Backstab",
-            spotsFilter: {
+            spotsFilter: SpotsFilters.all/*{
                 !$0.owner.isActive && !$0.isFree && !$0.creature!.isDamaged
-            }
+            }*/
         )
         description = "Deals \(BackstabSpell.damage) damage to undamaged creature."
+        /*
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if spot != nil {
                 battle.dealDamage(BackstabSpell.damage, to: spot!)
@@ -24,5 +25,6 @@ class BackstabSpell: SpellCard {
             }
             return false
         }
+        */
     }
 }

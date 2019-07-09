@@ -7,16 +7,17 @@
 //
 
 class Hero: Character {
-    var sprite: CharacterSprite
-    var health: Value
-    var isDead: Bool { return health.current <= 0 }
+    var deck: Deck
     
     init() {
-        health = Value(16)
-        sprite = HeroSprite(health: health)
+        deck = Deck(name: "NotOnlyDamageSpells")
+        super.init(
+            name: "Hero",
+            health: Value(16)
+        )
     }
     
-    func dealDamage(_ amount: Int) {
-        health.current -= amount
+    override func generateSprite() -> CharacterSprite {
+        return HeroSprite(self)
     }
 }

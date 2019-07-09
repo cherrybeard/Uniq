@@ -13,6 +13,7 @@ class MirrorImageSpell: SpellCard {
             spotsFilter: SpotsFilters.ownerCreatures
         )
         description = "Summon a copy of target creature with 1/1 to the random spot."
+        /*
         effect = { (battle: Battle, spot: Spot?) -> Bool in
             if let creature = spot?.creature {
                 if let freeSpot = battle.spots.randomSpot(in: SpotsFilters.ownerFree) {
@@ -25,5 +26,6 @@ class MirrorImageSpell: SpellCard {
             }
             return false
         }
+        */
     }
 }
