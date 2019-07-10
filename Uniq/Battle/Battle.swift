@@ -32,10 +32,20 @@ class Battle {
     init() {
         activePlayer = ai
         _ = place( Hero(), for: human )
+        for _ in 0..<2 {
+            _ = place(
+                Creature( of: FairyCreature() ), for: human
+            )
+        }
         for _ in 0..<3 {
             _ = place(
                 Creature( of: FairyCreature() ), for: ai
             )
+        }
+        if let fairy = characters.first(
+            where: { ($0.name == "Fairy") && ($0.owner?.isHuman ?? false) }
+        ) {
+            select(fairy)
         }
         /*
         for creature in generateRandomComposition() {
@@ -148,6 +158,21 @@ class Battle {
         }*/
         humanTurn()
     }
+    
+    func select(_ character: Character) {
+        if let panel = character.actionsPanel {
+            if let characterSprire = character.sprite {
+                animationPipeline.add(
+                    ShowActionsPanelAnimation(
+                        panel: panel,
+                        battle: sprite,
+                        character: characterSprire
+                    )
+                )
+            }
+        }
+    }
+    
     /*
     func draw(for player: Player) -> Card? {
         if let card = player.deck.draw() {
@@ -228,6 +253,11 @@ class Battle {
         character.owner = player
         let sprite = character.generateSprite()
         character.sprite = sprite
+        if player.isHuman {
+            let panel = character.generatePanel()
+            character.actionsPanel = panel
+            self.sprite.humanActions.add(panel)
+        }
         if let formation = self.sprite.formations[player.type] {
             animationPipeline.add(
                 SummonAnimation(sprite, to: formation)

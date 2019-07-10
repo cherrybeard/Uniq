@@ -9,14 +9,9 @@
 import SpriteKit
 
 class CreatureSprite: CharacterSprite {
-    let abilitiesList = AbilitiesList()
     
     init(_ creature: Creature) {
         super.init(creature)
-        
-        for ability in creature.abilities {
-            abilitiesList.addChild( AbilityButton(ability) )
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {

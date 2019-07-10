@@ -16,7 +16,7 @@ class CharacterSprite: SKNode {
     }
     
     static let width: Int = 80
-    static let height: Int = 105
+    static let height: Int = 110
     private static var textStyle: NSMutableParagraphStyle {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -33,7 +33,6 @@ class CharacterSprite: SKNode {
         .selected: UIColor(rgb: 0x775534)
     ]
     private static let fillColor = UIColor(rgb: 0x111111)
-    
     
     var character: Character
     

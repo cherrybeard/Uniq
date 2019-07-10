@@ -9,7 +9,7 @@
 
 class Player: Equatable {
     
-    enum Kind: Int {
+    enum Kind: Int, CaseIterable {
         case human = -1, ai = 1
     }
     

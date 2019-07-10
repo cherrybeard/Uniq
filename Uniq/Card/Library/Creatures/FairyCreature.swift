@@ -11,5 +11,9 @@ class FairyCreature: CreatureCard {
         super.init(name: "Fairy", attack: 0, health: 4)
         hasRush = true
         power = 1
+        abilities += [
+            AttackAbility(damage: 3),
+            DefendAbility(armor: 2)
+        ]
     }
 }

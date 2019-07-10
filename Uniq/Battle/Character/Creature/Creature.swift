@@ -25,4 +25,8 @@ class Creature: Character {
         return CreatureSprite(self)
     }
     
+    override func generatePanel() -> ActionsPanel {
+        return AbilitiesList(abilities)
+    }
+    
 }

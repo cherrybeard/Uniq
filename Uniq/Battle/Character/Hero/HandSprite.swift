@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class HandSprite: SKNode {
+class HandSprite: ActionsPanel {
     //static let ANGLE: CGFloat = .pi / 45
     //var cards: [CardSprite] = []
     

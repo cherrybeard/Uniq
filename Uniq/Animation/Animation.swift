@@ -15,6 +15,6 @@ class Animation {
     var state: State = .ready
     
     func play() {
-        
+        state = .finished
     }
 }

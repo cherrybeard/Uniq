@@ -18,7 +18,7 @@ class Character {
     
     // sprites
     weak var sprite: CharacterSprite? = nil
-    var hand = HandSprite()
+    var actionsPanel: ActionsPanel? = nil
     
     init(name: String, health: Value) {
         self.name = name
@@ -27,6 +27,10 @@ class Character {
     
     func generateSprite() -> CharacterSprite {
         return CharacterSprite(self)
+    }
+    
+    func generatePanel() -> ActionsPanel {
+        return ActionsPanel()
     }
     
     func dealDamage(_ amount: Int) {

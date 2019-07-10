@@ -10,12 +10,11 @@ import SpriteKit
 import GameplayKit
 
 class BattleScene: SKScene {
-    private struct SCREEN {
-        static let bottom = -Int(UIScreen.main.bounds.size.height/2)
-        static let left = -Int(UIScreen.main.bounds.size.width/2)
-        static let right = Int(UIScreen.main.bounds.size.width/2)
-    }
-    static let SCREEN_RIGHT = Int(UIScreen.main.bounds.size.width/2)
+    
+    static let screenSize = CGSize(
+        width: UIScreen.main.bounds.size.width,
+        height: UIScreen.main.bounds.size.height
+    )
     
     let battle = Battle()
     // TODO: Contains only links to battle objects functions to manipulate them
@@ -42,11 +41,14 @@ class BattleScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !battle.isUnlocked { return }
+        //if !battle.isUnlocked { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
-            let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
+            let touchedNodes = self.nodes(at: touchLocation)//.filter({ node in node.name != nil})
             for node in touchedNodes {
+                if let sprite = node as? CharacterSprite {
+                    battle.select(sprite.character)
+                }
                 /*
                 // TODO: rework to unified Tappable experience
                 // TODO: join Tapped with sourceNode

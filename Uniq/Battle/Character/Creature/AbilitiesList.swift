@@ -8,23 +8,30 @@
 
 import SpriteKit
 
-class AbilitiesList: SKNode {
-    //var abilities: [AbilityButton] = []
-    /*
-    func append(ability: AbilityButton) {
-        abilities.append(ability)
-        addChild(ability)
-    }*/
+class AbilitiesList: ActionsPanel {
+    private static let margin = 40
+    var buttons: [AbilityButton] = []
     
-    static func abilityPosition(at index: Int, total: Int) -> (CGPoint, CGFloat)  {
-        let center = CGFloat(total + 1) / 2
-        let shift = CGFloat(index) - center
-        let xPos = shift * CGFloat(AbilityButton.width  + 10)
-        //let yPos = -10 * abs(shift)
-        let yPos: CGFloat = 0
-        let position = CGPoint(x: xPos, y: yPos)
-        //let rotation = -HandSprite.ANGLE * shift
-        let rotation: CGFloat = 0
-        return (position, rotation)
+    init(_ abilities: [ActiveAbility]) {
+        super.init()
+        let total = abilities.count
+        for (index, ability) in abilities.enumerated() {
+            let button = AbilityButton(ability)
+            buttons.append(button)
+            button.position = AbilitiesList.getPosition(at: index, total: total)
+            addChild(button)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func getPosition(at index: Int, total: Int) -> CGPoint {
+        let size = Int(AbilityButton.size)
+        let width = total * size + (total - 1) * margin
+        let left = index * (size + margin)
+        let xPos = left + size / 2 - width / 2
+        return CGPoint(x: xPos, y: 0)
     }
 }
