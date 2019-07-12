@@ -8,11 +8,12 @@
 
 typealias CharacterFilter = (Character) -> Bool
 
-struct CreatureFilters {
+struct CharacterFilters {
     // TODO: Add ability to combine filters maybe in separate class
     // Something like x = Filter([Filter.filterPreset1, Filter.filterPreset2, ...])
     static let none: CharacterFilter = { _ in false }
     static let all: CharacterFilter = { _ in true }
+    static let enemy: CharacterFilter = { !($0.owner?.isActive ?? true) }
     /*
     static let creatures: CharacterFilter = { !$0.isFree }
     
@@ -47,7 +48,7 @@ class Card {
     init(
         name: String,
         requiresTarget: Bool = true,
-        targetFilter: @escaping CharacterFilter = CreatureFilters.none
+        targetFilter: @escaping CharacterFilter = CharacterFilters.none
     ) {
         self.name = name
         self.requiresTarget = requiresTarget

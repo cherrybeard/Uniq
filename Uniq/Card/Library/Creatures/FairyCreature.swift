@@ -13,7 +13,8 @@ class FairyCreature: CreatureCard {
         power = 1
         abilities += [
             AttackAbility(damage: 3),
-            DefendAbility(armor: 2)
+            DefendAbility(armor: 2),
+            BuffAttackAbility(amount: 2)
         ]
     }
 }

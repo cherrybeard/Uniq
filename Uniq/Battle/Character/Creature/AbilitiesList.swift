@@ -9,7 +9,7 @@
 import SpriteKit
 
 class AbilitiesList: ActionsPanel {
-    private static let margin = 40
+    private static let margin = 20
     var buttons: [AbilityButton] = []
     
     init(_ abilities: [ActiveAbility]) {

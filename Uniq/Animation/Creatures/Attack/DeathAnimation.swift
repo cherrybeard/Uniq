@@ -23,7 +23,7 @@ class DeathAnimation: Animation {
     override func play() {
         state = .finished
         character.run(DeathAnimation.action) {
-            self.character.removeFromParent()
+            self.character.removeFromFormation()
         }
     }
     

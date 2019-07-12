@@ -14,8 +14,11 @@ class AttackAbility: ActiveAbility {
             description: "Deals damage to single enemy",
             cooldown: 1,
             effect: { (battle: Battle, target: Character?) in
-                //battle.dealDamage(target)
-            }
+                if target != nil {
+                    battle.dealDamage(damage, to: target!) // TODO: replace with .attack()
+                }
+            },
+            targetFilter: CharacterFilters.enemy
         )
     }
     

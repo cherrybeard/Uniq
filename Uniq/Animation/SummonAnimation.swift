@@ -18,29 +18,23 @@ class SummonAnimation: Animation {
         let appear = SKAction.group([move, fadeIn])
         return SKAction.sequence([wait, appear])
     }
-    private let character: CharacterSprite
-    private let formation: Formation
     
-    init(_ character: CharacterSprite, to formation: Formation) {
+    private let character: CharacterSprite
+    private let formation: FormationSprite
+    private let index: Int
+    
+    init(_ character: CharacterSprite, to formation: FormationSprite, at index: Int) {
         self.character = character
         self.formation = formation
+        self.index = index
     }
     
     override func play() {
-        var newIndex = formation.characters.endIndex
-        if (newIndex > 0) && formation.characters[0] is HeroSprite {
-            newIndex = 0
-        }
-        formation.characters.insert(character, at: newIndex)
+        formation.add(character, at: index)
         
-        character.alpha = 0
-        character.setScale(1.2)
-        formation.addChild(character)
-        
-        let total = formation.characters.count
-        for (index, character) in formation.characters.enumerated() {
-            let position = Formation.getPosition(of: index, total: total)
-            if index != newIndex {
+        for (i, character) in formation.characters.enumerated() {
+            let position = formation.getPosition(of: i)
+            if i != index {
                 let move = SKAction.move(to: position, duration: SummonAnimation.moveDuration)
                 character.run(move)
             } else {

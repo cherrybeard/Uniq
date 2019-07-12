@@ -24,13 +24,20 @@ class Battle {
         }
     }
     var round: Int = 1
-    var characters: [Character] = []
     
     var isUnlocked: Bool = false
     var sprite = BattleSprite()
     
+    var characters: [Character] {
+        return human.characters + ai.characters
+    }
+    
     init() {
         activePlayer = ai
+        for player in [human, ai] {
+            sprite.addFormation(player.formation.sprite, for: player)
+        }
+        
         _ = place( Hero(), for: human )
         for _ in 0..<2 {
             _ = place(
@@ -42,9 +49,7 @@ class Battle {
                 Creature( of: FairyCreature() ), for: ai
             )
         }
-        if let fairy = characters.first(
-            where: { ($0.name == "Fairy") && ($0.owner?.isHuman ?? false) }
-        ) {
+        if let fairy = human.characters.first( where: { $0.name == "Fairy" } ) {
             select(fairy)
         }
         /*
@@ -114,10 +119,10 @@ class Battle {
     }*/
     
     func endRound() {
-        for character in characters {
+        //for character in characters {
             //decreaseAbilityCooldown(of: creature)
             //setExhaustion(of: creature, to: false)
-        }
+        //}
         /*
         for player in [human, ai] {
             _ = draw(for: player)
@@ -166,7 +171,8 @@ class Battle {
                     ShowActionsPanelAnimation(
                         panel: panel,
                         battle: sprite,
-                        character: characterSprire
+                        character: characterSprire,
+                        formation: character.owner?.formation.sprite
                     )
                 )
             }
@@ -249,20 +255,21 @@ class Battle {
     }*/
     
     func place(_ character: Character, for player: Player) {
-        characters.append(character)    // TODO: Move characters array to Player
-        character.owner = player
-        let sprite = character.generateSprite()
-        character.sprite = sprite
-        if player.isHuman {
-            let panel = character.generatePanel()
-            character.actionsPanel = panel
-            self.sprite.humanActions.add(panel)
-        }
-        if let formation = self.sprite.formations[player.type] {
+        if player.formation.add(character) {
+            if player.isHuman {
+                let panel = character.generatePanel()
+                character.actionsPanel = panel
+                self.sprite.humanActions.add(panel)
+            }
+            
+            let sprite = character.generateSprite()
+            character.sprite = sprite
+            
             animationPipeline.add(
-                SummonAnimation(sprite, to: formation)
+                SummonAnimation(sprite, to: player.formation.sprite, at: character.formationIndex)
             )
         }
+        
     }
     
     /*
@@ -314,16 +321,20 @@ class Battle {
             RetreatAnimation( creature: attackerSprite, spot: attacker.spot )
         )
     }*/
-    /*
+    
     func dealDamage(_ amount: Int, to character: Character) {
         character.dealDamage(amount)
-        animationPipeline.add(
-            DamageAnimation( character: character.sprite, amount: -amount )
-        )
+        if let sprite = character.sprite {
+            animationPipeline.add(
+                DamageAnimation( character: sprite, amount: amount )
+            )
+        }
         if character.isDead {
             kill(character)
         }
     }
+    
+    /*
     
     func dealDamage(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {
@@ -367,22 +378,16 @@ class Battle {
                 )
             }
         }
+    }*/
+    
+    func kill(_ character: Character) {
+        if let sprite = character.sprite {
+            animationPipeline.add(
+                DeathAnimation(character: sprite)
+            )
+        }
     }
     
-    func kill(_ character: Character, killAnimation: Bool = true) {
-        if let creature = character as? Creature {
-            creature.spot.creature = nil
-            if !killAnimation {
-                animationPipeline.add(
-                    RecallAnimation(creature: creature.sprite as! CreatureSprite)
-                )
-            } else {
-                animationPipeline.add( DeathAnimation(character: character.sprite) )
-            }
-        } else {
-            animationPipeline.add( DeathAnimation(character: character.sprite) )
-        }
-    }*/
     /*
     func heal(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {

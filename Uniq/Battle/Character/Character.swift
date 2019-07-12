@@ -10,8 +10,8 @@ class Character {
     // stats
     var name: String
     var owner: Player? = nil
+    var formationIndex: Int = -1
     var health: Value
-    var isSelected: Bool = false
     var isExhausted: Bool = true
     var isDead: Bool { return health.current <= 0 }
     var isDamaged: Bool { return health.current < health.max }

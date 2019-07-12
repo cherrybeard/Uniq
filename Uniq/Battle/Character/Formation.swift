@@ -6,17 +6,43 @@
 //  Copyright © 2019 Steven Gusev. All rights reserved.
 //
 
-import SpriteKit
-
-class Formation: SKNode {   // TODO: FormationSprite?
-    static let margin = 25
-    static let marginFromCenter = 60
-    var characters: [CharacterSprite] = []
+class Formation: Collection {
     
-    static func getPosition(of index: Int, total: Int) -> CGPoint {
-        let width = total * CharacterSprite.width + (total - 1) * margin
-        let left = index * (CharacterSprite.width + margin)
-        let xPos = left + CharacterSprite.width / 2 - width / 2
-        return CGPoint(x: xPos, y: 0)
+    var startIndex = 0
+    var endIndex: Int { return characters.endIndex }
+    
+    var characters: [Character] = []
+    
+    // Sptites
+    var sprite = FormationSprite()
+    
+    func add(_ character: Character) -> Bool {
+        let newIndex = generateIndex()
+        if newIndex == -1 { return false }
+        characters.insert(character, at: newIndex)
+        for (index, character) in characters.enumerated() {
+            character.formationIndex = index
+        }
+        return true
     }
+    
+    
+    func generateIndex() -> Int {
+        var newIndex = characters.endIndex
+        if newIndex > 2 { return -1 }
+        if (newIndex > 0) && characters[0] is Hero {
+            newIndex = 0
+        }
+        return newIndex
+    }
+    
+    subscript(position: Int) -> Character? {
+        if position >= characters.count { return nil }
+        return characters[position]
+    }
+    
+    func index(after i: Int) -> Int {
+        return (i + 1)
+    }
+    
 }

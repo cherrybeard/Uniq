@@ -71,6 +71,11 @@ class CharacterSprite: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func removeFromFormation() {
+        //formation?.characters.remov
+        self.removeFromParent()
+    }
+    
     private func redraw() {
         for s in State.allCases {
             if state.contains(s) || (s == .base) {
