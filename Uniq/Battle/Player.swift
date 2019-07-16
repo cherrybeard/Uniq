@@ -35,6 +35,15 @@ class Player: Equatable {
         deck = Deck(name: name)*/
     }
     
+    func place(_ character: Character) -> Bool {
+        let success = formation.add(character)
+        if success {
+            character.owner = self
+            characters.append(character)
+        }
+        return success
+    }
+    
     static func == (lhs: Player, rhs: Player) -> Bool {
         return lhs.controlledBy == rhs.controlledBy
     }

@@ -33,7 +33,8 @@ class SummonAnimation: Animation {
         formation.add(character, at: index)
         
         for (i, character) in formation.characters.enumerated() {
-            let position = formation.getPosition(of: i)
+            let xPos = formation.getXPosition(of: i)
+            let position = CGPoint(x: xPos, y: 0)
             if i != index {
                 let move = SKAction.move(to: position, duration: SummonAnimation.moveDuration)
                 character.run(move)
@@ -44,6 +45,6 @@ class SummonAnimation: Animation {
                 }
             }
         }
-        
     }
+    
 }

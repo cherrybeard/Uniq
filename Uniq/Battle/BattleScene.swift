@@ -17,7 +17,22 @@ class BattleScene: SKScene {
     )
     
     let battle = Battle()
-    // TODO: Contains only links to battle objects functions to manipulate them
+    
+    private var selectedCharacter: CharacterSprite? { willSet(justSelected) {
+        if selectedCharacter === justSelected { return }
+        
+        selectedCharacter?.state.remove(.selected)
+        selectedCharacter?.character.actionsPanel?.alpha = 0
+        selectedAbility = nil
+        
+        justSelected?.state.insert(.selected)
+        justSelected?.character.actionsPanel?.alpha = 1
+    } }
+    
+    private var selectedAbility: AbilityButton? { willSet(justSelected) {
+        selectedAbility?.state.remove(.selected)
+        justSelected?.state.insert(.selected)
+    } }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) is not used in this app")
@@ -46,8 +61,13 @@ class BattleScene: SKScene {
             let touchLocation = touch.location(in: self)
             let touchedNodes = self.nodes(at: touchLocation)//.filter({ node in node.name != nil})
             for node in touchedNodes {
-                if let sprite = node as? CharacterSprite {
-                    battle.select(sprite.character)
+                if let character = node as? CharacterSprite {
+                    if character.character.owner?.isHuman ?? false {
+                        selectedCharacter = character
+                    }
+                }
+                if let ability = node as? AbilityButton {
+                    selectedAbility = ability
                 }
                 /*
                 // TODO: rework to unified Tappable experience
@@ -80,7 +100,7 @@ class BattleScene: SKScene {
         if !battle.isUnlocked { return }
         for touch in touches {
             let touchLocation = touch.location(in: self)
-            let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
+            let touchedNodes = self.nodes(at: touchLocation).filter { node in node.name != nil}
             /*
             var stopTask = (delayedTask != nil) && !delayedTask!.isCancelled
             battle.interactives.removeState(.targetted)
@@ -105,7 +125,7 @@ class BattleScene: SKScene {
         for touch in touches {
             // TODO: Optimize these cycles by moving out type convertions
             let touchLocation = touch.location(in: self)
-            let touchedNodes = self.nodes(at: touchLocation).filter({ node in node.name != nil})
+            let touchedNodes = self.nodes(at: touchLocation).filter { node in node.name != nil}
             /*
             if let source = battle.interactives.first(where: { $0.state.contains(.interacted) }) {
                 for node in touchedNodes {

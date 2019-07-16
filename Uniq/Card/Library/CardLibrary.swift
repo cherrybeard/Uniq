@@ -10,7 +10,8 @@
 class CardLibrary {
     private static let cards: [String: Card] = [
         // Creatures
-        "Fairy": FairyCreature()
+        "Fairy": FairyCreature(),
+        "Lightbringer": LightbringerCreature()
         
         /*
         "Bandit": BanditCreature(),

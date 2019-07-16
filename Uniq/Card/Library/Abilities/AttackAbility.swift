@@ -8,9 +8,9 @@
 
 class AttackAbility: ActiveAbility {
     
-    init(damage: Int) {
+    init(name: String = "Attack", damage: Int) {
         super.init(
-            name: "Attack",
+            name: name,
             description: "Deals damage to single enemy",
             cooldown: 1,
             effect: { (battle: Battle, target: Character?) in

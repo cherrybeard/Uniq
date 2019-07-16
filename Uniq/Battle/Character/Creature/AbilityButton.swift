@@ -17,7 +17,6 @@ class AbilityButton: SKNode {
     }
     
     static let size: CGFloat = 60
-    private static let sideSize: CGFloat = AbilityButton.size / sqrt(2)
     private static let strokeColor: [State: UIColor] = [
         .selected: UIColor(rgb: 0xAC7D4E),
         .selectable: UIColor(rgb: 0x775534),
@@ -41,13 +40,13 @@ class AbilityButton: SKNode {
     
     private let label = SKLabelNode()
     private let border = SKShapeNode(
-        rectOf: CGSize(width: AbilityButton.sideSize, height: AbilityButton.sideSize)
+        rectOf: CGSize(width: AbilityButton.size, height: AbilityButton.size),
+        cornerRadius: 3
     )
     
     init(_ ability: ActiveAbility) {
         super.init()
         
-        border.zRotation = .pi / 4
         border.lineWidth = 1
         border.fillColor = AbilityButton.fillColor
         addChild(border)

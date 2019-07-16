@@ -9,22 +9,25 @@
 import SpriteKit
 
 class DeathAnimation: Animation {
-    private let character: CharacterSprite
     private static var action: SKAction {
         let shaking = SKAction.shake(duration: 0.5, amplitudeX: 5, amplitudeY: 5)
         let fadeOut = SKAction.fadeOut(withDuration: 1)
         return SKAction.group([shaking, fadeOut])
     }
+    private let formation: FormationSprite
+    private let index: Int
     
-    init(character: CharacterSprite) {
-        self.character = character
+    init(formation: FormationSprite, at index: Int) {
+        self.formation = formation
+        self.index = index
     }
     
     override func play() {
-        state = .finished
+        let character = formation.characters[index]
         character.run(DeathAnimation.action) {
-            self.character.removeFromFormation()
+            self.formation.remove(at: self.index)
         }
+        state = .finished
     }
     
 }

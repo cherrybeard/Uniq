@@ -12,7 +12,6 @@ class Battle {
     let passButton = PassButton()
     //var interactives = Interactives()
     private let animationPipeline = AnimationPipeline()
-    private var selectedCreature: Character? = nil
     
     let human = Player(as: .human)  // TODO: can we make it static?
     let ai = Player(as: .ai)
@@ -39,18 +38,14 @@ class Battle {
         }
         
         _ = place( Hero(), for: human )
-        for _ in 0..<2 {
-            _ = place(
-                Creature( of: FairyCreature() ), for: human
-            )
-        }
+        let fairy = Creature( of: FairyCreature() )
+        let lightbringer = Creature( of: LightbringerCreature() )
+        _ = place(fairy, for: human )
+        _ = place(lightbringer, for: human )
         for _ in 0..<3 {
             _ = place(
                 Creature( of: FairyCreature() ), for: ai
             )
-        }
-        if let fairy = human.characters.first( where: { $0.name == "Fairy" } ) {
-            select(fairy)
         }
         /*
         for creature in generateRandomComposition() {
@@ -164,21 +159,6 @@ class Battle {
         humanTurn()
     }
     
-    func select(_ character: Character) {
-        if let panel = character.actionsPanel {
-            if let characterSprire = character.sprite {
-                animationPipeline.add(
-                    ShowActionsPanelAnimation(
-                        panel: panel,
-                        battle: sprite,
-                        character: characterSprire,
-                        formation: character.owner?.formation.sprite
-                    )
-                )
-            }
-        }
-    }
-    
     /*
     func draw(for player: Player) -> Card? {
         if let card = player.deck.draw() {
@@ -255,7 +235,7 @@ class Battle {
     }*/
     
     func place(_ character: Character, for player: Player) {
-        if player.formation.add(character) {
+        if player.place(character) {
             if player.isHuman {
                 let panel = character.generatePanel()
                 character.actionsPanel = panel
@@ -366,24 +346,11 @@ class Battle {
             kill(at: spot)
         }
     }*/
-    /*
-    func kill(at spot: Spot, killAnimation: Bool = true) {
-        if let creature = spot.creature {
-            spot.creature = nil
-            if killAnimation {
-                animationPipeline.add( DeathAnimation(character: creature.sprite) )
-            } else {
-                animationPipeline.add(
-                    RecallAnimation(creature: creature.sprite as! CreatureSprite)
-                )
-            }
-        }
-    }*/
     
     func kill(_ character: Character) {
-        if let sprite = character.sprite {
+        if let formation = character.owner?.formation.sprite {
             animationPipeline.add(
-                DeathAnimation(character: sprite)
+                DeathAnimation(formation: formation, at: character.formationIndex)
             )
         }
     }
