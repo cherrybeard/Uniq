@@ -9,7 +9,7 @@
 import SpriteKit
 
 class AbilitiesList: ActionsPanel {
-    private static let margin = 20
+    private static let margin = 16
     var buttons: [AbilityButton] = []
     
     init(_ abilities: [ActiveAbility]) {
@@ -28,7 +28,7 @@ class AbilitiesList: ActionsPanel {
     }
     
     static func getPosition(at index: Int, total: Int) -> CGPoint {
-        let size = Int(AbilityButton.size)
+        let size = Int(AbilityButton.size * 2)
         let width = total * size + (total - 1) * margin
         let left = index * (size + margin)
         let xPos = left + size / 2 - width / 2

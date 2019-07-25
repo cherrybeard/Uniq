@@ -10,7 +10,7 @@ import SpriteKit
 
 class BattleSprite: SKNode {
     private static let formationMargin = 60
-    private static let actionsMargin: CGFloat = 30
+    private static let actionsMargin: CGFloat = 40
     
     // TODO: Combine this in the single class
     let humanActions = ActionsPanels()

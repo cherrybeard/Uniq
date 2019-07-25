@@ -50,6 +50,7 @@
 		5B9484C722C4F26700FA413C /* Interactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9484C622C4F26700FA413C /* Interactives.swift */; };
 		5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
+		5BB9379822EA16B400A135FE /* SKShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9379722EA16B400A135FE /* SKShapeNode.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
 		5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */; };
 		5BBF0F1A228ED5620071E9F7 /* AbilityLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */; };
@@ -123,6 +124,7 @@
 		5B9484C622C4F26700FA413C /* Interactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactives.swift; sourceTree = "<group>"; };
 		5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		5BB9379722EA16B400A135FE /* SKShapeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNode.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
 		5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncerAnimation.swift; sourceTree = "<group>"; };
 		5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityLabel.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			children = (
 				5BAC4311227E0ED500D15CA9 /* UIColor.swift */,
 				5BE889DA229704B2002B628F /* SKAction.swift */,
+				5BB9379722EA16B400A135FE /* SKShapeNode.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B4F7E792287D0FE00252113 /* Player.swift in Sources */,
+				5BB9379822EA16B400A135FE /* SKShapeNode.swift in Sources */,
 				5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */,
 				5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */,
 				5B34E05A22D0198700B72A11 /* HeroSprite.swift in Sources */,
