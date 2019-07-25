@@ -42,6 +42,7 @@ class Battle {
         let lightbringer = Creature( of: LightbringerCreature() )
         _ = place(fairy, for: human )
         _ = place(lightbringer, for: human )
+        
         for _ in 0..<3 {
             _ = place(
                 Creature( of: FairyCreature() ), for: ai
@@ -412,22 +413,19 @@ class Battle {
         animationPipeline.add(
             ReplaceAbilityAnimation(creature: creature.sprite as! CreatureSprite, ability: ability)
         )
+    }*/
+    
+    func useAbility(_ ability: ActiveAbility, on target: Character?) {
+        //if !creature.isExhausted && (ability.left == 0) {
+        //setExhaustion(of: creature, to: true)
+        //ability.left = ability.cooldown
+        //animationPipeline.add(
+            //ResetCooldownAnimation(creature: creature.sprite as! CreatureSprite)
+        //)
+        ability.effect(self, target)
     }
     
-    func useActiveAbility(of creature: Creature) -> Bool {
-        if let ability = creature.ability {
-            if !creature.isExhausted && (ability.left == 0) {
-                setExhaustion(of: creature, to: true)
-                ability.left = ability.cooldown
-                animationPipeline.add(
-                    ResetCooldownAnimation(creature: creature.sprite as! CreatureSprite)
-                )
-                return ability.effect(self, creature.spot)
-            }
-        }
-        return false
-    }
-    
+    /*
     func decreaseAbilityCooldown(of creature: Creature) {
         if let ability = creature.ability {
             if ability.left > 0 {

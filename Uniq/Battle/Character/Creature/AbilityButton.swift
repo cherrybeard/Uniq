@@ -35,17 +35,15 @@ class AbilityButton: SKNode {
         .paragraphStyle: AbilityButton.textStyle
     ]
     
+    var ability: ActiveAbility
     var state: Set<State> = [] { didSet { redraw() } }
     //var targetsFilter: (Interactive) -> Bool = { $0 is AbilityButton }
     
     private let label = SKLabelNode()
-    private let border = SKShapeNode(
-        hexagonOfRadius: AbilityButton.size
-        //rectOf: CGSize(width: AbilityButton.size, height: AbilityButton.size),
-        //cornerRadius: 3
-    )
+    private let border = SKShapeNode( hexagonOfRadius: AbilityButton.size )
     
     init(_ ability: ActiveAbility) {
+        self.ability = ability
         super.init()
         
         border.lineWidth = 1

@@ -62,6 +62,9 @@ class BattleScene: SKScene {
             let touchedNodes = self.nodes(at: touchLocation)//.filter({ node in node.name != nil})
             for node in touchedNodes {
                 if let character = node as? CharacterSprite {
+                    if let ability = selectedAbility?.ability {
+                        battle.useAbility(ability, on: character.character)
+                    }
                     if character.character.owner?.isHuman ?? false {
                         selectedCharacter = character
                     }
