@@ -9,6 +9,11 @@
 class Creature: Character {
     var card: CreatureCard
     var abilities: [ActiveAbility] = []
+    override var isExhausted: Bool { didSet {
+        for ability in abilities {
+            ability.isDisabled = isExhausted
+        }
+    } }
     
     //var attack: Value
     //var whenSummoned: PassiveAbility?

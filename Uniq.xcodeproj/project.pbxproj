@@ -65,6 +65,10 @@
 		5BCA6F2E203A2AB400B81376 /* CreatureCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCA6F2D203A2AB400B81376 /* CreatureCard.swift */; };
 		5BDF3834229F6DCF0094EEC2 /* Interactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDF3833229F6DCF0094EEC2 /* Interactive.swift */; };
 		5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0B0B3204F0F29009DA26E /* Battle.swift */; };
+		5BE7A48622EB4DAB00F05DD6 /* SetExhaustionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */; };
+		5BE7A48A22EC407800F05DD6 /* AbilityDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7A48922EC407800F05DD6 /* AbilityDescription.swift */; };
+		5BE7A48C22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */; };
+		5BE7A48E22ECD8C000F05DD6 /* HealthLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE7A48D22ECD8C000F05DD6 /* HealthLabel.swift */; };
 		5BE889DB229704B2002B628F /* SKAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE889DA229704B2002B628F /* SKAction.swift */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +145,10 @@
 		5BCA6F2D203A2AB400B81376 /* CreatureCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureCard.swift; sourceTree = "<group>"; };
 		5BDF3833229F6DCF0094EEC2 /* Interactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactive.swift; sourceTree = "<group>"; };
 		5BE0B0B3204F0F29009DA26E /* Battle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battle.swift; sourceTree = "<group>"; };
+		5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetExhaustionAnimation.swift; path = Creatures/SetExhaustionAnimation.swift; sourceTree = "<group>"; };
+		5BE7A48922EC407800F05DD6 /* AbilityDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityDescription.swift; sourceTree = "<group>"; };
+		5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAbilityCooldownAnimation.swift; sourceTree = "<group>"; };
+		5BE7A48D22ECD8C000F05DD6 /* HealthLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthLabel.swift; sourceTree = "<group>"; };
 		5BE889DA229704B2002B628F /* SKAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +177,7 @@
 				5B19083522B2760E00CE8121 /* CreatureSprite.swift */,
 				5B2AD8BA22D2D31F0082F6D1 /* AbilitiesList.swift */,
 				5B2AD8B822D265840082F6D1 /* AbilityButton.swift */,
+				5BE7A48922EC407800F05DD6 /* AbilityDescription.swift */,
 			);
 			path = Creature;
 			sourceTree = "<group>";
@@ -177,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				5B66CE4D204BF6560047A9DC /* StatLabel.swift */,
+				5BE7A48D22ECD8C000F05DD6 /* HealthLabel.swift */,
 				5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */,
 				5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */,
 			);
@@ -321,6 +331,8 @@
 				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
 				5B2AD8D822D6FE8A0082F6D1 /* DeathAnimation.swift */,
 				5B2AD8D622D6FDB70082F6D1 /* DamageAnimation.swift */,
+				5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */,
+				5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -565,13 +577,17 @@
 				5B2C921222DE2F6300D64332 /* ShieldAlliesAbility.swift in Sources */,
 				5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */,
 				5BCA6F142038911000B81376 /* GameViewController.swift in Sources */,
+				5BE7A48E22ECD8C000F05DD6 /* HealthLabel.swift in Sources */,
 				5B2AD8CB22D595FD0082F6D1 /* ActionsPanel.swift in Sources */,
 				5B2AD8B922D265840082F6D1 /* AbilityButton.swift in Sources */,
 				5B19083622B2760E00CE8121 /* CreatureSprite.swift in Sources */,
+				5BE7A48622EB4DAB00F05DD6 /* SetExhaustionAnimation.swift in Sources */,
 				5B2C920E22DE2AEE00D64332 /* LightbringerCreature.swift in Sources */,
 				5B2AD8CD22D597C70082F6D1 /* ActionsPanels.swift in Sources */,
+				5BE7A48C22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift in Sources */,
 				5B34E05822D0157600B72A11 /* Hero.swift in Sources */,
 				5B9484C722C4F26700FA413C /* Interactives.swift in Sources */,
+				5BE7A48A22EC407800F05DD6 /* AbilityDescription.swift in Sources */,
 				5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */,
 				5B2AD8C722D4F9B60082F6D1 /* FairyCreature.swift in Sources */,
 				5B2AD8D522D647D10082F6D1 /* BuffAttackAbility.swift in Sources */,

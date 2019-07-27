@@ -9,11 +9,12 @@
 import SpriteKit
 
 class BattleSprite: SKNode {
-    private static let formationMargin = 60
+    private static let formationCenter = 40
+    private static let formationMargin = 80
     private static let actionsMargin: CGFloat = 40
     
-    // TODO: Combine this in the single class
     let humanActions = ActionsPanels()
+    let abilityDescription = AbilityDescription()
     
     override init() {
         super.init()
@@ -21,12 +22,27 @@ class BattleSprite: SKNode {
         let actionsYPos = BattleScene.screenSize.height / 2 - AbilityButton.size / 2 - BattleSprite.actionsMargin
         humanActions.position = CGPoint( x: 0, y: -actionsYPos )
         addChild(humanActions)
+        
+        let descriptionYPos = BattleScene.screenSize.height / 2 - 126
+        abilityDescription.position = CGPoint(x: 0, y: -descriptionYPos)
+        abilityDescription.alpha = 0
+        addChild(abilityDescription)
     }
     
     func addFormation(_ formation: FormationSprite, for player: Player) {
         let margin = BattleSprite.formationMargin + CharacterSprite.height / 2
-        formation.position = CGPoint( x: 0, y: player.controlledBy.rawValue * margin )
+        let yPos = BattleSprite.formationCenter + player.controlledBy.rawValue * margin
+        formation.position = CGPoint( x: 0, y: yPos )
         addChild(formation)
+    }
+    
+    func updateAbilityDescription(to ability: ActiveAbility?) {
+        if ability != nil {
+            abilityDescription.alpha = 1
+            abilityDescription.set(to: ability!)
+        } else {
+            abilityDescription.alpha = 0
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

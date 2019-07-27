@@ -11,7 +11,7 @@ class BlessingAbility: ActiveAbility {
         super.init(
             name: "Blessing",
             description: "Heal target ally for 30% of their HP, rounded down.",
-            cooldown: 1,
+            cooldown: Cooldown(1, immediatelyReady: false),
             effect: { (battle: Battle, target: Character?) in
                 //battle.dealDamage(target)
             }

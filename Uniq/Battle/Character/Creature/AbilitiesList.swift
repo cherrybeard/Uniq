@@ -17,6 +17,7 @@ class AbilitiesList: ActionsPanel {
         let total = abilities.count
         for (index, ability) in abilities.enumerated() {
             let button = AbilityButton(ability)
+            ability.button = button
             buttons.append(button)
             button.position = AbilitiesList.getPosition(at: index, total: total)
             addChild(button)

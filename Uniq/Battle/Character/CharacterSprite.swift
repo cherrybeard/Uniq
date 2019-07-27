@@ -11,12 +11,14 @@ import SpriteKit
 class CharacterSprite: SKNode {
     
     enum State: CaseIterable {
+        case targetable
         case selected
+        case exhausted
         case base
     }
     
     static let width: Int = 80
-    static let height: Int = 110
+    static let height: Int = 115
     private static var textStyle: NSMutableParagraphStyle {
         let style = NSMutableParagraphStyle()
         style.alignment = .center
@@ -29,18 +31,19 @@ class CharacterSprite: SKNode {
         .paragraphStyle: CharacterSprite.textStyle
     ]
     private static let strokeColor: [State: UIColor] = [
-        .base: UIColor(rgb: 0x483726),
-        .selected: UIColor(rgb: 0x775534)
+        .targetable: UIColor(rgb: 0xF69A46),
+        .selected: UIColor(rgb: 0xE6B789),
+        .exhausted: UIColor(rgb: 0x222222),
+        .base: UIColor(rgb: 0x493C2F)
     ]
     private static let fillColor = UIColor(rgb: 0x111111)
     
     var character: Character
     
-    var healthLabel = StatLabel(type: .health)
+    var healthLabel = HealthLabel()
     private let label = SKLabelNode()
     private let border = SKShapeNode(
-        rectOf: CGSize(width: CharacterSprite.width, height: CharacterSprite.height),
-        cornerRadius: 5
+        rectOf: CGSize(width: CharacterSprite.width, height: CharacterSprite.height)
     )
     
     var state: Set<State> = [.base] { didSet { redraw() } }
@@ -49,6 +52,8 @@ class CharacterSprite: SKNode {
         self.character = character
         super.init()
         
+        border.lineWidth = 2
+        border.lineJoin = .miter
         border.fillColor = CharacterSprite.fillColor
         addChild(border)
         
@@ -58,10 +63,9 @@ class CharacterSprite: SKNode {
         )
         addChild(label)
         
-        let xPos = CharacterSprite.width / 2 - 6
-        let yPos = CharacterSprite.height / 2 - 10
-        healthLabel.position = CGPoint(x: xPos, y: -yPos)
-        healthLabel.value = character.health
+        let yPos = CharacterSprite.height / 2 - 6
+        healthLabel.position = CGPoint(x: 0, y: -yPos)
+        healthLabel.health = HealthLabel.Health(character.health.base)
         addChild(healthLabel)
         
         redraw()

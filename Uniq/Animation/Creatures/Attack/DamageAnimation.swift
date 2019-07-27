@@ -28,7 +28,7 @@ class DamageAnimation: Animation {
         self.character = character
         self.amount = amount
         
-        label = DamageLabel(amount: amount)
+        label = DamageLabel(amount: -amount)
         label.alpha = 0
         label.setScale(0)
         character.addChild(label)
@@ -37,7 +37,8 @@ class DamageAnimation: Animation {
     }
     
     override func play() {
-        character.healthLabel.changeValue(by: amount, changeMax: false)
+        //character.healthLabel.changeValue(by: amount, changeMax: false)
+        character.healthLabel.dealDamage(amount)
         label.run(DamageAnimation.action) {
             self.label.removeFromParent()
         }

@@ -32,6 +32,22 @@ class BattleScene: SKScene {
     private var selectedAbility: AbilityButton? { willSet(justSelected) {
         selectedAbility?.state.remove(.selected)
         justSelected?.state.insert(.selected)
+        battle.sprite.updateAbilityDescription(to: justSelected?.ability ?? nil)
+        
+        // Clean highlights
+        for character in battle.charactersAlive {
+            character.sprite?.state.remove(.targetable)
+        }
+        
+        // Highlight targets
+        if let ability = justSelected?.ability {
+            if ability.isReady {
+                let targets = battle.charactersAlive.filter(ability.targetFilter)
+                for target in targets {
+                    target.sprite?.state.insert(.targetable)
+                }
+            }
+        }
     } }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,15 +78,24 @@ class BattleScene: SKScene {
             let touchedNodes = self.nodes(at: touchLocation)//.filter({ node in node.name != nil})
             for node in touchedNodes {
                 if let character = node as? CharacterSprite {
-                    if let ability = selectedAbility?.ability {
-                        battle.useAbility(ability, on: character.character)
-                    }
-                    if character.character.owner?.isHuman ?? false {
+                    // Check if character is in the targets list
+                    if character.state.contains(.targetable) {
+                        if let ability = selectedAbility?.ability {
+                            selectedAbility = nil
+                            if let caster = selectedCharacter?.character {
+                                battle.setExhaustion(of: caster, to: true)
+                            }
+                            battle.useAbility(ability, on: character.character)
+                        }
+                    } else if character.character.owner?.isHuman ?? false {
                         selectedCharacter = character
                     }
-                }
-                if let ability = node as? AbilityButton {
-                    selectedAbility = ability
+                } else if let ability = node as? AbilityButton {
+                    if selectedAbility === ability {
+                        selectedAbility = nil
+                    } else {
+                        selectedAbility = ability
+                    }
                 }
                 /*
                 // TODO: rework to unified Tappable experience

@@ -30,6 +30,9 @@ class Battle {
     var characters: [Character] {
         return human.characters + ai.characters
     }
+    var charactersAlive: [Character] {
+        return characters.filter { !$0.isDead }
+    }
     
     init() {
         activePlayer = ai
@@ -265,13 +268,16 @@ class Battle {
         return creature
     }*/
     
-    func setExhaustion(of creature: Creature, to exhausted: Bool) {
-        creature.isExhausted = exhausted
-        /*
-        animationPipeline.add(
-            SetExhaustionAnimation(creature: creature.sprite as! CreatureSprite, to: exhausted)
-        )*/
+    func setExhaustion(of character: Character, to exhausted: Bool) {
+        character.isExhausted = exhausted
+        
+        if let sprite = character.sprite {
+            animationPipeline.add(
+                SetExhaustionAnimation(character: sprite, to: exhausted)
+            )
+        }
     }
+    
     /*
     func attack(from attackerSpot: Spot, to targetSpot: Spot) {
         if let attacker = attackerSpot.creature {
@@ -415,14 +421,33 @@ class Battle {
         )
     }*/
     
-    func useAbility(_ ability: ActiveAbility, on target: Character?) {
+    func useAbility(_ ability: ActiveAbility, on target: Character?) {  // TODO: Rename to use()
         //if !creature.isExhausted && (ability.left == 0) {
         //setExhaustion(of: creature, to: true)
         //ability.left = ability.cooldown
         //animationPipeline.add(
             //ResetCooldownAnimation(creature: creature.sprite as! CreatureSprite)
         //)
+        resetCooldown(of: ability)
         ability.effect(self, target)
+    }
+    
+    func decreaseCooldown(of ability: ActiveAbility) {
+        ability.cooldown.decrease()
+        updateCooldownVisuals(of: ability)
+    }
+    
+    func resetCooldown(of ability: ActiveAbility) {
+        ability.cooldown.reset()
+        updateCooldownVisuals(of: ability)
+    }
+    
+    private func updateCooldownVisuals(of ability: ActiveAbility) {
+        if let button = ability.button {
+            animationPipeline.add(
+                SetAbilityCooldownAnimation(ability: button, cooldown: ability.cooldown.left)
+            )
+        }
     }
     
     /*

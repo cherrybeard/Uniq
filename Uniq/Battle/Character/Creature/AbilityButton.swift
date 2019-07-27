@@ -12,14 +12,14 @@ class AbilityButton: SKNode {
     
     enum State: CaseIterable {
         case selected
-        case selectable
+        case disabled
         case base
     }
     
     static let size: CGFloat = 30
     private static let strokeColor: [State: UIColor] = [
         .selected: UIColor(rgb: 0xAC7D4E),
-        .selectable: UIColor(rgb: 0x775534),
+        .disabled: UIColor(rgb: 0x47433F),
         .base: UIColor(rgb: 0x483726)
     ]
     private static let fillColor: UIColor = UIColor(rgb: 0x111111)
@@ -30,13 +30,14 @@ class AbilityButton: SKNode {
         return style
     }
     private static let textAttributes: [NSAttributedString.Key : Any] = [
-        .font: UIFont(name: "AvenirNext-DemiBold", size: 8)!,
-        .foregroundColor: UIColor(rgb: 0xffffff),
+        .font: UIFont(name: "Copperplate", size: 24)!,
+        .foregroundColor: UIColor(rgb: 0xE1CEBB),
         .paragraphStyle: AbilityButton.textStyle
     ]
     
     var ability: ActiveAbility
     var state: Set<State> = [] { didSet { redraw() } }
+    var cooldown: Int { didSet { redraw() } }
     //var targetsFilter: (Interactive) -> Bool = { $0 is AbilityButton }
     
     private let label = SKLabelNode()
@@ -44,20 +45,26 @@ class AbilityButton: SKNode {
     
     init(_ ability: ActiveAbility) {
         self.ability = ability
+        self.cooldown = ability.cooldown.left
         super.init()
         
-        border.lineWidth = 1
+        border.lineWidth = 2
+        border.lineJoin = .miter
         border.fillColor = AbilityButton.fillColor
         addChild(border)
         
+        /*
         label.attributedText = NSAttributedString(
             string: ability.name,
             attributes: AbilityButton.textAttributes
-        )
+        )*/
+        label.fontName = "Copperplate"
+        label.fontSize = 24
+        label.fontColor = UIColor(rgb: 0xE1CEBB)
         label.horizontalAlignmentMode = .center
         label.verticalAlignmentMode = .center
-        label.preferredMaxLayoutWidth = 44
-        label.numberOfLines = 0
+        //label.preferredMaxLayoutWidth = 44
+        //label.numberOfLines = 0
         addChild(label)
         
         redraw()
@@ -68,6 +75,10 @@ class AbilityButton: SKNode {
     }
     
     private func redraw() {
+        label.text = String(cooldown)
+        label.alpha = (cooldown == 0) ? 0 : 1
+        
+        alpha = state.contains(.disabled) || (cooldown > 0) ? 0.4 : 1
         for s in State.allCases {
             if state.contains(s) || (s == .base) {
                 border.strokeColor = AbilityButton.strokeColor[s]!

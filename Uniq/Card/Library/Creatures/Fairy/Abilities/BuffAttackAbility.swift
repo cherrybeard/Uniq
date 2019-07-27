@@ -11,8 +11,8 @@ class BuffAttackAbility: ActiveAbility {
     init(amount: Int) {
         super.init(
             name: "Buff attack",
-            description: "Buffs attack by 3",
-            cooldown: 1,
+            description: "Buff attack by 3.",
+            cooldown: Cooldown(2, immediatelyReady: false),
             effect: { (battle: Battle, target: Character?) in
                 //battle.dealDamage(target)
             }

@@ -12,7 +12,7 @@ class ShieldAlliesAbility: ActiveAbility {
         super.init(
             name: "Shield allies",
             description: "Taunt. Increase all allies armor by 2.",
-            cooldown: 1,
+            cooldown: Cooldown(1),
             effect: { (battle: Battle, target: Character?) in
                 //battle.dealDamage(target)
             }

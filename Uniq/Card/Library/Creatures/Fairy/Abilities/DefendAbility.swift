@@ -11,8 +11,8 @@ class DefendAbility: ActiveAbility {
     init(armor: Int) {
         super.init(
             name: "Defend",
-            description: "Blocks 3 damage",
-            cooldown: 1,
+            description: "Gain 3 block.",
+            cooldown: Cooldown(1),
             effect: { (battle: Battle, target: Character?) in
                 //battle.dealDamage(target)
             }

@@ -9,16 +9,28 @@
 import SpriteKit
 
 class SetExhaustionAnimation: Animation {
-    private let creature: CreatureSprite
+    private let character: CharacterSprite
     private let exhausted: Bool
     
-    init(creature: CreatureSprite, to exhausted: Bool) {
-        self.creature = creature
+    init(character: CharacterSprite, to exhausted: Bool) {
+        self.character = character
         self.exhausted = exhausted
     }
     
     override func play() {
-        creature.isExhausted = exhausted
+        if let abilities = character.character.actionsPanel as? AbilitiesList {
+            if exhausted {
+                character.state.insert(.exhausted)
+                for ability in abilities.buttons {
+                    ability.state.insert(.disabled)
+                }
+            } else {
+                character.state.remove(.exhausted)
+                for ability in abilities.buttons {
+                    ability.state.remove(.disabled)
+                }
+            }
+        }
         state = .finished
     }
 }

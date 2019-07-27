@@ -8,23 +8,7 @@
 
 import SpriteKit
 
-struct Value {
-    var current: Int = 1
-    var max: Int = 1
-    var base: Int = 1
-    
-    init(_ value: Int) {
-        current = value
-        max = value
-        base = value
-    }
-    
-    mutating func setAll(to value: Int) {
-        current = value
-        max = value
-        base = value
-    }
-}
+
 
 class StatLabel: SKNode {
     
