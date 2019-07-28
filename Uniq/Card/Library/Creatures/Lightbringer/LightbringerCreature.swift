@@ -12,7 +12,7 @@ class LightbringerCreature: CreatureCard {
         hasRush = true
         power = 4
         abilities += [
-            AttackAbility(name: "Mace blow", damage: 4),    // TODO: Make it melee
+            AttackAbility(name: "Mace blow", damage: 4),
             ShieldAlliesAbility(armor: 2),
             BlessingAbility(healPercentage: 0.3)
         ]

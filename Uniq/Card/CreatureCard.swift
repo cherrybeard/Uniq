@@ -10,20 +10,20 @@ import SpriteKit
 
 class CreatureCard: Card {
     var attack: Value
-    var health: Value
+    var health: HealthLabel.Health
     var abilities: [ActiveAbility] = []
     var hasRush: Bool = false
     var power: Int = 0
     
     init(name: String, attack: Int, health: Int) {
         self.attack = Value(attack)
-        self.health = Value(health)
+        self.health = HealthLabel.Health(health)
         super.init(name: name, requiresTarget: false)
         sprite = CreatureCardSprite()
         sprite.card = self
     }
     
-    init(name: String, attack: Value, health: Value) {
+    init(name: String, attack: Value, health: HealthLabel.Health) {
         self.attack = attack
         self.health = health
         super.init(

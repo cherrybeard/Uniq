@@ -84,8 +84,12 @@ class BattleScene: SKScene {
                             selectedAbility = nil
                             if let caster = selectedCharacter?.character {
                                 battle.setExhaustion(of: caster, to: true)
+                                battle.useAbility(
+                                    caster: caster as! Creature,
+                                    ability: ability,
+                                    target: character.character
+                                )
                             }
-                            battle.useAbility(ability, on: character.character)
                         }
                     } else if character.character.owner?.isHuman ?? false {
                         selectedCharacter = character

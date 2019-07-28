@@ -12,7 +12,7 @@ class BlessingAbility: ActiveAbility {
             name: "Blessing",
             description: "Heal target ally for 30% of their HP, rounded down.",
             cooldown: Cooldown(1, immediatelyReady: false),
-            effect: { (battle: Battle, target: Character?) in
+            effect: { (battle: Battle, creature: Creature, target: Character?) in
                 //battle.dealDamage(target)
             }
         )

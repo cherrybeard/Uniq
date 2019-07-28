@@ -11,7 +11,7 @@ class Character {
     var name: String
     var owner: Player? = nil
     var formationIndex: Int = -1
-    var health: Value
+    var health: HealthLabel.Health
     var isExhausted: Bool = true
     var isDead: Bool { return health.current <= 0 }
     var isDamaged: Bool { return health.current < health.max }
@@ -20,7 +20,7 @@ class Character {
     weak var sprite: CharacterSprite? = nil
     var actionsPanel: ActionsPanel? = nil
     
-    init(name: String, health: Value) {
+    init(name: String, health: HealthLabel.Health) {
         self.name = name
         self.health = health
     }

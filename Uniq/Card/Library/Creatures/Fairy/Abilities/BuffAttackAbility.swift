@@ -13,7 +13,7 @@ class BuffAttackAbility: ActiveAbility {
             name: "Buff attack",
             description: "Buff attack by 3.",
             cooldown: Cooldown(2, immediatelyReady: false),
-            effect: { (battle: Battle, target: Character?) in
+            effect: { (battle: Battle, creature: Creature, target: Character?) in
                 //battle.dealDamage(target)
             }
         )

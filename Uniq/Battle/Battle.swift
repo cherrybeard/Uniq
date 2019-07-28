@@ -421,7 +421,7 @@ class Battle {
         )
     }*/
     
-    func useAbility(_ ability: ActiveAbility, on target: Character?) {  // TODO: Rename to use()
+    func useAbility(caster: Creature, ability: ActiveAbility, target: Character?) {  // TODO: Rename to use()
         //if !creature.isExhausted && (ability.left == 0) {
         //setExhaustion(of: creature, to: true)
         //ability.left = ability.cooldown
@@ -429,7 +429,7 @@ class Battle {
             //ResetCooldownAnimation(creature: creature.sprite as! CreatureSprite)
         //)
         resetCooldown(of: ability)
-        ability.effect(self, target)
+        ability.effect(self, caster, target)
     }
     
     func decreaseCooldown(of ability: ActiveAbility) {

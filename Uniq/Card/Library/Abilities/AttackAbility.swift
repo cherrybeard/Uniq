@@ -13,9 +13,10 @@ class AttackAbility: ActiveAbility {
             name: name,
             description: "Deal \(damage) damage to a single enemy.",
             cooldown: Cooldown(1),
-            effect: { (battle: Battle, target: Character?) in
+            effect: { (battle: Battle, creature: Creature, target: Character?) in
                 if let target = target {
-                    battle.dealDamage(damage, to: target) // TODO: replace with .attack()
+                    battle.dealDamage(damage, to: target)
+                    // TODO: replace with .attack()
                 }
             },
             targetFilter: CharacterFilters.enemy

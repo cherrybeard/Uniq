@@ -13,8 +13,8 @@ class DefendAbility: ActiveAbility {
             name: "Defend",
             description: "Gain 3 block.",
             cooldown: Cooldown(1),
-            effect: { (battle: Battle, target: Character?) in
-                //battle.dealDamage(target)
+            effect: { (battle: Battle, creature: Creature, target: Character?) in
+                //creature.health.armor += 3
             }
         )
     }

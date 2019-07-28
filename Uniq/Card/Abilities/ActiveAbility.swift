@@ -35,7 +35,7 @@ class ActiveAbility {
     let name: String
     let description: String
     var cooldown: Cooldown
-    let effect: (Battle, Character?) -> ()
+    let effect: (Battle, Creature, Character?) -> ()
     let targetFilter: CharacterFilter
     let requiresTarget: Bool
     var isDisabled: Bool = false
@@ -48,7 +48,7 @@ class ActiveAbility {
         name: String = "",
         description: String = "",
         cooldown: Cooldown,
-        effect: @escaping (Battle, Character?) -> (),
+        effect: @escaping (Battle, Creature, Character?) -> (),
         requiresTarget: Bool = true,
         targetFilter: @escaping CharacterFilter = CharacterFilters.none
     ) {

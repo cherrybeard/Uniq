@@ -14,11 +14,18 @@ class FormationSprite: SKNode {
     
     var characters: [CharacterSprite] = []
     
-    func getXPosition(of index: Int) -> CGFloat {
-        let total = characters.count
+    func getXPosition(of index: Int, removedIndex: Int = -1) -> CGFloat {
+        var total = characters.count
+        var targetIndex = index
+        if removedIndex != -1 {
+            total -= 1
+            if targetIndex > removedIndex {
+                targetIndex -= 1
+            }
+        }
         let characterWidth = CharacterSprite.width
         let width = total * characterWidth + (total - 1) * FormationSprite.margin
-        let left = index * (characterWidth + FormationSprite.margin)
+        let left = targetIndex * (characterWidth + FormationSprite.margin)
         return CGFloat(left + characterWidth / 2 - width / 2)
     }
     

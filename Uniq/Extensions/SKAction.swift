@@ -9,7 +9,7 @@
 import SpriteKit
 
 extension SKAction {
-    class func shake(duration:CGFloat, amplitudeX:Int = 3, amplitudeY:Int = 3) -> SKAction {
+    class func shake(amplitudeX: Int = 3, amplitudeY: Int = 3, duration: TimeInterval) -> SKAction {
         let numberOfShakes = duration / 0.015 / 2.0
         var actionsArray:[SKAction] = []
         for _ in 1...Int(numberOfShakes) {
