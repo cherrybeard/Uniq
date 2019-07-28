@@ -14,8 +14,9 @@ class DefendAbility: ActiveAbility {
             description: "Gain 3 block.",
             cooldown: Cooldown(1),
             effect: { (battle: Battle, creature: Creature, target: Character?) in
-                //creature.health.armor += 3
-            }
+                battle.giveArmor(3, to: target!)
+            },
+            targetFilter: { $0.sprite?.state.contains(.selected) ?? false }
         )
     }
     

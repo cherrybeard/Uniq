@@ -362,6 +362,14 @@ class Battle {
         }
     }
     
+    func giveArmor(_ amount: Int, to character: Character) {
+        guard let sprite = character.sprite else { return }
+        character.giveArmor(amount)
+        animationPipeline.add(
+            GiveArmorAnimation(character: sprite, amount: amount)
+        )
+    }
+    
     /*
     func heal(_ amount: Int, to spot: Spot) {
         if let creature = spot.creature {

@@ -14,7 +14,7 @@ class DamageAnimation: Animation {
     let label: DamageLabel
     // TODO: hideAfter: Bool to not hide in case it's final damage
     
-    static private var action: SKAction {
+    static var action: SKAction {
         let fadeIn = SKAction.fadeIn(withDuration: 0.1)
         let scaleUp = SKAction.scale(to: 1, duration: 0.1)
         let appear = SKAction.group([fadeIn, scaleUp])

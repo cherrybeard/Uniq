@@ -10,7 +10,7 @@ import SpriteKit
 
 class DamageLabel: SKNode {
     private let label = SKLabelNode()
-    var amount: Int
+    var amount: Int { didSet { redraw() }}
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

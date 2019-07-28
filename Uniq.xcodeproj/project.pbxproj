@@ -49,6 +49,7 @@
 		5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D19203EB7B20026B445 /* Animation.swift */; };
 		5B9484C722C4F26700FA413C /* Interactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9484C622C4F26700FA413C /* Interactives.swift */; };
 		5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */; };
+		5BAB2C5422EE5262008A31EE /* GiveArmorAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB2C5322EE5262008A31EE /* GiveArmorAnimation.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BB9379822EA16B400A135FE /* SKShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9379722EA16B400A135FE /* SKShapeNode.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
@@ -101,8 +102,8 @@
 		5B2AD8CE22D5BBB10082F6D1 /* AttackAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackAbility.swift; sourceTree = "<group>"; };
 		5B2AD8D222D5F7BA0082F6D1 /* DefendAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefendAbility.swift; sourceTree = "<group>"; };
 		5B2AD8D422D647D10082F6D1 /* BuffAttackAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuffAttackAbility.swift; sourceTree = "<group>"; };
-		5B2AD8D622D6FDB70082F6D1 /* DamageAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DamageAnimation.swift; path = Creatures/Attack/DamageAnimation.swift; sourceTree = "<group>"; };
-		5B2AD8D822D6FE8A0082F6D1 /* DeathAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeathAnimation.swift; path = Creatures/Attack/DeathAnimation.swift; sourceTree = "<group>"; };
+		5B2AD8D622D6FDB70082F6D1 /* DamageAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DamageAnimation.swift; sourceTree = "<group>"; };
+		5B2AD8D822D6FE8A0082F6D1 /* DeathAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeathAnimation.swift; sourceTree = "<group>"; };
 		5B2AD8DA22D709410082F6D1 /* FormationSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormationSprite.swift; sourceTree = "<group>"; };
 		5B2C920D22DE2AEE00D64332 /* LightbringerCreature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightbringerCreature.swift; sourceTree = "<group>"; };
 		5B2C921122DE2F6300D64332 /* ShieldAlliesAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldAlliesAbility.swift; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 		5B7E2D19203EB7B20026B445 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B9484C622C4F26700FA413C /* Interactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactives.swift; sourceTree = "<group>"; };
 		5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
+		5BAB2C5322EE5262008A31EE /* GiveArmorAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveArmorAnimation.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BB9379722EA16B400A135FE /* SKShapeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNode.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
@@ -145,7 +147,7 @@
 		5BCA6F2D203A2AB400B81376 /* CreatureCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureCard.swift; sourceTree = "<group>"; };
 		5BDF3833229F6DCF0094EEC2 /* Interactive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactive.swift; sourceTree = "<group>"; };
 		5BE0B0B3204F0F29009DA26E /* Battle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battle.swift; sourceTree = "<group>"; };
-		5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SetExhaustionAnimation.swift; path = Creatures/SetExhaustionAnimation.swift; sourceTree = "<group>"; };
+		5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetExhaustionAnimation.swift; sourceTree = "<group>"; };
 		5BE7A48922EC407800F05DD6 /* AbilityDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityDescription.swift; sourceTree = "<group>"; };
 		5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAbilityCooldownAnimation.swift; sourceTree = "<group>"; };
 		5BE7A48D22ECD8C000F05DD6 /* HealthLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthLabel.swift; sourceTree = "<group>"; };
@@ -326,13 +328,8 @@
 			children = (
 				5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */,
 				5B7E2D19203EB7B20026B445 /* Animation.swift */,
-				5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */,
-				5B40056222C59C73005AABB6 /* WaitAnimation.swift */,
-				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
-				5B2AD8D822D6FE8A0082F6D1 /* DeathAnimation.swift */,
-				5B2AD8D622D6FDB70082F6D1 /* DamageAnimation.swift */,
-				5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */,
-				5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */,
+				5BAB2C5122EE523E008A31EE /* Battle */,
+				5BAB2C5222EE5248008A31EE /* Character */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -365,6 +362,28 @@
 				5B2C920A22DE29F300D64332 /* Creatures */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		5BAB2C5122EE523E008A31EE /* Battle */ = {
+			isa = PBXGroup;
+			children = (
+				5BBF0F17228D13DE0071E9F7 /* AnnouncerAnimation.swift */,
+				5B40056222C59C73005AABB6 /* WaitAnimation.swift */,
+			);
+			path = Battle;
+			sourceTree = "<group>";
+		};
+		5BAB2C5222EE5248008A31EE /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				5B19083722B282A300CE8121 /* SummonAnimation.swift */,
+				5B2AD8D822D6FE8A0082F6D1 /* DeathAnimation.swift */,
+				5B2AD8D622D6FDB70082F6D1 /* DamageAnimation.swift */,
+				5BAB2C5322EE5262008A31EE /* GiveArmorAnimation.swift */,
+				5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */,
+				5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */,
+			);
+			path = Character;
 			sourceTree = "<group>";
 		};
 		5BAC4310227E0EA100D15CA9 /* Extensions */ = {
@@ -555,6 +574,7 @@
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
 				5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */,
 				5B34E05F22D02DA900B72A11 /* CharacterSprite.swift in Sources */,
+				5BAB2C5422EE5262008A31EE /* GiveArmorAnimation.swift in Sources */,
 				5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */,
 				5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */,
 				5BCA6F122038911000B81376 /* BattleScene.swift in Sources */,

@@ -52,7 +52,7 @@ class HealthLabel: SKNode {
     private func redraw() {
         var text = String(health.current)
         if health.armor > 0 {
-            text += " + \(health.armor)"
+            text += "+\(health.armor)"
         }
         label.text = text
         var width = label.frame.width + 8
@@ -63,5 +63,10 @@ class HealthLabel: SKNode {
     func dealDamage(_ healthDamage: Int, armorDamage: Int = 0) {
         health.current -= healthDamage
         health.armor -= armorDamage
+    }
+    
+    func heal(_ amount: Int, armor: Int = 0) {
+        health.current += amount
+        health.armor += armor
     }
 }

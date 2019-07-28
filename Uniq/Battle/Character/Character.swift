@@ -46,4 +46,8 @@ class Character {
         return healed
     }
     
+    func giveArmor(_ amount: Int) {
+        health.armor += amount
+    }
+    
 }
