@@ -33,7 +33,6 @@ class HealthLabel: SKNode {
         
         label.fontName = "Copperplate"
         label.fontSize = 19
-        label.fontColor = UIColor(rgb: 0x20160B)
         label.horizontalAlignmentMode = .center
         label.verticalAlignmentMode = .center
         addChild(label)
@@ -55,6 +54,11 @@ class HealthLabel: SKNode {
             text += "+\(health.armor)"
         }
         label.text = text
+        if health.current < health.max {
+            label.fontColor = UIColor(rgb: 0xA33D3D)
+        } else {
+            label.fontColor = UIColor(rgb: 0x20160B)
+        }
         var width = label.frame.width + 8
         if width < 34 { width = 34 }
         border.xScale = width / 100

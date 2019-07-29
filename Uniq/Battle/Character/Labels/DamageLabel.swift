@@ -19,9 +19,8 @@ class DamageLabel: SKNode {
     init(amount: Int) {
         self.amount = amount
         super.init()
-        label.fontColor = SKColor.white
-        label.fontName = "AvenirNext-Regular"
-        label.fontSize = 24
+        label.fontName = "Copperplate"
+        label.fontSize = 36
         label.verticalAlignmentMode = .center
         label.horizontalAlignmentMode = .center    
         addChild(label)
@@ -31,6 +30,7 @@ class DamageLabel: SKNode {
     private func redraw() {
         let text = String(abs(amount))
         let prefix = amount > 0 ? "+" : "–"
+        label.fontColor = amount > 0 ? UIColor(rgb: 0x539564) : UIColor(rgb: 0xA33D3D)
         label.text = prefix + text
     }
 }

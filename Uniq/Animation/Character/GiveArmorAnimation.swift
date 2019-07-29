@@ -14,6 +14,7 @@ class GiveArmorAnimation: DamageAnimation {
         character.healthLabel.heal(0, armor: amount)
         label.run(DamageAnimation.action) {
             self.label.removeFromParent()
+            self.state = .finished
         }
     }
 }
