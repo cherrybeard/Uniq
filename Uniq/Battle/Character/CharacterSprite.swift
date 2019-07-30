@@ -47,6 +47,7 @@ class CharacterSprite: SKNode {
     )
     
     var state: Set<State> = [.base] { didSet { redraw() } }
+    var buffs: [BuffLabel.Kind: BuffLabel] = [:]
     
     init(_ character: Character) {
         self.character = character
@@ -76,6 +77,18 @@ class CharacterSprite: SKNode {
     }
     
     private func redraw() {
+        var index = 0
+        let xPos = CharacterSprite.width / 2
+        for (_, buff) in buffs {
+            if buff.value > 0 {
+                let yPos = CharacterSprite.height / 2 - index * 20
+                buff.position = CGPoint(x: xPos, y: yPos)
+                index += 1
+            } else {
+                buff.removeFromParent()
+            }
+        }
+        
         for s in State.allCases {
             if state.contains(s) || (s == .base) {
                 border.strokeColor = CharacterSprite.strokeColor[s]!
@@ -84,4 +97,15 @@ class CharacterSprite: SKNode {
         }
     }
     
+    func addBuff(kind: BuffLabel.Kind, value: Int) {
+        if let label = buffs[kind] {
+            label.value += value
+        } else {
+            let label = BuffLabel(kind: kind)
+            label.value = value
+            buffs[kind] = label
+            addChild(label)
+        }
+        redraw()
+    }
 }

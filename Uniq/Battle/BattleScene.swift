@@ -42,7 +42,7 @@ class BattleScene: SKScene {
         // Highlight targets
         if let ability = justSelected?.ability {
             if ability.isReady {
-                let targets = battle.charactersAlive.filter(ability.targetFilter)
+                let targets = battle.charactersAlive.filter(ability.effect.targetFilter)
                 for target in targets {
                     target.sprite?.state.insert(.targetable)
                 }
@@ -85,7 +85,6 @@ class BattleScene: SKScene {
                             if let caster = selectedCharacter?.character {
                                 battle.setExhaustion(of: caster, to: true)
                                 battle.useAbility(
-                                    caster: caster as! Creature,
                                     ability: ability,
                                     target: character.character
                                 )

@@ -11,7 +11,7 @@ import SpriteKit
 class CreatureCard: Card {
     var attack: Value
     var health: HealthLabel.Health
-    var abilities: [ActiveAbility] = []
+    var abilities: [ActiveAbilityEffect] = []
     var hasRush: Bool = false
     var power: Int = 0
     

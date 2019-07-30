@@ -45,7 +45,7 @@ class AbilityButton: SKNode {
     
     init(_ ability: ActiveAbility) {
         self.ability = ability
-        self.cooldown = ability.cooldown.left
+        self.cooldown = ability.cooldown
         super.init()
         
         border.lineWidth = 2

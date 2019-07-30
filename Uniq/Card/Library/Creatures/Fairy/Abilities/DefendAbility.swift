@@ -6,18 +6,21 @@
 //  Copyright © 2019 Steven Gusev. All rights reserved.
 //
 
-class DefendAbility: ActiveAbility {
+class DefendAbility: ActiveAbilityEffect {
     
     init(armor: Int) {
         super.init(
             name: "Defend",
-            description: "Gain 3 block.",
-            cooldown: Cooldown(1),
-            effect: { (battle: Battle, creature: Creature, target: Character?) in
-                battle.giveArmor(3, to: target!)
-            },
+            cooldown: 1,
             targetFilter: { $0.sprite?.state.contains(.selected) ?? false }
         )
     }
     
+    override func description(caster: Creature) -> String {
+        return "Gain 3 armor."
+    }
+    
+    override func effect(battle: Battle, caster: Creature, target: Character) {
+        battle.giveArmor(3, to: caster)
+    }
 }

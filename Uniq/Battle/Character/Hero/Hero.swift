@@ -13,7 +13,8 @@ class Hero: Character {
         deck = Deck(name: "NotOnlyDamageSpells")
         super.init(
             name: "Hero",
-            health: HealthLabel.Health(16)
+            health: HealthLabel.Health(16),
+            attack: 4
         )
     }
     

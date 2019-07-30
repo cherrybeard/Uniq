@@ -14,7 +14,7 @@
 		5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC399203BB01200F3B921 /* HandSprite.swift */; };
 		5B1AC39C203C435A00F3B921 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AC39B203C435A00F3B921 /* Deck.swift */; };
 		5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CA228A64E100DFE0EE /* CardLibrary.swift */; };
-		5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */; };
+		5B2622CD228A82CE00DFE0EE /* ActiveAbilityEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2622CC228A82CE00DFE0EE /* ActiveAbilityEffect.swift */; };
 		5B2AD8B922D265840082F6D1 /* AbilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2AD8B822D265840082F6D1 /* AbilityButton.swift */; };
 		5B2AD8BB22D2D31F0082F6D1 /* AbilitiesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2AD8BA22D2D31F0082F6D1 /* AbilitiesList.swift */; };
 		5B2AD8C322D377560082F6D1 /* Formation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2AD8C222D377560082F6D1 /* Formation.swift */; };
@@ -48,8 +48,13 @@
 		5B7E2D18203E9D420026B445 /* AnimationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */; };
 		5B7E2D1A203EB7B20026B445 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E2D19203EB7B20026B445 /* Animation.swift */; };
 		5B9484C722C4F26700FA413C /* Interactives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9484C622C4F26700FA413C /* Interactives.swift */; };
+		5BA0E8B922EFA87E003BAD8F /* HealAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0E8B822EFA87E003BAD8F /* HealAnimation.swift */; };
+		5BA0E8BB22F00308003BAD8F /* BuffAttackAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0E8BA22F00308003BAD8F /* BuffAttackAnimation.swift */; };
+		5BA0E8BD22F0039B003BAD8F /* BuffCardStatAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0E8BC22F0039B003BAD8F /* BuffCardStatAnimation.swift */; };
+		5BA0E8BF22F008AA003BAD8F /* BuffLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0E8BE22F008AA003BAD8F /* BuffLabel.swift */; };
 		5BA1E90B22C8457F00B9C2C2 /* PassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */; };
 		5BAB2C5422EE5262008A31EE /* GiveArmorAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB2C5322EE5262008A31EE /* GiveArmorAnimation.swift */; };
+		5BAB2C5622EF3D52008A31EE /* ActiveAbility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAB2C5522EF3D52008A31EE /* ActiveAbility.swift */; };
 		5BAC4312227E0ED500D15CA9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAC4311227E0ED500D15CA9 /* UIColor.swift */; };
 		5BB9379822EA16B400A135FE /* SKShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9379722EA16B400A135FE /* SKShapeNode.swift */; };
 		5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */; };
@@ -91,7 +96,7 @@
 		5B1AC399203BB01200F3B921 /* HandSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandSprite.swift; sourceTree = "<group>"; };
 		5B1AC39B203C435A00F3B921 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		5B2622CA228A64E100DFE0EE /* CardLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardLibrary.swift; sourceTree = "<group>"; };
-		5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveAbility.swift; sourceTree = "<group>"; };
+		5B2622CC228A82CE00DFE0EE /* ActiveAbilityEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveAbilityEffect.swift; sourceTree = "<group>"; };
 		5B2AD8B822D265840082F6D1 /* AbilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityButton.swift; sourceTree = "<group>"; };
 		5B2AD8BA22D2D31F0082F6D1 /* AbilitiesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilitiesList.swift; sourceTree = "<group>"; };
 		5B2AD8C222D377560082F6D1 /* Formation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formation.swift; sourceTree = "<group>"; };
@@ -127,8 +132,13 @@
 		5B7E2D17203E9D420026B445 /* AnimationPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationPipeline.swift; sourceTree = "<group>"; };
 		5B7E2D19203EB7B20026B445 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5B9484C622C4F26700FA413C /* Interactives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactives.swift; sourceTree = "<group>"; };
+		5BA0E8B822EFA87E003BAD8F /* HealAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealAnimation.swift; sourceTree = "<group>"; };
+		5BA0E8BA22F00308003BAD8F /* BuffAttackAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuffAttackAnimation.swift; sourceTree = "<group>"; };
+		5BA0E8BC22F0039B003BAD8F /* BuffCardStatAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuffCardStatAnimation.swift; path = Uniq/Animation/Cards/BuffCardStatAnimation.swift; sourceTree = SOURCE_ROOT; };
+		5BA0E8BE22F008AA003BAD8F /* BuffLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuffLabel.swift; sourceTree = "<group>"; };
 		5BA1E90A22C8457E00B9C2C2 /* PassButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassButton.swift; sourceTree = "<group>"; };
 		5BAB2C5322EE5262008A31EE /* GiveArmorAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveArmorAnimation.swift; sourceTree = "<group>"; };
+		5BAB2C5522EF3D52008A31EE /* ActiveAbility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveAbility.swift; sourceTree = "<group>"; };
 		5BAC4311227E0ED500D15CA9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5BB9379722EA16B400A135FE /* SKShapeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKShapeNode.swift; sourceTree = "<group>"; };
 		5BBF0F13228C09550071E9F7 /* TurnAnnouncerSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnAnnouncerSprite.swift; sourceTree = "<group>"; };
@@ -189,6 +199,7 @@
 			children = (
 				5B66CE4D204BF6560047A9DC /* StatLabel.swift */,
 				5BE7A48D22ECD8C000F05DD6 /* HealthLabel.swift */,
+				5BA0E8BE22F008AA003BAD8F /* BuffLabel.swift */,
 				5BBF0F19228ED5620071E9F7 /* AbilityLabel.swift */,
 				5B66CE4F204BFEDD0047A9DC /* DamageLabel.swift */,
 			);
@@ -347,7 +358,8 @@
 		5B9484C822C5182800FA413C /* Abilities */ = {
 			isa = PBXGroup;
 			children = (
-				5B2622CC228A82CE00DFE0EE /* ActiveAbility.swift */,
+				5B2622CC228A82CE00DFE0EE /* ActiveAbilityEffect.swift */,
+				5BAB2C5522EF3D52008A31EE /* ActiveAbility.swift */,
 				5B19083B22B3527D00CE8121 /* PassiveAbility.swift */,
 				5B11822122C98313007D963A /* OnSummonAbility.swift */,
 			);
@@ -380,6 +392,9 @@
 				5B2AD8D822D6FE8A0082F6D1 /* DeathAnimation.swift */,
 				5B2AD8D622D6FDB70082F6D1 /* DamageAnimation.swift */,
 				5BAB2C5322EE5262008A31EE /* GiveArmorAnimation.swift */,
+				5BA0E8B822EFA87E003BAD8F /* HealAnimation.swift */,
+				5BA0E8BA22F00308003BAD8F /* BuffAttackAnimation.swift */,
+				5BA0E8BC22F0039B003BAD8F /* BuffCardStatAnimation.swift */,
 				5BE7A48522EB4DAB00F05DD6 /* SetExhaustionAnimation.swift */,
 				5BE7A48B22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift */,
 			);
@@ -565,14 +580,17 @@
 				5B34E05A22D0198700B72A11 /* HeroSprite.swift in Sources */,
 				5B1AC39A203BB01200F3B921 /* HandSprite.swift in Sources */,
 				5B2AD8D322D5F7BA0082F6D1 /* DefendAbility.swift in Sources */,
+				5BA0E8B922EFA87E003BAD8F /* HealAnimation.swift in Sources */,
 				5BBF0F18228D13DE0071E9F7 /* AnnouncerAnimation.swift in Sources */,
 				5B2622CB228A64E100DFE0EE /* CardLibrary.swift in Sources */,
 				5B19083C22B3527D00CE8121 /* PassiveAbility.swift in Sources */,
 				5B2AD8C322D377560082F6D1 /* Formation.swift in Sources */,
 				5B6FCB1F22BE471600E189DD /* CardSprite.swift in Sources */,
+				5BA0E8BF22F008AA003BAD8F /* BuffLabel.swift in Sources */,
+				5BA0E8BB22F00308003BAD8F /* BuffAttackAnimation.swift in Sources */,
 				5BBF0F14228C09550071E9F7 /* TurnAnnouncerSprite.swift in Sources */,
 				5B66CE4E204BF6560047A9DC /* StatLabel.swift in Sources */,
-				5B2622CD228A82CE00DFE0EE /* ActiveAbility.swift in Sources */,
+				5B2622CD228A82CE00DFE0EE /* ActiveAbilityEffect.swift in Sources */,
 				5B34E05F22D02DA900B72A11 /* CharacterSprite.swift in Sources */,
 				5BAB2C5422EE5262008A31EE /* GiveArmorAnimation.swift in Sources */,
 				5BE0B0B4204F0F29009DA26E /* Battle.swift in Sources */,
@@ -604,6 +622,8 @@
 				5BE7A48622EB4DAB00F05DD6 /* SetExhaustionAnimation.swift in Sources */,
 				5B2C920E22DE2AEE00D64332 /* LightbringerCreature.swift in Sources */,
 				5B2AD8CD22D597C70082F6D1 /* ActionsPanels.swift in Sources */,
+				5BAB2C5622EF3D52008A31EE /* ActiveAbility.swift in Sources */,
+				5BA0E8BD22F0039B003BAD8F /* BuffCardStatAnimation.swift in Sources */,
 				5BE7A48C22EC717800F05DD6 /* SetAbilityCooldownAnimation.swift in Sources */,
 				5B34E05822D0157600B72A11 /* Hero.swift in Sources */,
 				5B9484C722C4F26700FA413C /* Interactives.swift in Sources */,

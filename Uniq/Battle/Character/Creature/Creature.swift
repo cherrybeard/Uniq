@@ -15,15 +15,18 @@ class Creature: Character {
         }
     } }
     
-    //var attack: Value
     //var whenSummoned: PassiveAbility?
     //var onSummon: OnSummonAbility?
 
-    
     init(of card: CreatureCard) {
         self.card = card
-        abilities = card.abilities  // TODO: Copy abilities?
-        super.init(name: card.name, health: card.health)
+        super.init(name: card.name, health: card.health, attack: card.attack.base)
+        
+        for ability in card.abilities {
+            abilities.append(
+                ActiveAbility(ability, caster: self)
+            )
+        }
     }
     
     override func generateSprite() -> CharacterSprite {

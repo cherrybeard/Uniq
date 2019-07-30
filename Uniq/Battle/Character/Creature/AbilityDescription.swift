@@ -37,12 +37,12 @@ class AbilityDescription: SKNode {  // TODO: Rename to AbilityLabel?
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(name: String, description: String) {
-        nameLabel.text = name.uppercased()
+    func set(name: String, description: String, cooldown: Int) {
+        nameLabel.text = "\(name.uppercased()) (\(cooldown))"
         descriptionLabel.text = description
     }
     
     func set(to ability: ActiveAbility) {
-        set(name: ability.name, description: ability.description)
+        set(name: ability.effect.name, description: ability.description, cooldown: ability.effect.cooldown)
     }
 }

@@ -362,11 +362,35 @@ class Battle {
         }
     }
     
+    func heal(percentage: Float, to character: Character) {
+        let amount = Int(Float(character.health.max) * percentage)
+        heal(amount, to: character)
+    }
+    
+    func heal(_ amount: Int, to character: Character) {
+        guard let sprite = character.sprite else { return }
+        let healed = character.heal(amount)
+        animationPipeline.add(
+            HealAnimation(character: sprite, amount: healed)
+        )
+    }
+    
     func giveArmor(_ amount: Int, to character: Character) {
         guard let sprite = character.sprite else { return }
         character.giveArmor(amount)
         animationPipeline.add(
             GiveArmorAnimation(character: sprite, amount: amount)
+        )
+    }
+    
+    func buffAttack(of character: Character, by amount: Int) {
+        guard let sprite = character.sprite else { return }
+        character.buffAttack(by: amount)
+        animationPipeline.add(
+            BuffAttackAnimation(
+                character: sprite,
+                amount: amount
+            )
         )
     }
     
@@ -429,31 +453,32 @@ class Battle {
         )
     }*/
     
-    func useAbility(caster: Creature, ability: ActiveAbility, target: Character?) {  // TODO: Rename to use()
+    func useAbility(ability: ActiveAbility, target: Character?) {  // TODO: Rename to use()
         //if !creature.isExhausted && (ability.left == 0) {
         //setExhaustion(of: creature, to: true)
         //ability.left = ability.cooldown
         //animationPipeline.add(
             //ResetCooldownAnimation(creature: creature.sprite as! CreatureSprite)
         //)
+        guard let target = target else { return }
         resetCooldown(of: ability)
-        ability.effect(self, caster, target)
+        ability.use(battle: self, target: target)
     }
     
     func decreaseCooldown(of ability: ActiveAbility) {
-        ability.cooldown.decrease()
+        ability.decreaseCooldown()
         updateCooldownVisuals(of: ability)
     }
     
     func resetCooldown(of ability: ActiveAbility) {
-        ability.cooldown.reset()
+        ability.resetCooldown()
         updateCooldownVisuals(of: ability)
     }
     
     private func updateCooldownVisuals(of ability: ActiveAbility) {
         if let button = ability.button {
             animationPipeline.add(
-                SetAbilityCooldownAnimation(ability: button, cooldown: ability.cooldown.left)
+                SetAbilityCooldownAnimation(ability: button, cooldown: ability.cooldown)
             )
         }
     }

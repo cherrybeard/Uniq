@@ -8,11 +8,11 @@
 
 class FairyCreature: CreatureCard {
     init() {
-        super.init(name: "Fairy", attack: 0, health: 4)
+        super.init(name: "Fairy", attack: 3, health: 4)
         hasRush = true
         power = 1
         abilities += [
-            AttackAbility(damage: 3),
+            AttackAbility(multiplier: 1),
             DefendAbility(armor: 2),
             BuffAttackAbility(amount: 2)
         ]
